@@ -12,9 +12,9 @@ import { useEffect } from "react";
 
 const Index = () => {
   useEffect(() => {
-    document.title = "Физика финансов · Василий Мещеряков";
+    document.title = "Вася и финансы · Василий Мещеряков";
     const desc = document.querySelector('meta[name="description"]');
-    const content = "Физика финансов — авторский проект Василия Мещерякова, физтеха и инвестора. Курсы, марафон «Теория большого бюджета» и блог о законах личного капитала.";
+    const content = "Вася и финансы — авторский проект Василия Мещерякова. Курсы, марафон «Теория большого бюджета» и спокойный блог о личных финансах.";
     if (desc) desc.setAttribute("content", content);
     else {
       const m = document.createElement("meta");

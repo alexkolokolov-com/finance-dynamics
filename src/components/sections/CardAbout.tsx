@@ -137,7 +137,7 @@ export const CardAbout = ({ eyebrow, heading }: CardAboutProps = {}) => {
               <span className="absolute inset-0 rounded-full border border-foreground -z-10" />
               <img
                 src={vasily}
-                alt="Василий Мещеряков, основатель проекта «Физика финансов»"
+                alt="Василий Мещеряков"
                 className="w-full aspect-square object-cover rounded-full"
                 loading="lazy"
               />

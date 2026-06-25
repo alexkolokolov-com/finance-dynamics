@@ -133,8 +133,8 @@ export const CardAbout = ({ eyebrow, heading }: CardAboutProps = {}) => {
             style={{ animationDelay: "0.3s" }}
           >
             <div className="relative w-[56%] md:w-[72%] mx-auto">
-              {/* орбита — тонкое кольцо по краю фото */}
-              <span className="absolute inset-0 rounded-full border border-foreground -z-10" />
+              {/* мягкая тёплая подложка под портрет */}
+              <span aria-hidden className="absolute -inset-2 rounded-full bg-accent-soft/40 -z-10" style={{ background: "hsl(var(--accent-soft) / 0.45)" }} />
               <img
                 src={vasily}
                 alt="Василий Мещеряков"

@@ -106,10 +106,10 @@ const benefits = [
 
 const Conference = () => {
   useEffect(() => {
-    document.title = "Конференция «Физика финансов» · бесплатно";
+    document.title = "Конференция «Вася и финансы» · бесплатно";
     const desc = document.querySelector('meta[name="description"]');
     const content =
-      "Бесплатная онлайн-конференция «Физика финансов»: 10 практиков, 3 секции и понятная система управления личным капиталом в непростое время.";
+      "Бесплатная онлайн-встреча «Вася и финансы»: 10 практиков, 3 секции и понятная система управления личным капиталом в непростое время.";
     if (desc) desc.setAttribute("content", content);
     else {
       const m = document.createElement("meta");

@@ -203,7 +203,7 @@ const Calculator = () => {
   });
 
   useEffect(() => {
-    document.title = "Калькулятор потерянного кэшбэка — Физика финансов";
+    document.title = "Калькулятор потерянного кэшбэка · Вася и финансы";
   }, []);
 
   const styleMul = style === "lazy" ? 0.72 : style === "optimal" ? 0.9 : style === "max" ? 1.12 : 0.62;

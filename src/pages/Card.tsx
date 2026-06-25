@@ -1,10 +1,10 @@
-import { OrbitDiagram } from "@/components/OrbitDiagram";
 import { SiteHeader } from "@/components/SiteHeader";
 import { CardAbout } from "@/components/sections/CardAbout";
 import { CardProject } from "@/components/sections/CardProject";
 import { CardSoon } from "@/components/sections/CardSoon";
 import { CardConsultations } from "@/components/sections/CardConsultations";
 import { CardTextbook } from "@/components/sections/CardTextbook";
+import vasilyPortrait from "@/assets/vasily-portrait.jpg";
 import pennyAvatar from "@/assets/bigbudget/penny.png";
 import sheldonAvatar from "@/assets/bigbudget/sheldon.png";
 import { useEffect } from "react";

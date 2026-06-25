@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- орбита -->
+  <circle cx="32" cy="32" r="30" fill="none" stroke="#0a0a0a" stroke-width="2.5"/>
+  <!-- центр — жёлтый диск -->
+  <circle cx="32" cy="32" r="22" fill="#f6c945"/>
+  <!-- символ рубля, оптически центрирован (чуть выше геометрического центра) -->
+  <text x="32" y="40" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-weight="700" font-size="30" fill="#0a0a0a">₽</text>
+  <!-- точка на орбите в верхнем-левом 45° -->
+  <circle cx="10.6" cy="10.6" r="3.2" fill="#0a0a0a"/>
+</svg>

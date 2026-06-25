@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<base target="_parent" />
+<title>Форма заявки</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  html,body{margin:0;padding:0;background:transparent;color:#1a1a1a;font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased;}
+  body{padding:8px 4px 24px;}
+  form,.gc-widget,.gc-form{max-width:100% !important;}
+  input[type="text"],input[type="email"],input[type="tel"],input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="hidden"]){
+    font-family:inherit !important;font-size:15px !important;padding:14px 0 !important;
+    border:0 !important;border-bottom:1px solid rgba(0,0,0,0.18) !important;
+    background:transparent !important;outline:none !important;border-radius:0 !important;
+    transition:border-color .2s ease;width:100% !important;box-sizing:border-box !important;
+  }
+  input:focus{border-bottom-color:#caa54a !important;}
+  ::placeholder{color:rgba(0,0,0,0.4) !important;}
+  button[type="submit"],input[type="submit"],.gc-submit,.btn,.button{
+    font-family:inherit !important;font-weight:600 !important;font-size:11px !important;
+    letter-spacing:0.18em !important;text-transform:uppercase !important;
+    background:#caa54a !important;color:#1a1a1a !important;border:0 !important;
+    border-radius:0 !important;padding:18px 32px !important;cursor:pointer !important;
+    transition:background .2s ease,color .2s ease !important;box-shadow:none !important;
+    width:100% !important;margin-top:8px !important;
+  }
+  button[type="submit"]:hover,input[type="submit"]:hover{background:#1a1a1a !important;color:#fff !important;}
+  a{color:#8a6d2a !important;}
+  label{font-size:13px !important;color:rgba(0,0,0,0.7) !important;}
+</style>
+</head>
+<body>
+<script>
+// Synchronous setup: must run during initial parse so the GetCourse <script>
+// tag written below is executed inline and its document.write calls work.
+(function(){
+  var qs = new URLSearchParams(location.search);
+  var widgetId = qs.get('id');
+  var hash = qs.get('hash') || '';
+  window.__gcWidgetId = widgetId;
+  window.__gcTrackedKeys = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','utm_referrer','gclid','yclid','ysclid','fbclid','_openstat','from','ref'];
+  // Backfill UTM / click-id params from parent localStorage if missing here,
+  // so the GC widget reads them from window.location.search and forwards them.
+  try{
+    var raw = window.parent && window.parent.localStorage ? window.parent.localStorage.getItem('phf_utm_params') : null;
+    if(raw){
+      var parsed = JSON.parse(raw);
+      var stored = (parsed && parsed.params) || {};
+      var added = false;
+      window.__gcTrackedKeys.forEach(function(k){
+        if(!qs.has(k) && stored[k]){ qs.set(k, stored[k]); added = true; }
+      });
+      if(added){
+        history.replaceState(null, '', location.pathname + '?' + qs.toString() + location.hash);
+      }
+    }
+  }catch(e){}
+  window.__gcQs = qs;
+  if(widgetId){
+    document.write(
+      '<scr' + 'ipt' + (hash ? ' id="' + hash.replace(/"/g,'') + '"' : '') +
+      ' src="https://nivz.getcourse.ru/pl/lite/widget/script?id=' +
+      encodeURIComponent(widgetId) + '"></scr' + 'ipt>'
+    );
+  }
+})();
+</script>
+<script>
+(function(){
+  if(!window.__gcWidgetId) return;
+  var qs = window.__gcQs;
+  var trackedKeys = window.__gcTrackedKeys;
+
+  // Belt and braces: also push UTM into any hidden inputs the widget renders.
+  function fillHidden(){
+    var params = {};
+    trackedKeys.forEach(function(k){ var v = qs.get(k); if(v) params[k] = v; });
+    Object.keys(params).forEach(function(name){
+      document.querySelectorAll('input[name="'+name+'"]').forEach(function(inp){
+        if(!inp.value){
+          inp.value = params[name];
+          inp.dispatchEvent(new Event('input',{bubbles:true}));
+          inp.dispatchEvent(new Event('change',{bubbles:true}));
+        }
+      });
+    });
+  }
+
+  // Rewrite "Оферта" links to point at the host site.
+  function rewriteOferta(){
+    try{
+      var origin = window.parent.location.origin;
+      document.querySelectorAll('a').forEach(function(a){
+        if(/оферт/i.test(a.textContent || '')){
+          a.setAttribute('href', origin + '/oferta');
+          a.setAttribute('target', '_blank');
+          a.setAttribute('rel', 'noopener');
+        }
+      });
+    }catch(e){}
+  }
+
+  var lastH = 0;
+  function postHeight(){
+    var h = Math.max(
+      document.body.scrollHeight, document.documentElement.scrollHeight,
+      document.body.offsetHeight, document.documentElement.offsetHeight
+    );
+    if(h && Math.abs(h - lastH) > 1){
+      lastH = h;
+      window.parent.postMessage({tag:'calc-gc-widget-height', height: h}, '*');
+    }
+  }
+
+  function tick(){ fillHidden(); rewriteOferta(); postHeight(); }
+  tick();
+  new MutationObserver(tick).observe(document.body,{childList:true,subtree:true,attributes:true,characterData:true});
+  window.addEventListener('load', tick);
+  window.addEventListener('resize', postHeight);
+  if(window.ResizeObserver){ new ResizeObserver(postHeight).observe(document.body); }
+  setInterval(tick, 600);
+})();
+</script>
+</body>
+</html>

@@ -63,7 +63,7 @@ export const Expert = () => {
           <div className="col-span-12 lg:col-span-5 order-1 lg:order-2">
             <div className="relative">
               <div className="absolute -top-4 -left-4 w-full h-full border-2 border-accent" />
-              <img src={vasilyBench} alt="Василий Мещеряков, эксперт проекта «Физика финансов»" className="relative w-full aspect-[4/5] object-cover grayscale" loading="lazy" />
+              <img src={vasilyBench} alt="Василий Мещеряков" className="relative w-full aspect-[4/5] object-cover grayscale" loading="lazy" />
             </div>
           </div>
         </div>

@@ -28,7 +28,7 @@ const YT_URL = "https://www.youtube.com/@Vasya_i_finance";
 
 const BudgetMethods = () => {
   useEffect(() => {
-    document.title = "19 способов ведения бюджета · Физика финансов";
+    document.title = "19 способов ведения бюджета · Вася и финансы";
     const desc = document.querySelector('meta[name="description"]');
     const content =
       "19 способов ведения семейного бюджета — от Excel и метода конвертов до FIRE и «бюджета на аутсорсе». С ссылками на YouTube-шортсы автора.";

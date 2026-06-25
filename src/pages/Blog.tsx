@@ -149,7 +149,7 @@ const posts: Post[] = [
 
 const Blog = () => {
   useEffect(() => {
-    document.title = "Блог · Физика финансов";
+    document.title = "Блог · Вася и финансы";
   }, []);
 
   return (

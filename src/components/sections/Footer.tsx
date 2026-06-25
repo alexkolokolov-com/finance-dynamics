@@ -8,14 +8,14 @@ export const Footer = () => (
           <div className="flex items-center gap-3">
             <LogoMark size="md" />
             <div>
-              <div className="font-display font-bold">Физика финансов</div>
-              <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">© 2026 · в. мещеряков</div>
+              <div className="font-display font-semibold">Вася и&nbsp;финансы</div>
+              <div className="text-xs text-muted-foreground mt-0.5">© 2026 · Василий Мещеряков</div>
             </div>
           </div>
         </div>
 
         <div className="col-span-6 md:col-span-3">
-          <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/50 mb-4">Навигация</div>
+          <div className="text-xs uppercase tracking-wider text-foreground/50 mb-4">Навигация</div>
           <ul className="space-y-2 text-sm">
             <li><a href="/" className="hover:text-accent transition">Главная</a></li>
             <li><a href="/bigbudget" className="hover:text-accent transition">Марафон</a></li>
@@ -23,7 +23,7 @@ export const Footer = () => (
         </div>
 
         <div className="col-span-6 md:col-span-4">
-          <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/50 mb-4">Контакты</div>
+          <div className="text-xs uppercase tracking-wider text-foreground/50 mb-4">Контакты</div>
           <ul className="space-y-2 text-sm">
             <li>
               <a

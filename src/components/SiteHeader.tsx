@@ -81,10 +81,7 @@ export const SiteHeader = ({ pageNav = globalNav }: { pageNav?: HeaderNavLink[] 
             <LogoMark size="sm" />
 
             <div className="leading-tight block">
-              <div className="font-display font-bold text-sm tracking-tight">Физика финансов</div>
-              <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                василий&nbsp;мещеряков
-              </div>
+              <div className="font-display font-semibold text-base tracking-tight">Вася и&nbsp;финансы</div>
             </div>
           </a>
 
@@ -100,7 +97,7 @@ export const SiteHeader = ({ pageNav = globalNav }: { pageNav?: HeaderNavLink[] 
                     !isCta && isActive ? "border-accent text-accent" : ""
                   } ${l.className ?? ""}`}
                 >
-                  <span className={l.mono ? "font-mono uppercase tracking-widest" : "normal-case tracking-normal font-body"}>{l.label}</span>
+                  <span className="normal-case tracking-normal font-body">{l.label}</span>
                 </a>
               );
             })}

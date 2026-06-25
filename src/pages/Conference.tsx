@@ -106,10 +106,10 @@ const benefits = [
 
 const Conference = () => {
   useEffect(() => {
-    document.title = "Конференция «Физика финансов» · бесплатно";
+    document.title = "Конференция «Вася и финансы» · бесплатно";
     const desc = document.querySelector('meta[name="description"]');
     const content =
-      "Бесплатная онлайн-конференция «Физика финансов»: 10 практиков, 3 секции и понятная система управления личным капиталом в непростое время.";
+      "Бесплатная онлайн-встреча «Вася и финансы»: 10 практиков, 3 секции и понятная система управления личным капиталом в непростое время.";
     if (desc) desc.setAttribute("content", content);
     else {
       const m = document.createElement("meta");
@@ -233,7 +233,7 @@ const Conference = () => {
                 из&nbsp;воздуха».
               </p>
               <p>
-                Мы&nbsp;собрали конференцию <span className="text-accent italic">«Физика финансов»</span>, чтобы
+                Мы&nbsp;собрали конференцию <span className="text-accent italic">«Вася и&nbsp;финансы»</span>, чтобы
                 выступали практики — люди, которые сами управляют капиталом и&nbsp;ведут учеников
                 к&nbsp;результату. Без волшебных таблеток, маркетинговых масок и&nbsp;курсов «как
                 заработать миллион за&nbsp;месяц».

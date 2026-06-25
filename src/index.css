@@ -1,68 +1,67 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Caveat:wght@400;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Физика финансов — дизайн-система
-   Палитра «чёрная доска с мелом»: кремовый фон, угольно-чёрные блоки, янтарный акцент.
+/* Вася и финансы — дизайн-система
+   Тёплая палитра, мягкий доверительный тон. Outfit + Figtree.
    Все цвета HSL.
 */
 
 @layer base {
   :root {
-    /* Бумага / меловая доска */
-    --background: 42 27% 94%;       /* #f5f3ee кремовый */
-    --foreground: 0 0% 5%;          /* #0d0d0d угольный */
+    /* Бумага / тёплый фон */
+    --background: 36 38% 97%;        /* #FBF8F3 кремовый */
+    --foreground: 28 16% 11%;        /* #1F1B16 тёплый near-black */
 
-    --card: 42 30% 97%;
-    --card-foreground: 0 0% 5%;
+    --card: 0 0% 100%;
+    --card-foreground: 28 16% 11%;
 
-    --popover: 42 30% 97%;
-    --popover-foreground: 0 0% 5%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 28 16% 11%;
 
-    /* Чёрная доска — основной контраст */
-    --primary: 0 0% 5%;             /* #0d0d0d */
-    --primary-foreground: 42 27% 94%;
+    --primary: 28 16% 11%;
+    --primary-foreground: 36 38% 97%;
 
-    --secondary: 0 0% 18%;          /* #2d2d2d графит */
-    --secondary-foreground: 42 27% 94%;
+    --secondary: 34 18% 92%;
+    --secondary-foreground: 28 16% 11%;
 
-    --muted: 42 20% 88%;
-    --muted-foreground: 0 0% 28%;
+    --muted: 34 18% 92%;
+    --muted-foreground: 32 9% 40%;   /* #6E665B */
 
-    /* Янтарь — мел / акцент */
-    --accent: 42 56% 54%;           /* #c9a84c янтарный */
-    --accent-foreground: 0 0% 5%;
+    /* Тёплая глина — основной акцент */
+    --accent: 12 56% 50%;            /* #C2553B терракота */
+    --accent-foreground: 36 38% 97%;
+    --accent-soft: 14 60% 78%;       /* #E8B8A4 peach */
 
-    --chalk: 42 60% 70%;            /* светлый мел */
-    --chalk-blue: 200 70% 75%;      /* голубой мел */
-    --chalk-coral: 14 78% 62%;      /* коралловый мел */
+    /* Совместимость со старыми классами — нейтрализованы */
+    --chalk: 32 9% 40%;
+    --chalk-blue: 32 9% 40%;
+    --chalk-coral: 12 56% 50%;
 
-    --destructive: 0 70% 45%;
-    --destructive-foreground: 42 27% 94%;
+    --destructive: 0 65% 48%;
+    --destructive-foreground: 36 38% 97%;
 
-    --border: 0 0% 5% / 0.12;
-    --input: 0 0% 5% / 0.15;
-    --ring: 42 56% 54%;
+    --border: 32 22% 86%;            /* #E8E0D2 */
+    --input: 32 22% 86%;
+    --ring: 12 56% 50%;
 
-    --radius: 0.25rem;
+    --radius: 0.75rem;
 
-    /* Градиенты и эффекты */
-    --grad-chalk: radial-gradient(circle at 30% 20%, hsl(42 56% 54% / 0.15), transparent 60%);
-    --grad-board: linear-gradient(180deg, hsl(0 0% 8%) 0%, hsl(0 0% 4%) 100%);
-    --shadow-paper: 0 1px 0 hsl(0 0% 5% / 0.08), 0 20px 40px -20px hsl(0 0% 5% / 0.15);
-    --shadow-hard: 6px 6px 0 hsl(0 0% 5%);
-    --shadow-hard-amber: 6px 6px 0 hsl(42 56% 54%);
+    /* Мягкие эффекты */
+    --grad-chalk: radial-gradient(circle at 30% 20%, hsl(12 56% 50% / 0.06), transparent 60%);
+    --grad-board: linear-gradient(180deg, hsl(28 16% 11%) 0%, hsl(28 16% 8%) 100%);
+    --shadow-paper: 0 1px 0 hsl(28 16% 11% / 0.04), 0 24px 48px -24px hsl(28 16% 11% / 0.18);
+    --shadow-hard: 0 12px 32px -16px hsl(28 16% 11% / 0.22);
+    --shadow-hard-amber: 0 16px 36px -18px hsl(12 56% 50% / 0.35);
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 36 38% 97%;
+    --sidebar-foreground: 28 16% 11%;
+    --sidebar-primary: 28 16% 11%;
+    --sidebar-primary-foreground: 36 38% 97%;
+    --sidebar-accent: 34 18% 92%;
+    --sidebar-accent-foreground: 28 16% 11%;
+    --sidebar-border: 32 22% 86%;
+    --sidebar-ring: 12 56% 50%;
   }
 }
 
@@ -77,14 +76,14 @@
 
   body {
     @apply bg-background text-foreground font-body antialiased;
-    font-feature-settings: "ss01", "cv11";
+    font-feature-settings: "ss01";
   }
 
-  /* Подчёркивание акцентом — корректно переносится по строкам */
+  /* Мягкое подчёркивание акцентом */
   .underline-accent {
     text-decoration: underline;
-    text-decoration-color: hsl(var(--accent));
-    text-decoration-thickness: 3px;
+    text-decoration-color: hsl(var(--accent) / 0.7);
+    text-decoration-thickness: 2px;
     text-underline-offset: 6px;
     text-decoration-skip-ink: none;
   }
@@ -93,12 +92,10 @@
     @apply font-display tracking-tight;
   }
 
-  /* Бумажная фоновая текстура с тонкой сеткой */
+  /* Едва заметная тёплая текстура (раньше — школьная сетка) */
   .bg-grid {
-    background-image:
-      linear-gradient(hsl(0 0% 5% / 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(0 0% 5% / 0.04) 1px, transparent 1px);
-    background-size: 48px 48px;
+    background-image: radial-gradient(hsl(28 16% 11% / 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
   }
 
   .bg-board {
@@ -124,49 +121,49 @@
 @layer components {
   .container-px { @apply px-6 md:px-10 lg:px-16; }
 
+  /* Совместимость: больше не «мел», просто тихий текст */
   .chalk-text {
-    color: hsl(var(--chalk));
-    text-shadow: 0 0 10px hsl(var(--chalk) / 0.25);
+    color: hsl(var(--muted-foreground));
   }
 
   .formula {
-    @apply font-mono text-sm tracking-tight;
+    @apply font-body text-sm;
   }
 
+  /* Мягкий pill — без капса и моно */
   .badge-tag {
-    @apply inline-flex items-center gap-2 px-3 py-1 text-xs font-mono uppercase tracking-widest border border-foreground/20 rounded-full;
+    @apply inline-flex items-center gap-2 px-3 py-1.5 text-sm font-body border border-border rounded-full text-foreground/80 bg-card;
   }
 
   .hard-shadow {
-    box-shadow: var(--shadow-hard);
+    box-shadow: var(--shadow-paper);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
   .hard-shadow:hover {
-    transform: translate(-3px, -3px);
-    box-shadow: 9px 9px 0 hsl(var(--accent));
+    transform: translateY(-2px);
+    box-shadow: 0 18px 40px -20px hsl(28 16% 11% / 0.25);
   }
 
   .number-display {
-    @apply font-display font-bold leading-none;
+    @apply font-display font-semibold leading-none;
     font-feature-settings: "tnum";
   }
 }
 
 @layer utilities {
-  .font-display { font-family: 'Space Grotesk', system-ui, sans-serif; }
-  .font-body { font-family: 'DM Sans', system-ui, sans-serif; }
-  .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
-  .font-serif-display { font-family: 'Cormorant Garamond', 'Times New Roman', serif; }
-  .font-hand { font-family: 'Caveat', cursive; }
+  .font-display { font-family: 'Outfit', system-ui, sans-serif; }
+  .font-body { font-family: 'Figtree', system-ui, sans-serif; }
+  .font-mono { font-family: 'Figtree', system-ui, sans-serif; }
+  .font-serif-display { font-family: 'Outfit', system-ui, sans-serif; }
+  .font-hand { font-family: 'Figtree', system-ui, sans-serif; }
 
   .mask-fade-b {
     mask-image: linear-gradient(180deg, black 60%, transparent 100%);
   }
 }
 
-/* ===== /bigbudget — Cream base, blackboard as accent (scoped) ===== */
+/* ===== /bigbudget — отдельная тема, оставлена как есть для второго лендинга ===== */
 .bigbudget-theme {
-  /* dark-on-cream tokens are the default */
   --chalk: oklch(0.28 0.04 165);
   --chalk-muted: oklch(0.42 0.03 165);
   --chalk-accent: oklch(0.45 0.10 160);
@@ -175,16 +172,12 @@
   --chalk-blue: oklch(0.45 0.13 230);
   --bb-bg: oklch(0.27 0.025 165);
 
-  background-color: hsl(42 27% 94%);
+  background-color: hsl(36 38% 97%);
   color: var(--chalk);
-  font-family: 'Inter', system-ui, sans-serif;
-  background-image:
-    linear-gradient(hsl(0 0% 5% / 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, hsl(0 0% 5% / 0.04) 1px, transparent 1px);
-  background-size: 48px 48px;
+  font-family: 'Figtree', system-ui, sans-serif;
 }
 
-.bigbudget-theme .font-chalk { font-family: 'Caveat', cursive; letter-spacing: 0.01em; }
+.bigbudget-theme .font-chalk { font-family: 'Figtree', sans-serif; letter-spacing: 0.01em; }
 
 .bigbudget-theme .chalk-text   { color: var(--chalk); }
 .bigbudget-theme .chalk-accent { color: var(--chalk-accent); }
@@ -200,17 +193,12 @@
   padding-bottom: 4px;
 }
 
-/* Dark-green panel with a thin chalk border — used for dialogs, pains, quote, reviews */
 .bigbudget-theme .chalk-frame,
 .bigbudget-theme .chalk-card {
   position: relative;
   background: var(--bb-bg);
-  background-image:
-    radial-gradient(900px 500px at 10% 0%, oklch(0.32 0.03 165) 0%, transparent 60%),
-    repeating-linear-gradient(0deg, transparent 0, transparent 3px, oklch(1 0 0 / 1.5%) 3px, oklch(1 0 0 / 1.5%) 4px);
   border-radius: 10px;
   box-shadow: 0 12px 30px -18px oklch(0 0 0 / 0.45);
-  /* flip chalk tokens back to light mel colors inside dark panel */
   --chalk: oklch(0.96 0.015 90);
   --chalk-muted: oklch(0.82 0.02 90);
   --chalk-accent: oklch(0.85 0.10 75);
@@ -227,7 +215,6 @@
   border: 1px solid oklch(0.96 0.015 90 / 18%);
 }
 
-/* Light white card on cream — для "Что вы получите" */
 .bigbudget-theme .chalk-card-light {
   background: hsl(0 0% 100% / 0.9);
   border: 1px solid hsl(160 20% 20% / 0.15);
@@ -237,14 +224,6 @@
 .bigbudget-theme .chalk-card-light .chalk-accent { color: oklch(0.45 0.10 160); }
 .bigbudget-theme .chalk-card-light .chalk-warm   { color: oklch(0.55 0.18 35); }
 .bigbudget-theme .chalk-card-light .chalk-text   { color: oklch(0.28 0.04 165); }
-.bigbudget-theme .chalk-frame .chalk-text,
-.bigbudget-theme .chalk-frame .chalk-accent,
-.bigbudget-theme .chalk-frame .chalk-warm,
-.bigbudget-theme .chalk-card .chalk-text,
-.bigbudget-theme .chalk-card .chalk-accent,
-.bigbudget-theme .chalk-card .chalk-warm {
-  text-shadow: 0 0 1px oklch(1 0 0 / 25%), 0 1px 0 oklch(0 0 0 / 15%);
-}
 
 .bigbudget-theme .blackboard-frame {
   background: linear-gradient(135deg, oklch(0.42 0.08 50), oklch(0.32 0.06 45));
@@ -259,7 +238,6 @@
   background: var(--bb-bg);
   border-radius: 6px;
   box-shadow: inset 0 0 80px oklch(0 0 0 / 35%);
-  /* inside a dark board the chalk tokens flip to light mel colors */
   --chalk: oklch(0.96 0.015 90);
   --chalk-muted: oklch(0.82 0.02 90);
   --chalk-accent: oklch(0.85 0.10 75);
@@ -267,13 +245,6 @@
   --chalk-pink: oklch(0.78 0.13 350);
   --chalk-blue: oklch(0.78 0.11 230);
   color: var(--chalk);
-}
-.bigbudget-theme .blackboard-inner .chalk-text,
-.bigbudget-theme .blackboard-inner .chalk-accent,
-.bigbudget-theme .blackboard-inner .chalk-warm,
-.bigbudget-theme .blackboard-inner .chalk-blue,
-.bigbudget-theme .blackboard-inner .chalk-pink {
-  text-shadow: 0 0 1px oklch(1 0 0 / 25%), 0 1px 0 oklch(0 0 0 / 15%);
 }
 
 .bigbudget-theme .chalk-pill {
@@ -284,18 +255,11 @@
   border: 1.5px dashed hsl(160 20% 20% / 0.35);
   border-radius: 999px;
   color: var(--chalk-accent);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Figtree', sans-serif;
   font-size: 0.85rem;
   font-weight: 500;
   letter-spacing: 0.02em;
   line-height: 1;
-}
-.bigbudget-theme .blackboard-inner .chalk-pill {
-  border-color: oklch(0.85 0.10 75 / 70%);
-  color: var(--chalk-accent);
-  font-family: 'Caveat', cursive;
-  font-size: 1.25rem;
-  font-weight: 400;
 }
 
 .bigbudget-theme .formula-bg {
@@ -303,11 +267,10 @@
   inset: 0;
   pointer-events: none;
   color: oklch(0.96 0.015 90 / 10%);
-  font-family: 'Caveat', cursive;
+  font-family: 'Figtree', sans-serif;
   overflow: hidden;
 }
 
-/* Light CTA — dark-green fill on cream */
 .bigbudget-theme .btn-chalk {
   display: inline-flex;
   align-items: center;
@@ -316,7 +279,7 @@
   padding: 0.75rem 2rem;
   background: oklch(0.32 0.06 165);
   color: oklch(0.96 0.015 90);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Figtree', sans-serif;
   font-weight: 500;
   font-size: 1rem;
   border-radius: 10px;
@@ -326,17 +289,6 @@
 }
 .bigbudget-theme .btn-chalk:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 0 3px oklch(0.45 0.10 160 / 0.30), 0 14px 28px -10px oklch(0.22 0.04 165 / 0.55);
-}
-/* On a dark board — amber chalk button */
-.bigbudget-theme .blackboard-inner .btn-chalk {
-  background: var(--chalk-accent);
-  color: oklch(0.22 0.025 165);
-  font-family: 'Caveat', cursive;
-  font-weight: 400;
-  font-size: 1.5rem;
-  border-color: oklch(0.22 0.025 165 / 0.25);
-  box-shadow: 0 0 0 3px oklch(0.85 0.10 75 / 0.25), 0 8px 20px -8px oklch(0 0 0 / 0.5);
 }
 
 .bigbudget-theme .dotted-divider {
@@ -353,5 +305,3 @@
   transform-origin: center;
   display: inline-block;
 }
-
-

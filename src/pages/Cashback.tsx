@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
+import { CashbackPreviewFlip } from "@/components/cashback/CashbackPreviewFlip";
+
 
 // ============================================================================
 //  /cashback — основная продуктовая страница «Кэшбэк-гайда»
@@ -313,35 +315,9 @@ const Cashback = () => {
           </div>
         </section>
 
-        {/* ============ Preview (dark) ============ */}
-        <section id="preview" className="bg-foreground text-background py-20 md:py-28 scroll-mt-24">
-          <div className="container-px max-w-7xl mx-auto">
-            <div className="max-w-2xl">
-              <div className="inline-flex font-mono text-[11px] uppercase tracking-[0.18em] text-accent border border-accent/40 rounded-full px-3 py-1">
-                Как в&nbsp;книжном магазине
-              </div>
-              <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] tracking-tight mt-6">
-                Можно полистать и&nbsp;понять плотность материала
-              </h2>
-              <p className="mt-5 text-lg text-background/70 leading-relaxed">
-                Часть страниц открыта как превью: структура выпуска, примеры разборов, таблицы, скрины и&nbsp;практические инструкции. Полный доступ открывается после оплаты.
-              </p>
-            </div>
+        {/* ============ Preview — листалка ============ */}
+        <CashbackPreviewFlip />
 
-            <div className="grid md:grid-cols-3 gap-6 mt-12">
-              {[
-                { label: "Обложка", t: "Основной выпуск месяца" },
-                { label: "Пример страницы", t: "Какими картами платить в&nbsp;категориях" },
-                { label: "Пример разбора", t: "Условия, лимиты, нюансы и&nbsp;выводы" },
-              ].map((p, i) => (
-                <article key={i} className="border border-background/20 rounded-lg p-6 min-h-[260px] flex flex-col justify-end bg-background/[0.04]">
-                  <div className="font-mono text-[10px] uppercase tracking-widest text-accent">{p.label}</div>
-                  <div className="font-display font-bold text-xl mt-2" dangerouslySetInnerHTML={{ __html: p.t }} />
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* ============ Why monthly (dark research) ============ */}
         <section className="container-px max-w-7xl mx-auto py-20 md:py-28">

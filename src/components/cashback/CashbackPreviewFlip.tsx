@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import HTMLFlipBook from "react-pageflip";
 import p1 from "@/assets/cashback-preview/page-1.jpg.asset.json";
 import p2 from "@/assets/cashback-preview/page-2.jpg.asset.json";
 import p3 from "@/assets/cashback-preview/page-3.jpg.asset.json";
@@ -11,11 +12,32 @@ import p9 from "@/assets/cashback-preview/page-9.jpg.asset.json";
 
 const pages = [p1, p2, p3, p4, p5, p6, p7, p8, p9].map((a) => a.url);
 
+// A4-ish ratio
+const PAGE_W = 480;
+const PAGE_H = Math.round(PAGE_W * 1.414);
+
+type PageProps = { src: string; index: number };
+
+// eslint-disable-next-line react-refresh/only-export-components
+const Page = ({ src, index }: PageProps) => (
+  <div className="bg-background overflow-hidden shadow-inner">
+    <img
+      src={src}
+      alt={`Страница ${index + 1}`}
+      loading={index < 2 ? "eager" : "lazy"}
+      draggable={false}
+      className="w-full h-full object-contain pointer-events-none select-none"
+    />
+  </div>
+);
+
 export const CashbackPreviewFlip = () => {
-  const [i, setI] = useState(0);
+  const bookRef = useRef<{ pageFlip: () => { flipPrev: () => void; flipNext: () => void } } | null>(null);
+  const [page, setPage] = useState(0);
   const total = pages.length;
-  const prev = () => setI((v) => (v - 1 + total) % total);
-  const next = () => setI((v) => (v + 1) % total);
+
+  const flipPrev = () => bookRef.current?.pageFlip()?.flipPrev();
+  const flipNext = () => bookRef.current?.pageFlip()?.flipNext();
 
   return (
     <section
@@ -34,58 +56,65 @@ export const CashbackPreviewFlip = () => {
           </div>
           <div className="text-sm text-background/70">
             страница{" "}
-            <span className="text-background font-medium">{i + 1}</span> из{" "}
-            {total}
+            <span className="text-background font-medium">
+              {Math.min(page + 1, total)}
+              {page + 1 < total ? `–${Math.min(page + 2, total)}` : ""}
+            </span>{" "}
+            из {total}
           </div>
         </div>
 
-        <div className="relative">
-          <div className="relative mx-auto max-w-3xl aspect-[1/1.414] bg-background rounded-lg overflow-hidden shadow-[0_24px_60px_-20px_rgba(0,0,0,0.5)]">
-            {pages.map((src, idx) => (
-              <img
-                key={src}
-                src={src}
-                alt={`Страница ${idx + 1}`}
-                loading={idx === 0 ? "eager" : "lazy"}
-                className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-300 ${
-                  idx === i ? "opacity-100" : "opacity-0 pointer-events-none"
-                }`}
-              />
-            ))}
-          </div>
-
+        <div className="relative flex justify-center">
           <button
             type="button"
-            aria-label="Предыдущая страница"
-            onClick={prev}
-            className="absolute left-2 md:-left-4 top-1/2 -translate-y-1/2 w-11 h-11 md:w-12 md:h-12 rounded-full bg-background text-foreground flex items-center justify-center text-xl hover:bg-accent hover:text-accent-foreground transition-colors shadow-lg"
+            aria-label="Предыдущий разворот"
+            onClick={flipPrev}
+            className="absolute left-0 md:left-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 md:w-12 md:h-12 rounded-full bg-background text-foreground flex items-center justify-center text-xl hover:bg-accent hover:text-accent-foreground transition-colors shadow-lg"
           >
             ←
           </button>
+
+          {/* @ts-expect-error react-pageflip typings */}
+          <HTMLFlipBook
+            ref={bookRef}
+            width={PAGE_W}
+            height={PAGE_H}
+            size="stretch"
+            minWidth={280}
+            maxWidth={600}
+            minHeight={400}
+            maxHeight={850}
+            showCover={true}
+            maxShadowOpacity={0.5}
+            drawShadow={true}
+            mobileScrollSupport={true}
+            usePortrait={true}
+            flippingTime={650}
+            className="cashback-flipbook"
+            style={{}}
+            startPage={0}
+            startZIndex={0}
+            autoSize={true}
+            clickEventForward={true}
+            useMouseEvents={true}
+            swipeDistance={30}
+            showPageCorners={true}
+            disableFlipByClick={false}
+            onFlip={(e: { data: number }) => setPage(e.data)}
+          >
+            {pages.map((src, i) => (
+              <Page key={src} src={src} index={i} />
+            ))}
+          </HTMLFlipBook>
+
           <button
             type="button"
-            aria-label="Следующая страница"
-            onClick={next}
-            className="absolute right-2 md:-right-4 top-1/2 -translate-y-1/2 w-11 h-11 md:w-12 md:h-12 rounded-full bg-background text-foreground flex items-center justify-center text-xl hover:bg-accent hover:text-accent-foreground transition-colors shadow-lg"
+            aria-label="Следующий разворот"
+            onClick={flipNext}
+            className="absolute right-0 md:right-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 md:w-12 md:h-12 rounded-full bg-background text-foreground flex items-center justify-center text-xl hover:bg-accent hover:text-accent-foreground transition-colors shadow-lg"
           >
             →
           </button>
-        </div>
-
-        <div className="mt-8 flex items-center justify-center gap-2 flex-wrap">
-          {pages.map((_, idx) => (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => setI(idx)}
-              aria-label={`Страница ${idx + 1}`}
-              className={`h-1.5 rounded-full transition-all ${
-                idx === i
-                  ? "w-8 bg-accent"
-                  : "w-4 bg-background/30 hover:bg-background/60"
-              }`}
-            />
-          ))}
         </div>
 
         <p className="mt-10 text-center text-sm text-background/60 max-w-xl mx-auto">

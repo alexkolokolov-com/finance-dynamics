@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
+import { CashbackPreviewFlip } from "@/components/cashback/CashbackPreviewFlip";
+
 
 // ============================================================================
 //  /cashback — основная продуктовая страница «Кэшбэк-гайда»

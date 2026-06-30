@@ -5,10 +5,9 @@ import { CardSoon } from "@/components/sections/CardSoon";
 import { CardConsultations } from "@/components/sections/CardConsultations";
 import { CardTextbook } from "@/components/sections/CardTextbook";
 import vasilyPortrait from "@/assets/vasily-portrait.jpg";
-import pennyAvatar from "@/assets/bigbudget/penny.png";
-import sheldonAvatar from "@/assets/bigbudget/sheldon.png";
 import { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
 
 const cardPageNav = [
   { href: "#about", label: "О проекте", id: "about" },

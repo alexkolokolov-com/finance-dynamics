@@ -4,7 +4,7 @@ import { CardProject } from "@/components/sections/CardProject";
 import { CardSoon } from "@/components/sections/CardSoon";
 import { CardConsultations } from "@/components/sections/CardConsultations";
 import { CardTextbook } from "@/components/sections/CardTextbook";
-import vasilyPortrait from "@/assets/vasily-portrait.jpg";
+import vasilyPortrait from "@/assets/vasily-hero.png.asset.json";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -65,10 +65,11 @@ const Card = () => {
               <div className="relative w-full max-w-md aspect-[4/5]">
 
                 <img
-                  src={vasilyPortrait}
+                  src={vasilyPortrait.url}
                   alt="Василий Мещеряков"
-                  className="w-full h-full object-cover rounded-[1.75rem]"
+                  className="w-full h-full object-contain rounded-[1.75rem]"
                 />
+
               </div>
             </div>
           </div>

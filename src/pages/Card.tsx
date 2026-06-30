@@ -65,10 +65,11 @@ const Card = () => {
               <div className="relative w-full max-w-md aspect-[4/5]">
 
                 <img
-                  src={vasilyPortrait}
+                  src={vasilyPortrait.url}
                   alt="Василий Мещеряков"
-                  className="w-full h-full object-cover rounded-[1.75rem]"
+                  className="w-full h-full object-contain rounded-[1.75rem]"
                 />
+
               </div>
             </div>
           </div>

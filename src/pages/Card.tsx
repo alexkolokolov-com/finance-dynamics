@@ -101,11 +101,7 @@ const Card = () => {
               style={{ animationDelay: "0.25s" }}
             >
               <div className="relative w-full max-w-md aspect-[4/5]">
-                <div
-                  aria-hidden
-                  className="absolute -inset-3 rounded-[2rem] bg-accent-soft/40 -z-10"
-                  style={{ background: "hsl(var(--accent-soft) / 0.45)" }}
-                />
+
                 <img
                   src={vasilyPortrait}
                   alt="Василий Мещеряков"

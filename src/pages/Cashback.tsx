@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { CashbackPreviewFlip } from "@/components/cashback/CashbackPreviewFlip";
+import cashbackHero from "@/assets/cashback-hero.jpg";
+
 
 
 // ============================================================================
@@ -252,33 +254,18 @@ const Cashback = () => {
               </div>
             </div>
 
-            {/* Mock issue card */}
-            <aside className="bg-foreground text-background rounded-lg p-6 md:p-8 shadow-paper border border-foreground/40">
-              <div className="flex items-center justify-between text-xs font-mono uppercase tracking-widest text-background/60">
-                <span>Выпуск</span>
-                <span className="px-2 py-1 border border-accent/60 text-accent rounded-full">Июнь 2026</span>
-              </div>
-              <div className="mt-6 font-serif-display text-3xl md:text-4xl leading-[1.05]">
-                Основной выпуск<br/>+ спецвыпуск месяца
-              </div>
-              <div className="mt-8 space-y-3">
-                {[
-                  "Карты и категории месяца",
-                  "Обновления по банкам и лимитам",
-                  "Акции и накопительные счета",
-                  "Спецвыпуск: Яндекс Банк",
-                  "Архив прошлых выпусков",
-                ].map((r) => (
-                  <div key={r} className="flex items-center gap-3 text-sm text-background/85">
-                    <span className="text-accent font-mono">→</span>
-                    <span>{r}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-8 pt-6 border-t border-background/15 text-xs font-mono uppercase tracking-widest text-background/55">
-                Подписчики получают доступ сразу
-              </div>
+            {/* Hero illustration */}
+            <aside className="relative flex justify-center lg:justify-end">
+              <img
+                src={cashbackHero}
+                alt="Иллюстрация: карты и возврат кэшбэка"
+                width={1024}
+                height={1280}
+                className="w-full max-w-md lg:max-w-none h-auto select-none"
+                draggable={false}
+              />
             </aside>
+
           </div>
         </section>
 

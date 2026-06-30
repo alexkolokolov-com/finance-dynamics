@@ -77,10 +77,10 @@ const Card = () => {
       </section>
 
       <CardAbout />
-      <CardProject />
-      <CardSoon />
       <CardConsultations />
+      <CardOffers />
       <CardTextbook />
+
     </main>
   );
 };

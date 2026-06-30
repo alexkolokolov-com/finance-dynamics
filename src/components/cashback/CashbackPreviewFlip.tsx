@@ -74,7 +74,7 @@ export const CashbackPreviewFlip = () => {
             ←
           </button>
 
-          {/* @ts-expect-error react-pageflip typings */}
+          
           <HTMLFlipBook
             ref={bookRef}
             width={PAGE_W}

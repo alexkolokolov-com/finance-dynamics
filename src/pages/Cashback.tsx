@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { CashbackPreviewFlip } from "@/components/cashback/CashbackPreviewFlip";
+import cashbackHero from "@/assets/cashback-hero.jpg";
+
 
 
 // ============================================================================

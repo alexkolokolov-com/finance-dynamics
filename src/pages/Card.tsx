@@ -1,9 +1,9 @@
 import { SiteHeader } from "@/components/SiteHeader";
 import { CardAbout } from "@/components/sections/CardAbout";
-import { CardProject } from "@/components/sections/CardProject";
-import { CardSoon } from "@/components/sections/CardSoon";
 import { CardConsultations } from "@/components/sections/CardConsultations";
+import { CardOffers } from "@/components/sections/CardOffers";
 import { CardTextbook } from "@/components/sections/CardTextbook";
+
 import vasilyPortrait from "@/assets/vasily-hero.png.asset.json";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";

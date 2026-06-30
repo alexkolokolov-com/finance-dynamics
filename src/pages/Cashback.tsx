@@ -236,18 +236,20 @@ const Cashback = () => {
           <div className="absolute inset-0 -z-10 bg-grid opacity-40 mask-fade-b" />
           <div className="grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-16 items-start">
             <div className="relative">
-              {/* Mobile: иллюстрация как декоративный фон, не растягивает блок */}
+              {/* Mobile: иллюстрация в правом верхнем углу, не растягивает блок */}
               <img
                 src={cashbackHero}
                 alt=""
                 aria-hidden
-                className="lg:hidden pointer-events-none select-none absolute -right-6 -top-6 w-56 sm:w-72 h-auto opacity-20 -z-10"
+                className="lg:hidden pointer-events-none select-none absolute right-0 top-0 w-28 sm:w-40 h-auto"
                 draggable={false}
               />
-              <Eyebrow>Ежемесячный аналитический выпуск</Eyebrow>
-              <h1 className="font-serif-display font-medium text-5xl md:text-6xl lg:text-7xl leading-[1.02] tracking-tight mt-6">
-                Кэшбэк-гайд: разбор банковских <span className="italic">выгод</span> каждый месяц
-              </h1>
+              <div className="lg:pr-0 pr-32 sm:pr-44">
+                <Eyebrow>Ежемесячный аналитический выпуск</Eyebrow>
+                <h1 className="font-serif-display font-medium text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.02] tracking-tight mt-6">
+                  Кэшбэк-гайд: разбор банковских <span className="italic">выгод</span> каждый месяц
+                </h1>
+              </div>
               <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
                 Карты, категории, акции, накопительные счета, ограничения и&nbsp;рабочие сценарии для обычных расходов&nbsp;— в&nbsp;одном актуальном выпуске.
               </p>

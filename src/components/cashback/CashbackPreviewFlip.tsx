@@ -98,14 +98,18 @@ export const CashbackPreviewFlip = () => {
 
   // свайп
   const touchX = useRef<number | null>(null);
+  const touchY = useRef<number | null>(null);
   const onTouchStart = (e: React.TouchEvent) => {
     touchX.current = e.touches[0].clientX;
+    touchY.current = e.touches[0].clientY;
   };
   const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchX.current === null) return;
+    if (touchX.current === null || touchY.current === null) return;
     const dx = e.changedTouches[0].clientX - touchX.current;
+    const dy = e.changedTouches[0].clientY - touchY.current;
     touchX.current = null;
-    if (Math.abs(dx) < 40) return;
+    touchY.current = null;
+    if (Math.abs(dx) < 25 || Math.abs(dx) < Math.abs(dy)) return;
     if (dx < 0) goNext();
     else goPrev();
   };
@@ -166,7 +170,7 @@ export const CashbackPreviewFlip = () => {
 
           <div
             className="relative w-full max-w-[960px] md:aspect-[2/1.414] aspect-[1/1.414]"
-            style={{ perspective: "2200px" }}
+            style={{ perspective: "2200px", touchAction: "pan-y" }}
             onTouchStart={onTouchStart}
             onTouchEnd={onTouchEnd}
           >
@@ -280,6 +284,30 @@ export const CashbackPreviewFlip = () => {
             →
           </button>
         </div>
+
+        {/* Мобильные кнопки-стрелки под превью (на десктопе скрыты, там стрелки по бокам) */}
+        <div className="mt-6 flex md:hidden items-center justify-center gap-4">
+          <button
+            type="button"
+            aria-label="Предыдущая страница"
+            onClick={goPrev}
+            disabled={!canPrev}
+            className="w-12 h-12 rounded-full bg-background text-foreground flex items-center justify-center text-xl shadow-lg disabled:opacity-30 disabled:pointer-events-none active:scale-95 transition-transform"
+          >
+            ←
+          </button>
+          <div className="text-sm text-background/70 min-w-[80px] text-center">{label}</div>
+          <button
+            type="button"
+            aria-label="Следующая страница"
+            onClick={goNext}
+            disabled={!canNext}
+            className="w-12 h-12 rounded-full bg-background text-foreground flex items-center justify-center text-xl shadow-lg disabled:opacity-30 disabled:pointer-events-none active:scale-95 transition-transform"
+          >
+            →
+          </button>
+        </div>
+
 
         <p className="mt-10 text-center text-sm text-background/60 max-w-xl mx-auto">
           Это первые девять страниц июньского выпуска. Полный гайд открывается

@@ -220,11 +220,6 @@ const Cashback = () => {
     document.title = "Кэшбэк-гайд — ежемесячный разбор банковских выгод";
   }, []);
 
-  const [toast, setToast] = useState<string | null>(null);
-  const buy = (label: string) => {
-    setToast(`Здесь подключается оплата: ${label}`);
-    setTimeout(() => setToast(null), 2600);
-  };
 
   const pageNav = [
     { href: "#inside", label: "Что внутри", id: "inside" },

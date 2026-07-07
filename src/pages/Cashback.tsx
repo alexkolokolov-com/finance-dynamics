@@ -134,18 +134,22 @@ const ReviewCard = ({ r }: { r: Review }) => {
       <blockquote className="mt-5 mb-6 font-display text-lg leading-snug pl-4 text-foreground border-l-2 border-accent">
         {r.quote}
       </blockquote>
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        className="self-end font-mono text-[11px] uppercase tracking-widest transition-colors inline-flex items-center gap-2 text-foreground hover:text-accent"
-      >
-        {open ? "Свернуть" : "Читать полностью"}
-        <span aria-hidden>{open ? "−" : "→"}</span>
-      </button>
-      {open && (
-        <div className="mt-3 pt-3 border-t border-foreground/10 font-body text-[15px] leading-relaxed text-foreground/85">
-          <p>{r.text}</p>
-        </div>
+      {!r.noExpand && (
+        <>
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className="self-end font-mono text-[11px] uppercase tracking-widest transition-colors inline-flex items-center gap-2 text-foreground hover:text-accent"
+          >
+            {open ? "Свернуть" : "Читать полностью"}
+            <span aria-hidden>{open ? "−" : "→"}</span>
+          </button>
+          {open && (
+            <div className="mt-3 pt-3 border-t border-foreground/10 font-body text-[15px] leading-relaxed text-foreground/85">
+              <p>{r.text}</p>
+            </div>
+          )}
+        </>
       )}
     </figure>
   );

@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { CashbackPreviewFlip } from "@/components/cashback/CashbackPreviewFlip";
+import { CalculatorRegisterDialog } from "@/components/calculator/CalculatorRegisterDialog";
 import cashbackHero from "@/assets/cashback-hero.jpg";
+
 
 
 
@@ -176,47 +178,48 @@ const faqItems = [
 
 const tariffs = [
   {
-    name: "Месяц",
-    old: "1\u00A0500\u00A0₽",
-    price: "990\u00A0₽",
-    per: "",
-    note: "Чтобы проверить гайд на\u00A0своих расходах и\u00A0понять, насколько вам подходит формат.",
-    items: ["Доступ на\u00A030 дней", "Основной выпуск месяца", "Спецвыпуски и\u00A0архив на\u00A0период доступа"],
-    badge: "",
-    featured: false,
-  },
-  {
-    name: "Квартал",
-    old: "4\u00A0500\u00A0₽",
-    price: "2\u00A0990\u00A0₽",
-    per: "≈\u00A0997\u00A0₽ в\u00A0месяц",
-    note: "Три обновления подряд: удобно спокойно внедрить подход и\u00A0не\u00A0принимать решение каждый месяц.",
-    items: ["Доступ на\u00A03\u00A0месяца", "3\u00A0ежемесячных выпуска", "Спецвыпуски и\u00A0архив на\u00A0период доступа"],
-    badge: "Акция",
-    featured: true,
-  },
-  {
-    name: "Год",
-    old: "18\u00A0000\u00A0₽",
+    name: "Стандарт",
+    old: "19\u00A0900\u00A0₽",
     price: "9\u00A0900\u00A0₽",
     per: "825\u00A0₽ в\u00A0месяц",
-    note: "Для тех, кто хочет весь год получать обновления без ежемесячного продления.",
-    items: ["Доступ на\u00A012\u00A0месяцев", "12\u00A0ежемесячных выпусков", "Все спецвыпуски и\u00A0архив на\u00A0период доступа"],
-    badge: "",
+    note: "Подписка на\u00A01\u00A0год. Все выпуски и\u00A0архив на\u00A0весь период доступа.",
+    items: [
+      "12\u00A0месяцев обновлений",
+      "Ежемесячные спецвыпуски",
+      "Доступ ко\u00A0всем старым выпускам",
+      "Действует до\u00A023:59 8\u00A0июля",
+    ],
+    badge: "Акция",
     featured: false,
+    widgetId: 1625246,
+    scriptHash: "01668685b511e0ed88100aab07f24bbe50aa6a2e",
+  },
+  {
+    name: "VIP",
+    old: "79\u00A0900\u00A0₽",
+    price: "39\u00A0900\u00A0₽",
+    per: "с\u00A0личным консультантом",
+    note: "Всё, что\u00A0в\u00A0тарифе Стандарт, плюс личное сопровождение весь год.",
+    items: [
+      "Всё из\u00A0тарифа Стандарт",
+      "Личный подключённый консультант на\u00A0весь год",
+      "Ответы на\u00A0вопросы",
+      "Разбор крупных покупок",
+      "Индивидуальные рекомендации",
+    ],
+    badge: "VIP",
+    featured: true,
+    widgetId: 1625247,
+    scriptHash: "8cd06bb161f8a4f0410e6255c41d8b00d9a9d055",
   },
 ];
+
 
 const Cashback = () => {
   useEffect(() => {
     document.title = "Кэшбэк-гайд — ежемесячный разбор банковских выгод";
   }, []);
 
-  const [toast, setToast] = useState<string | null>(null);
-  const buy = (label: string) => {
-    setToast(`Здесь подключается оплата: ${label}`);
-    setTimeout(() => setToast(null), 2600);
-  };
 
   const pageNav = [
     { href: "#inside", label: "Что внутри", id: "inside" },
@@ -494,7 +497,7 @@ const Cashback = () => {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 lg:gap-8 mt-12 items-stretch">
+          <div className="grid md:grid-cols-2 gap-6 lg:gap-8 mt-12 items-stretch max-w-5xl">
             {tariffs.map((t) => (
               <article
                 key={t.name}
@@ -518,13 +521,22 @@ const Cashback = () => {
                   ))}
                 </ul>
                 <div className="mt-7">
-                  {t.featured
-                    ? <GoldBtn block onClick={() => buy(t.name)}>Оформить доступ</GoldBtn>
-                    : <DarkBtn block onClick={() => buy(t.name)}>Оформить доступ</DarkBtn>}
+                  <CalculatorRegisterDialog
+                    widgetId={t.widgetId}
+                    scriptHash={t.scriptHash}
+                    title={`Кэшбэк-гайд · ${t.name}`}
+                    subtitle={`Подписка на\u00A012\u00A0месяцев · ${t.price}`}
+                    trigger={
+                      t.featured
+                        ? <GoldBtn block>Оформить {t.name}</GoldBtn>
+                        : <DarkBtn block>Оформить {t.name}</DarkBtn>
+                    }
+                  />
                 </div>
               </article>
             ))}
           </div>
+
 
           <div className="mt-16">
             <ReviewGrid items={reviewsPricing} />
@@ -567,11 +579,6 @@ const Cashback = () => {
 
       <Footer />
 
-      {toast && (
-        <div className="fixed left-1/2 bottom-6 -translate-x-1/2 bg-foreground text-background rounded-full px-5 py-3 font-mono text-xs uppercase tracking-widest shadow-paper z-50">
-          {toast}
-        </div>
-      )}
     </div>
   );
 };

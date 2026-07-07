@@ -505,11 +505,8 @@ const Cashback = () => {
                   t.featured ? "border-accent shadow-paper lg:-translate-y-3" : "border-foreground/15"
                 }`}
               >
-                {t.badge && (
-                  <div className="absolute right-5 top-5 bg-foreground text-accent font-mono text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full">
-                    {t.badge}
-                  </div>
-                )}
+
+
                 <h3 className="font-display font-bold text-2xl">{t.name}</h3>
                 <div className="mt-6 font-mono text-sm text-muted-foreground line-through">{t.old}</div>
                 <div className="font-serif-display text-5xl md:text-6xl leading-none tracking-tight mt-2">{t.price}</div>

@@ -502,7 +502,7 @@ const Cashback = () => {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 lg:gap-8 mt-12 items-stretch">
+          <div className="grid md:grid-cols-2 gap-6 lg:gap-8 mt-12 items-stretch max-w-5xl">
             {tariffs.map((t) => (
               <article
                 key={t.name}
@@ -526,13 +526,22 @@ const Cashback = () => {
                   ))}
                 </ul>
                 <div className="mt-7">
-                  {t.featured
-                    ? <GoldBtn block onClick={() => buy(t.name)}>Оформить доступ</GoldBtn>
-                    : <DarkBtn block onClick={() => buy(t.name)}>Оформить доступ</DarkBtn>}
+                  <CalculatorRegisterDialog
+                    widgetId={t.widgetId}
+                    scriptHash={t.scriptHash}
+                    title={`Кэшбэк-гайд · ${t.name}`}
+                    subtitle={`Подписка на\u00A012\u00A0месяцев · ${t.price}`}
+                    trigger={
+                      t.featured
+                        ? <GoldBtn block>Оформить {t.name}</GoldBtn>
+                        : <DarkBtn block>Оформить {t.name}</DarkBtn>
+                    }
+                  />
                 </div>
               </article>
             ))}
           </div>
+
 
           <div className="mt-16">
             <ReviewGrid items={reviewsPricing} />

@@ -101,6 +101,18 @@ const reviewsPricing: Review[] = [
     quote: "Действительно стоящая вещь\u00A0— тщательная аналитика",
     text: "Действительно стоящая вещь\u00A0— тщательная аналитика. Всё чётко разложено, со\u00A0скринами, как воспользоваться плюшками. Сама регулярно получаю кэшем или баллами 5–20\u00A0т.\u00A0р. в\u00A0месяц, но\u00A0в\u00A0гайде нашла новую инфу.",
   },
+  {
+    name: "Анна",
+    role: "клиент консультации",
+    quote: "Ожидание недели вылилось в\u00A0новую посудомоечную машину",
+    text: "Василий, добрый день! Так и\u00A0хочется сказать\u00A0— а\u00A0что, так бывает? Ожидание недели по\u00A0оплате кухни вылилось в\u00A0новую посудомоечную машину и\u00A0«бесплатный» монтаж этой кухни. Большое спасибо за\u00A0консультацию.",
+  },
+  {
+    name: "Игорь",
+    role: "клиент консультации",
+    quote: "Консультация увеличила налоговый вычет на\u00A040\u00A0000\u00A0₽",
+    text: "И\u00A0ваша консультация увеличила налоговый вычет на\u00A040\u00A0000. Спасибо.",
+  },
 ];
 
 const ReviewCard = ({ r }: { r: Review }) => {
@@ -394,8 +406,8 @@ const Cashback = () => {
 
         {/* ============ Автор (dark) ============ */}
         <section className="container-px max-w-7xl mx-auto py-16 md:py-24">
-          <div className="bg-foreground text-background rounded-lg p-8 md:p-12 grid lg:grid-cols-2 gap-10">
-            <div>
+          <div className="bg-foreground text-background rounded-lg p-8 md:p-12">
+            <div className="max-w-3xl">
               <div className="inline-flex font-mono text-[11px] uppercase tracking-[0.18em] text-accent border border-accent/40 rounded-full px-3 py-1">
                 Автор
               </div>
@@ -412,16 +424,9 @@ const Cashback = () => {
                 </p>
               </div>
             </div>
-            <div className="space-y-6 self-center">
-              <blockquote className="pl-5 border-l-2 border-accent font-display text-lg leading-snug text-background/90">
-                Василий, добрый день! Так и&nbsp;хочется сказать&nbsp;— а&nbsp;что, так бывает? Ожидание недели по&nbsp;оплате кухни вылилось в&nbsp;новую посудомоечную машину и&nbsp;«бесплатный» монтаж этой кухни. Большое спасибо за&nbsp;консультацию.
-              </blockquote>
-              <blockquote className="pl-5 border-l-2 border-accent font-display text-base leading-snug text-background/80">
-                И&nbsp;ваша консультация увеличила налоговый вычет на&nbsp;40&nbsp;000. Спасибо.
-              </blockquote>
-            </div>
           </div>
         </section>
+
 
         {/* ============ Pricing ============ */}
         <section id="pricing" className="container-px max-w-7xl mx-auto py-16 md:py-24 scroll-mt-24">

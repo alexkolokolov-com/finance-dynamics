@@ -274,9 +274,9 @@ const Cashback = () => {
                 draggable={false}
               />
               <div className="lg:pr-0 pr-32 sm:pr-44">
-                <Eyebrow>Ежемесячный аналитический выпуск</Eyebrow>
+                <Eyebrow size="lg">Кэшбэк-гайд</Eyebrow>
                 <h1 className="font-serif-display font-medium text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.02] tracking-tight mt-6">
-                  Кэшбэк-гайд: разбор банковских <span className="italic">выгод</span> каждый месяц
+                  Кэшбэк-гайд: как получать от&nbsp;<span className="italic">10 до&nbsp;50&nbsp;тысяч</span> каждый месяц
                 </h1>
               </div>
               <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">

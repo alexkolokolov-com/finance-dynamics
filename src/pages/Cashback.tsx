@@ -331,6 +331,13 @@ const Cashback = () => {
           </div>
         </section>
 
+        {/* ============ Отзывы (hero) ============ */}
+        <section className="container-px max-w-7xl mx-auto pb-8 md:pb-12">
+          <ReviewGrid items={reviewsHero} />
+        </section>
+
+
+
         {/* ============ Why monthly (dark research) ============ */}
         <section className="container-px max-w-7xl mx-auto py-20 md:py-28">
           <div className="bg-foreground text-background rounded-lg p-8 md:p-12 grid lg:grid-cols-2 gap-10">

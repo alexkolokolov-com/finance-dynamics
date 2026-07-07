@@ -13,8 +13,14 @@ import cashbackHero from "@/assets/cashback-hero.jpg";
 // ============================================================================
 
 // ===== atoms (модель Calculator.tsx — единый визуальный язык) =====
-const Eyebrow = ({ children }: { children: React.ReactNode }) => (
-  <div className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground border border-foreground/15 rounded-full px-3 py-1">
+const Eyebrow = ({ children, size = "sm" }: { children: React.ReactNode; size?: "sm" | "lg" }) => (
+  <div
+    className={
+      size === "lg"
+        ? "inline-flex items-center gap-2 font-display font-semibold text-sm md:text-base uppercase tracking-[0.14em] text-foreground border border-foreground/25 rounded-full px-5 py-2"
+        : "inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground border border-foreground/15 rounded-full px-3 py-1"
+    }
+  >
     {children}
   </div>
 );

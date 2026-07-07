@@ -285,6 +285,30 @@ export const CashbackPreviewFlip = () => {
           </button>
         </div>
 
+        {/* Мобильные кнопки-стрелки под превью (на десктопе скрыты, там стрелки по бокам) */}
+        <div className="mt-6 flex md:hidden items-center justify-center gap-4">
+          <button
+            type="button"
+            aria-label="Предыдущая страница"
+            onClick={goPrev}
+            disabled={!canPrev}
+            className="w-12 h-12 rounded-full bg-background text-foreground flex items-center justify-center text-xl shadow-lg disabled:opacity-30 disabled:pointer-events-none active:scale-95 transition-transform"
+          >
+            ←
+          </button>
+          <div className="text-sm text-background/70 min-w-[80px] text-center">{label}</div>
+          <button
+            type="button"
+            aria-label="Следующая страница"
+            onClick={goNext}
+            disabled={!canNext}
+            className="w-12 h-12 rounded-full bg-background text-foreground flex items-center justify-center text-xl shadow-lg disabled:opacity-30 disabled:pointer-events-none active:scale-95 transition-transform"
+          >
+            →
+          </button>
+        </div>
+
+
         <p className="mt-10 text-center text-sm text-background/60 max-w-xl mx-auto">
           Это первые девять страниц июньского выпуска. Полный гайд открывается
           после оплаты.

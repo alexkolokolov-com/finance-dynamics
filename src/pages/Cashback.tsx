@@ -579,11 +579,6 @@ const Cashback = () => {
 
       <Footer />
 
-      {toast && (
-        <div className="fixed left-1/2 bottom-6 -translate-x-1/2 bg-foreground text-background rounded-full px-5 py-3 font-mono text-xs uppercase tracking-widest shadow-paper z-50">
-          {toast}
-        </div>
-      )}
     </div>
   );
 };

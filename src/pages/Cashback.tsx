@@ -484,7 +484,7 @@ const Cashback = () => {
               Что говорят о&nbsp;гайде
             </h2>
           </div>
-          <ReviewGrid items={[...reviewsHero, ...reviewsAudience, ...reviewsPricing]} />
+          <ReviewGrid items={[...reviewsAudience, ...reviewsPricing]} />
         </section>
 
         {/* ============ FAQ ============ */}

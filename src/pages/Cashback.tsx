@@ -95,6 +95,12 @@ const reviewsPricing: Review[] = [
     quote: "За\u00A0неделю вернул около 10\u00A0000\u00A0₽ с\u00A0авиабилетов",
     text: "Подсмотрев в\u00A0гайде акции Альфы, за\u00A0неделю набрал кэшбэками около полутора тысяч обычными покупками. А\u00A0сегодня купил авиабилеты с\u00A030% кэшбэком. Сумма возврата составит более 10\u00A0тысяч.",
   },
+  {
+    name: "Ирина",
+    role: "подписчица гайда",
+    quote: "Действительно стоящая вещь\u00A0— тщательная аналитика",
+    text: "Действительно стоящая вещь\u00A0— тщательная аналитика. Всё чётко разложено, со\u00A0скринами, как воспользоваться плюшками. Сама регулярно получаю кэшем или баллами 5–20\u00A0т.\u00A0р. в\u00A0месяц, но\u00A0в\u00A0гайде нашла новую инфу.",
+  },
 ];
 
 const ReviewCard = ({ r }: { r: Review }) => {
@@ -181,15 +187,13 @@ const tariffs = [
     name: "Стандарт",
     old: "19\u00A0900\u00A0₽",
     price: "9\u00A0900\u00A0₽",
-    per: "825\u00A0₽ в\u00A0месяц",
+    promo: "Акция до\u00A08\u00A0июля",
     note: "Подписка на\u00A01\u00A0год. Все выпуски и\u00A0архив на\u00A0весь период доступа.",
     items: [
       "12\u00A0месяцев обновлений",
       "Ежемесячные спецвыпуски",
       "Доступ ко\u00A0всем старым выпускам",
-      "Действует до\u00A023:59 8\u00A0июля",
     ],
-    badge: "Акция",
     featured: false,
     widgetId: 1625246,
     scriptHash: "01668685b511e0ed88100aab07f24bbe50aa6a2e",
@@ -198,7 +202,7 @@ const tariffs = [
     name: "VIP",
     old: "79\u00A0900\u00A0₽",
     price: "39\u00A0900\u00A0₽",
-    per: "с\u00A0личным консультантом",
+    promo: "Акция до\u00A08\u00A0июля",
     note: "Всё, что\u00A0в\u00A0тарифе Стандарт, плюс личное сопровождение весь год.",
     items: [
       "Всё из\u00A0тарифа Стандарт",
@@ -207,7 +211,6 @@ const tariffs = [
       "Разбор крупных покупок",
       "Индивидуальные рекомендации",
     ],
-    badge: "VIP",
     featured: true,
     widgetId: 1625247,
     scriptHash: "8cd06bb161f8a4f0410e6255c41d8b00d9a9d055",
@@ -259,11 +262,6 @@ const Cashback = () => {
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <GoldBtn href="#pricing">Оформить доступ →</GoldBtn>
-                <LightBtn href="#preview">Посмотреть превью</LightBtn>
-              </div>
-
-              <div className="mt-8 text-sm text-muted-foreground max-w-lg leading-relaxed">
-                Это не&nbsp;курс и&nbsp;не&nbsp;разовая методичка. Это подписка на&nbsp;регулярные обновления и&nbsp;архив выпусков.
               </div>
             </div>
 
@@ -324,7 +322,7 @@ const Cashback = () => {
           <div className="bg-foreground text-background rounded-lg p-8 md:p-12 grid lg:grid-cols-2 gap-10">
             <div>
               <div className="inline-flex font-mono text-[11px] uppercase tracking-[0.18em] text-accent border border-accent/40 rounded-full px-3 py-1">
-                Почему выпуск обновляется
+                Как это работает
               </div>
               <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] tracking-tight mt-6">
                 Банковские выгоды быстро устаревают
@@ -332,9 +330,6 @@ const Cashback = () => {
               <p className="mt-5 text-lg text-background/70 leading-relaxed">
                 Банки меняют категории, лимиты, ставки, подписки, правила начисления и&nbsp;исключения. Один и&nbsp;тот&nbsp;же совет может быть полезен в&nbsp;мае и&nbsp;уже не&nbsp;работать в&nbsp;июне.
               </p>
-              <blockquote className="mt-8 pl-5 border-l-2 border-accent font-display text-lg leading-snug text-background/90">
-                Действительно стоящая вещь&nbsp;— тщательная аналитика. Всё чётко разложено, со&nbsp;скринами, как воспользоваться плюшками. Сама регулярно получаю кэшем или баллами 5–20&nbsp;т.&nbsp;р. в&nbsp;месяц, но&nbsp;в&nbsp;гайде нашла новую инфу.
-              </blockquote>
             </div>
             <ul className="space-y-4 self-center">
               {[
@@ -352,63 +347,6 @@ const Cashback = () => {
           </div>
         </section>
 
-        {/* ============ Путеводитель для старта ============ */}
-        <section className="container-px max-w-7xl mx-auto py-16 md:py-24">
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-            <div>
-              <Eyebrow>Для старта</Eyebrow>
-              <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] tracking-tight mt-6">
-                Если вы новичок, начните с&nbsp;Путеводителя
-              </h2>
-              <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
-                Внутри подписки есть вводный материал: от&nbsp;выбора одной карты до&nbsp;понимания, как собирать несколько карт под разные расходы.
-              </p>
-              <blockquote className="mt-8 pl-5 border-l-2 border-accent font-display text-lg leading-snug text-foreground">
-                Три месяца назад начал с&nbsp;Путеводителя для начинающих. Из&nbsp;воздуха заработал 24k&nbsp;— 15k в&nbsp;ГПБ и&nbsp;9k в&nbsp;ВТБ.
-              </blockquote>
-            </div>
-            <ul className="space-y-5">
-              {[
-                { t: "Первые шаги", d: "Как выбрать карту под свои регулярные расходы и\u00A0не\u00A0утонуть в\u00A0условиях." },
-                { t: "Категории", d: "Как понимать супермаркеты, ЖКХ, маркетплейсы, такси, медицину и\u00A0другие типовые расходы." },
-                { t: "Дальше", d: "Как постепенно добавлять новые карты, если хочется забирать больше выгоды." },
-              ].map((i) => (
-                <li key={i.t} className="flex gap-5 border-t border-foreground/15 pt-5 first:border-t-0 first:pt-0">
-                  <span className="text-accent font-mono shrink-0 w-6">→</span>
-                  <div>
-                    <div className="font-display font-bold text-xl">{i.t}</div>
-                    <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">{i.d}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        {/* ============ Кому подойдёт ============ */}
-        <section className="container-px max-w-7xl mx-auto py-16 md:py-24">
-          <div className="max-w-2xl">
-            <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] tracking-tight">
-              Кому подойдёт
-            </h2>
-            <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
-              Тем, кто хочет получать больше выгоды с&nbsp;расходов, которые уже&nbsp;есть, и&nbsp;не&nbsp;хочет каждый месяц самостоятельно разбирать правила банков.
-            </p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12">
-            {audience.map((a) => (
-              <article key={a.t} className="border border-foreground/15 bg-card p-6 hover:border-foreground transition-colors">
-                <div className="text-3xl">{a.icon}</div>
-                <h3 className="font-display font-bold text-lg mt-4 leading-tight">{a.t}</h3>
-                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{a.d}</p>
-              </article>
-            ))}
-          </div>
-
-          <div className="mt-12">
-            <ReviewGrid items={reviewsAudience} />
-          </div>
-        </section>
 
         {/* ============ Архив ============ */}
         <section id="archive" className="container-px max-w-7xl mx-auto py-16 md:py-24 scroll-mt-24">
@@ -509,9 +447,15 @@ const Cashback = () => {
 
 
                 <h3 className="font-display font-bold text-2xl">{t.name}</h3>
-                <div className="mt-6 font-mono text-sm text-muted-foreground line-through">{t.old}</div>
-                <div className="font-serif-display text-5xl md:text-6xl leading-none tracking-tight mt-2">{t.price}</div>
-                {t.per && <div className="font-mono text-xs uppercase tracking-widest text-accent mt-3">{t.per}</div>}
+                <div className="mt-6 font-serif-display text-5xl md:text-6xl leading-none tracking-tight">{t.price}</div>
+                <div className="mt-3 flex items-center gap-3 flex-wrap">
+                  <span className="font-serif-display text-2xl md:text-3xl leading-none text-muted-foreground line-through">{t.old}</span>
+                  {t.promo && (
+                    <span className="inline-flex items-center font-mono text-[11px] uppercase tracking-widest text-accent border border-accent/40 rounded-full px-2.5 py-1">
+                      {t.promo}
+                    </span>
+                  )}
+                </div>
                 <p className="mt-5 text-[15px] leading-relaxed text-muted-foreground min-h-[78px]">{t.note}</p>
                 <ul className="mt-5 space-y-2 text-[15px] text-foreground/85 flex-1">
                   {t.items.map((i) => (
@@ -538,6 +482,31 @@ const Cashback = () => {
 
           <div className="mt-16">
             <ReviewGrid items={reviewsPricing} />
+          </div>
+        </section>
+
+        {/* ============ Кому подойдёт ============ */}
+        <section className="container-px max-w-7xl mx-auto py-16 md:py-24">
+          <div className="max-w-2xl">
+            <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] tracking-tight">
+              Кому подойдёт
+            </h2>
+            <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
+              Тем, кто хочет получать больше выгоды с&nbsp;расходов, которые уже&nbsp;есть, и&nbsp;не&nbsp;хочет каждый месяц самостоятельно разбирать правила банков.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12">
+            {audience.map((a) => (
+              <article key={a.t} className="border border-foreground/15 bg-card p-6 hover:border-foreground transition-colors">
+                <div className="text-3xl">{a.icon}</div>
+                <h3 className="font-display font-bold text-lg mt-4 leading-tight">{a.t}</h3>
+                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{a.d}</p>
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-12">
+            <ReviewGrid items={reviewsAudience} />
           </div>
         </section>
 

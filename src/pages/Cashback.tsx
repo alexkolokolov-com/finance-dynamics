@@ -184,18 +184,18 @@ const faqItems = [
 
 const tariffs = [
   {
+const tariffs = [
+  {
     name: "Стандарт",
     old: "19\u00A0900\u00A0₽",
     price: "9\u00A0900\u00A0₽",
-    per: "825\u00A0₽ в\u00A0месяц",
+    promo: "Акция до\u00A08\u00A0июля",
     note: "Подписка на\u00A01\u00A0год. Все выпуски и\u00A0архив на\u00A0весь период доступа.",
     items: [
       "12\u00A0месяцев обновлений",
       "Ежемесячные спецвыпуски",
       "Доступ ко\u00A0всем старым выпускам",
-      "Действует до\u00A023:59 8\u00A0июля",
     ],
-    badge: "Акция",
     featured: false,
     widgetId: 1625246,
     scriptHash: "01668685b511e0ed88100aab07f24bbe50aa6a2e",
@@ -204,7 +204,7 @@ const tariffs = [
     name: "VIP",
     old: "79\u00A0900\u00A0₽",
     price: "39\u00A0900\u00A0₽",
-    per: "с\u00A0личным консультантом",
+    promo: "Акция до\u00A08\u00A0июля",
     note: "Всё, что\u00A0в\u00A0тарифе Стандарт, плюс личное сопровождение весь год.",
     items: [
       "Всё из\u00A0тарифа Стандарт",
@@ -213,7 +213,11 @@ const tariffs = [
       "Разбор крупных покупок",
       "Индивидуальные рекомендации",
     ],
-    badge: "VIP",
+    featured: true,
+    widgetId: 1625247,
+    scriptHash: "8cd06bb161f8a4f0410e6255c41d8b00d9a9d055",
+  },
+];
     featured: true,
     widgetId: 1625247,
     scriptHash: "8cd06bb161f8a4f0410e6255c41d8b00d9a9d055",

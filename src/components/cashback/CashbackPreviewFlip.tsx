@@ -170,7 +170,7 @@ export const CashbackPreviewFlip = () => {
 
           <div
             className="relative w-full max-w-[960px] md:aspect-[2/1.414] aspect-[1/1.414]"
-            style={{ perspective: "2200px" }}
+            style={{ perspective: "2200px", touchAction: "pan-y" }}
             onTouchStart={onTouchStart}
             onTouchEnd={onTouchEnd}
           >

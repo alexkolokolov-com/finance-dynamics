@@ -308,9 +308,8 @@ const Cashback = () => {
         <section id="inside" className="container-px max-w-7xl mx-auto py-16 md:py-24 scroll-mt-24">
           <div className="grid lg:grid-cols-[1fr_1.2fr] gap-10 lg:gap-16 items-start">
             <div>
-              <Eyebrow>В&nbsp;текущем выпуске</Eyebrow>
-              <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] tracking-tight mt-6">
-                Что именно получает подписчик
+              <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] tracking-tight">
+                Что такое кэшбэк-гайд
               </h2>
               <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
                 Гайд собран как рабочий журнал: можно читать целиком, а&nbsp;можно быстро найти нужную категорию или банк через поиск.

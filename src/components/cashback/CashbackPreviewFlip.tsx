@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import p1 from "@/assets/cashback-preview/page-1.jpg.asset.json";
-import p2 from "@/assets/cashback-preview/page-2.jpg.asset.json";
-import p3 from "@/assets/cashback-preview/page-3.jpg.asset.json";
-import p4 from "@/assets/cashback-preview/page-4.jpg.asset.json";
-import p5 from "@/assets/cashback-preview/page-5.jpg.asset.json";
-import p6 from "@/assets/cashback-preview/page-6.jpg.asset.json";
-import p7 from "@/assets/cashback-preview/page-7.jpg.asset.json";
-import p8 from "@/assets/cashback-preview/page-8.jpg.asset.json";
-import p9 from "@/assets/cashback-preview/page-9.jpg.asset.json";
+import p1 from "@/assets/cashback-preview-local/page-1.jpg";
+import p2 from "@/assets/cashback-preview-local/page-2.jpg";
+import p3 from "@/assets/cashback-preview-local/page-3.jpg";
+import p4 from "@/assets/cashback-preview-local/page-4.jpg";
+import p5 from "@/assets/cashback-preview-local/page-5.jpg";
+import p6 from "@/assets/cashback-preview-local/page-6.jpg";
+import p7 from "@/assets/cashback-preview-local/page-7.jpg";
+import p8 from "@/assets/cashback-preview-local/page-8.jpg";
+import p9 from "@/assets/cashback-preview-local/page-9.jpg";
 
-const pages = [p1, p2, p3, p4, p5, p6, p7, p8, p9].map((a) => a.url);
+const pages = [p1, p2, p3, p4, p5, p6, p7, p8, p9];
 const N = pages.length;
 const FLIP_MS = 650;
 

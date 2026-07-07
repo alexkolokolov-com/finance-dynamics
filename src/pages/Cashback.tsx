@@ -50,7 +50,7 @@ const LightBtn = ({ href, onClick, children, block }: { href?: string; onClick?:
 );
 
 // ===== отзывы (повторяем визуальный язык карточек Calculator) =====
-type Review = { name: string; role: string; quote: string; text: string };
+type Review = { name: string; role: string; quote: string; text: string; noExpand?: boolean };
 
 const reviewsHero: Review[] = [
   {

@@ -504,9 +504,15 @@ const Cashback = () => {
 
 
                 <h3 className="font-display font-bold text-2xl">{t.name}</h3>
-                <div className="mt-6 font-mono text-sm text-muted-foreground line-through">{t.old}</div>
-                <div className="font-serif-display text-5xl md:text-6xl leading-none tracking-tight mt-2">{t.price}</div>
-                {t.per && <div className="font-mono text-xs uppercase tracking-widest text-accent mt-3">{t.per}</div>}
+                <div className="mt-6 font-serif-display text-5xl md:text-6xl leading-none tracking-tight">{t.price}</div>
+                <div className="mt-3 flex items-center gap-3 flex-wrap">
+                  <span className="font-serif-display text-2xl md:text-3xl leading-none text-muted-foreground line-through">{t.old}</span>
+                  {t.promo && (
+                    <span className="inline-flex items-center font-mono text-[11px] uppercase tracking-widest text-accent border border-accent/40 rounded-full px-2.5 py-1">
+                      {t.promo}
+                    </span>
+                  )}
+                </div>
                 <p className="mt-5 text-[15px] leading-relaxed text-muted-foreground min-h-[78px]">{t.note}</p>
                 <ul className="mt-5 space-y-2 text-[15px] text-foreground/85 flex-1">
                   {t.items.map((i) => (

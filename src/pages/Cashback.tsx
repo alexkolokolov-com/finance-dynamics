@@ -13,8 +13,14 @@ import cashbackHero from "@/assets/cashback-hero.jpg";
 // ============================================================================
 
 // ===== atoms (модель Calculator.tsx — единый визуальный язык) =====
-const Eyebrow = ({ children }: { children: React.ReactNode }) => (
-  <div className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground border border-foreground/15 rounded-full px-3 py-1">
+const Eyebrow = ({ children, size = "sm" }: { children: React.ReactNode; size?: "sm" | "lg" }) => (
+  <div
+    className={
+      size === "lg"
+        ? "inline-flex items-center gap-2 font-display font-semibold text-sm md:text-base uppercase tracking-[0.14em] text-foreground border border-foreground/25 rounded-full px-5 py-2"
+        : "inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground border border-foreground/15 rounded-full px-3 py-1"
+    }
+  >
     {children}
   </div>
 );
@@ -268,9 +274,9 @@ const Cashback = () => {
                 draggable={false}
               />
               <div className="lg:pr-0 pr-32 sm:pr-44">
-                <Eyebrow>Ежемесячный аналитический выпуск</Eyebrow>
+                <Eyebrow size="lg">Кэшбэк-гайд</Eyebrow>
                 <h1 className="font-serif-display font-medium text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.02] tracking-tight mt-6">
-                  Кэшбэк-гайд: разбор банковских <span className="italic">выгод</span> каждый месяц
+                  Кэшбэк-гайд: как получать от&nbsp;<span className="italic">10 до&nbsp;50&nbsp;тысяч</span> каждый месяц
                 </h1>
               </div>
               <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
@@ -302,9 +308,8 @@ const Cashback = () => {
         <section id="inside" className="container-px max-w-7xl mx-auto py-16 md:py-24 scroll-mt-24">
           <div className="grid lg:grid-cols-[1fr_1.2fr] gap-10 lg:gap-16 items-start">
             <div>
-              <Eyebrow>В&nbsp;текущем выпуске</Eyebrow>
-              <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] tracking-tight mt-6">
-                Что именно получает подписчик
+              <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] tracking-tight">
+                Что такое кэшбэк-гайд
               </h2>
               <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
                 Гайд собран как рабочий журнал: можно читать целиком, а&nbsp;можно быстро найти нужную категорию или банк через поиск.
@@ -325,10 +330,6 @@ const Cashback = () => {
             </ul>
           </div>
         </section>
-
-        {/* ============ Preview — листалка ============ */}
-        <CashbackPreviewFlip />
-
 
         {/* ============ Why monthly (dark research) ============ */}
         <section className="container-px max-w-7xl mx-auto py-20 md:py-28">
@@ -386,6 +387,9 @@ const Cashback = () => {
           </div>
         </section>
 
+        {/* ============ Preview — листалка ============ */}
+        <CashbackPreviewFlip />
+
         {/* ============ Как пользоваться ============ */}
         <section className="container-px max-w-7xl mx-auto py-16 md:py-24">
           <div className="max-w-2xl">
@@ -396,41 +400,21 @@ const Cashback = () => {
               Не&nbsp;обязательно читать всё подряд. Гайд можно использовать как справочник по&nbsp;конкретной категории, банку или задаче.
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-6 mt-12">
+          <ol className="mt-10 space-y-4">
             {usage.map((u) => (
-              <article key={u.n} className="border border-foreground/15 bg-card p-7">
-                <div className="w-11 h-11 rounded-full bg-foreground text-accent grid place-items-center font-display font-bold">
-                  {u.n}
+              <li key={u.n} className="flex items-baseline gap-4 border-t border-foreground/15 pt-4 first:border-t-0 first:pt-0">
+                <span className="font-serif-display text-3xl md:text-4xl leading-none text-accent shrink-0 w-10">
+                  {u.n}.
+                </span>
+                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                  <span className="font-display font-bold text-xl text-foreground">{u.t}</span>
+                  <span className="text-[15px] leading-relaxed text-muted-foreground">— {u.d}</span>
                 </div>
-                <h3 className="font-display font-bold text-2xl mt-5">{u.t}</h3>
-                <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">{u.d}</p>
-              </article>
+              </li>
             ))}
-          </div>
+          </ol>
         </section>
 
-        {/* ============ Автор (dark) ============ */}
-        <section className="container-px max-w-7xl mx-auto py-16 md:py-24">
-          <div className="bg-foreground text-background rounded-lg p-8 md:p-12">
-            <div className="max-w-3xl">
-              <div className="inline-flex font-mono text-[11px] uppercase tracking-[0.18em] text-accent border border-accent/40 rounded-full px-3 py-1">
-                Автор
-              </div>
-              <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] tracking-tight mt-6">
-                Василий Мещеряков
-              </h2>
-              <p className="mt-5 text-lg text-background/70 leading-relaxed">
-                Финансовый консультант, автор канала «Вася и&nbsp;финансы». Учит вести бюджет и&nbsp;работать с&nbsp;личными финансами без сложных схем и&nbsp;потери интереса.
-              </p>
-              <div className="mt-8 border border-background/20 rounded p-5">
-                <div className="font-display font-bold text-xl">«Вася и&nbsp;финансы»</div>
-                <p className="mt-2 text-sm text-background/70 leading-relaxed">
-                  Практический подход к&nbsp;личным финансам: бюджет, кэшбэк, банковские продукты и&nbsp;понятные действия без лишней теории.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
 
 
         {/* ============ Pricing ============ */}

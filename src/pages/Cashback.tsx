@@ -259,11 +259,6 @@ const Cashback = () => {
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <GoldBtn href="#pricing">Оформить доступ →</GoldBtn>
-                <LightBtn href="#preview">Посмотреть превью</LightBtn>
-              </div>
-
-              <div className="mt-8 text-sm text-muted-foreground max-w-lg leading-relaxed">
-                Это не&nbsp;курс и&nbsp;не&nbsp;разовая методичка. Это подписка на&nbsp;регулярные обновления и&nbsp;архив выпусков.
               </div>
             </div>
 

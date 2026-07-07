@@ -478,36 +478,16 @@ const Cashback = () => {
               </article>
             ))}
           </div>
-
-
-          <div className="mt-16">
-            <ReviewGrid items={reviewsPricing} />
-          </div>
         </section>
 
-        {/* ============ Кому подойдёт ============ */}
-        <section className="container-px max-w-7xl mx-auto py-16 md:py-24">
-          <div className="max-w-2xl">
+        {/* ============ Отзывы ============ */}
+        <section id="reviews" className="container-px max-w-7xl mx-auto py-16 md:py-24 scroll-mt-24">
+          <div className="max-w-2xl mb-12">
             <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] tracking-tight">
-              Кому подойдёт
+              Что говорят о&nbsp;гайде
             </h2>
-            <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
-              Тем, кто хочет получать больше выгоды с&nbsp;расходов, которые уже&nbsp;есть, и&nbsp;не&nbsp;хочет каждый месяц самостоятельно разбирать правила банков.
-            </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12">
-            {audience.map((a) => (
-              <article key={a.t} className="border border-foreground/15 bg-card p-6 hover:border-foreground transition-colors">
-                <div className="text-3xl">{a.icon}</div>
-                <h3 className="font-display font-bold text-lg mt-4 leading-tight">{a.t}</h3>
-                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{a.d}</p>
-              </article>
-            ))}
-          </div>
-
-          <div className="mt-12">
-            <ReviewGrid items={reviewsAudience} />
-          </div>
+          <ReviewGrid items={[...reviewsHero, ...reviewsAudience, ...reviewsPricing]} />
         </section>
 
         {/* ============ FAQ ============ */}

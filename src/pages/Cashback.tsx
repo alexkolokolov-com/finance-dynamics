@@ -319,7 +319,7 @@ const Cashback = () => {
           <div className="bg-foreground text-background rounded-lg p-8 md:p-12 grid lg:grid-cols-2 gap-10">
             <div>
               <div className="inline-flex font-mono text-[11px] uppercase tracking-[0.18em] text-accent border border-accent/40 rounded-full px-3 py-1">
-                Почему выпуск обновляется
+                Как это работает
               </div>
               <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] tracking-tight mt-6">
                 Банковские выгоды быстро устаревают
@@ -327,9 +327,6 @@ const Cashback = () => {
               <p className="mt-5 text-lg text-background/70 leading-relaxed">
                 Банки меняют категории, лимиты, ставки, подписки, правила начисления и&nbsp;исключения. Один и&nbsp;тот&nbsp;же совет может быть полезен в&nbsp;мае и&nbsp;уже не&nbsp;работать в&nbsp;июне.
               </p>
-              <blockquote className="mt-8 pl-5 border-l-2 border-accent font-display text-lg leading-snug text-background/90">
-                Действительно стоящая вещь&nbsp;— тщательная аналитика. Всё чётко разложено, со&nbsp;скринами, как воспользоваться плюшками. Сама регулярно получаю кэшем или баллами 5–20&nbsp;т.&nbsp;р. в&nbsp;месяц, но&nbsp;в&nbsp;гайде нашла новую инфу.
-              </blockquote>
             </div>
             <ul className="space-y-4 self-center">
               {[

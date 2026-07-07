@@ -516,9 +516,6 @@ const Cashback = () => {
           <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] tracking-tight max-w-3xl mx-auto">
             Оформите доступ к&nbsp;текущему выпуску и&nbsp;архиву
           </h2>
-          <p className="mt-5 text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Начните с&nbsp;месяца или выберите более длинный доступ, если хотите получать обновления регулярно.
-          </p>
           <div className="mt-8 flex justify-center">
             <GoldBtn href="#pricing">Оформить доступ →</GoldBtn>
           </div>

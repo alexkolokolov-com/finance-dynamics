@@ -98,14 +98,18 @@ export const CashbackPreviewFlip = () => {
 
   // свайп
   const touchX = useRef<number | null>(null);
+  const touchY = useRef<number | null>(null);
   const onTouchStart = (e: React.TouchEvent) => {
     touchX.current = e.touches[0].clientX;
+    touchY.current = e.touches[0].clientY;
   };
   const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchX.current === null) return;
+    if (touchX.current === null || touchY.current === null) return;
     const dx = e.changedTouches[0].clientX - touchX.current;
+    const dy = e.changedTouches[0].clientY - touchY.current;
     touchX.current = null;
-    if (Math.abs(dx) < 40) return;
+    touchY.current = null;
+    if (Math.abs(dx) < 25 || Math.abs(dx) < Math.abs(dy)) return;
     if (dx < 0) goNext();
     else goPrev();
   };

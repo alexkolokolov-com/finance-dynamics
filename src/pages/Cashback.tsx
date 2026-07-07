@@ -184,8 +184,6 @@ const faqItems = [
 
 const tariffs = [
   {
-const tariffs = [
-  {
     name: "Стандарт",
     old: "19\u00A0900\u00A0₽",
     price: "9\u00A0900\u00A0₽",
@@ -213,11 +211,6 @@ const tariffs = [
       "Разбор крупных покупок",
       "Индивидуальные рекомендации",
     ],
-    featured: true,
-    widgetId: 1625247,
-    scriptHash: "8cd06bb161f8a4f0410e6255c41d8b00d9a9d055",
-  },
-];
     featured: true,
     widgetId: 1625247,
     scriptHash: "8cd06bb161f8a4f0410e6255c41d8b00d9a9d055",

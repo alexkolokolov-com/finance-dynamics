@@ -502,8 +502,9 @@ const Cashback = () => {
               <article
                 key={t.name}
                 className={`relative border bg-card p-7 md:p-8 flex flex-col ${
-                  t.featured ? "border-accent shadow-paper lg:-translate-y-3" : "border-foreground/15"
+                  t.featured ? "border-accent shadow-paper" : "border-foreground/15"
                 }`}
+
               >
 
 

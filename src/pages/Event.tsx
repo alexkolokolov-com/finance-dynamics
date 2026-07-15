@@ -340,7 +340,7 @@ const Event = () => {
           <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center animate-fade-up">
             <div className="relative overflow-hidden rounded-2xl border border-foreground/10 aspect-[4/3] hard-shadow">
               <img
-                src={venueImage}
+                src="/river-loft.png"
                 alt="River Loft — зал для бизнес-завтрака"
                 className="w-full h-full object-cover"
                 loading="lazy"

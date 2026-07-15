@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
-import { Calendar, MapPin, Clock, Users, ArrowRight, Quote } from "lucide-react";
+import { Calendar, MapPin, ArrowRight, Quote } from "lucide-react";
 import { nbsp } from "@/lib/nbsp";
 
 const pageNav: HeaderNavLink[] = [

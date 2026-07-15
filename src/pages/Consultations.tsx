@@ -340,11 +340,6 @@ const Consultations = () => {
             </div>
           </div>
 
-          <div
-            className="mt-16 flex justify-center p-8 md:p-10 border border-foreground/15 bg-card hard-shadow animate-fade-up"
-          >
-            <BookButton className="w-full md:w-auto" />
-          </div>
         </div>
       </section>
 
@@ -399,6 +394,9 @@ const Consultations = () => {
                     Если вы сейчас задумаетесь о&nbsp;подведении итогов года и&nbsp;финансовом плане на&nbsp;следующий{"\u00A0"}— то сделаете это вместе со&nbsp;мной в&nbsp;разы эффективнее и&nbsp;на&nbsp;60% дешевле.
                   </p>
                 </blockquote>
+                <div className="mt-8">
+                  <BookButton />
+                </div>
               </div>
             </div>
           </figure>

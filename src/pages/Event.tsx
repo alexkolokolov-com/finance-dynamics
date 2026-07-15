@@ -381,14 +381,21 @@ const Event = () => {
               </div>
 
               <div className="md:border-l md:border-foreground/10 md:pl-12">
-                <a
-                  href="https://t.me/Vasily_Mescheryakov"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-full gap-2 px-6 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-accent-foreground transition-colors"
-                >
-                  Зарегистрироваться <ArrowRight size={14} />
-                </a>
+                <TrafficRegisterDialog
+                  widgetId={1630658}
+                  scriptHash="0d8bfde3b9a4168fa6ff4c65c386affe00c6cc94"
+                  title="Регистрация на бизнес-завтрак"
+                  subtitle="1 августа · Москва · River Loft"
+                  trigger={
+                    <button
+                      type="button"
+                      className="inline-flex items-center justify-center w-full gap-2 px-6 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-accent-foreground transition-colors"
+                    >
+                      Зарегистрироваться <ArrowRight size={14} />
+                    </button>
+                  }
+                />
+
                 <div className="mt-5 space-y-1.5 font-mono text-[11px] uppercase tracking-widest text-foreground/60">
                   <div className="flex items-center gap-2">
                     <Calendar size={12} className="text-accent" />

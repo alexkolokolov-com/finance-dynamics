@@ -1,5 +1,6 @@
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
+import heroPhoto from "@/assets/hero-photo.png";
 
 const audience = [
   {
@@ -192,52 +193,43 @@ const Consultations = () => {
             Почему чем дальше — тем дешевле.
           </h2>
 
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            <div
-              className="bg-card border border-foreground/15 p-7 md:p-8 hard-shadow animate-fade-up flex flex-col h-full"
-              style={{ animationDelay: "0.1s" }}
-            >
-              <div className="font-mono text-xs uppercase tracking-widest text-accent mb-5">
-                01 · Авиабилеты
+          <figure className="mt-16 bg-card border border-foreground/15 p-8 md:p-12 hard-shadow animate-fade-up">
+            <div className="grid grid-cols-12 gap-8 md:gap-12">
+              <div className="col-span-12 md:col-span-3 flex flex-col items-center md:items-start text-center md:text-left">
+                <img
+                  src={heroPhoto}
+                  alt="Василий Мещеряков"
+                  className="w-28 h-28 md:w-36 md:h-36 rounded-full object-cover"
+                  loading="lazy"
+                />
+                <figcaption className="mt-5">
+                  <div className="font-serif-display font-semibold text-lg">
+                    Василий Мещеряков
+                  </div>
+                  <div className="font-mono text-[11px] uppercase tracking-widest text-foreground/55 mt-1">
+                    Вася и&nbsp;финансы
+                  </div>
+                </figcaption>
               </div>
-              <h3 className="font-serif-display font-semibold leading-[1.05] tracking-tight text-2xl md:text-3xl mb-4">
-                Планируешь заранее — платишь меньше.
-              </h3>
-              <p className="font-body text-base text-foreground/75 leading-relaxed">
-                Если вы покупаете билет заранее, он стоит дешевле. Здесь тот&nbsp;же принцип: чем раньше вы смотрите вперёд, тем меньше платите.
-              </p>
-            </div>
 
-            <div
-              className="bg-card border border-foreground/15 p-7 md:p-8 hard-shadow animate-fade-up flex flex-col h-full"
-              style={{ animationDelay: "0.18s" }}
-            >
-              <div className="font-mono text-xs uppercase tracking-widest text-accent mb-5">
-                02 · Длинный горизонт
+              <div className="col-span-12 md:col-span-9">
+                <span className="font-serif-display text-4xl md:text-5xl text-accent leading-none">
+                  "
+                </span>
+                <blockquote className="font-serif-display text-xl md:text-2xl leading-relaxed text-foreground/90 mt-2">
+                  <p>
+                    Я делаю аналогию с&nbsp;авиабилетами: если вы хорошо планируете заранее, вы можете покупать дешевле. Но здесь есть ещё один элемент — планирование.
+                  </p>
+                  <p className="mt-4">
+                    Система, которую я внедряю, подразумевает, что если вы начинаете смотреть вперёд на&nbsp;длинный горизонт, у вас больше денег. Это верно и&nbsp;для расходов, и&nbsp;для доходов, и&nbsp;для инвестиций: чем длиннее горизонт планирования, тем лучше.
+                  </p>
+                  <p className="mt-4">
+                    И я хочу применить эту же модель на&nbsp;своих консультациях. Кто сейчас задумается о&nbsp;том, что в&nbsp;конце года нужно подводить итоги и&nbsp;планировать следующий финансовый год, — это всё равно наступит через&nbsp;полгода. Вы можете этого не&nbsp;хотеть, но это наступит. Тот, кто купит консультацию сейчас, купит её дешевле, со&nbsp;скидкой 60%.
+                  </p>
+                </blockquote>
               </div>
-              <h3 className="font-serif-display font-semibold leading-[1.05] tracking-tight text-2xl md:text-3xl mb-4">
-                Чем дальше смотришь — тем больше денег.
-              </h3>
-              <p className="font-body text-base text-foreground/75 leading-relaxed">
-                Система, которую я внедряю, работает на длинной дистанции. Это верно и&nbsp;для расходов, и&nbsp;для доходов, и&nbsp;для инвестиций: чем длиннее горизонт планирования, тем лучше результат.
-              </p>
             </div>
-
-            <div
-              className="bg-card border border-foreground/15 p-7 md:p-8 hard-shadow animate-fade-up flex flex-col h-full"
-              style={{ animationDelay: "0.26s" }}
-            >
-              <div className="font-mono text-xs uppercase tracking-widest text-accent mb-5">
-                03 · Конец года
-              </div>
-              <h3 className="font-serif-display font-semibold leading-[1.05] tracking-tight text-2xl md:text-3xl mb-4">
-                Он всё равно наступит.
-              </h3>
-              <p className="font-body text-base text-foreground/75 leading-relaxed">
-                Через полгода вы всё равно будете подводить итоги и планировать следующий финансовый год. Вы можете этого не&nbsp;хотеть, но это случится. Кто задумается об&nbsp;этом сейчас — купит консультацию дешевле, со&nbsp;скидкой 60%.
-              </p>
-            </div>
-          </div>
+          </figure>
         </div>
       </section>
 

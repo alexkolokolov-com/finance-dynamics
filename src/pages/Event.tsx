@@ -318,14 +318,18 @@ const Event = () => {
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
               <div>
-                <div className="font-serif-display font-semibold text-5xl md:text-7xl leading-none">
+                <div className="font-mono text-[11px] uppercase tracking-widest text-foreground/50 mb-2">
+                  Стоимость
+                </div>
+                <div className="font-serif-display font-semibold text-5xl md:text-7xl leading-none text-foreground/45 line-through decoration-2">
+                  5 000 ₽
+                </div>
+                <div className="mt-4 font-serif-display font-semibold text-5xl md:text-7xl leading-none text-accent">
                   3 500 ₽
                 </div>
-                <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-foreground/70">
-                  <span className="line-through text-lg">5 000 ₽</span>
-                  <span className="font-mono text-[11px] uppercase tracking-widest">
-                    первые 10&nbsp;мест по&nbsp;акции
-                  </span>
+                <div className="mt-5 inline-flex items-center gap-2 bg-accent text-accent-foreground px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest hard-shadow">
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent-foreground animate-pulse" />
+                  Первые 10&nbsp;мест по&nbsp;акции
                 </div>
               </div>
 

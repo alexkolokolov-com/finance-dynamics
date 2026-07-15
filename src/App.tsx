@@ -18,6 +18,7 @@ import Calculator from "./pages/Calculator.tsx";
 import Cashback from "./pages/Cashback.tsx";
 import Conference from "./pages/Conference.tsx";
 import Consultations from "./pages/Consultations.tsx";
+import Event from "./pages/Event.tsx";
 import Oferta from "./pages/Oferta.tsx";
 import Reviews from "./pages/Reviews.tsx";
 import NotFound from "./pages/NotFound.tsx";
@@ -45,6 +46,7 @@ const App = () => (
           <Route path="/cashback" element={<Cashback />} />
           <Route path="/conference" element={<Conference />} />
           <Route path="/consultations" element={<Consultations />} />
+          <Route path="/event" element={<Event />} />
           <Route path="/oferta" element={<Oferta />} />
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/old" element={<Index />} />

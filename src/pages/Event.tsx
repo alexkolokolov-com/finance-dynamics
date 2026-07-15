@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
-import { Calendar, MapPin, ArrowRight, Check } from "lucide-react";
+import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import { nbsp } from "@/lib/nbsp";
 import expertAvatar from "@/assets/expert-vasily.jpg";
 
@@ -270,71 +270,61 @@ const Event = () => {
       </section>
 
       {/* Register */}
-      <section id="register" className="relative py-24 md:py-32 bg-foreground text-background overflow-hidden scroll-mt-20">
-        <div className="absolute inset-0 pointer-events-none opacity-10 bg-grid" />
-        <div className="container-px max-w-6xl mx-auto relative">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-            <div className="lg:col-span-7 animate-fade-up">
-              <div className="font-mono text-xs uppercase tracking-widest text-accent mb-4">
-                Регистрация
-              </div>
-              <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl">
-                Забронируйте место на бизнес-завтрак.
-              </h2>
-              <p className="mt-6 text-background/70 text-lg md:text-xl leading-relaxed max-w-xl">
-                Количество мест ограничено. После регистрации пришлём подтверждение и все детали.
-              </p>
+      <section id="register" className="relative py-24 md:py-32 overflow-hidden bg-grid scroll-mt-20">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: "var(--grad-chalk)" }}
+        />
+        <div className="container-px max-w-7xl mx-auto relative">
+          <div className="font-mono text-xs uppercase tracking-widest text-accent mb-6 animate-fade-up">
+            Регистрация
+          </div>
+          <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl max-w-4xl animate-fade-up">
+            Забронировать место.
+          </h2>
 
-              <ul className="mt-8 space-y-3 text-background/80 text-base md:text-lg">
-                {[
-                  "Главное выступление и 4 рабочие части",
-                  "Открытые вопросы на ваши ситуации",
-                  "Бранч, кофе и живое общение",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <Check size={18} className="text-accent shrink-0 mt-1" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="lg:col-span-5 animate-fade-up" style={{ animationDelay: "0.1s" }}>
-              <div className="bg-background text-foreground p-8 md:p-10 rounded-2xl border border-background/10 hard-shadow">
-                <div className="font-mono text-xs uppercase tracking-widest text-accent mb-3">
-                  Акция — первые 10 мест
-                </div>
-                <div className="font-serif-display text-5xl md:text-6xl font-semibold leading-none">
+          <div
+            className="mt-12 bg-card border border-foreground/15 p-7 md:p-10 hard-shadow animate-fade-up"
+            style={{ animationDelay: "0.1s" }}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+              <div>
+                <div className="font-serif-display font-semibold text-5xl md:text-7xl leading-none">
                   3 500 ₽
                 </div>
-                <div className="mt-3 flex items-center gap-3">
-                  <span className="text-foreground/50 line-through">5 000 ₽</span>
-                  <span className="font-mono text-[10px] uppercase tracking-widest bg-accent text-accent-foreground px-2 py-1">
-                    Экономия 1 500 ₽
+                <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-foreground/70">
+                  <span className="line-through text-lg">5 000 ₽</span>
+                  <span className="font-mono text-[11px] uppercase tracking-widest">
+                    первые 10&nbsp;мест по&nbsp;акции
                   </span>
                 </div>
+              </div>
 
-                <div className="mt-8 pt-6 border-t border-foreground/10 space-y-3">
-                  <a
-                    href="https://t.me/Vasily_Mescheryakov"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center w-full gap-2 px-6 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-accent-foreground transition-colors"
-                  >
-                    Зарегистрироваться <ArrowRight size={14} />
-                  </a>
-                  <a
-                    href="/"
-                    className="inline-flex items-center justify-center w-full gap-2 px-6 py-3 border border-foreground/40 font-mono text-xs uppercase tracking-widest hover:border-foreground transition-colors"
-                  >
-                    На главную
-                  </a>
+              <div className="md:border-l md:border-foreground/10 md:pl-12">
+                <a
+                  href="https://t.me/Vasily_Mescheryakov"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center w-full gap-2 px-6 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-accent-foreground transition-colors"
+                >
+                  Зарегистрироваться <ArrowRight size={14} />
+                </a>
+                <div className="mt-5 space-y-1.5 font-mono text-[11px] uppercase tracking-widest text-foreground/60">
+                  <div className="flex items-center gap-2">
+                    <Calendar size={12} className="text-accent" />
+                    1&nbsp;августа · 10:00–13:00
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <MapPin size={12} className="text-accent" />
+                    Москва, Новоданиловская наб. 4
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+
 
       {/* Venue */}
       <section className="relative py-24 md:py-32 overflow-hidden bg-grid">

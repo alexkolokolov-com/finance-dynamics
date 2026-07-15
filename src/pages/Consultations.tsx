@@ -2,6 +2,7 @@ import { useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import heroPhoto from "@/assets/hero-photo.png";
+import laptopPhoto from "@/assets/vasily-laptop.jpg";
 import { url as vladimirItAvatar } from "@/assets/reviews/vladimir-it.png.asset.json";
 import { url as svetlanaAvatar } from "@/assets/reviews/svetlana.png.asset.json";
 import { url as spartakAvatar } from "@/assets/reviews/spartak.png.asset.json";
@@ -113,9 +114,10 @@ const BookButton = ({ className = "" }: { className?: string }) => (
     type="button"
     id="book-consultation"
     data-book-consultation
-    className={`inline-flex items-center justify-center gap-3 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors ${className}`}
+    className={`inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors ${className}`}
   >
-    Забронировать
+    <span>Забронировать</span>
+    <span className="font-body italic normal-case text-sm opacity-90">: заранее</span>
     <span className="text-base">→</span>
   </button>
 );
@@ -165,24 +167,58 @@ const Consultations = () => {
       <SiteHeader />
 
       {/* Hero */}
-      <section className="relative pt-32 md:pt-40 pb-16 md:pb-24 overflow-hidden bg-grid">
+      <section className="relative pt-28 md:pt-36 lg:pt-40 pb-16 md:pb-24 overflow-hidden bg-grid">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{ background: "var(--grad-chalk)" }}
         />
         <div className="container-px max-w-7xl mx-auto relative">
-          <h1 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-[clamp(2.5rem,8vw,6rem)] animate-fade-up">
-            Персональные <span className="italic font-normal">консультации</span>.
-          </h1>
-          <p
-            className="mt-8 font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-2xl animate-fade-up"
-            style={{ animationDelay: "0.1s" }}
-          >
-            Разбираем ваши финансы, строим модель капитала и держим траекторию.
-          </p>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            <div className="lg:col-span-7 animate-fade-up">
+              <h1 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-[clamp(2.5rem,8vw,6rem)]">
+                Персональные <span className="italic font-normal">консультации</span>.
+              </h1>
+              <p
+                className="mt-8 font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-2xl"
+                style={{ animationDelay: "0.1s" }}
+              >
+                Разбираем ваши финансы, строим модель капитала и держим траекторию.
+              </p>
 
-          <div className="mt-10 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-            <BookButton />
+              <div className="mt-10" style={{ animationDelay: "0.2s" }}>
+                <BookButton />
+              </div>
+            </div>
+
+            <div
+              className="lg:col-span-5 animate-fade-up"
+              style={{ animationDelay: "0.2s" }}
+            >
+              <div className="relative max-w-md lg:max-w-none mx-auto lg:mx-0">
+                {/* decorative background layer */}
+                <div className="absolute -inset-4 md:-inset-6 bg-accent/10 rounded-[2rem] -rotate-3 pointer-events-none" />
+                {/* subtle texture layer */}
+                <div
+                  className="absolute inset-0 rounded-2xl opacity-30 pointer-events-none bg-grid"
+                  style={{ maskImage: "linear-gradient(180deg, black 40%, transparent 100%)" }}
+                />
+                {/* photo card */}
+                <div className="relative overflow-hidden rounded-2xl border border-foreground/10 shadow-hard aspect-[3/4] md:aspect-[4/5] max-h-[70vh] lg:max-h-none">
+                  <img
+                    src={laptopPhoto}
+                    alt="Василий Мещеряков с ноутбуком"
+                    className="w-full h-full object-cover object-center"
+                    loading="eager"
+                  />
+                </div>
+                {/* floating badge */}
+                <div className="absolute -bottom-4 -left-4 md:-bottom-6 md:-left-6 bg-card border border-foreground/15 px-4 py-2 shadow-hard rounded-full">
+                  <span className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-accent">
+                    1 на 1 · 90 мин
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -262,7 +298,7 @@ const Consultations = () => {
               Раннее бронирование
             </div>
             <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl max-w-4xl">
-              Скидка до&nbsp;60% (при&nbsp;бронировании заранее)
+              Скидка до&nbsp;60%
             </h2>
             <div className="mt-8 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
               <p className="font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-3xl">
@@ -403,30 +439,30 @@ const Consultations = () => {
             Почему чем дальше — тем дешевле.
           </h2>
 
-          <figure className="mt-16 bg-card border border-foreground/15 p-8 md:p-12 hard-shadow animate-fade-up">
-            <div className="grid grid-cols-12 gap-8 md:gap-12">
-              <div className="col-span-12 md:col-span-3 flex flex-col items-center md:items-start text-center md:text-left">
+          <figure className="mt-16 bg-card border border-foreground/15 p-6 md:p-12 hard-shadow animate-fade-up">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
+              <div className="flex items-center gap-4 md:flex-col md:items-start md:col-span-3 md:text-left">
                 <img
                   src={heroPhoto}
                   alt="Василий Мещеряков"
-                  className="w-28 h-28 md:w-36 md:h-36 rounded-full object-cover"
+                  className="w-16 h-16 md:w-36 md:h-36 rounded-full object-cover shrink-0"
                   loading="lazy"
                 />
-                <figcaption className="mt-5">
-                  <div className="font-serif-display font-semibold text-lg">
+                <figcaption>
+                  <div className="font-serif-display font-semibold text-base md:text-lg">
                     Василий Мещеряков
                   </div>
-                  <div className="font-mono text-[11px] uppercase tracking-widest text-foreground/55 mt-1">
+                  <div className="font-mono text-[11px] uppercase tracking-widest text-foreground/55 md:mt-1">
                     Вася и&nbsp;финансы
                   </div>
                 </figcaption>
               </div>
 
-              <div className="col-span-12 md:col-span-9">
-                <span className="font-serif-display text-4xl md:text-5xl text-accent leading-none">
+              <div className="md:col-span-9">
+                <span className="hidden md:block font-serif-display text-4xl md:text-5xl text-accent leading-none">
                   "
                 </span>
-                <blockquote className="font-serif-display text-xl md:text-2xl leading-relaxed text-foreground/90 mt-2">
+                <blockquote className="font-serif-display text-xl md:text-2xl leading-relaxed text-foreground/90 mt-2 md:mt-0 border-l-2 border-accent pl-4 md:border-l-0 md:pl-0">
                   <p>
                     По&nbsp;аналогии с&nbsp;авиабилетами: если вы хорошо планируете заранее, вы можете покупать дешевле.
                   </p>

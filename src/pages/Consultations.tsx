@@ -1,6 +1,11 @@
+import { useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import heroPhoto from "@/assets/hero-photo.png";
+import { url as vladimirItAvatar } from "@/assets/reviews/vladimir-it.png.asset.json";
+import { url as svetlanaAvatar } from "@/assets/reviews/svetlana.png.asset.json";
+import { url as spartakAvatar } from "@/assets/reviews/spartak.png.asset.json";
+import { url as tatyanaAvatar } from "@/assets/reviews/tatyana.png.asset.json";
 
 const audience = [
   {
@@ -73,6 +78,33 @@ const results = [
   },
 ];
 
+const galleryReviews = [
+  {
+    name: "Владимир",
+    role: "Владелец бизнеса по IT-сопровождению",
+    avatar: vladimirItAvatar,
+    quote: "Научился планировать свои траты и\u00A0перестал их бояться",
+  },
+  {
+    name: "Светлана",
+    role: "Менеджер по продажам",
+    avatar: svetlanaAvatar,
+    quote: "Доход вырос на\u00A030%. Обучение окупилось за\u00A02 месяца",
+  },
+  {
+    name: "Спартак",
+    role: "Проектирование зданий и сооружений",
+    avatar: spartakAvatar,
+    quote: "Сместился фокус на\u00A0доходы (был только на\u00A0расходах). С\u00A0нетерпением жду, когда завершится календарный год и\u00A0я смогу сравнивать год к\u00A0году.",
+  },
+  {
+    name: "Татьяна",
+    role: "Врач антивозрастной медицины",
+    avatar: tatyanaAvatar,
+    quote: "Бюджет из\u00A0нулевого превратился в\u00A0плюсовой. Ведение бюджета теперь вдохновляет.",
+  },
+];
+
 const formatPrice = (n: number) =>
   new Intl.NumberFormat("ru-RU").format(n) + " ₽";
 
@@ -87,6 +119,45 @@ const BookButton = ({ className = "" }: { className?: string }) => (
     <span className="text-base">→</span>
   </button>
 );
+
+const ReviewCard = ({ r, i }: { r: typeof galleryReviews[0]; i: number }) => {
+  const [imgError, setImgError] = useState(false);
+
+  return (
+    <figure
+      className="bg-card border border-foreground/15 p-7 md:p-8 hard-shadow animate-fade-up flex flex-col h-full"
+      style={{ animationDelay: `${0.1 + i * 0.08}s` }}
+    >
+      <div className="flex items-center gap-4 mb-6">
+        {imgError ? (
+          <span className="w-14 h-14 rounded-full bg-muted border border-foreground/15 grid place-items-center font-serif-display text-lg text-foreground/55 shrink-0">
+            {r.name.charAt(0)}
+          </span>
+        ) : (
+          <img
+            src={r.avatar}
+            alt={r.name}
+            className="w-14 h-14 rounded-full object-cover border border-foreground/15 shrink-0"
+            loading="lazy"
+            onError={() => setImgError(true)}
+          />
+        )}
+        <div className="min-w-0">
+          <div className="font-serif-display font-semibold text-lg leading-tight">
+            {r.name}
+          </div>
+          <div className="font-mono text-[11px] uppercase tracking-widest text-foreground/55 mt-1">
+            {r.role}
+          </div>
+        </div>
+      </div>
+
+      <blockquote className="font-serif-display text-xl md:text-2xl leading-snug text-foreground border-l-2 border-accent pl-4 flex-1">
+        «{r.quote}»
+      </blockquote>
+    </figure>
+  );
+};
 
 const Consultations = () => {
   return (
@@ -180,56 +251,6 @@ const Consultations = () => {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Логика цены */}
-      <section className="relative py-24 md:py-32 overflow-hidden">
-        <div className="container-px max-w-7xl mx-auto">
-          <div className="font-mono text-xs uppercase tracking-widest text-accent mb-6 animate-fade-up">
-            Логика цены
-          </div>
-          <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl animate-fade-up max-w-4xl">
-            Почему чем дальше — тем дешевле.
-          </h2>
-
-          <figure className="mt-16 bg-card border border-foreground/15 p-8 md:p-12 hard-shadow animate-fade-up">
-            <div className="grid grid-cols-12 gap-8 md:gap-12">
-              <div className="col-span-12 md:col-span-3 flex flex-col items-center md:items-start text-center md:text-left">
-                <img
-                  src={heroPhoto}
-                  alt="Василий Мещеряков"
-                  className="w-28 h-28 md:w-36 md:h-36 rounded-full object-cover"
-                  loading="lazy"
-                />
-                <figcaption className="mt-5">
-                  <div className="font-serif-display font-semibold text-lg">
-                    Василий Мещеряков
-                  </div>
-                  <div className="font-mono text-[11px] uppercase tracking-widest text-foreground/55 mt-1">
-                    Вася и&nbsp;финансы
-                  </div>
-                </figcaption>
-              </div>
-
-              <div className="col-span-12 md:col-span-9">
-                <span className="font-serif-display text-4xl md:text-5xl text-accent leading-none">
-                  "
-                </span>
-                <blockquote className="font-serif-display text-xl md:text-2xl leading-relaxed text-foreground/90 mt-2">
-                  <p>
-                    Я делаю аналогию с&nbsp;авиабилетами: если вы хорошо планируете заранее, вы можете покупать дешевле. Но здесь есть ещё один элемент — планирование.
-                  </p>
-                  <p className="mt-4">
-                    Система, которую я внедряю, подразумевает, что если вы начинаете смотреть вперёд на&nbsp;длинный горизонт, у вас больше денег. Это верно и&nbsp;для расходов, и&nbsp;для доходов, и&nbsp;для инвестиций: чем длиннее горизонт планирования, тем лучше.
-                  </p>
-                  <p className="mt-4">
-                    И я хочу применить эту же модель на&nbsp;своих консультациях. Кто сейчас задумается о&nbsp;том, что в&nbsp;конце года нужно подводить итоги и&nbsp;планировать следующий финансовый год, — это всё равно наступит через&nbsp;полгода. Вы можете этого не&nbsp;хотеть, но это наступит. Тот, кто купит консультацию сейчас, купит её дешевле, со&nbsp;скидкой 60%.
-                  </p>
-                </blockquote>
-              </div>
-            </div>
-          </figure>
         </div>
       </section>
 
@@ -327,12 +348,62 @@ const Consultations = () => {
         </div>
       </section>
 
-      {/* Результаты */}
+      {/* Логика цены */}
       <section className="relative py-24 md:py-32 overflow-hidden bg-grid">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{ background: "var(--grad-chalk)" }}
         />
+        <div className="container-px max-w-7xl mx-auto relative">
+          <div className="font-mono text-xs uppercase tracking-widest text-accent mb-6 animate-fade-up">
+            Логика цены
+          </div>
+          <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl animate-fade-up max-w-4xl">
+            Почему чем дальше — тем дешевле.
+          </h2>
+
+          <figure className="mt-16 bg-card border border-foreground/15 p-8 md:p-12 hard-shadow animate-fade-up">
+            <div className="grid grid-cols-12 gap-8 md:gap-12">
+              <div className="col-span-12 md:col-span-3 flex flex-col items-center md:items-start text-center md:text-left">
+                <img
+                  src={heroPhoto}
+                  alt="Василий Мещеряков"
+                  className="w-28 h-28 md:w-36 md:h-36 rounded-full object-cover"
+                  loading="lazy"
+                />
+                <figcaption className="mt-5">
+                  <div className="font-serif-display font-semibold text-lg">
+                    Василий Мещеряков
+                  </div>
+                  <div className="font-mono text-[11px] uppercase tracking-widest text-foreground/55 mt-1">
+                    Вася и&nbsp;финансы
+                  </div>
+                </figcaption>
+              </div>
+
+              <div className="col-span-12 md:col-span-9">
+                <span className="font-serif-display text-4xl md:text-5xl text-accent leading-none">
+                  "
+                </span>
+                <blockquote className="font-serif-display text-xl md:text-2xl leading-relaxed text-foreground/90 mt-2">
+                  <p>
+                    Я делаю аналогию с&nbsp;авиабилетами: если вы хорошо планируете заранее, вы можете покупать дешевле. Но здесь есть ещё один элемент — планирование.
+                  </p>
+                  <p className="mt-4">
+                    Система, которую я внедряю, подразумевает, что если вы начинаете смотреть вперёд на&nbsp;длинный горизонт, у вас больше денег. Это верно и&nbsp;для расходов, и&nbsp;для доходов, и&nbsp;для инвестиций: чем длиннее горизонт планирования, тем лучше.
+                  </p>
+                  <p className="mt-4">
+                    И я хочу применить эту же модель на&nbsp;своих консультациях. Кто сейчас задумается о&nbsp;том, что в&nbsp;конце года нужно подводить итоги и&nbsp;планировать следующий финансовый год, — это всё равно наступит через&nbsp;полгода. Вы можете этого не&nbsp;хотеть, но это наступит. Тот, кто купит консультацию сейчас, купит её дешевле, со&nbsp;скидкой 60%.
+                  </p>
+                </blockquote>
+              </div>
+            </div>
+          </figure>
+        </div>
+      </section>
+
+      {/* Результаты */}
+      <section className="relative py-24 md:py-32 overflow-hidden">
         <div className="container-px max-w-7xl mx-auto relative">
           <div className="font-mono text-xs uppercase tracking-widest text-accent mb-6 animate-fade-up">
             Результаты
@@ -355,6 +426,32 @@ const Consultations = () => {
                   {r.text}
                 </p>
               </div>
+            ))}
+          </div>
+
+          <div className="mt-16 animate-fade-up">
+            <BookButton />
+          </div>
+        </div>
+      </section>
+
+      {/* Отзывы */}
+      <section className="relative py-24 md:py-32 overflow-hidden bg-grid">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: "var(--grad-chalk)" }}
+        />
+        <div className="container-px max-w-7xl mx-auto relative">
+          <div className="font-mono text-xs uppercase tracking-widest text-accent mb-6 animate-fade-up">
+            Истории
+          </div>
+          <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl animate-fade-up max-w-4xl">
+            Что говорят клиенты.
+          </h2>
+
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+            {galleryReviews.map((r, i) => (
+              <ReviewCard key={r.name} r={r} i={i} />
             ))}
           </div>
 

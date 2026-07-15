@@ -114,12 +114,10 @@ const Event = () => {
               />
               {/* Pills over photo */}
               <div className="absolute top-3 left-3 right-3 flex flex-wrap gap-2">
-                <span className="badge-tag inline-flex items-center gap-2">
-                  <MapPin size={14} className="text-accent" />
+                <span className="badge-tag inline-flex items-center text-xs">
                   Москва, Новоданиловская наб.&nbsp;4
                 </span>
-                <span className="badge-tag inline-flex items-center gap-2">
-                  <Calendar size={14} className="text-accent" />
+                <span className="badge-tag inline-flex items-center text-xs">
                   1&nbsp;августа, 10:00–13:00
                 </span>
               </div>
@@ -153,12 +151,10 @@ const Event = () => {
           <div className="hidden lg:grid grid-cols-12 gap-14 items-center">
             <div className="col-span-7">
               <div className="flex flex-wrap items-center gap-3 animate-fade-up">
-                <span className="badge-tag inline-flex items-center gap-2">
-                  <Calendar size={14} className="text-accent" />
+                <span className="badge-tag inline-flex items-center text-xs">
                   1&nbsp;августа, 10:00–13:00
                 </span>
-                <span className="badge-tag inline-flex items-center gap-2">
-                  <MapPin size={14} className="text-accent" />
+                <span className="badge-tag inline-flex items-center text-xs">
                   Москва, Новоданиловская наб.&nbsp;4
                 </span>
               </div>

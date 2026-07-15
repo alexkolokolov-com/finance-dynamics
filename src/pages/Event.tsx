@@ -115,7 +115,6 @@ const Event = () => {
                   width="1440"
                   height="2560"
                   loading="eager"
-                  fetchPriority="high"
                 />
               </picture>
               {/* Pills over photo */}
@@ -206,7 +205,6 @@ const Event = () => {
                       width="1440"
                       height="2560"
                       loading="eager"
-                      fetchPriority="high"
                     />
                   </picture>
                 </div>

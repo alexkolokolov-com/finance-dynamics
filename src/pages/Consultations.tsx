@@ -2,6 +2,7 @@ import { useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import heroPhoto from "@/assets/hero-photo.png";
+import laptopPhoto from "@/assets/vasily-laptop.jpg";
 import { url as vladimirItAvatar } from "@/assets/reviews/vladimir-it.png.asset.json";
 import { url as svetlanaAvatar } from "@/assets/reviews/svetlana.png.asset.json";
 import { url as spartakAvatar } from "@/assets/reviews/spartak.png.asset.json";
@@ -113,9 +114,10 @@ const BookButton = ({ className = "" }: { className?: string }) => (
     type="button"
     id="book-consultation"
     data-book-consultation
-    className={`inline-flex items-center justify-center gap-3 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors ${className}`}
+    className={`inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors ${className}`}
   >
-    Забронировать
+    <span>Забронировать</span>
+    <span className="font-body italic normal-case text-sm opacity-90">: заранее</span>
     <span className="text-base">→</span>
   </button>
 );

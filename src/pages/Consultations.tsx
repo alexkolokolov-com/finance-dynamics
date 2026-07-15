@@ -56,7 +56,7 @@ const calendar = [
   { month: "Сентябрь", discount: 30, seats: 5 },
   { month: "Октябрь", discount: 40, seats: 8 },
   { month: "Ноябрь", discount: 50, seats: 5 },
-  { month: "Декабрь", discount: 60, seats: 4 },
+  { month: "Декабрь", discount: 60, seats: 10 },
 ];
 
 const results = [
@@ -272,7 +272,7 @@ const Consultations = () => {
             </div>
           </div>
 
-          <div className="mt-16 overflow-hidden border border-foreground/15 bg-card hard-shadow animate-fade-up">
+          <div className="mt-16 hidden md:block overflow-hidden border border-foreground/15 bg-card hard-shadow animate-fade-up">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[28rem]">
                 <thead>
@@ -338,6 +338,52 @@ const Consultations = () => {
                 </tbody>
               </table>
             </div>
+          </div>
+
+          <div className="mt-16 md:hidden overflow-hidden border border-foreground/15 bg-card hard-shadow animate-fade-up">
+            {calendar.map((c, i) => {
+              const price = Math.round((BASE_PRICE * (100 - c.discount)) / 100);
+              return (
+                <div
+                  key={c.month}
+                  className="px-6 py-5 border-b border-foreground/10 last:border-b-0"
+                  style={{ animationDelay: `${0.1 + i * 0.06}s` }}
+                >
+                  <div className="flex items-start justify-between gap-4 mb-3">
+                    <div className="font-serif-display font-semibold text-xl">
+                      {c.month}
+                    </div>
+                    {c.discount > 0 ? (
+                      <span className="inline-block font-mono text-xs uppercase tracking-widest bg-accent text-accent-foreground px-2.5 py-1">
+                        −{c.discount}%
+                      </span>
+                    ) : (
+                      <span className="font-body text-foreground/60">—</span>
+                    )}
+                  </div>
+                  <div className="flex items-baseline justify-between gap-3">
+                    <div className="flex flex-wrap items-baseline gap-2">
+                      <span className="font-serif-display font-semibold text-xl">
+                        {formatPrice(price)}
+                      </span>
+                      {c.discount > 0 && (
+                        <span className="font-body text-sm text-foreground/50 line-through">
+                          {formatPrice(BASE_PRICE)}
+                        </span>
+                      )}
+                    </div>
+                    <div className="font-body text-base text-foreground/80">
+                      {c.seats}{" "}
+                      {c.seats === 1
+                        ? "место"
+                        : c.seats >= 2 && c.seats <= 4
+                          ? "места"
+                          : "мест"}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
         </div>

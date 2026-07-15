@@ -20,43 +20,44 @@ const schedule = [
   },
   {
     time: "10:30–12:00",
-    title: "Главное выступление",
-    subtitle:
-      "«Как принимать финансовые решения в эпоху постоянной неопределенности»",
     parts: [
       {
+        part: "Часть 1",
         title:
-          "Часть 1. Почему большинство людей принимают правильные решения слишком поздно",
+          "Почему большинство людей принимают правильные решения слишком поздно",
         bullets: [
-          "как перестать реагировать на новости",
-          "как отличать шум от действительно важных событий",
-          "мой подход к финансовым решениям за последние несколько лет",
+          "Как перестать реагировать на новости",
+          "Как отличать шум от действительно важных событий",
+          "Мой подход к финансовым решениям за последние несколько лет",
         ],
       },
       {
-        title: "Часть 2. Как устроена моя финансовая система",
+        part: "Часть 2",
+        title: "Как устроена моя финансовая система",
         bullets: [
-          "что изменилось за последний год",
-          "какие решения оказались правильными, а какие — нет",
-          "как изменилось мое отношение к инвестициям, недвижимости, валютам, бизнесу",
+          "Что изменилось за последний год",
+          "Какие решения оказались правильными, а какие — нет",
+          "Как изменилось мое отношение к инвестициям, недвижимости, валютам, бизнесу",
         ],
       },
       {
+        part: "Часть 3",
         title:
-          "Часть 3. Как строить финансовый план, если невозможно предсказать будущее",
+          "Как строить финансовый план, если невозможно предсказать будущее",
         bullets: [
-          "почему большинство финансовых планов ломаются",
-          "как планировать так, чтобы не бояться кризисов",
-          "как перестать жить ожиданием «когда все стабилизируется»",
+          "Почему большинство финансовых планов ломаются",
+          "Как планировать так, чтобы не бояться кризисов",
+          "Как перестать жить ожиданием «когда все стабилизируется»",
         ],
       },
       {
+        part: "Часть 4",
         title:
-          "Часть 4. Новые инструменты, которые я пока нигде подробно не показывал",
+          "Новые инструменты, которые я пока нигде подробно не показывал",
         bullets: [
-          "практические штуки, которые уже использую сам",
-          "почему ими не рассказываю публично",
-          "как их применить в вашей ситуации",
+          "Практические штуки, которые уже использую сам",
+          "Почему ими не рассказываю публично",
+          "Как их применить в вашей ситуации",
         ],
       },
     ],
@@ -268,20 +269,15 @@ const Event = () => {
               if (item.parts) {
                 return (
                   <div key={item.time} className="contents">
-                    <article
-                      className="bg-card border border-foreground/15 p-7 md:p-9 hard-shadow animate-fade-up"
+                    <div
+                      className="flex flex-wrap items-center gap-3 animate-fade-up"
                       style={{ animationDelay: `${0.1 + i * 0.08}s` }}
                     >
-                      <div className="font-mono text-xs uppercase tracking-widest text-accent mb-4">
-                        {item.time}
-                      </div>
-                      <h3 className="font-serif-display font-semibold leading-[1.05] tracking-tight text-2xl md:text-3xl">
-                        {nbsp(item.title)}
-                      </h3>
-                      <p className="mt-3 font-serif-display text-lg md:text-xl italic text-foreground/70">
-                        {nbsp(item.subtitle)}
-                      </p>
-                    </article>
+                      <span className="badge-tag">{item.time}</span>
+                      <span className="font-mono text-xs uppercase tracking-widest text-accent">
+                        Основная программа
+                      </span>
+                    </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {item.parts.map((part, pi) => (
                         <article
@@ -289,7 +285,8 @@ const Event = () => {
                           className="bg-card border border-foreground/15 p-7 md:p-9 hard-shadow animate-fade-up"
                           style={{ animationDelay: `${0.18 + i * 0.08 + pi * 0.06}s` }}
                         >
-                          <h4 className="font-serif-display font-semibold text-lg leading-snug">
+                          <span className="badge-tag text-xs">{nbsp(part.part)}</span>
+                          <h4 className="mt-3 font-serif-display font-semibold text-lg leading-snug">
                             {nbsp(part.title)}
                           </h4>
                           <ul className="mt-4 space-y-2">

@@ -103,9 +103,20 @@ const Event = () => {
           style={{ background: "var(--grad-chalk)" }}
         />
         <div className="container-px max-w-7xl mx-auto relative">
+          <div className="flex flex-wrap items-center gap-3 mb-8 lg:hidden animate-fade-up">
+            <span className="badge-tag inline-flex items-center gap-2">
+              <Calendar size={14} className="text-accent" />
+              1&nbsp;августа, 10:00–13:00
+            </span>
+            <span className="badge-tag inline-flex items-center gap-2">
+              <MapPin size={14} className="text-accent" />
+              Москва, Новоданиловская наб.&nbsp;4
+            </span>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             <div className="lg:col-span-7 order-2 lg:order-1">
-              <div className="flex flex-wrap items-center gap-3 animate-fade-up">
+              <div className="hidden lg:flex flex-wrap items-center gap-3 animate-fade-up">
                 <span className="badge-tag inline-flex items-center gap-2">
                   <Calendar size={14} className="text-accent" />
                   1&nbsp;августа, 10:00–13:00

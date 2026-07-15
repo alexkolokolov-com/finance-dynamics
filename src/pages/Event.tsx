@@ -125,8 +125,8 @@ const Event = () => {
               </div>
               {/* Bottom gradient + subtitle */}
               <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-background via-background/70 to-transparent pointer-events-none" />
-              <p className="absolute bottom-4 left-4 right-4 font-serif-display text-xl md:text-2xl leading-snug text-foreground/80">
-                <span className="font-semibold text-foreground">Бизнес-завтрак</span><br />
+              <p className="absolute bottom-4 left-4 right-4 font-serif-display font-semibold text-xl md:text-2xl leading-snug text-foreground">
+                Бизнес-завтрак<br />
                 с&nbsp;Василием Мещеряковым
               </p>
             </div>

@@ -167,24 +167,58 @@ const Consultations = () => {
       <SiteHeader />
 
       {/* Hero */}
-      <section className="relative pt-32 md:pt-40 pb-16 md:pb-24 overflow-hidden bg-grid">
+      <section className="relative pt-28 md:pt-36 lg:pt-40 pb-16 md:pb-24 overflow-hidden bg-grid">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{ background: "var(--grad-chalk)" }}
         />
         <div className="container-px max-w-7xl mx-auto relative">
-          <h1 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-[clamp(2.5rem,8vw,6rem)] animate-fade-up">
-            Персональные <span className="italic font-normal">консультации</span>.
-          </h1>
-          <p
-            className="mt-8 font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-2xl animate-fade-up"
-            style={{ animationDelay: "0.1s" }}
-          >
-            Разбираем ваши финансы, строим модель капитала и держим траекторию.
-          </p>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            <div className="lg:col-span-7 animate-fade-up">
+              <h1 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-[clamp(2.5rem,8vw,6rem)]">
+                Персональные <span className="italic font-normal">консультации</span>.
+              </h1>
+              <p
+                className="mt-8 font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-2xl"
+                style={{ animationDelay: "0.1s" }}
+              >
+                Разбираем ваши финансы, строим модель капитала и держим траекторию.
+              </p>
 
-          <div className="mt-10 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-            <BookButton />
+              <div className="mt-10" style={{ animationDelay: "0.2s" }}>
+                <BookButton />
+              </div>
+            </div>
+
+            <div
+              className="lg:col-span-5 animate-fade-up"
+              style={{ animationDelay: "0.2s" }}
+            >
+              <div className="relative max-w-md lg:max-w-none mx-auto lg:mx-0">
+                {/* decorative background layer */}
+                <div className="absolute -inset-4 md:-inset-6 bg-accent/10 rounded-[2rem] -rotate-3 pointer-events-none" />
+                {/* subtle texture layer */}
+                <div
+                  className="absolute inset-0 rounded-2xl opacity-30 pointer-events-none bg-grid"
+                  style={{ maskImage: "linear-gradient(180deg, black 40%, transparent 100%)" }}
+                />
+                {/* photo card */}
+                <div className="relative overflow-hidden rounded-2xl border border-foreground/10 shadow-hard aspect-[3/4] md:aspect-[4/5] max-h-[70vh] lg:max-h-none">
+                  <img
+                    src={laptopPhoto}
+                    alt="Василий Мещеряков с ноутбуком"
+                    className="w-full h-full object-cover object-center"
+                    loading="eager"
+                  />
+                </div>
+                {/* floating badge */}
+                <div className="absolute -bottom-4 -left-4 md:-bottom-6 md:-left-6 bg-card border border-foreground/15 px-4 py-2 shadow-hard rounded-full">
+                  <span className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-accent">
+                    1 на 1 · 90 мин
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

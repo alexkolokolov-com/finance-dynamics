@@ -262,7 +262,7 @@ const Consultations = () => {
               Раннее бронирование
             </div>
             <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl max-w-4xl">
-              Скидка до&nbsp;70% при&nbsp;бронировании заранее.
+              Скидка до&nbsp;60% (при&nbsp;бронировании заранее)
             </h2>
             <div className="mt-8 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
               <p className="font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-3xl">

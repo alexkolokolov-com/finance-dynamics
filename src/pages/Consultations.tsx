@@ -154,7 +154,7 @@ const ReviewCard = ({ r, i }: { r: typeof galleryReviews[0]; i: number }) => {
         </div>
       </div>
 
-      <blockquote className="font-serif-display text-xl md:text-2xl leading-snug text-foreground border-l-2 border-accent pl-4 flex-1">
+      <blockquote className="font-serif-display text-lg md:text-2xl leading-snug text-foreground md:border-l-2 md:border-accent md:pl-4 flex-1">
         «{r.quote}»
       </blockquote>
     </figure>
@@ -462,7 +462,7 @@ const Consultations = () => {
                 <span className="hidden md:block font-serif-display text-4xl md:text-5xl text-accent leading-none">
                   "
                 </span>
-                <blockquote className="font-serif-display text-xl md:text-2xl leading-relaxed text-foreground/90 mt-2 md:mt-0 border-l-2 border-accent pl-4 md:border-l-0 md:pl-0">
+                <blockquote className="font-serif-display text-lg md:text-2xl leading-relaxed text-foreground/90 mt-2 md:mt-0 md:border-l-0 md:pl-0">
                   <p>
                     По&nbsp;аналогии с&nbsp;авиабилетами: если вы хорошо планируете заранее, вы можете покупать дешевле.
                   </p>

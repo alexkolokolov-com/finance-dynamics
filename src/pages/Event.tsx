@@ -264,7 +264,7 @@ const Event = () => {
             Забронировать место.
           </h2>
           <p className="mt-5 text-foreground/70 max-w-xl mx-auto">
-            Количество мест ограничено. Дату и место сообщим после регистрации.
+            Количество мест ограничено. Подтвердим участие и пришлём все детали после регистрации.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
             <a

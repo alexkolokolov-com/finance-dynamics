@@ -439,30 +439,30 @@ const Consultations = () => {
             Почему чем дальше — тем дешевле.
           </h2>
 
-          <figure className="mt-16 bg-card border border-foreground/15 p-8 md:p-12 hard-shadow animate-fade-up">
-            <div className="grid grid-cols-12 gap-8 md:gap-12">
-              <div className="col-span-12 md:col-span-3 flex flex-col items-center md:items-start text-center md:text-left">
+          <figure className="mt-16 bg-card border border-foreground/15 p-6 md:p-12 hard-shadow animate-fade-up">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
+              <div className="flex items-center gap-4 md:flex-col md:items-start md:col-span-3 md:text-left">
                 <img
                   src={heroPhoto}
                   alt="Василий Мещеряков"
-                  className="w-28 h-28 md:w-36 md:h-36 rounded-full object-cover"
+                  className="w-16 h-16 md:w-36 md:h-36 rounded-full object-cover shrink-0"
                   loading="lazy"
                 />
-                <figcaption className="mt-5">
-                  <div className="font-serif-display font-semibold text-lg">
+                <figcaption>
+                  <div className="font-serif-display font-semibold text-base md:text-lg">
                     Василий Мещеряков
                   </div>
-                  <div className="font-mono text-[11px] uppercase tracking-widest text-foreground/55 mt-1">
+                  <div className="font-mono text-[11px] uppercase tracking-widest text-foreground/55 md:mt-1">
                     Вася и&nbsp;финансы
                   </div>
                 </figcaption>
               </div>
 
-              <div className="col-span-12 md:col-span-9">
-                <span className="font-serif-display text-4xl md:text-5xl text-accent leading-none">
+              <div className="md:col-span-9">
+                <span className="hidden md:block font-serif-display text-4xl md:text-5xl text-accent leading-none">
                   "
                 </span>
-                <blockquote className="font-serif-display text-xl md:text-2xl leading-relaxed text-foreground/90 mt-2">
+                <blockquote className="font-serif-display text-xl md:text-2xl leading-relaxed text-foreground/90 mt-2 md:mt-0 border-l-2 border-accent pl-4 md:border-l-0 md:pl-0">
                   <p>
                     По&nbsp;аналогии с&nbsp;авиабилетами: если вы хорошо планируете заранее, вы можете покупать дешевле.
                   </p>

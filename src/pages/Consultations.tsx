@@ -120,6 +120,45 @@ const BookButton = ({ className = "" }: { className?: string }) => (
   </button>
 );
 
+const ReviewCard = ({ r, i }: { r: typeof galleryReviews[0]; i: number }) => {
+  const [imgError, setImgError] = useState(false);
+
+  return (
+    <figure
+      className="bg-card border border-foreground/15 p-7 md:p-8 hard-shadow animate-fade-up flex flex-col h-full"
+      style={{ animationDelay: `${0.1 + i * 0.08}s` }}
+    >
+      <div className="flex items-center gap-4 mb-6">
+        {imgError ? (
+          <span className="w-14 h-14 rounded-full bg-muted border border-foreground/15 grid place-items-center font-serif-display text-lg text-foreground/55 shrink-0">
+            {r.name.charAt(0)}
+          </span>
+        ) : (
+          <img
+            src={r.avatar}
+            alt={r.name}
+            className="w-14 h-14 rounded-full object-cover border border-foreground/15 shrink-0"
+            loading="lazy"
+            onError={() => setImgError(true)}
+          />
+        )}
+        <div className="min-w-0">
+          <div className="font-serif-display font-semibold text-lg leading-tight">
+            {r.name}
+          </div>
+          <div className="font-mono text-[11px] uppercase tracking-widest text-foreground/55 mt-1">
+            {r.role}
+          </div>
+        </div>
+      </div>
+
+      <blockquote className="font-serif-display text-xl md:text-2xl leading-snug text-foreground border-l-2 border-accent pl-4 flex-1">
+        «{r.quote}»
+      </blockquote>
+    </figure>
+  );
+};
+
 const Consultations = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">

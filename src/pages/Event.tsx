@@ -4,7 +4,7 @@ import { Footer } from "@/components/sections/Footer";
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import { nbsp } from "@/lib/nbsp";
 import expertAvatar from "@/assets/expert-vasily.jpg";
-import heroPhoto from "@/assets/vasya-brunch.jpg.asset.json";
+import eventHeroPhoto from "@/assets/event-hero-rebuilt.jpg.asset.json";
 
 const pageNav: HeaderNavLink[] = [
   { href: "#about", label: "О встрече", id: "about" },
@@ -104,15 +104,19 @@ const Event = () => {
           style={{ background: "var(--grad-chalk)" }}
         />
         <div className="container-px max-w-7xl mx-auto relative">
-          {/* Mobile / Tablet: photo with pills on top and subtitle at bottom */}
+          {/* Mobile / Tablet: rebuilt photo block */}
           <div className="lg:hidden">
-            <div className="relative w-full aspect-[4/5] max-h-[62svh] overflow-hidden border border-foreground/15 hard-shadow bg-card animate-fade-up">
-              <img
-                src={heroPhoto.url}
-                alt="Василий Мещеряков на бизнес-завтраке"
-                className="absolute inset-0 w-full h-full object-cover"
-                loading="eager"
-              />
+            <figure className="relative w-full aspect-[4/5] max-h-[62svh] overflow-hidden border border-foreground/15 hard-shadow bg-card animate-fade-up">
+              <picture className="absolute inset-0 block">
+                <img
+                  src={eventHeroPhoto.url}
+                  alt="Василий Мещеряков за завтраком"
+                  className="h-full w-full object-cover"
+                  width="1440"
+                  height="2560"
+                  loading="eager"
+                />
+              </picture>
               {/* Pills over photo */}
               <div className="absolute top-3 left-3 right-3 flex flex-wrap gap-2">
                 <span className="badge-tag inline-flex items-center text-xs">
@@ -128,7 +132,7 @@ const Event = () => {
                 Бизнес-завтрак<br />
                 с&nbsp;Василием Мещеряковым
               </p>
-            </div>
+            </figure>
 
             <h1
               className="mt-6 font-serif-display font-semibold leading-[1.02] tracking-tight text-[clamp(1.6rem,5.6vw,2.6rem)] animate-fade-up"
@@ -186,24 +190,28 @@ const Event = () => {
             </div>
 
             <div className="col-span-5 animate-fade-up" style={{ animationDelay: "0.15s" }}>
-              <div className="relative">
+              <figure className="relative">
                 <div
                   className="absolute -inset-4 border border-foreground/15 pointer-events-none"
                   aria-hidden
                 />
                 <div className="absolute -top-4 -left-4 w-16 h-16 bg-accent/15 pointer-events-none" aria-hidden />
                 <div className="relative overflow-hidden border border-foreground/15 hard-shadow aspect-[4/5] bg-card">
-                  <img
-                    src={heroPhoto.url}
-                    alt="Василий Мещеряков на бизнес-завтраке"
-                    className="w-full h-full object-cover"
-                    loading="eager"
-                  />
+                  <picture className="block h-full w-full">
+                    <img
+                      src={eventHeroPhoto.url}
+                      alt="Василий Мещеряков за завтраком"
+                      className="h-full w-full object-cover"
+                      width="1440"
+                      height="2560"
+                      loading="eager"
+                    />
+                  </picture>
                 </div>
                 <div className="absolute -bottom-4 -right-4 bg-foreground text-background px-4 py-2 font-mono text-[10px] uppercase tracking-widest hard-shadow">
                   River Loft · Москва
                 </div>
-              </div>
+              </figure>
             </div>
           </div>
         </div>

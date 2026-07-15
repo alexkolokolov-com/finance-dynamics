@@ -4,6 +4,7 @@ import { Footer } from "@/components/sections/Footer";
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import { nbsp } from "@/lib/nbsp";
 import expertAvatar from "@/assets/expert-vasily.jpg";
+import heroPhoto from "@/assets/vasya-brunch.jpg.asset.json";
 
 const pageNav: HeaderNavLink[] = [
   { href: "#about", label: "О встрече", id: "about" },

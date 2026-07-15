@@ -197,44 +197,72 @@ const Consultations = () => {
             </p>
           </div>
 
-          <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {calendar.map((c, i) => {
-              const price = Math.round((BASE_PRICE * (100 - c.discount)) / 100);
-              return (
-                <div
-                  key={c.month}
-                  className="relative bg-card border border-foreground/15 p-7 md:p-8 hard-shadow animate-fade-up flex flex-col"
-                  style={{ animationDelay: `${0.1 + i * 0.06}s` }}
-                >
-                  {c.discount > 0 && (
-                    <div className="absolute top-5 right-5 font-mono text-xs uppercase tracking-widest bg-accent text-accent-foreground px-2.5 py-1">
-                      −{c.discount}%
-                    </div>
-                  )}
-                  <div className="font-serif-display font-semibold leading-[1.05] tracking-tight text-3xl md:text-4xl mb-6">
-                    {c.month}
-                  </div>
-                  <div className="flex items-baseline gap-3 mb-2">
-                    <div className="font-serif-display font-semibold text-3xl md:text-4xl">
-                      {formatPrice(price)}
-                    </div>
-                    {c.discount > 0 && (
-                      <div className="font-body text-base text-foreground/50 line-through">
-                        {formatPrice(BASE_PRICE)}
-                      </div>
-                    )}
-                  </div>
-                  <div className="font-body text-sm text-foreground/70">
-                    {c.seats}{" "}
-                    {c.seats === 1
-                      ? "место"
-                      : c.seats >= 2 && c.seats <= 4
-                        ? "места"
-                        : "мест"}
-                  </div>
-                </div>
-              );
-            })}
+          <div className="mt-16 overflow-hidden border border-foreground/15 bg-card hard-shadow animate-fade-up">
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[28rem]">
+                <thead>
+                  <tr className="border-b border-foreground/15 bg-foreground/5">
+                    <th className="text-left font-mono text-xs uppercase tracking-widest text-accent px-6 py-4">
+                      Месяц
+                    </th>
+                    <th className="text-left font-mono text-xs uppercase tracking-widest text-accent px-6 py-4">
+                      Скидка
+                    </th>
+                    <th className="text-left font-mono text-xs uppercase tracking-widest text-accent px-6 py-4">
+                      Цена
+                    </th>
+                    <th className="text-left font-mono text-xs uppercase tracking-widest text-accent px-6 py-4">
+                      Мест
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {calendar.map((c, i) => {
+                    const price = Math.round((BASE_PRICE * (100 - c.discount)) / 100);
+                    return (
+                      <tr
+                        key={c.month}
+                        className="border-b border-foreground/10 last:border-b-0"
+                        style={{ animationDelay: `${0.1 + i * 0.06}s` }}
+                      >
+                        <td className="font-serif-display font-semibold text-xl md:text-2xl px-6 py-5">
+                          {c.month}
+                        </td>
+                        <td className="px-6 py-5">
+                          {c.discount > 0 ? (
+                            <span className="inline-block font-mono text-xs uppercase tracking-widest bg-accent text-accent-foreground px-2.5 py-1">
+                              −{c.discount}%
+                            </span>
+                          ) : (
+                            <span className="font-body text-foreground/60">—</span>
+                          )}
+                        </td>
+                        <td className="px-6 py-5">
+                          <div className="flex flex-wrap items-baseline gap-2 md:gap-3">
+                            <span className="font-serif-display font-semibold text-xl md:text-2xl">
+                              {formatPrice(price)}
+                            </span>
+                            {c.discount > 0 && (
+                              <span className="font-body text-sm text-foreground/50 line-through">
+                                {formatPrice(BASE_PRICE)}
+                              </span>
+                            )}
+                          </div>
+                        </td>
+                        <td className="font-body text-base text-foreground/80 px-6 py-5">
+                          {c.seats}{" "}
+                          {c.seats === 1
+                            ? "место"
+                            : c.seats >= 2 && c.seats <= 4
+                              ? "места"
+                              : "мест"}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
 
           <div

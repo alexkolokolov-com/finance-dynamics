@@ -145,11 +145,8 @@ const Event = () => {
           <div className="font-mono text-xs uppercase tracking-widest text-accent mb-6 animate-fade-up">
             О встрече
           </div>
-          <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl max-w-4xl animate-fade-up">
-            Живая встреча, а не лекция.
-          </h2>
 
-          <figure className="mt-12 bg-card border border-foreground/15 p-6 md:p-12 hard-shadow animate-fade-up">
+          <figure className="bg-card border border-foreground/15 p-6 md:p-12 hard-shadow animate-fade-up">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
               <div className="flex items-center gap-4 md:flex-col md:items-start md:col-span-3 md:text-left">
                 <img

@@ -154,7 +154,7 @@ const ReviewCard = ({ r, i }: { r: typeof galleryReviews[0]; i: number }) => {
         </div>
       </div>
 
-      <blockquote className="font-serif-display text-xl md:text-2xl leading-snug text-foreground border-l-2 border-accent pl-4 flex-1">
+      <blockquote className="font-serif-display text-lg md:text-2xl leading-snug text-foreground md:border-l-2 md:border-accent md:pl-4 flex-1">
         «{r.quote}»
       </blockquote>
     </figure>

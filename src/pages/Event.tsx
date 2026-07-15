@@ -97,26 +97,63 @@ const Event = () => {
       <SiteHeader pageNav={pageNav} />
 
       {/* Hero */}
-      <section className="relative pt-32 md:pt-40 pb-16 md:pb-24 overflow-hidden bg-grid">
+      <section className="relative pt-24 md:pt-28 lg:pt-40 pb-10 md:pb-16 lg:pb-24 overflow-hidden bg-grid">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{ background: "var(--grad-chalk)" }}
         />
         <div className="container-px max-w-7xl mx-auto relative">
-          <div className="flex flex-wrap items-center gap-3 mb-8 lg:hidden animate-fade-up">
-            <span className="badge-tag inline-flex items-center gap-2">
-              <Calendar size={14} className="text-accent" />
-              1&nbsp;августа, 10:00–13:00
-            </span>
-            <span className="badge-tag inline-flex items-center gap-2">
-              <MapPin size={14} className="text-accent" />
-              Москва, Новоданиловская наб.&nbsp;4
-            </span>
+          {/* Mobile / Tablet: photo with pills on top and subtitle at bottom */}
+          <div className="lg:hidden">
+            <div className="relative w-full aspect-[4/5] max-h-[62svh] overflow-hidden border border-foreground/15 hard-shadow bg-card animate-fade-up">
+              <img
+                src={heroPhoto.url}
+                alt="Василий Мещеряков на бизнес-завтраке"
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="eager"
+              />
+              {/* Pills over photo */}
+              <div className="absolute top-3 left-3 right-3 flex flex-wrap gap-2">
+                <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-background/85 backdrop-blur-sm border border-foreground/15 font-mono text-[10px] uppercase tracking-widest text-foreground">
+                  <Calendar size={12} className="text-accent" />
+                  1&nbsp;августа, 10:00–13:00
+                </span>
+                <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-background/85 backdrop-blur-sm border border-foreground/15 font-mono text-[10px] uppercase tracking-widest text-foreground">
+                  <MapPin size={12} className="text-accent" />
+                  Москва, Новоданиловская наб.&nbsp;4
+                </span>
+              </div>
+              {/* Bottom gradient + subtitle */}
+              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-background via-background/70 to-transparent pointer-events-none" />
+              <p className="absolute bottom-4 left-4 right-4 font-serif-display text-xl sm:text-2xl leading-tight text-foreground">
+                Бизнес-завтрак<br />
+                с&nbsp;Василием<br />
+                Мещеряковым
+              </p>
+            </div>
+
+            <h1
+              className="mt-6 font-serif-display font-semibold leading-[1.02] tracking-tight text-[clamp(1.6rem,5.6vw,2.6rem)] animate-fade-up"
+              style={{ animationDelay: "0.1s" }}
+            >
+              {nbsp("Как принимать финансовые решения в эпоху постоянной неопределенности")}
+            </h1>
+
+            <div className="mt-5 animate-fade-up" style={{ animationDelay: "0.2s" }}>
+              <a
+                href="#register"
+                className="inline-flex items-center justify-center gap-3 px-7 py-3.5 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
+              >
+                Зарегистрироваться
+                <span className="text-base">→</span>
+              </a>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-            <div className="lg:col-span-7 order-2 lg:order-1">
-              <div className="hidden lg:flex flex-wrap items-center gap-3 animate-fade-up">
+          {/* Desktop */}
+          <div className="hidden lg:grid grid-cols-12 gap-14 items-center">
+            <div className="col-span-7">
+              <div className="flex flex-wrap items-center gap-3 animate-fade-up">
                 <span className="badge-tag inline-flex items-center gap-2">
                   <Calendar size={14} className="text-accent" />
                   1&nbsp;августа, 10:00–13:00
@@ -152,16 +189,13 @@ const Event = () => {
               </div>
             </div>
 
-            <div
-              className="lg:col-span-5 order-1 lg:order-2 animate-fade-up"
-              style={{ animationDelay: "0.15s" }}
-            >
+            <div className="col-span-5 animate-fade-up" style={{ animationDelay: "0.15s" }}>
               <div className="relative">
                 <div
-                  className="absolute -inset-3 md:-inset-4 border border-foreground/15 pointer-events-none"
+                  className="absolute -inset-4 border border-foreground/15 pointer-events-none"
                   aria-hidden
                 />
-                <div className="absolute -top-3 -left-3 md:-top-4 md:-left-4 w-16 h-16 bg-accent/15 pointer-events-none" aria-hidden />
+                <div className="absolute -top-4 -left-4 w-16 h-16 bg-accent/15 pointer-events-none" aria-hidden />
                 <div className="relative overflow-hidden border border-foreground/15 hard-shadow aspect-[4/5] bg-card">
                   <img
                     src={heroPhoto.url}
@@ -170,7 +204,7 @@ const Event = () => {
                     loading="eager"
                   />
                 </div>
-                <div className="absolute -bottom-3 -right-3 md:-bottom-4 md:-right-4 hidden md:block bg-foreground text-background px-4 py-2 font-mono text-[10px] uppercase tracking-widest hard-shadow">
+                <div className="absolute -bottom-4 -right-4 bg-foreground text-background px-4 py-2 font-mono text-[10px] uppercase tracking-widest hard-shadow">
                   River Loft · Москва
                 </div>
               </div>
@@ -178,6 +212,7 @@ const Event = () => {
           </div>
         </div>
       </section>
+
 
       {/* About / Quote */}
       <section id="about" className="relative py-24 md:py-32 scroll-mt-20">

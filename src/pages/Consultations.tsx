@@ -102,13 +102,15 @@ const Consultations = () => {
           <h1 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-[clamp(2.5rem,8vw,6rem)] animate-fade-up">
             Персональные <span className="italic font-normal">консультации</span>.
           </h1>
-          <div className="mt-8 flex flex-col md:flex-row md:items-end md:justify-between gap-8 animate-fade-up" style={{ animationDelay: "0.1s" }}>
-            <p
-              className="font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-2xl"
-            >
-              Разбираем ваши финансы, строим модель капитала и держим траекторию.
-            </p>
-            <BookButton className="shrink-0 w-full md:w-auto" style={{ animationDelay: "0.2s" }} />
+          <p
+            className="mt-8 font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-2xl animate-fade-up"
+            style={{ animationDelay: "0.1s" }}
+          >
+            Разбираем ваши финансы, строим модель капитала и держим траекторию.
+          </p>
+
+          <div className="mt-10 animate-fade-up" style={{ animationDelay: "0.2s" }}>
+            <BookButton />
           </div>
         </div>
       </section>
@@ -190,9 +192,12 @@ const Consultations = () => {
             <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl max-w-4xl">
               Скидка до&nbsp;70% при&nbsp;бронировании заранее.
             </h2>
-            <p className="mt-8 font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-3xl">
-              Забронируйте консультацию сейчас по&nbsp;выгодной цене и&nbsp;воспользуйтесь ей к&nbsp;концу года — когда будете планировать стратегию на&nbsp;следующий.
-            </p>
+            <div className="mt-8 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+              <p className="font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-3xl">
+                Забронируйте консультацию сейчас по&nbsp;выгодной цене и&nbsp;воспользуйтесь ей к&nbsp;концу года — когда будете планировать стратегию на&nbsp;следующий.
+              </p>
+              <BookButton className="shrink-0 w-full md:w-auto" />
+            </div>
           </div>
 
           <div className="mt-16 overflow-hidden border border-foreground/15 bg-card hard-shadow animate-fade-up">
@@ -264,12 +269,9 @@ const Consultations = () => {
           </div>
 
           <div
-            className="mt-16 flex flex-col md:flex-row md:items-center md:justify-between gap-8 p-8 md:p-10 border border-foreground/15 bg-card hard-shadow animate-fade-up"
+            className="mt-16 flex justify-center p-8 md:p-10 border border-foreground/15 bg-card hard-shadow animate-fade-up"
           >
-            <p className="font-serif-display text-xl md:text-2xl leading-snug text-foreground/85 max-w-xl">
-              Выбирайте месяц с&nbsp;выгодной ценой — я&nbsp;лично провожу каждую встречу.
-            </p>
-            <BookButton className="shrink-0 w-full md:w-auto" />
+            <BookButton className="w-full md:w-auto" />
           </div>
         </div>
       </section>

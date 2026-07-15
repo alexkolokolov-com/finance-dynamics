@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
+import { TrafficRegisterDialog } from "@/components/traffic/TrafficRegisterDialog";
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import { nbsp } from "@/lib/nbsp";
 import expertAvatar from "@/assets/expert-vasily.jpg";

@@ -182,6 +182,65 @@ const Consultations = () => {
         </div>
       </section>
 
+      {/* Логика цены */}
+      <section className="relative py-24 md:py-32 overflow-hidden">
+        <div className="container-px max-w-7xl mx-auto">
+          <div className="font-mono text-xs uppercase tracking-widest text-accent mb-6 animate-fade-up">
+            Логика цены
+          </div>
+          <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl animate-fade-up max-w-4xl">
+            Почему чем дальше — тем дешевле.
+          </h2>
+
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            <div
+              className="bg-card border border-foreground/15 p-7 md:p-8 hard-shadow animate-fade-up flex flex-col h-full"
+              style={{ animationDelay: "0.1s" }}
+            >
+              <div className="font-mono text-xs uppercase tracking-widest text-accent mb-5">
+                01 · Авиабилеты
+              </div>
+              <h3 className="font-serif-display font-semibold leading-[1.05] tracking-tight text-2xl md:text-3xl mb-4">
+                Планируешь заранее — платишь меньше.
+              </h3>
+              <p className="font-body text-base text-foreground/75 leading-relaxed">
+                Если вы покупаете билет заранее, он стоит дешевле. Здесь тот&nbsp;же принцип: чем раньше вы смотрите вперёд, тем меньше платите.
+              </p>
+            </div>
+
+            <div
+              className="bg-card border border-foreground/15 p-7 md:p-8 hard-shadow animate-fade-up flex flex-col h-full"
+              style={{ animationDelay: "0.18s" }}
+            >
+              <div className="font-mono text-xs uppercase tracking-widest text-accent mb-5">
+                02 · Длинный горизонт
+              </div>
+              <h3 className="font-serif-display font-semibold leading-[1.05] tracking-tight text-2xl md:text-3xl mb-4">
+                Чем дальше смотришь — тем больше денег.
+              </h3>
+              <p className="font-body text-base text-foreground/75 leading-relaxed">
+                Система, которую я внедряю, работает на длинной дистанции. Это верно и&nbsp;для расходов, и&nbsp;для доходов, и&nbsp;для инвестиций: чем длиннее горизонт планирования, тем лучше результат.
+              </p>
+            </div>
+
+            <div
+              className="bg-card border border-foreground/15 p-7 md:p-8 hard-shadow animate-fade-up flex flex-col h-full"
+              style={{ animationDelay: "0.26s" }}
+            >
+              <div className="font-mono text-xs uppercase tracking-widest text-accent mb-5">
+                03 · Конец года
+              </div>
+              <h3 className="font-serif-display font-semibold leading-[1.05] tracking-tight text-2xl md:text-3xl mb-4">
+                Он всё равно наступит.
+              </h3>
+              <p className="font-body text-base text-foreground/75 leading-relaxed">
+                Через полгода вы всё равно будете подводить итоги и планировать следующий финансовый год. Вы можете этого не&nbsp;хотеть, но это случится. Кто задумается об&nbsp;этом сейчас — купит консультацию дешевле, со&nbsp;скидкой 60%.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Календарь и бронирование */}
       <section className="relative py-24 md:py-32 overflow-hidden">
         <div className="container-px max-w-7xl mx-auto">

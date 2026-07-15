@@ -451,35 +451,7 @@ const Consultations = () => {
 
           <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
             {galleryReviews.map((r, i) => (
-              <figure
-                key={r.name}
-                className="bg-card border border-foreground/15 p-7 md:p-8 hard-shadow animate-fade-up flex flex-col h-full"
-                style={{ animationDelay: `${0.1 + i * 0.08}s` }}
-              >
-                <div className="flex items-center gap-4 mb-6">
-                  <img
-                    src={r.avatar}
-                    alt={r.name}
-                    className="w-14 h-14 rounded-full object-cover border border-foreground/15 shrink-0"
-                    loading="lazy"
-                    onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).style.display = "none";
-                    }}
-                  />
-                  <div className="min-w-0">
-                    <div className="font-serif-display font-semibold text-lg leading-tight">
-                      {r.name}
-                    </div>
-                    <div className="font-mono text-[11px] uppercase tracking-widest text-foreground/55 mt-1">
-                      {r.role}
-                    </div>
-                  </div>
-                </div>
-
-                <blockquote className="font-serif-display text-xl md:text-2xl leading-snug text-foreground border-l-2 border-accent pl-4 flex-1">
-                  «{r.quote}»
-                </blockquote>
-              </figure>
+              <ReviewCard key={r.name} r={r} i={i} />
             ))}
           </div>
 

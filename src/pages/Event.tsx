@@ -103,39 +103,67 @@ const Event = () => {
           style={{ background: "var(--grad-chalk)" }}
         />
         <div className="container-px max-w-7xl mx-auto relative">
-          <div className="flex flex-wrap items-center gap-3 animate-fade-up">
-            <span className="badge-tag inline-flex items-center gap-2">
-              <Calendar size={14} className="text-accent" />
-              1 августа, 10:00–13:00
-            </span>
-            <span className="badge-tag inline-flex items-center gap-2">
-              <MapPin size={14} className="text-accent" />
-              Москва, Новоданиловская наб. 4
-            </span>
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            <div className="lg:col-span-7 order-2 lg:order-1">
+              <div className="flex flex-wrap items-center gap-3 animate-fade-up">
+                <span className="badge-tag inline-flex items-center gap-2">
+                  <Calendar size={14} className="text-accent" />
+                  1&nbsp;августа, 10:00–13:00
+                </span>
+                <span className="badge-tag inline-flex items-center gap-2">
+                  <MapPin size={14} className="text-accent" />
+                  Москва, Новоданиловская наб.&nbsp;4
+                </span>
+              </div>
 
-          <h1
-            className="mt-8 font-serif-display font-semibold leading-[0.95] tracking-tight text-[clamp(2.5rem,8vw,6rem)] max-w-4xl animate-fade-up"
-            style={{ animationDelay: "0.1s" }}
-          >
-            Как принимать финансовые решения в эпоху постоянной неопределенности
-          </h1>
+              <h1
+                className="mt-8 font-serif-display font-semibold leading-[0.95] tracking-tight text-[clamp(2.25rem,5.5vw,4.5rem)] animate-fade-up"
+                style={{ animationDelay: "0.1s" }}
+              >
+                {nbsp("Как принимать финансовые решения в эпоху постоянной неопределенности")}
+              </h1>
 
-          <p
-            className="mt-6 font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-3xl animate-fade-up"
-            style={{ animationDelay: "0.2s" }}
-          >
-            Бизнес-завтрак с Василием Мещеряковым
-          </p>
+              <p
+                className="mt-6 font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 animate-fade-up"
+                style={{ animationDelay: "0.2s" }}
+              >
+                {nbsp("Бизнес-завтрак с Василием Мещеряковым")}
+              </p>
 
-          <div className="mt-10 animate-fade-up" style={{ animationDelay: "0.3s" }}>
-            <a
-              href="#register"
-              className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
+              <div className="mt-10 animate-fade-up" style={{ animationDelay: "0.3s" }}>
+                <a
+                  href="#register"
+                  className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
+                >
+                  Зарегистрироваться
+                  <span className="text-base">→</span>
+                </a>
+              </div>
+            </div>
+
+            <div
+              className="lg:col-span-5 order-1 lg:order-2 animate-fade-up"
+              style={{ animationDelay: "0.15s" }}
             >
-              Зарегистрироваться
-              <span className="text-base">→</span>
-            </a>
+              <div className="relative">
+                <div
+                  className="absolute -inset-3 md:-inset-4 border border-foreground/15 pointer-events-none"
+                  aria-hidden
+                />
+                <div className="absolute -top-3 -left-3 md:-top-4 md:-left-4 w-16 h-16 bg-accent/15 pointer-events-none" aria-hidden />
+                <div className="relative overflow-hidden border border-foreground/15 hard-shadow aspect-[4/5] bg-card">
+                  <img
+                    src={heroPhoto.url}
+                    alt="Василий Мещеряков на бизнес-завтраке"
+                    className="w-full h-full object-cover"
+                    loading="eager"
+                  />
+                </div>
+                <div className="absolute -bottom-3 -right-3 md:-bottom-4 md:-right-4 hidden md:block bg-foreground text-background px-4 py-2 font-mono text-[10px] uppercase tracking-widest hard-shadow">
+                  River Loft · Москва
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

@@ -65,8 +65,11 @@ jobs:
           }
           NODE
 
-      - name: Add SPA fallback for deep links
-        run: cp dist/index.html dist/404.html
+      - name: Add SPA entry points for deep links
+        run: |
+          cp dist/index.html dist/404.html
+          mkdir -p dist/event
+          cp dist/index.html dist/event/index.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

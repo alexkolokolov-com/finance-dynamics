@@ -114,21 +114,20 @@ const Event = () => {
               />
               {/* Pills over photo */}
               <div className="absolute top-3 left-3 right-3 flex flex-wrap gap-2">
-                <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-background/85 backdrop-blur-sm border border-foreground/15 font-mono text-[10px] uppercase tracking-widest text-foreground">
-                  <Calendar size={12} className="text-accent" />
-                  1&nbsp;августа, 10:00–13:00
-                </span>
-                <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-background/85 backdrop-blur-sm border border-foreground/15 font-mono text-[10px] uppercase tracking-widest text-foreground">
-                  <MapPin size={12} className="text-accent" />
+                <span className="badge-tag inline-flex items-center gap-2">
+                  <MapPin size={14} className="text-accent" />
                   Москва, Новоданиловская наб.&nbsp;4
+                </span>
+                <span className="badge-tag inline-flex items-center gap-2">
+                  <Calendar size={14} className="text-accent" />
+                  1&nbsp;августа, 10:00–13:00
                 </span>
               </div>
               {/* Bottom gradient + subtitle */}
               <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-background via-background/70 to-transparent pointer-events-none" />
-              <p className="absolute bottom-4 left-4 right-4 font-serif-display text-xl sm:text-2xl leading-tight text-foreground">
+              <p className="absolute bottom-4 left-4 right-4 font-serif-display text-xl md:text-2xl leading-snug text-foreground/80">
                 Бизнес-завтрак<br />
-                с&nbsp;Василием<br />
-                Мещеряковым
+                с&nbsp;Василием Мещеряковым
               </p>
             </div>
 

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
-import { Calendar, MapPin, Clock, Users, ArrowRight, Quote } from "lucide-react";
+import { Calendar, MapPin, ArrowRight, Quote } from "lucide-react";
 import { nbsp } from "@/lib/nbsp";
 
 const pageNav: HeaderNavLink[] = [
@@ -65,7 +65,7 @@ const schedule = [
     note: "Можно разобрать несколько реальных финансовых ситуаций участников.",
   },
   {
-    time: "12:30–13:30",
+    time: "12:30–13:00",
     title: "Бранч + нетворкинг",
     note: "Вкусный бранч, живое общение и знакомства без формальных бейджей.",
   },
@@ -110,10 +110,14 @@ const Event = () => {
           style={{ background: "var(--grad-chalk)" }}
         />
         <div className="container-px max-w-7xl mx-auto relative">
-          <div className="animate-fade-up">
+          <div className="flex flex-wrap items-center gap-3 animate-fade-up">
             <span className="badge-tag inline-flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-              Бизнес-завтрак · офлайн
+              <Calendar size={14} className="text-accent" />
+              1 августа, 10:00–13:00
+            </span>
+            <span className="badge-tag inline-flex items-center gap-2">
+              <MapPin size={14} className="text-accent" />
+              Москва, Новоданиловская наб. 4
             </span>
           </div>
 
@@ -131,37 +135,7 @@ const Event = () => {
             Как принимать финансовые решения в эпоху постоянной неопределенности.
           </p>
 
-          <div
-            className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-fade-up"
-            style={{ animationDelay: "0.3s" }}
-          >
-            <div className="border border-foreground/15 bg-card p-4 hard-shadow">
-              <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/55 mb-2 flex items-center gap-2">
-                <Calendar size={14} className="text-accent" /> Когда
-              </div>
-              <div className="font-display text-lg font-semibold">Дата уточняется</div>
-            </div>
-            <div className="border border-foreground/15 bg-card p-4 hard-shadow">
-              <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/55 mb-2 flex items-center gap-2">
-                <Clock size={14} className="text-accent" /> Время
-              </div>
-              <div className="font-display text-lg font-semibold">10:00–13:30</div>
-            </div>
-            <div className="border border-foreground/15 bg-card p-4 hard-shadow">
-              <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/55 mb-2 flex items-center gap-2">
-                <MapPin size={14} className="text-accent" /> Где
-              </div>
-              <div className="font-display text-lg font-semibold">Москва, место уточняется</div>
-            </div>
-            <div className="border border-foreground/15 bg-card p-4 hard-shadow">
-              <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/55 mb-2 flex items-center gap-2">
-                <Users size={14} className="text-accent" /> Формат
-              </div>
-              <div className="font-display text-lg font-semibold">Офлайн</div>
-            </div>
-          </div>
-
-          <div className="mt-10 animate-fade-up" style={{ animationDelay: "0.4s" }}>
+          <div className="mt-10 animate-fade-up" style={{ animationDelay: "0.3s" }}>
             <a
               href="#register"
               className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
@@ -290,7 +264,7 @@ const Event = () => {
             Забронировать место.
           </h2>
           <p className="mt-5 text-foreground/70 max-w-xl mx-auto">
-            Количество мест ограничено. Дату и место сообщим после регистрации.
+            Количество мест ограничено. Подтвердим участие и пришлём все детали после регистрации.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
             <a

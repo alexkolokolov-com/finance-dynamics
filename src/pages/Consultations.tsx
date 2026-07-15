@@ -102,15 +102,13 @@ const Consultations = () => {
           <h1 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-[clamp(2.5rem,8vw,6rem)] animate-fade-up">
             Персональные <span className="italic font-normal">консультации</span>.
           </h1>
-          <p
-            className="mt-8 font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-2xl animate-fade-up"
-            style={{ animationDelay: "0.1s" }}
-          >
-            Разбираем ваши финансы, строим модель капитала и держим траекторию.
-          </p>
-
-          <div className="mt-10 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-            <BookButton />
+          <div className="mt-8 flex flex-col md:flex-row md:items-end md:justify-between gap-8 animate-fade-up" style={{ animationDelay: "0.1s" }}>
+            <p
+              className="font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-2xl"
+            >
+              Разбираем ваши финансы, строим модель капитала и держим траекторию.
+            </p>
+            <BookButton className="shrink-0 w-full md:w-auto" style={{ animationDelay: "0.2s" }} />
           </div>
         </div>
       </section>

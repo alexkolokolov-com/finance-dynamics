@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
-import { Calendar, MapPin, Clock, ArrowRight, Quote } from "lucide-react";
+import { Calendar, MapPin, Clock, Users, ArrowRight, Quote } from "lucide-react";
+import { nbsp } from "@/lib/nbsp";
 
 const pageNav: HeaderNavLink[] = [
   { href: "#about", label: "О встрече", id: "about" },
@@ -70,6 +71,19 @@ const schedule = [
   },
 ];
 
+const aboutParagraphs = [
+  "Это не формальная лекция и не продажа курса. Мы встречаемся в небольшой компании, чтобы поговорить о деньгах, инвестициях, карьере и планировании — без мистики и «волшебных таблеток».",
+  "Главная тема — как принимать финансовые решения в эпоху постоянной неопределенности. Я расскажу, как устроена моя система, что изменилось за последний год, какие инструменты использую и почему большинство планов ломается, когда будущее кажется непредсказуемым.",
+  "А потом у нас будет открытый разговор: вы можете задать вопросы или разобрать свою ситуацию. И, конечно, бранч с нетворкингом.",
+];
+
+const quoteParagraphs = [
+  "Можно годами читать друг друга в соцсетях, но один живой разговор за чашкой кофе иногда оказывается полезнее десятков переписок.",
+  "На встрече соберутся люди, которым действительно интересны личные финансы, инвестиции, развитие карьеры, бизнес и осознанное отношение к деньгам. Люди, которые не будут смотреть на вас странно, если вы начнете обсуждать финансовые цели, доходность или долгосрочные планы.",
+  "Никакого формального нетворкинга с бейджиками и натянутыми улыбками. Просто вкусный бранч, живое общение и возможность познакомиться с людьми, с которыми вы, возможно, еще не раз пересечетесь в будущем — как друзья, партнеры, клиенты или просто единомышленники.",
+  "По моему опыту, именно такие знакомства иногда оказываются самым ценным результатом подобных встреч.",
+];
+
 const Event = () => {
   useEffect(() => {
     document.title = "Бизнес-завтрак «Вася и финансы»";
@@ -103,15 +117,24 @@ const Event = () => {
             </span>
           </div>
 
-          <h1 className="mt-8 font-serif-display font-semibold leading-[0.95] tracking-tight text-[clamp(2.5rem,8vw,6rem)] max-w-4xl animate-fade-up" style={{ animationDelay: "0.1s" }}>
+          <h1
+            className="mt-8 font-serif-display font-semibold leading-[0.95] tracking-tight text-[clamp(2.5rem,8vw,6rem)] max-w-4xl animate-fade-up"
+            style={{ animationDelay: "0.1s" }}
+          >
             Бизнес-завтрак с Василием Мещеряковым.
           </h1>
 
-          <p className="mt-6 font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-3xl animate-fade-up" style={{ animationDelay: "0.2s" }}>
+          <p
+            className="mt-6 font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-3xl animate-fade-up"
+            style={{ animationDelay: "0.2s" }}
+          >
             Как принимать финансовые решения в эпоху постоянной неопределенности.
           </p>
 
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-fade-up" style={{ animationDelay: "0.3s" }}>
+          <div
+            className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-fade-up"
+            style={{ animationDelay: "0.3s" }}
+          >
             <div className="border border-foreground/15 bg-card p-4 hard-shadow">
               <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/55 mb-2 flex items-center gap-2">
                 <Calendar size={14} className="text-accent" /> Когда
@@ -132,7 +155,7 @@ const Event = () => {
             </div>
             <div className="border border-foreground/15 bg-card p-4 hard-shadow">
               <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/55 mb-2 flex items-center gap-2">
-                <span className="text-accent">●</span> Формат
+                <Users size={14} className="text-accent" /> Формат
               </div>
               <div className="font-display text-lg font-semibold">Офлайн</div>
             </div>
@@ -160,16 +183,13 @@ const Event = () => {
             Живая встреча, а не лекция.
           </h2>
 
-          <div className="mt-12 max-w-3xl space-y-5 text-lg text-foreground/80 leading-relaxed animate-fade-up" style={{ animationDelay: "0.1s" }}>
-            <p>
-              Это не формальная лекция и не продажа курса. Мы встречаемся в небольшой компании, чтобы поговорить о деньгах, инвестициях, карьере и планировании — без мистики и «волшебных таблеток».
-            </p>
-            <p>
-              Главная тема — как принимать финансовые решения в эпоху постоянной неопределенности. Я расскажу, как устроена моя система, что изменилось за последний год, какие инструменты использую и почему большинство планов ломается, когда будущее кажется непредсказуемым.
-            </p>
-            <p>
-              А потом у нас будет открытый разговор: вы можете задать вопросы или разобрать свою ситуацию. И, конечно, бранч с нетворкингом.
-            </p>
+          <div
+            className="mt-12 max-w-3xl space-y-5 text-lg text-foreground/80 leading-relaxed animate-fade-up"
+            style={{ animationDelay: "0.1s" }}
+          >
+            {aboutParagraphs.map((p) => (
+              <p key={p}>{nbsp(p)}</p>
+            ))}
           </div>
         </div>
       </section>
@@ -199,11 +219,11 @@ const Event = () => {
                   {item.time}
                 </div>
                 <h3 className="font-serif-display font-semibold leading-[1.05] tracking-tight text-2xl md:text-3xl">
-                  {item.title}
+                  {nbsp(item.title)}
                 </h3>
                 {item.subtitle && (
                   <p className="mt-3 font-serif-display text-lg md:text-xl italic text-foreground/70">
-                    {item.subtitle}
+                    {nbsp(item.subtitle)}
                   </p>
                 )}
                 {item.parts && (
@@ -211,13 +231,13 @@ const Event = () => {
                     {item.parts.map((part) => (
                       <div key={part.title}>
                         <h4 className="font-serif-display font-semibold text-lg leading-snug">
-                          {part.title}
+                          {nbsp(part.title)}
                         </h4>
                         <ul className="mt-3 space-y-2">
                           {part.bullets.map((b) => (
                             <li key={b} className="flex gap-3 text-foreground/80">
                               <span className="text-accent">•</span>
-                              <span>{b}</span>
+                              <span>{nbsp(b)}</span>
                             </li>
                           ))}
                         </ul>
@@ -226,7 +246,7 @@ const Event = () => {
                   </div>
                 )}
                 {item.note && (
-                  <p className="mt-6 text-foreground/70">{item.note}</p>
+                  <p className="mt-6 text-foreground/70">{nbsp(item.note)}</p>
                 )}
               </article>
             ))}
@@ -244,21 +264,15 @@ const Event = () => {
             Самое ценное — живое общение.
           </h2>
 
-          <figure className="mt-12 bg-card border border-foreground/15 p-8 md:p-12 hard-shadow animate-fade-up" style={{ animationDelay: "0.1s" }}>
+          <figure
+            className="mt-12 bg-card border border-foreground/15 p-8 md:p-12 hard-shadow animate-fade-up"
+            style={{ animationDelay: "0.1s" }}
+          >
             <Quote size={28} className="text-accent mb-6" />
             <blockquote className="font-serif-display text-xl md:text-2xl leading-relaxed text-foreground/90 space-y-5">
-              <p>
-                Можно годами читать друг друга в соцсетях, но один живой разговор за чашкой кофе иногда оказывается полезнее десятков переписок.
-              </p>
-              <p>
-                На встрече соберутся люди, которым действительно интересны личные финансы, инвестиции, развитие карьеры, бизнес и осознанное отношение к деньгам. Люди, которые не будут смотреть на вас странно, если вы начнете обсуждать финансовые цели, доходность или долгосрочные планы.
-              </p>
-              <p>
-                Никакого формального нетворкинга с бейджиками и натянутыми улыбками. Просто вкусный бранч, живое общение и возможность познакомиться с людьми, с которыми вы, возможно, еще не раз пересечетесь в будущем — как друзья, партнеры, клиенты или просто единомышленники.
-              </p>
-              <p>
-                По моему опыту, именно такие знакомства иногда оказываются самым ценным результатом подобных встреч.
-              </p>
+              {quoteParagraphs.map((p) => (
+                <p key={p}>{nbsp(p)}</p>
+              ))}
             </blockquote>
           </figure>
         </div>

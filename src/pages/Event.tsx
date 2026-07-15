@@ -206,7 +206,7 @@ const Event = () => {
               </div>
 
               <div className="md:col-span-9">
-                <blockquote className="font-serif-display text-xl md:text-2xl leading-relaxed text-foreground/90 border-l-2 border-accent pl-4 md:border-l-0 md:pl-0">
+                <blockquote className="font-serif-display text-lg md:text-2xl leading-relaxed text-foreground/90 md:border-l-0 md:pl-0">
                   {quoteParagraphs.map((p) => (
                     <p key={p} className="mt-4 first:mt-0">
                       {nbsp(p)}

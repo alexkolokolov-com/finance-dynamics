@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
+import { TrafficRegisterDialog } from "@/components/traffic/TrafficRegisterDialog";
 import heroPhoto from "@/assets/hero-photo.png";
 import laptopPhoto from "@/assets/vasily-laptop.jpg";
 import { url as vladimirItAvatar } from "@/assets/reviews/vladimir-it.png.asset.json";
@@ -135,14 +136,21 @@ const BookButton = ({
   }
 
   return (
-    <button
-      type="button"
-      id="book-consultation"
-      data-book-consultation
-      className={baseClasses}
-    >
-      {content}
-    </button>
+    <TrafficRegisterDialog
+      widgetId={1631071}
+      scriptHash="24e4f8d1a6ed671824006ef96ad5a19bbec043c9"
+      title="Бронирование консультации"
+      trigger={
+        <button
+          type="button"
+          id="book-consultation"
+          data-book-consultation
+          className={baseClasses}
+        >
+          {content}
+        </button>
+      }
+    />
   );
 };
 

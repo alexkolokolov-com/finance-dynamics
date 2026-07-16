@@ -136,14 +136,21 @@ const BookButton = ({
   }
 
   return (
-    <button
-      type="button"
-      id="book-consultation"
-      data-book-consultation
-      className={baseClasses}
-    >
-      {content}
-    </button>
+    <TrafficRegisterDialog
+      widgetId={1631071}
+      scriptHash="24e4f8d1a6ed671824006ef96ad5a19bbec043c9"
+      title="Бронирование консультации"
+      trigger={
+        <button
+          type="button"
+          id="book-consultation"
+          data-book-consultation
+          className={baseClasses}
+        >
+          {content}
+        </button>
+      }
+    />
   );
 };
 

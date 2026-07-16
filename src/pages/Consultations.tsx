@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
+import { TrafficRegisterDialog } from "@/components/traffic/TrafficRegisterDialog";
 import heroPhoto from "@/assets/hero-photo.png";
 import laptopPhoto from "@/assets/vasily-laptop.jpg";
 import { url as vladimirItAvatar } from "@/assets/reviews/vladimir-it.png.asset.json";

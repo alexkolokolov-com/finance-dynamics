@@ -210,7 +210,7 @@ const Consultations = () => {
               </p>
 
               <div className="mt-10" style={{ animationDelay: "0.2s" }}>
-                <BookButton />
+                <BookButton href="#early-booking" />
               </div>
             </div>
 
@@ -315,7 +315,7 @@ const Consultations = () => {
       </section>
 
       {/* Календарь и бронирование */}
-      <section className="relative py-24 md:py-32 overflow-hidden">
+      <section id="early-booking" className="relative py-24 md:py-32 overflow-hidden scroll-mt-20">
         <div className="container-px max-w-7xl mx-auto">
           <div className="animate-fade-up">
             <div className="font-mono text-xs uppercase tracking-widest text-accent mb-6">

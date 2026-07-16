@@ -109,18 +109,42 @@ const galleryReviews = [
 const formatPrice = (n: number) =>
   new Intl.NumberFormat("ru-RU").format(n) + " ₽";
 
-const BookButton = ({ className = "" }: { className?: string }) => (
-  <button
-    type="button"
-    id="book-consultation"
-    data-book-consultation
-    className={`inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors ${className}`}
-  >
-    <span>Забронировать</span>
-    <span className="font-body italic normal-case text-sm opacity-90">: заранее</span>
-    <span className="text-base">→</span>
-  </button>
-);
+const BookButton = ({
+  className = "",
+  href,
+}: {
+  className?: string;
+  href?: string;
+}) => {
+  const content = (
+    <>
+      <span>Забронировать</span>
+      <span className="font-body italic normal-case text-sm opacity-90">: заранее</span>
+      <span className="text-base">→</span>
+    </>
+  );
+
+  const baseClasses = `inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors ${className}`;
+
+  if (href) {
+    return (
+      <a href={href} className={baseClasses}>
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      id="book-consultation"
+      data-book-consultation
+      className={baseClasses}
+    >
+      {content}
+    </button>
+  );
+};
 
 const ReviewCard = ({ r, i }: { r: typeof galleryReviews[0]; i: number }) => {
   const [imgError, setImgError] = useState(false);
@@ -186,7 +210,7 @@ const Consultations = () => {
               </p>
 
               <div className="mt-10" style={{ animationDelay: "0.2s" }}>
-                <BookButton />
+                <BookButton href="#early-booking" />
               </div>
             </div>
 
@@ -291,7 +315,7 @@ const Consultations = () => {
       </section>
 
       {/* Календарь и бронирование */}
-      <section className="relative py-24 md:py-32 overflow-hidden">
+      <section id="early-booking" className="relative py-24 md:py-32 overflow-hidden scroll-mt-20">
         <div className="container-px max-w-7xl mx-auto">
           <div className="animate-fade-up">
             <div className="font-mono text-xs uppercase tracking-widest text-accent mb-6">

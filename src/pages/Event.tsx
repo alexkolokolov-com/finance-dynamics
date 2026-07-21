@@ -378,22 +378,25 @@ const Event = () => {
                   </div>
                 </div>
 
-                <div>
-                  <div className="font-serif-display font-semibold text-5xl md:text-6xl leading-none text-accent">
+                <div className="opacity-50">
+                  <div className="font-serif-display font-semibold text-3xl md:text-4xl leading-none text-foreground/70 line-through decoration-2">
                     4 500 ₽
                   </div>
-                  <div className="mt-2 inline-flex items-center gap-2 bg-accent text-accent-foreground px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest hard-shadow">
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent-foreground animate-pulse" />
-                    {nbsp("Вторые 10 мест")}
+                  <div className="mt-2 inline-flex items-center gap-2 bg-foreground/10 text-foreground/50 px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest hard-shadow">
+                    {nbsp("Вторые 10 мест")} · SOLD OUT
                   </div>
                 </div>
 
                 <div>
-                  <div className="font-serif-display font-semibold text-3xl md:text-4xl leading-none text-foreground/70">
+                  <div className="font-serif-display font-semibold text-5xl md:text-6xl leading-none text-accent">
                     6 000 ₽
                   </div>
-                  <div className="mt-2 font-mono text-[11px] uppercase tracking-widest text-foreground/50">
+                  <div className="mt-2 inline-flex items-center gap-2 bg-accent text-accent-foreground px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest hard-shadow">
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent-foreground animate-pulse" />
                     {nbsp("Стандартная цена")}
+                  </div>
+                  <div className="mt-2 font-mono text-[11px] uppercase tracking-widest text-foreground/50">
+                    {nbsp("Действует, пока есть места")}
                   </div>
                 </div>
               </div>

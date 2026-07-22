@@ -309,7 +309,7 @@ const Negotiations = () => {
                 onClick={scrollToRegister}
                 className="inline-flex items-center justify-center gap-3 px-7 py-3.5 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
               >
-                Успеть соУспеть со&nbsp;скидкой 50%nbsp;скидкой
+                Успеть со&nbsp;скидкой
                 <ArrowRight size={16} />
               </button>
             </div>
@@ -362,7 +362,7 @@ const Negotiations = () => {
                   onClick={scrollToRegister}
                   className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
                 >
-                  Успеть соУспеть со&nbsp;скидкой 50%nbsp;скидкой
+                  Успеть со&nbsp;скидкой
                   <ArrowRight size={16} />
                 </button>
               </div>

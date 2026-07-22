@@ -19,6 +19,7 @@ import Cashback from "./pages/Cashback.tsx";
 import Conference from "./pages/Conference.tsx";
 import Consultations from "./pages/Consultations.tsx";
 import Lectures from "./pages/Lectures.tsx";
+import Decisions from "./pages/Decisions.tsx";
 import Event from "./pages/Event.tsx";
 import Oferta from "./pages/Oferta.tsx";
 import Reviews from "./pages/Reviews.tsx";
@@ -48,6 +49,7 @@ const App = () => (
           <Route path="/conference" element={<Conference />} />
           <Route path="/consultations" element={<Consultations />} />
           <Route path="/lectures" element={<Lectures />} />
+          <Route path="/decisions" element={<Decisions />} />
           <Route path="/event" element={<Event />} />
           <Route path="/oferta" element={<Oferta />} />
           <Route path="/reviews" element={<Reviews />} />

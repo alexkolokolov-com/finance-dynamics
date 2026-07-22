@@ -638,19 +638,18 @@ const Negotiations = () => {
               {nbsp("После каждой игры")}
             </h3>
 
-            {/* Snake timeline: horizontal on md+, vertical on mobile */}
+            {/* Snake timeline: horizontal zigzag on md+, vertical on mobile */}
             <ol className="mt-8 flex flex-col md:flex-row md:flex-wrap md:items-stretch gap-y-4 md:gap-y-6">
               {afterGames.map((step, i) => {
                 const isLast = i === afterGames.length - 1;
+                const zig = i % 2 === 1 ? "md:translate-y-3" : "md:-translate-y-0";
                 return (
                   <li
                     key={step}
                     className="flex md:flex-1 md:min-w-[180px] items-stretch"
                   >
                     <div
-                      className={`flex-1 flex flex-col gap-3 bg-background border border-foreground/15 p-4 md:p-5 hard-shadow md:${
-                        i % 2 === 0 ? "translate-y-0" : "translate-y-3"
-                      }`}
+                      className={`flex-1 flex flex-col gap-3 bg-background border border-foreground/15 p-4 md:p-5 hard-shadow ${zig}`}
                     >
                       <span className="badge-tag text-[10px] w-fit">{`0${i + 1}`}</span>
                       <span className="text-sm md:text-[15px] leading-snug text-foreground/85">
@@ -658,17 +657,8 @@ const Negotiations = () => {
                       </span>
                     </div>
                     {!isLast && (
-                      <div className="flex items-center justify-center text-accent shrink-0 px-2 md:px-3">
-                        <ArrowRight
-                          size={20}
-                          className="hidden md:block"
-                          strokeWidth={2.5}
-                        />
-                        <ArrowRight
-                          size={20}
-                          className="md:hidden rotate-90"
-                          strokeWidth={2.5}
-                        />
+                      <div className="hidden md:flex items-center justify-center text-accent shrink-0 px-2 md:px-3">
+                        <ArrowRight size={20} strokeWidth={2.5} />
                       </div>
                     )}
                   </li>

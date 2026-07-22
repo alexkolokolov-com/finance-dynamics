@@ -1,9 +1,30 @@
 import { useEffect, useRef, useState } from "react";
+import {
+  Flame,
+  HandCoins,
+  EyeOff,
+  Briefcase,
+  Award,
+  TrendingUp,
+  Star,
+  ChevronDown,
+  BookOpen,
+  Rocket,
+  Wallet,
+  Smile,
+  Quote,
+  ChevronLeft,
+  ChevronRight,
+  Heart,
+  ArrowRight,
+} from "lucide-react";
 import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { TrafficRegisterDialog } from "@/components/traffic/TrafficRegisterDialog";
 import { nbsp } from "@/lib/nbsp";
-import expertPhoto from "@/assets/expert-vasily.jpg";
+import heroPhoto from "@/assets/neg-hero-photo.png";
+import expertDesktop from "@/assets/neg-expert-desktop.png";
+import expertChair from "@/assets/neg-expert-chair.png";
 import clockImage from "@/assets/clock-method-new.png";
 import testimonialYulia from "@/assets/testimonial-yulia.png";
 import testimonialTatyana from "@/assets/testimonial-tatyana.png";
@@ -21,6 +42,8 @@ const pains = [
   "Не учитываем истинных интересов и мотивацию другой стороны",
 ];
 
+const painIcons = [Flame, HandCoins, EyeOff];
+
 const credentials = [
   "14 лет в Procter&Gamble",
   "Вырос до директора по продажам",
@@ -28,14 +51,28 @@ const credentials = [
   "Провёл 20+ тренингов с оценкой 4.92",
 ];
 
-const trainerStory = [
-  "У нас в Procter&Gamble была одна особенность: все тренинги вели сами сотрудники. Принцип — обучать тому, что сам проверил на практике.",
-  "Когда я стал руководителем, то начал вести внутренние тренинги по коммерческим переговорам. Коллеги хвалили и ставили мне высокие оценки: средний балл 4,8 и даже 4,9!",
-  "И вот я поставил себе цель — в следующем году получить 100% пятёрок. Это удавалось лишь нескольким людям в компании.",
-  "На это ушло 5 лет.",
-  "На тренинги приходили не только новички, но и опытные сотрудники, которых сложно удивить. Нужно не только интересно рассказать — нужно провести практику так, чтобы даже бывалый переговорщик вынес что-то полезное.",
-  "И вот спустя 5 лет в группе из 40 человек все поставили оценки 5!!!",
-  "Вот почему я так уверенно заявляю, что вы получите знания о переговорах, с которыми увеличите свои доходы на 20%.",
+const credentialIcons = [Briefcase, Award, TrendingUp, Star];
+
+const trainerStory: Array<{ text: string; emphasis?: boolean; highlight?: string }> = [
+  {
+    text: "У нас в Procter&Gamble была одна особенность: все тренинги вели сами сотрудники. Принцип — обучать тому, что сам проверил на практике.",
+  },
+  {
+    text: "Когда я стал руководителем, то начал вести внутренние тренинги по коммерческим переговорам. Коллеги хвалили и ставили мне высокие оценки: средний балл 4,8 и даже 4,9!",
+  },
+  {
+    text: "И вот я поставил себе цель — в следующем году получить 100% пятёрок. Это удавалось лишь нескольким людям в компании.",
+    highlight: "в следующем году получить 100% пятёрок",
+  },
+  { text: "На это ушло 5 лет", emphasis: true },
+  {
+    text: "На тренинги приходили не только новички, но и опытные сотрудники, которых сложно удивить. Нужно не только интересно рассказать — нужно провести практику так, чтобы даже бывалый переговорщик вынес что-то полезное.",
+  },
+  { text: "И вот спустя 5 лет в группе из 40 человек все поставили оценки 5!!!" },
+  {
+    text: "Вот почему я так уверенно заявляю, что вы получите знания о переговорах, с которыми увеличите свои доходы на 20%.",
+    highlight: "вы получите знания о переговорах, с которыми увеличите свои доходы на 20%",
+  },
 ];
 
 const steps = [
@@ -61,39 +98,41 @@ const steps = [
   },
 ];
 
+const stepIcons = [BookOpen, Rocket];
+
 const program = [
   {
     number: "Блок 1",
     title: "Техника «За 10 минут понимаем, КАК именно нужно вести конкретные переговоры»",
     text: "Большинство людей используют один и тот же стиль в любых ситуациях. Я покажу модель, после которой становится понятно:",
     bullets: [
-      "когда нужно жестко торговаться",
-      "когда вообще нельзя торговаться",
-      "когда нужно искать компромисс",
-      "когда создавать новую выгоду вместо борьбы за существующую",
-      "и стоит ли в принципе заходить в эти переговоры",
+      "Когда нужно жёстко торговаться",
+      "Когда вообще нельзя торговаться",
+      "Когда нужно искать компромисс",
+      "Когда создавать новую выгоду вместо борьбы за существующую",
+      "И стоит ли в принципе заходить в эти переговоры",
     ],
   },
   {
     number: "Блок 2",
     title: "«Переговорный чемоданчик» — набор техник и инструментов на любой случай",
-    text: null,
+    text: null as string | null,
     bullets: [
-      "если жесткие переговоры",
-      "если мало времени",
-      "если у вас мало опыта",
-      "если выгоды хочется, но переговариваться страшно",
+      "Если жёсткие переговоры",
+      "Если мало времени",
+      "Если у вас мало опыта",
+      "Если выгоды хочется, но переговариваться страшно",
     ],
   },
   {
     number: "Игра 1",
-    title: "Практическая игра №1 — Жесткие переговоры",
+    title: "Практическая игра №1 — Жёсткие переговоры",
     text: "Каждый получает свою роль, цели и скрытую информацию. После раунда разбираем:",
     bullets: [
-      "где вы сами отдали деньги",
-      "где могли получить больше",
-      "какие сигналы не заметили",
-      "почему собеседник победил именно вас / или вы победили собеседника",
+      "Где вы сами отдали деньги",
+      "Где могли получить больше",
+      "Какие сигналы не заметили",
+      "Почему собеседник победил именно вас / или вы победили собеседника",
     ],
   },
   {
@@ -111,11 +150,11 @@ const program = [
 ];
 
 const afterGames = [
-  "персональный разбор",
-  "обратная связь",
-  "ошибки каждого участника",
-  "альтернативные стратегии",
-  "демонстрация переговоров «как это сделал бы я»",
+  "Персональный разбор",
+  "Обратная связь",
+  "Ошибки каждого участника",
+  "Альтернативные стратегии",
+  "Демонстрация переговоров «как это сделал бы я»",
 ];
 
 const resultsFinancial = [
@@ -134,7 +173,7 @@ const testimonials = [
   {
     name: "Юлия Маслова",
     role: "экономист",
-    avatar: testimonialYulia,
+    avatar: testimonialYulia as string | null,
     text: "Такая практика совершенно точно не забудется и будет в помощь ещё оооочень долгое время. А самый шик, что применимо и в личных переговорах, и в коммерческих 🔥🔥🔥",
   },
   {
@@ -167,9 +206,29 @@ const scrollToRegister = () => {
   document.getElementById("register")?.scrollIntoView({ behavior: "smooth" });
 };
 
+const renderStoryText = (item: (typeof trainerStory)[number]) => {
+  if (item.emphasis) {
+    return <span className="text-foreground font-semibold">{nbsp(item.text)}</span>;
+  }
+  if (item.highlight && item.text.includes(item.highlight)) {
+    const [before, after] = item.text.split(item.highlight);
+    return (
+      <>
+        {nbsp(before)}
+        <span className="text-foreground font-semibold">{nbsp(item.highlight)}</span>
+        {nbsp(after)}
+      </>
+    );
+  }
+  return nbsp(item.text);
+};
+
 const Negotiations = () => {
   const [storyOpen, setStoryOpen] = useState(false);
   const [expanded, setExpanded] = useState<Set<number>>(new Set());
+  const [showAllMobile, setShowAllMobile] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   const toggle = (i: number) =>
     setExpanded((prev) => {
       const next = new Set(prev);
@@ -177,6 +236,12 @@ const Negotiations = () => {
       else next.add(i);
       return next;
     });
+
+  const scrollBy = (dir: number) => {
+    scrollRef.current?.scrollBy({ left: dir * 340, behavior: "smooth" });
+  };
+
+  const mobileTestimonials = showAllMobile ? testimonials : testimonials.slice(0, 2);
 
   useEffect(() => {
     document.title = "Коммерческие переговоры — тренинг-практикум";
@@ -215,10 +280,10 @@ const Negotiations = () => {
             </div>
 
             <p
-              className="mt-6 font-serif-display font-semibold text-lg leading-snug text-foreground/70 animate-fade-up"
+              className="mt-6 font-mono text-xs uppercase tracking-widest text-accent animate-fade-up"
               style={{ animationDelay: "0.05s" }}
             >
-              {nbsp("Онлайн-интенсив · Коммерческие переговоры")}
+              Живой тренинг-практикум
             </p>
 
             <h1
@@ -250,7 +315,7 @@ const Negotiations = () => {
                 className="inline-flex items-center justify-center gap-3 px-7 py-3.5 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
               >
                 Успеть со&nbsp;скидкой 50%
-                <span className="text-base">→</span>
+                <ArrowRight size={16} />
               </button>
             </div>
           </div>
@@ -303,7 +368,7 @@ const Negotiations = () => {
                   className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
                 >
                   Успеть со&nbsp;скидкой 50%
-                  <span className="text-base">→</span>
+                  <ArrowRight size={16} />
                 </button>
               </div>
             </div>
@@ -320,7 +385,7 @@ const Negotiations = () => {
                 />
                 <div className="relative overflow-hidden border border-foreground/15 hard-shadow aspect-[4/5] bg-card">
                   <img
-                    src={expertPhoto}
+                    src={heroPhoto}
                     alt="Василий Мещеряков"
                     className="h-full w-full object-cover"
                     loading="eager"
@@ -345,25 +410,28 @@ const Negotiations = () => {
         <div className="container-px max-w-5xl mx-auto">
           <h2 className="font-serif-display font-semibold leading-tight text-3xl md:text-5xl text-center animate-fade-up">
             {nbsp("Мы проигрываем переговоры — ")}
-            <span className="text-accent">{nbsp("теряем деньги")}</span>
+            <span className="text-destructive">{nbsp("теряем деньги")}</span>
             {nbsp(" и качество жизни")}
           </h2>
 
           <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-5">
-            {pains.map((pain, i) => (
-              <div
-                key={pain}
-                className="bg-card border border-foreground/15 p-6 hard-shadow animate-fade-up"
-                style={{ animationDelay: `${0.1 + i * 0.08}s` }}
-              >
-                <div className="font-mono text-xs uppercase tracking-widest text-accent mb-3">
-                  0{i + 1}
+            {pains.map((pain, i) => {
+              const Icon = painIcons[i];
+              return (
+                <div
+                  key={pain}
+                  className="flex items-start gap-4 bg-card border border-foreground/15 p-6 hard-shadow animate-fade-up"
+                  style={{ animationDelay: `${0.1 + i * 0.08}s` }}
+                >
+                  <div className="w-10 h-10 border border-destructive/25 bg-destructive/5 grid place-items-center shrink-0">
+                    <Icon size={20} strokeWidth={1.5} className="text-destructive" />
+                  </div>
+                  <p className="text-base md:text-lg text-foreground leading-relaxed">
+                    {nbsp(pain)}
+                  </p>
                 </div>
-                <p className="text-base md:text-lg text-foreground leading-relaxed">
-                  {nbsp(pain)}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="mt-10 text-center animate-fade-up">
@@ -374,7 +442,7 @@ const Negotiations = () => {
               <li>{nbsp("Вам просто не хватает системы")}</li>
               <li>
                 {nbsp("И практики переговоров ")}
-                <span className="text-accent font-semibold">{nbsp("под давлением")}</span>
+                <span className="text-destructive font-semibold">{nbsp("под давлением")}</span>
               </li>
             </ul>
           </div>
@@ -382,60 +450,63 @@ const Negotiations = () => {
       </section>
 
       {/* Expert */}
-      <section className="relative py-20 md:py-28 bg-card border-y border-foreground/10">
-        <div className="container-px max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-[minmax(0,260px)_1fr] gap-10 md:gap-14 items-start">
-          <figure className="animate-fade-up">
-            <div className="relative overflow-hidden border border-foreground/15 hard-shadow aspect-[4/5] bg-background">
-              <img
-                src={expertPhoto}
-                alt="Василий Мещеряков"
-                className="h-full w-full object-cover"
-                loading="lazy"
-              />
+      <section
+        id="about"
+        className="relative bg-card border-y border-foreground/10 overflow-hidden scroll-mt-20"
+      >
+        {/* Desktop / tablet */}
+        <div className="hidden md:grid md:grid-cols-[45%_1fr]">
+          <div className="relative">
+            <img
+              src={expertDesktop}
+              alt="Василий Мещеряков"
+              className="w-full h-full object-cover object-center"
+              style={{
+                maskImage: "linear-gradient(to right, black 65%, transparent 100%)",
+                WebkitMaskImage: "linear-gradient(to right, black 65%, transparent 100%)",
+              }}
+              loading="lazy"
+            />
+          </div>
+          <div className="py-16 px-10 lg:px-20">
+            <div className="max-w-xl">
+              <div className="font-mono text-xs uppercase tracking-widest text-accent mb-4">
+                Об эксперте
+              </div>
+              <h2 className="font-serif-display font-semibold text-3xl md:text-4xl mb-8">
+                {nbsp("Василий Мещеряков")}
+              </h2>
+              <CredentialsList />
+              <TrainerStory open={storyOpen} setOpen={setStoryOpen} />
             </div>
-          </figure>
+          </div>
+        </div>
 
-          <div className="animate-fade-up" style={{ animationDelay: "0.1s" }}>
-            <div className="font-mono text-xs uppercase tracking-widest text-accent mb-4">
+        {/* Mobile */}
+        <div className="md:hidden">
+          <div className="relative">
+            <img
+              src={expertChair}
+              alt="Василий Мещеряков"
+              className="w-full aspect-square object-cover object-center"
+              loading="lazy"
+            />
+            <div
+              className="absolute inset-x-0 bottom-0 h-32 pointer-events-none"
+              style={{
+                background: "linear-gradient(to bottom, transparent 0%, hsl(var(--card)) 100%)",
+              }}
+            />
+          </div>
+          <div className="px-6 pb-14 pt-4">
+            <div className="font-mono text-xs uppercase tracking-widest text-accent mb-3">
               Об эксперте
             </div>
-            <h2 className="font-serif-display font-semibold text-3xl md:text-4xl mb-8">
+            <h2 className="font-serif-display font-semibold text-2xl mb-6">
               {nbsp("Василий Мещеряков")}
             </h2>
-            <ul className="space-y-3">
-              {credentials.map((c) => (
-                <li key={c} className="flex items-start gap-3">
-                  <span className="mt-2 w-1.5 h-1.5 bg-accent shrink-0" />
-                  <span className="text-foreground/85 leading-relaxed">
-                    {c.includes("4.92") ? (
-                      <>
-                        {nbsp(c.split("4.92")[0])}
-                        <span className="text-accent font-semibold">4.92</span>
-                      </>
-                    ) : (
-                      nbsp(c)
-                    )}
-                  </span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-8">
-              <button
-                type="button"
-                onClick={() => setStoryOpen((v) => !v)}
-                className="font-mono text-xs uppercase tracking-widest text-accent hover:underline"
-              >
-                {storyOpen ? "Свернуть ↑" : "Как я стал тренером по переговорам ↓"}
-              </button>
-              {storyOpen && (
-                <div className="mt-5 space-y-4 text-foreground/85 leading-relaxed max-w-2xl">
-                  {trainerStory.map((p, i) => (
-                    <p key={i}>{nbsp(p)}</p>
-                  ))}
-                </div>
-              )}
-            </div>
+            <CredentialsList />
+            <TrainerStory open={storyOpen} setOpen={setStoryOpen} />
           </div>
         </div>
       </section>
@@ -454,7 +525,7 @@ const Negotiations = () => {
             <img
               src={clockImage}
               alt="Циферблат переговоров — 8 секторов: Бартер, Торг о цене, Жёсткие торги, Сделки, Торги с уступками, Win-win, Партнёрство, Долгосрочные отношения"
-              className="w-72 md:w-96 h-72 md:h-96 rounded-full object-cover hard-shadow border border-foreground/15"
+              className="w-72 md:w-96 h-72 md:h-96 rounded-full object-cover"
             />
           </div>
 
@@ -474,40 +545,50 @@ const Negotiations = () => {
             {nbsp("Два шага к результату")}
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
-            {steps.map((s, i) => (
-              <div
-                key={s.step}
-                className="bg-background border border-foreground/15 p-7 md:p-8 hard-shadow animate-fade-up"
-                style={{ animationDelay: `${0.1 + i * 0.1}s` }}
-              >
-                <div className="font-mono text-xs uppercase tracking-widest text-accent mb-2">
-                  {s.step}
-                </div>
-                <h3 className="font-serif-display font-semibold text-xl md:text-2xl mb-5">
-                  {nbsp(s.title)}
-                </h3>
-                <ul className="space-y-3">
-                  {s.points.map((p, j) => {
-                    const isLast = j === s.points.length - 1;
-                    return (
-                      <li
-                        key={p}
-                        className={`flex items-start gap-3 ${
-                          isLast ? "text-accent font-semibold" : "text-foreground/85"
-                        }`}
-                      >
-                        <span
-                          className={`mt-2 w-1.5 h-1.5 shrink-0 ${
-                            isLast ? "bg-accent" : "bg-foreground/40"
+            {steps.map((s, i) => {
+              const Icon = stepIcons[i];
+              return (
+                <div
+                  key={s.step}
+                  className="bg-background border border-foreground/15 p-7 md:p-8 hard-shadow animate-fade-up"
+                  style={{ animationDelay: `${0.1 + i * 0.1}s` }}
+                >
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 border border-accent/30 bg-accent/10 grid place-items-center shrink-0">
+                      <Icon size={24} strokeWidth={1.5} className="text-accent" />
+                    </div>
+                    <div>
+                      <div className="font-mono text-xs uppercase tracking-widest text-accent">
+                        {s.step}
+                      </div>
+                      <h3 className="font-serif-display font-semibold text-xl md:text-2xl">
+                        {nbsp(s.title)}
+                      </h3>
+                    </div>
+                  </div>
+                  <ul className="space-y-3">
+                    {s.points.map((p, j) => {
+                      const isLast = j === s.points.length - 1;
+                      return (
+                        <li
+                          key={p}
+                          className={`flex items-start gap-3 ${
+                            isLast ? "text-accent font-semibold" : "text-foreground/85"
                           }`}
-                        />
-                        <span>{nbsp(p)}</span>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            ))}
+                        >
+                          <span
+                            className={`mt-2 w-1.5 h-1.5 shrink-0 rounded-full ${
+                              isLast ? "bg-accent" : "bg-foreground/40"
+                            }`}
+                          />
+                          <span>{nbsp(p)}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -639,7 +720,7 @@ const Negotiations = () => {
                       type="button"
                       className="inline-flex items-center justify-center w-full gap-2 px-6 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-accent-foreground transition-colors"
                     >
-                      Зарегистрироваться <span className="text-base">→</span>
+                      Зарегистрироваться <ArrowRight size={16} />
                     </button>
                   }
                 />
@@ -670,11 +751,11 @@ const Negotiations = () => {
             {resultsFinancial.map((item, i) => (
               <div
                 key={item}
-                className="bg-card border border-foreground/15 p-5 hard-shadow animate-fade-up"
+                className="flex items-start gap-3 bg-card border border-foreground/15 p-5 hard-shadow animate-fade-up"
                 style={{ animationDelay: `${0.1 + i * 0.06}s` }}
               >
-                <div className="font-mono text-xs uppercase tracking-widest text-accent mb-2">
-                  ₽ Доход
+                <div className="w-10 h-10 border border-accent/30 bg-accent/10 grid place-items-center shrink-0">
+                  <Wallet size={20} strokeWidth={1.5} className="text-accent" />
                 </div>
                 <p className="text-foreground leading-relaxed">{nbsp(item)}</p>
               </div>
@@ -685,11 +766,11 @@ const Negotiations = () => {
             {resultsLifestyle.map((item, i) => (
               <div
                 key={item}
-                className="bg-card border border-foreground/15 p-5 hard-shadow animate-fade-up"
+                className="flex items-start gap-3 bg-card border border-foreground/15 p-5 hard-shadow animate-fade-up"
                 style={{ animationDelay: `${0.1 + i * 0.06}s` }}
               >
-                <div className="font-mono text-xs uppercase tracking-widest text-foreground/50 mb-2">
-                  Образ жизни
+                <div className="w-10 h-10 border border-foreground/15 grid place-items-center shrink-0">
+                  <Smile size={20} strokeWidth={1.5} className="text-foreground/60" />
                 </div>
                 <p className="text-foreground leading-relaxed">{nbsp(item)}</p>
               </div>
@@ -705,54 +786,64 @@ const Negotiations = () => {
             {nbsp("Отзывы участников")}
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {testimonials.map((t, i) => {
-              const isLong = t.text.length > 220;
-              const isExpanded = expanded.has(i);
-              return (
+          {/* Desktop: horizontal scroll */}
+          <div className="hidden md:block relative">
+            <button
+              type="button"
+              onClick={() => scrollBy(-1)}
+              aria-label="Предыдущий отзыв"
+              className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 border border-foreground/15 bg-background hard-shadow grid place-items-center hover:bg-accent hover:text-accent-foreground transition-colors"
+            >
+              <ChevronLeft size={18} />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollBy(1)}
+              aria-label="Следующий отзыв"
+              className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 border border-foreground/15 bg-background hard-shadow grid place-items-center hover:bg-accent hover:text-accent-foreground transition-colors"
+            >
+              <ChevronRight size={18} />
+            </button>
+
+            <div
+              ref={scrollRef}
+              className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-2"
+              style={{ scrollbarWidth: "none" }}
+            >
+              {testimonials.map((t, i) => (
                 <div
                   key={t.name}
-                  className="bg-background border border-foreground/15 p-6 md:p-7 hard-shadow flex flex-col animate-fade-up"
-                  style={{ animationDelay: `${0.08 * i}s` }}
+                  className="w-[320px] flex-shrink-0 snap-start"
                 >
-                  <div className="text-accent font-serif-display text-3xl leading-none mb-3">
-                    “
-                  </div>
-                  <p
-                    className={`text-foreground/85 leading-relaxed whitespace-pre-line flex-1 ${
-                      !isExpanded && isLong ? "line-clamp-5" : ""
-                    }`}
-                  >
-                    {t.text}
-                  </p>
-                  {isLong && (
-                    <button
-                      type="button"
-                      onClick={() => toggle(i)}
-                      className="mt-2 self-start font-mono text-xs uppercase tracking-widest text-accent hover:underline"
-                    >
-                      {isExpanded ? "Свернуть" : "Читать полностью"}
-                    </button>
-                  )}
-                  <div className="mt-5 pt-5 border-t border-foreground/10 flex items-center gap-3">
-                    {t.avatar && (
-                      <img
-                        src={t.avatar}
-                        alt={t.name}
-                        className="w-11 h-11 rounded-full object-cover border border-foreground/15"
-                        loading="lazy"
-                      />
-                    )}
-                    <div>
-                      <p className="font-serif-display font-semibold text-sm">
-                        {nbsp(t.name)}
-                      </p>
-                      <p className="text-xs text-foreground/60">{nbsp(t.role)}</p>
-                    </div>
-                  </div>
+                  <TestimonialCard
+                    t={t}
+                    isExpanded={expanded.has(i)}
+                    onToggle={() => toggle(i)}
+                  />
                 </div>
-              );
-            })}
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile: stacked */}
+          <div className="md:hidden flex flex-col gap-5">
+            {mobileTestimonials.map((t, i) => (
+              <TestimonialCard
+                key={t.name}
+                t={t}
+                isExpanded={expanded.has(i)}
+                onToggle={() => toggle(i)}
+              />
+            ))}
+            {!showAllMobile && testimonials.length > mobileTestimonials.length && (
+              <button
+                type="button"
+                onClick={() => setShowAllMobile(true)}
+                className="mt-2 mx-auto font-mono text-xs uppercase tracking-widest text-accent hover:underline"
+              >
+                Ещё отзывы
+              </button>
+            )}
           </div>
         </div>
       </section>
@@ -774,8 +865,8 @@ const Negotiations = () => {
                 className="bg-card border border-foreground/15 p-6 hard-shadow text-left animate-fade-up"
                 style={{ animationDelay: `${0.1 + i * 0.08}s` }}
               >
-                <div className="w-8 h-8 border border-accent/30 bg-accent/10 grid place-items-center text-accent mb-4">
-                  ♥
+                <div className="w-10 h-10 border border-accent/30 bg-accent/10 grid place-items-center mb-4">
+                  <Heart size={20} strokeWidth={1.5} className="text-accent" />
                 </div>
                 <p className="text-foreground leading-relaxed">{nbsp(item)}</p>
               </div>
@@ -788,13 +879,137 @@ const Negotiations = () => {
             className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
           >
             Записаться на&nbsp;тренинг
-            <span className="text-base">→</span>
+            <ArrowRight size={16} />
           </button>
         </div>
       </section>
 
       <Footer />
     </main>
+  );
+};
+
+const CredentialsList = () => (
+  <ul className="space-y-3">
+    {credentials.map((c, i) => {
+      const Icon = credentialIcons[i] || Briefcase;
+      const has492 = c.includes("4.92");
+      return (
+        <li key={c} className="flex items-start gap-3">
+          <div className="w-8 h-8 border border-accent/30 bg-accent/10 grid place-items-center shrink-0 mt-0.5">
+            <Icon size={16} strokeWidth={1.5} className="text-accent" />
+          </div>
+          <span className="text-foreground/85 leading-relaxed text-sm md:text-[0.9375rem]">
+            {has492 ? (
+              <>
+                {nbsp(c.split("4.92")[0])}
+                <span className="text-accent font-semibold">4.92</span>
+              </>
+            ) : (
+              nbsp(c)
+            )}
+          </span>
+        </li>
+      );
+    })}
+  </ul>
+);
+
+const TrainerStory = ({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: (v: boolean | ((prev: boolean) => boolean)) => void;
+}) => (
+  <div className="mt-6">
+    <button
+      type="button"
+      onClick={() => setOpen((v) => !v)}
+      className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-accent hover:underline"
+    >
+      Как я&nbsp;стал тренером по&nbsp;переговорам
+      <ChevronDown
+        size={14}
+        className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+      />
+    </button>
+
+    <div className="relative">
+      <div
+        className={`text-sm md:text-[0.9375rem] text-foreground/85 leading-relaxed space-y-4 overflow-hidden transition-all duration-500 ${
+          open ? "max-h-[2400px] mt-4" : "max-h-[4.5em] mt-3"
+        }`}
+      >
+        {trainerStory.map((item, i) => (
+          <p key={i}>{renderStoryText(item)}</p>
+        ))}
+      </div>
+      {!open && (
+        <div
+          className="absolute bottom-0 left-0 right-0 h-10 pointer-events-none"
+          style={{
+            background: "linear-gradient(to bottom, transparent, hsl(var(--card)))",
+          }}
+        />
+      )}
+    </div>
+  </div>
+);
+
+const TestimonialCard = ({
+  t,
+  isExpanded,
+  onToggle,
+}: {
+  t: (typeof testimonials)[number];
+  isExpanded: boolean;
+  onToggle: () => void;
+}) => {
+  const isLong = t.text.length > 220;
+  return (
+    <div className="bg-background border border-foreground/15 p-6 hard-shadow flex flex-col h-full">
+      <Quote size={24} strokeWidth={1.5} className="text-accent/50 mb-3" />
+      <div className="relative flex-1">
+        <p
+          className={`text-foreground/85 leading-relaxed whitespace-pre-line text-sm md:text-base ${
+            !isExpanded && isLong ? "line-clamp-5" : ""
+          }`}
+        >
+          {t.text}
+        </p>
+        {!isExpanded && isLong && (
+          <div className="absolute bottom-0 left-0 right-0 h-8 pointer-events-none bg-gradient-to-t from-background to-transparent" />
+        )}
+      </div>
+      {isLong && (
+        <button
+          type="button"
+          onClick={onToggle}
+          className="mt-2 self-start font-mono text-xs uppercase tracking-widest text-accent hover:underline"
+        >
+          {isExpanded ? "Свернуть" : "Читать полностью"}
+        </button>
+      )}
+      <div className="mt-5 pt-5 border-t border-foreground/10 flex items-center gap-3">
+        {t.avatar ? (
+          <img
+            src={t.avatar}
+            alt={t.name}
+            className="w-10 h-10 rounded-full object-cover border border-foreground/15 shrink-0"
+            loading="lazy"
+          />
+        ) : (
+          <div className="w-10 h-10 rounded-full border border-foreground/15 bg-foreground/5 grid place-items-center font-serif-display font-semibold text-foreground/60 shrink-0">
+            {t.name[0]}
+          </div>
+        )}
+        <div>
+          <p className="font-serif-display font-semibold text-sm">{nbsp(t.name)}</p>
+          <p className="text-xs text-foreground/60">{nbsp(t.role)}</p>
+        </div>
+      </div>
+    </div>
   );
 };
 

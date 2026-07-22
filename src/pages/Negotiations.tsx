@@ -429,18 +429,22 @@ const Negotiations = () => {
             })}
           </div>
 
-          <div className="mt-10 text-center animate-fade-up">
-            <p className="text-lg md:text-xl font-serif-display font-semibold mb-3">
-              {nbsp("Дело не в уверенности или «характере»!")}
-            </p>
-            <ul className="space-y-1 text-base md:text-lg text-foreground/80">
-              <li>{nbsp("Вам просто не хватает системы")}</li>
-              <li>
-                {nbsp("И практики переговоров ")}
-                <span className="text-destructive font-semibold">{nbsp("под давлением")}</span>
-              </li>
-            </ul>
-          </div>
+        </div>
+      </section>
+
+      {/* Accent: not about confidence */}
+      <section className="relative py-16 md:py-24 bg-board text-primary-foreground">
+        <div className="container-px max-w-4xl mx-auto text-center animate-fade-up">
+          <p className="font-serif-display font-semibold text-2xl md:text-4xl leading-snug">
+            {nbsp("Дело не в уверенности или «характере»!")}
+          </p>
+          <p className="mt-5 text-lg md:text-xl text-primary-foreground/80">
+            {nbsp("Вам просто не хватает системы")}
+          </p>
+          <p className="text-lg md:text-xl text-primary-foreground/80">
+            {nbsp("И практики переговоров ")}
+            <span className="text-accent font-semibold">{nbsp("под давлением")}</span>
+          </p>
         </div>
       </section>
 

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
-import { ArrowRight } from "lucide-react";
+import { TrafficRegisterDialog } from "@/components/traffic/TrafficRegisterDialog";
 import { nbsp } from "@/lib/nbsp";
 
 const pageNav: HeaderNavLink[] = [

@@ -63,16 +63,17 @@ const Decisions = () => {
               className="col-span-12 md:col-span-7 animate-fade-up"
               style={{ animationDelay: "0.1s" }}
             >
-              <span className="badge-tag">Личные финансы без\u00A0паники</span>
+              <span className="badge-tag">Личные финансы без&nbsp;паники</span>
               <h1 className="mt-6 font-display font-semibold leading-[0.98] tracking-tight text-[clamp(2.5rem,7vw,6rem)]">
                 Как принимать{" "}
                 <span className="text-accent">правильные</span> финансовые решения
               </h1>
 
               <p className="mt-8 font-display font-light leading-[1.25] tracking-tight text-[clamp(1.15rem,2.4vw,1.75rem)] text-foreground/85 max-w-2xl">
-                Спокойная система, в\u00A0которой деньги растут без\u00A0героических усилий,
-                хаоса и\u00A0чувства вины за\u00A0каждую покупку.
+                Спокойная система, в&nbsp;которой деньги растут без&nbsp;героических усилий,
+                хаоса и&nbsp;чувства вины за&nbsp;каждую покупку.
               </p>
+
 
               <div className="mt-10 flex flex-wrap gap-3">
                 <a

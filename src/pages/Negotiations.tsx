@@ -126,24 +126,19 @@ const program = [
   },
   {
     number: "Игра 1",
-    title: "Практическая игра №1 — Жёсткие переговоры",
-    text: "Каждый получает свою роль, цели и скрытую информацию. После раунда разбираем:",
-    bullets: [
-      "Где вы сами отдали деньги",
-      "Где могли получить больше",
-      "Какие сигналы не заметили",
-      "Почему собеседник победил именно вас / или вы победили собеседника",
-    ],
+    title: "Жёсткие переговоры",
+    text: "Каждый получает свою роль, цели и скрытую информацию. После раунда разбираем, где вы сами отдали деньги, где могли получить больше, какие сигналы не заметили и почему собеседник победил именно вас — или вы победили собеседника.",
+    bullets: [],
   },
   {
     number: "Игра 2",
-    title: "Практическая игра №2 — Переговоры с несколькими параметрами",
+    title: "Переговоры с несколькими параметрами",
     text: "У каждой стороны будут свои скрытые интересы. Победит не тот, кто сильнее давит, а тот, кто сумеет собрать максимально выгодную сделку.",
     bullets: [],
   },
   {
     number: "Игра 3",
-    title: "Практическая игра №3 — Как достичь взаимной выгоды в переговорах",
+    title: "Как достичь взаимной выгоды в переговорах",
     text: "Две конкурирующие компании. Ограниченный ресурс. Всего 15 минут. На первый взгляд интересы противоположны, но одна деталь полностью меняет переговоры.",
     bullets: [],
   },
@@ -642,14 +637,34 @@ const Negotiations = () => {
             <h3 className="font-serif-display font-semibold text-2xl md:text-3xl leading-snug">
               {nbsp("После каждой игры")}
             </h3>
-            <ul className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3">
-              {afterGames.map((b) => (
-                <li key={b} className="flex gap-3 text-foreground/80">
-                  <span className="text-accent">•</span>
-                  <span>{nbsp(b)}</span>
-                </li>
-              ))}
-            </ul>
+
+            {/* Snake timeline: horizontal zigzag on md+, vertical on mobile */}
+            <ol className="mt-8 flex flex-col md:flex-row md:flex-wrap md:items-stretch gap-y-4 md:gap-y-6">
+              {afterGames.map((step, i) => {
+                const isLast = i === afterGames.length - 1;
+                const zig = i % 2 === 1 ? "md:translate-y-3" : "md:-translate-y-0";
+                return (
+                  <li
+                    key={step}
+                    className="flex md:flex-1 md:min-w-[180px] items-stretch"
+                  >
+                    <div
+                      className={`flex-1 flex flex-col gap-3 bg-background border border-foreground/15 p-4 md:p-5 hard-shadow ${zig}`}
+                    >
+                      <span className="badge-tag text-[10px] w-fit">{`0${i + 1}`}</span>
+                      <span className="text-sm md:text-[15px] leading-snug text-foreground/85">
+                        {nbsp(step)}
+                      </span>
+                    </div>
+                    {!isLast && (
+                      <div className="hidden md:flex items-center justify-center text-accent shrink-0 px-2 md:px-3">
+                        <ArrowRight size={20} strokeWidth={2.5} />
+                      </div>
+                    )}
+                  </li>
+                );
+              })}
+            </ol>
           </div>
         </div>
       </section>

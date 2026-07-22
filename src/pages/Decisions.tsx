@@ -118,9 +118,10 @@ const Decisions = () => {
                 <span className="text-accent">это конкретно</span>
               </h2>
               <p className="mt-6 font-body text-base md:text-lg text-foreground/75 leading-relaxed max-w-md">
-                Не\u00A0абстрактная «финансовая грамотность», а\u00A0одиннадцать точных
-                результатов, к\u00A0которым мы\u00A0идём вместе.
+                Не&nbsp;абстрактная «финансовая грамотность», а&nbsp;одиннадцать точных
+                результатов, к&nbsp;которым мы&nbsp;идём вместе.
               </p>
+
             </div>
 
             <div className="col-span-12 lg:col-span-8">

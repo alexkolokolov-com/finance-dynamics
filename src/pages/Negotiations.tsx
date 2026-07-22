@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
-import { ArrowRight } from "lucide-react";
+import { TrafficRegisterDialog } from "@/components/traffic/TrafficRegisterDialog";
 import { nbsp } from "@/lib/nbsp";
 
 const pageNav: HeaderNavLink[] = [
@@ -159,13 +159,21 @@ const Negotiations = () => {
             </p>
 
             <div className="mt-5 animate-fade-up" style={{ animationDelay: "0.3s" }}>
-              <a
-                href="#register"
-                className="inline-flex items-center justify-center gap-3 px-7 py-3.5 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
-              >
-                Зарегистрироваться
-                <span className="text-base">→</span>
-              </a>
+              <TrafficRegisterDialog
+                widgetId={1630667}
+                scriptHash="0f1335c2fa8be25975f08b80fddadddf65106ed8"
+                title="Регистрация на тренинг"
+                subtitle="Коммерческие переговоры · 3,5 часа практики"
+                trigger={
+                  <button
+                    type="button"
+                    className="inline-flex items-center justify-center gap-3 px-7 py-3.5 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
+                  >
+                    Зарегистрироваться
+                    <span className="text-base">→</span>
+                  </button>
+                }
+              />
             </div>
           </div>
 
@@ -205,13 +213,21 @@ const Negotiations = () => {
               </p>
 
               <div className="mt-10 animate-fade-up" style={{ animationDelay: "0.4s" }}>
-                <a
-                  href="#register"
-                  className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
-                >
-                  Зарегистрироваться
-                  <span className="text-base">→</span>
-                </a>
+                <TrafficRegisterDialog
+                  widgetId={1630667}
+                  scriptHash="0f1335c2fa8be25975f08b80fddadddf65106ed8"
+                  title="Регистрация на тренинг"
+                  subtitle="Коммерческие переговоры · 3,5 часа практики"
+                  trigger={
+                    <button
+                      type="button"
+                      className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
+                    >
+                      Зарегистрироваться
+                      <span className="text-base">→</span>
+                    </button>
+                  }
+                />
               </div>
             </div>
 
@@ -433,14 +449,22 @@ const Negotiations = () => {
               </div>
 
               <div className="md:border-l md:border-foreground/10 md:pl-12">
-                <button
-                  type="button"
-                  className="inline-flex items-center justify-center w-full gap-2 px-6 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-accent-foreground transition-colors"
-                >
-                  Зарегистрироваться <ArrowRight size={14} />
-                </button>
+                <TrafficRegisterDialog
+                  widgetId={1630667}
+                  scriptHash="0f1335c2fa8be25975f08b80fddadddf65106ed8"
+                  title="Регистрация на тренинг"
+                  subtitle="Коммерческие переговоры · 3,5 часа практики"
+                  trigger={
+                    <button
+                      type="button"
+                      className="inline-flex items-center justify-center w-full gap-2 px-6 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-accent-foreground transition-colors"
+                    >
+                      Зарегистрироваться <span className="text-base">→</span>
+                    </button>
+                  }
+                />
                 <p className="mt-4 text-sm text-foreground/60">
-                  {nbsp("Скоро откроется форма регистрации. Следите за обновлениями.")}
+                  {nbsp("Места ограничены. После регистрации пришлем детали и счет на оплату.")}
                 </p>
               </div>
             </div>

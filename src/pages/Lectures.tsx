@@ -33,8 +33,8 @@ const corporate = [
 
 const solo = [
   {
-    title: "Капитал",
-    text: "Как на самом деле работают деньги — без мистики и «схем». Разбираем законы, по которым капитал приумножается.",
+    title: "Пассивный доход: правда и мифы",
+    text: "Что из «пассивного дохода» реально работает, а что — маркетинговая удочка. Как начать капитализировать деньги без спешки и страха.",
   },
   {
     title: "Чёрные дыры бюджета",
@@ -101,7 +101,7 @@ const Lectures = () => {
                 Лекции и&nbsp;выступления
               </div>
               <h1 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-[clamp(2.5rem,8vw,6rem)]">
-                Финансовая <span className="italic font-normal">грамотность</span> для команд и&nbsp;сообществ.
+                Деньги, которые работают <span className="italic font-normal">на&nbsp;вас</span>
               </h1>
               <p className="mt-8 font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-2xl">
                 Провожу лекции и&nbsp;курсы в&nbsp;организациях для&nbsp;сотрудников и&nbsp;выступаю в&nbsp;сообществах — о&nbsp;деньгах простым языком.

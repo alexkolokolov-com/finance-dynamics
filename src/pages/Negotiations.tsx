@@ -1,13 +1,64 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { TrafficRegisterDialog } from "@/components/traffic/TrafficRegisterDialog";
 import { nbsp } from "@/lib/nbsp";
+import expertPhoto from "@/assets/expert-vasily.jpg";
+import clockImage from "@/assets/clock-method-new.png";
+import testimonialYulia from "@/assets/testimonial-yulia.png";
+import testimonialTatyana from "@/assets/testimonial-tatyana.png";
+import testimonialValentina from "@/assets/testimonial-valentina.png";
 
 const pageNav: HeaderNavLink[] = [
   { href: "#about", label: "О тренинге", id: "about" },
   { href: "#program", label: "Программа", id: "program" },
   { href: "#register", label: "Регистрация", cta: true },
+];
+
+const pains = [
+  "Совершаем ошибки на эмоциях, давим где не надо",
+  "Соглашаемся на невыгодные условия, лишь бы избежать конфликта",
+  "Не учитываем истинных интересов и мотивацию другой стороны",
+];
+
+const credentials = [
+  "14 лет в Procter&Gamble",
+  "Вырос до директора по продажам",
+  "Вёл переговоры от 5 млн до 5 млрд руб",
+  "Провёл 20+ тренингов с оценкой 4.92",
+];
+
+const trainerStory = [
+  "У нас в Procter&Gamble была одна особенность: все тренинги вели сами сотрудники. Принцип — обучать тому, что сам проверил на практике.",
+  "Когда я стал руководителем, то начал вести внутренние тренинги по коммерческим переговорам. Коллеги хвалили и ставили мне высокие оценки: средний балл 4,8 и даже 4,9!",
+  "И вот я поставил себе цель — в следующем году получить 100% пятёрок. Это удавалось лишь нескольким людям в компании.",
+  "На это ушло 5 лет.",
+  "На тренинги приходили не только новички, но и опытные сотрудники, которых сложно удивить. Нужно не только интересно рассказать — нужно провести практику так, чтобы даже бывалый переговорщик вынес что-то полезное.",
+  "И вот спустя 5 лет в группе из 40 человек все поставили оценки 5!!!",
+  "Вот почему я так уверенно заявляю, что вы получите знания о переговорах, с которыми увеличите свои доходы на 20%.",
+];
+
+const steps = [
+  {
+    step: "Шаг 1",
+    title: "Понять инструменты",
+    points: [
+      "Что делать",
+      "Когда применять",
+      "Как комбинировать",
+      "Разобрать на практических примерах",
+    ],
+  },
+  {
+    step: "Шаг 2",
+    title: "Получать выгоду",
+    points: [
+      "Уверенно вести переговоры",
+      "Забирать максимум",
+      "Управлять процессом",
+      "Проиграть переговоры в безопасной среде",
+    ],
+  },
 ];
 
 const program = [
@@ -67,27 +118,66 @@ const afterGames = [
   "демонстрация переговоров «как это сделал бы я»",
 ];
 
-const audience = [
-  "владельцам бизнеса / предпринимателям",
-  "руководителям",
-  "менеджерам по продажам",
-  "тем, кто регулярно обсуждает стоимость своих услуг",
-  "тем, кто ведет переговоры о зарплате",
-  "закупщикам",
-  "всем, кто хочет научиться получать лучшие условия не за счет давления, а за счет понимания психологии переговоров",
+const resultsFinancial = [
+  "Обосновать повышение оклада",
+  "Получить премию",
+  "Повысить ставку часа",
 ];
 
-const outcomes = [
-  "модель, которую сможете применять практически в любых переговорах",
-  "опыт нескольких реальных переговорных игр",
-  "понимание собственных слабых мест",
-  "персональную обратную связь",
-  "десятки приемов, которые можно использовать уже на следующий день",
+const resultsLifestyle = [
+  "Отказ от навязанных трат",
+  "Снижение стресса",
+  "Сохранение и укрепление авторитета",
 ];
 
-const eventHeroPhoto = { url: `${import.meta.env.BASE_URL}event-hero.jpg` };
+const testimonials = [
+  {
+    name: "Юлия Маслова",
+    role: "экономист",
+    avatar: testimonialYulia,
+    text: "Такая практика совершенно точно не забудется и будет в помощь ещё оооочень долгое время. А самый шик, что применимо и в личных переговорах, и в коммерческих 🔥🔥🔥",
+  },
+  {
+    name: "Анна Киселева",
+    role: "переводчик",
+    avatar: null,
+    text: "Я очень волновалась перед началом игр, но, как оказалось, после первой ступени договариваться я уже немного умею!\nМой главный инсайт в том, что мы несём в любую вводную себя. Даже если интересы совпадают и делить нечего — психика собеседника (или моя) об этом не знает. То есть в двух идентичных ситуациях я могу получить совершенно разные результаты переговоров, просто потому что передо мной сидят разные люди.\nРаньше я переговоров только боялась. Теперь мне стало интересно!",
+  },
+  {
+    name: "Татьяна Тымко",
+    role: "врач антивозрастной медицины",
+    avatar: testimonialTatyana,
+    text: "Я в восторге от последнего дня игр 🔥 это как кульминация! Все поняли это ощущение win-win, его не забыть теперь! Очень понравился тренинг по переговорам 🙏",
+  },
+  {
+    name: "Валентина Павлова",
+    role: "предприниматель",
+    avatar: testimonialValentina,
+    text: "Моё главное открытие: «Переговоры нужны, чтобы договориться! Не поиграть мускулами и доказать, что ты круче, а именно достигнуть точки договора-результата. И если вы не договорились — то вы проиграли».\n\nДля меня это осознание поменяло моё мировозрение, как будто компас был сломан и всё время вёл не в том направлении. Теория без практики остаётся информацией, которая просто засоряет эфир.",
+  },
+];
+
+const introverts = [
+  "Вы не манипулируете, но и не поддаётесь на провокации!",
+  "Партнёры ценят, что вы находите Win-Win без конфликта",
+  "Вам не нужно снимать стресс после сложного разговора",
+];
+
+const scrollToRegister = () => {
+  document.getElementById("register")?.scrollIntoView({ behavior: "smooth" });
+};
 
 const Negotiations = () => {
+  const [storyOpen, setStoryOpen] = useState(false);
+  const [expanded, setExpanded] = useState<Set<number>>(new Set());
+  const toggle = (i: number) =>
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      if (next.has(i)) next.delete(i);
+      else next.add(i);
+      return next;
+    });
+
   useEffect(() => {
     document.title = "Коммерческие переговоры — тренинг-практикум";
     const desc = document.querySelector('meta[name="description"]');
@@ -115,65 +205,53 @@ const Negotiations = () => {
         <div className="container-px max-w-7xl mx-auto relative">
           {/* Mobile / Tablet */}
           <div className="lg:hidden">
-            <figure className="relative w-full aspect-[4/5] max-h-[62svh] overflow-hidden border border-foreground/15 hard-shadow bg-card animate-fade-up">
-              <picture className="absolute inset-0 block">
-                <img
-                  src={eventHeroPhoto.url}
-                  alt="Василий Мещеряков на тренинге по переговорам"
-                  className="h-full w-full object-cover"
-                  width="1440"
-                  height="2560"
-                  loading="eager"
-                />
-              </picture>
-              <div className="absolute top-3 left-3 right-3 flex flex-wrap gap-2">
-                <span className="badge-tag inline-flex items-center text-xs">
-                  {nbsp("3,5 часа практики")}
-                </span>
-                <span className="badge-tag inline-flex items-center text-xs">
-                  {nbsp("Только 10 мест")}
-                </span>
-              </div>
-              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-background via-background/70 to-transparent pointer-events-none" />
-              <p className="absolute bottom-4 left-4 right-4 font-serif-display font-semibold text-xl md:text-2xl leading-snug text-foreground">
-                {nbsp("Живой тренинг-практикум")}
-                <br />
-                {nbsp("«Коммерческие переговоры»")}
-              </p>
-            </figure>
+            <div className="flex flex-wrap gap-2 animate-fade-up">
+              <span className="badge-tag inline-flex items-center text-xs">
+                1&nbsp;августа, 14:00–18:00
+              </span>
+              <span className="badge-tag inline-flex items-center text-xs">
+                Москва, Новоданиловская наб.&nbsp;4
+              </span>
+            </div>
+
+            <p
+              className="mt-6 font-serif-display font-semibold text-lg leading-snug text-foreground/70 animate-fade-up"
+              style={{ animationDelay: "0.05s" }}
+            >
+              {nbsp("Онлайн-интенсив · Коммерческие переговоры")}
+            </p>
 
             <h1
-              className="mt-6 font-serif-display font-semibold leading-[1.02] tracking-tight text-[clamp(1.6rem,5.6vw,2.6rem)] animate-fade-up"
+              className="mt-3 font-serif-display font-semibold leading-[1.02] tracking-tight text-[clamp(2rem,7vw,3rem)] animate-fade-up"
               style={{ animationDelay: "0.1s" }}
             >
-              {nbsp("Как вести переговоры, чтобы не уступать деньги")}
+              {nbsp("Коммерческие переговоры")}
             </h1>
 
             <p
-              className="mt-4 text-foreground/80 text-base md:text-lg leading-relaxed animate-fade-up"
-              style={{ animationDelay: "0.2s" }}
+              className="mt-4 font-serif-display italic text-accent text-lg md:text-xl leading-relaxed animate-fade-up"
+              style={{ animationDelay: "0.15s" }}
             >
-              {nbsp(
-                "За 3,5 часа вы проведете несколько настоящих переговоров, получите разбор своих ошибок и поймете, почему одни люди постоянно получают выгоду, а другие сами того не замечая уступают."
-              )}
+              «Я&nbsp;знаю, что стою дороже —<br />
+              но&nbsp;соглашаюсь на&nbsp;меньшее»
             </p>
 
-            <div className="mt-5 animate-fade-up" style={{ animationDelay: "0.3s" }}>
-              <TrafficRegisterDialog
-                widgetId={1630667}
-                scriptHash="0f1335c2fa8be25975f08b80fddadddf65106ed8"
-                title="Регистрация на тренинг"
-                subtitle="Коммерческие переговоры · 3,5 часа практики"
-                trigger={
-                  <button
-                    type="button"
-                    className="inline-flex items-center justify-center gap-3 px-7 py-3.5 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
-                  >
-                    Зарегистрироваться
-                    <span className="text-base">→</span>
-                  </button>
-                }
-              />
+            <p
+              className="mt-4 text-base md:text-lg text-foreground/80 animate-fade-up"
+              style={{ animationDelay: "0.2s" }}
+            >
+              {nbsp("Как перестать сливать деньги и возможности")}
+            </p>
+
+            <div className="mt-6 animate-fade-up" style={{ animationDelay: "0.3s" }}>
+              <button
+                type="button"
+                onClick={scrollToRegister}
+                className="inline-flex items-center justify-center gap-3 px-7 py-3.5 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
+              >
+                Успеть со&nbsp;скидкой 50%
+                <span className="text-base">→</span>
+              </button>
             </div>
           </div>
 
@@ -182,52 +260,51 @@ const Negotiations = () => {
             <div className="col-span-7">
               <div className="flex flex-wrap items-center gap-3 animate-fade-up">
                 <span className="badge-tag inline-flex items-center text-xs">
-                  {nbsp("3,5 часа практики")}
+                  1&nbsp;августа, 14:00–18:00
                 </span>
                 <span className="badge-tag inline-flex items-center text-xs">
-                  {nbsp("Только 10 мест")}
+                  Москва, Новоданиловская наб.&nbsp;4
                 </span>
               </div>
 
               <p
-                className="mt-8 font-serif-display font-semibold text-xl md:text-2xl leading-snug text-foreground/80 animate-fade-up"
-                style={{ animationDelay: "0.1s" }}
+                className="mt-8 font-mono text-xs uppercase tracking-widest text-accent animate-fade-up"
+                style={{ animationDelay: "0.05s" }}
               >
-                {nbsp("Живой тренинг-практикум «Коммерческие переговоры»")}
+                Живой тренинг-практикум
               </p>
 
               <h1
-                className="mt-6 font-serif-display font-semibold leading-[0.95] tracking-tight text-[clamp(2.25rem,5.5vw,4.5rem)] animate-fade-up"
-                style={{ animationDelay: "0.2s" }}
+                className="mt-4 font-serif-display font-semibold leading-[0.95] tracking-tight text-[clamp(2.5rem,5.5vw,4.5rem)] animate-fade-up"
+                style={{ animationDelay: "0.1s" }}
               >
-                {nbsp("Как вести переговоры, чтобы не уступать деньги")}
+                {nbsp("Коммерческие переговоры")}
               </h1>
 
               <p
-                className="mt-6 text-lg md:text-xl leading-relaxed text-foreground/80 animate-fade-up"
+                className="mt-6 font-serif-display italic text-accent text-xl md:text-2xl leading-relaxed max-w-lg animate-fade-up"
+                style={{ animationDelay: "0.2s" }}
+              >
+                «Я&nbsp;знаю, что стою дороже —<br />
+                но&nbsp;соглашаюсь на&nbsp;меньшее»
+              </p>
+
+              <p
+                className="mt-5 text-lg md:text-xl leading-relaxed text-foreground/80 animate-fade-up"
                 style={{ animationDelay: "0.3s" }}
               >
-                {nbsp(
-                  "За 3,5 часа вы проведете несколько настоящих переговоров, получите разбор своих ошибок и поймете, почему одни люди постоянно получают выгоду, а другие сами того не замечая уступают."
-                )}
+                {nbsp("Как перестать сливать деньги и возможности")}
               </p>
 
               <div className="mt-10 animate-fade-up" style={{ animationDelay: "0.4s" }}>
-                <TrafficRegisterDialog
-                  widgetId={1630667}
-                  scriptHash="0f1335c2fa8be25975f08b80fddadddf65106ed8"
-                  title="Регистрация на тренинг"
-                  subtitle="Коммерческие переговоры · 3,5 часа практики"
-                  trigger={
-                    <button
-                      type="button"
-                      className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
-                    >
-                      Зарегистрироваться
-                      <span className="text-base">→</span>
-                    </button>
-                  }
-                />
+                <button
+                  type="button"
+                  onClick={scrollToRegister}
+                  className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
+                >
+                  Успеть со&nbsp;скидкой 50%
+                  <span className="text-base">→</span>
+                </button>
               </div>
             </div>
 
@@ -237,42 +314,201 @@ const Negotiations = () => {
                   className="absolute -inset-4 border border-foreground/15 pointer-events-none"
                   aria-hidden
                 />
-                <div className="absolute -top-4 -left-4 w-16 h-16 bg-accent/15 pointer-events-none" aria-hidden />
+                <div
+                  className="absolute -top-4 -left-4 w-16 h-16 bg-accent/15 pointer-events-none"
+                  aria-hidden
+                />
                 <div className="relative overflow-hidden border border-foreground/15 hard-shadow aspect-[4/5] bg-card">
-                  <picture className="block h-full w-full">
-                    <img
-                      src={eventHeroPhoto.url}
-                      alt="Василий Мещеряков на тренинге по переговорам"
-                      className="h-full w-full object-cover"
-                      width="1440"
-                      height="2560"
-                      loading="eager"
-                    />
-                  </picture>
+                  <img
+                    src={expertPhoto}
+                    alt="Василий Мещеряков"
+                    className="h-full w-full object-cover"
+                    loading="eager"
+                  />
                 </div>
-                <div className="absolute -bottom-4 -right-4 bg-foreground text-background px-4 py-2 font-mono text-[10px] uppercase tracking-widest hard-shadow">
-                  {nbsp("Оффлайн-формат")}
-                </div>
+                <figcaption className="mt-6 text-center">
+                  <p className="font-serif-display font-semibold">
+                    {nbsp("Василий Мещеряков")}
+                  </p>
+                  <p className="text-sm text-foreground/60">
+                    {nbsp("эксперт по переговорам")}
+                  </p>
+                </figcaption>
               </figure>
             </div>
           </div>
         </div>
       </section>
 
-      {/* About / Promise */}
-      <section id="about" className="relative py-24 md:py-32 scroll-mt-20">
-        <div className="container-px max-w-7xl mx-auto">
-          <div className="font-mono text-xs uppercase tracking-widest text-accent mb-6 animate-fade-up">
-            О тренинге
-          </div>
-          <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl max-w-4xl animate-fade-up">
-            {nbsp("Это не лекция. Это тренировка.")}
+      {/* Pains */}
+      <section className="relative py-20 md:py-28">
+        <div className="container-px max-w-5xl mx-auto">
+          <h2 className="font-serif-display font-semibold leading-tight text-3xl md:text-5xl text-center animate-fade-up">
+            {nbsp("Мы проигрываем переговоры — ")}
+            <span className="text-accent">{nbsp("теряем деньги")}</span>
+            {nbsp(" и качество жизни")}
           </h2>
-          <p className="mt-6 text-lg md:text-2xl leading-relaxed text-foreground/80 max-w-3xl animate-fade-up">
-            {nbsp(
-              "И именно поэтому провести ее онлайн невозможно. Практика, моментальная обратная связь и разбор невербалики — то, что практически невозможно воспроизвести онлайн."
-            )}
+
+          <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-5">
+            {pains.map((pain, i) => (
+              <div
+                key={pain}
+                className="bg-card border border-foreground/15 p-6 hard-shadow animate-fade-up"
+                style={{ animationDelay: `${0.1 + i * 0.08}s` }}
+              >
+                <div className="font-mono text-xs uppercase tracking-widest text-accent mb-3">
+                  0{i + 1}
+                </div>
+                <p className="text-base md:text-lg text-foreground leading-relaxed">
+                  {nbsp(pain)}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 text-center animate-fade-up">
+            <p className="text-lg md:text-xl font-serif-display font-semibold mb-3">
+              {nbsp("Дело не в уверенности или «характере»!")}
+            </p>
+            <ul className="space-y-1 text-base md:text-lg text-foreground/80">
+              <li>{nbsp("Вам просто не хватает системы")}</li>
+              <li>
+                {nbsp("И практики переговоров ")}
+                <span className="text-accent font-semibold">{nbsp("под давлением")}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Expert */}
+      <section className="relative py-20 md:py-28 bg-card border-y border-foreground/10">
+        <div className="container-px max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-[minmax(0,260px)_1fr] gap-10 md:gap-14 items-start">
+          <figure className="animate-fade-up">
+            <div className="relative overflow-hidden border border-foreground/15 hard-shadow aspect-[4/5] bg-background">
+              <img
+                src={expertPhoto}
+                alt="Василий Мещеряков"
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
+            </div>
+          </figure>
+
+          <div className="animate-fade-up" style={{ animationDelay: "0.1s" }}>
+            <div className="font-mono text-xs uppercase tracking-widest text-accent mb-4">
+              Об эксперте
+            </div>
+            <h2 className="font-serif-display font-semibold text-3xl md:text-4xl mb-8">
+              {nbsp("Василий Мещеряков")}
+            </h2>
+            <ul className="space-y-3">
+              {credentials.map((c) => (
+                <li key={c} className="flex items-start gap-3">
+                  <span className="mt-2 w-1.5 h-1.5 bg-accent shrink-0" />
+                  <span className="text-foreground/85 leading-relaxed">
+                    {c.includes("4.92") ? (
+                      <>
+                        {nbsp(c.split("4.92")[0])}
+                        <span className="text-accent font-semibold">4.92</span>
+                      </>
+                    ) : (
+                      nbsp(c)
+                    )}
+                  </span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-8">
+              <button
+                type="button"
+                onClick={() => setStoryOpen((v) => !v)}
+                className="font-mono text-xs uppercase tracking-widest text-accent hover:underline"
+              >
+                {storyOpen ? "Свернуть ↑" : "Как я стал тренером по переговорам ↓"}
+              </button>
+              {storyOpen && (
+                <div className="mt-5 space-y-4 text-foreground/85 leading-relaxed max-w-2xl">
+                  {trainerStory.map((p, i) => (
+                    <p key={i}>{nbsp(p)}</p>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Method */}
+      <section className="relative py-20 md:py-28">
+        <div className="container-px max-w-4xl mx-auto text-center">
+          <div className="font-mono text-xs uppercase tracking-widest text-accent mb-4 animate-fade-up">
+            Авторская методика
+          </div>
+          <h2 className="font-serif-display font-semibold text-3xl md:text-5xl mb-12 animate-fade-up">
+            {nbsp("Циферблат переговоров")}
+          </h2>
+
+          <div className="flex justify-center mb-10 animate-fade-up">
+            <img
+              src={clockImage}
+              alt="Циферблат переговоров — 8 секторов: Бартер, Торг о цене, Жёсткие торги, Сделки, Торги с уступками, Win-win, Партнёрство, Долгосрочные отношения"
+              className="w-72 md:w-96 h-72 md:h-96 rounded-full object-cover hard-shadow border border-foreground/15"
+            />
+          </div>
+
+          <p className="text-base md:text-lg text-foreground/80 max-w-xl mx-auto leading-relaxed animate-fade-up">
+            {nbsp("Зная, в каком секторе находитесь вы и ваш оппонент, вы сможете выбирать верные инструменты и ")}
+            <span className="text-accent font-semibold">
+              {nbsp("договариваться без конфликта")}
+            </span>
           </p>
+        </div>
+      </section>
+
+      {/* Steps */}
+      <section className="relative py-20 md:py-28 bg-card border-y border-foreground/10">
+        <div className="container-px max-w-5xl mx-auto">
+          <h2 className="font-serif-display font-semibold text-3xl md:text-5xl mb-12 text-center animate-fade-up">
+            {nbsp("Два шага к результату")}
+          </h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            {steps.map((s, i) => (
+              <div
+                key={s.step}
+                className="bg-background border border-foreground/15 p-7 md:p-8 hard-shadow animate-fade-up"
+                style={{ animationDelay: `${0.1 + i * 0.1}s` }}
+              >
+                <div className="font-mono text-xs uppercase tracking-widest text-accent mb-2">
+                  {s.step}
+                </div>
+                <h3 className="font-serif-display font-semibold text-xl md:text-2xl mb-5">
+                  {nbsp(s.title)}
+                </h3>
+                <ul className="space-y-3">
+                  {s.points.map((p, j) => {
+                    const isLast = j === s.points.length - 1;
+                    return (
+                      <li
+                        key={p}
+                        className={`flex items-start gap-3 ${
+                          isLast ? "text-accent font-semibold" : "text-foreground/85"
+                        }`}
+                      >
+                        <span
+                          className={`mt-2 w-1.5 h-1.5 shrink-0 ${
+                            isLast ? "bg-accent" : "bg-foreground/40"
+                          }`}
+                        />
+                        <span>{nbsp(p)}</span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -337,63 +573,7 @@ const Negotiations = () => {
         </div>
       </section>
 
-      {/* Audience */}
-      <section className="relative py-24 md:py-32">
-        <div className="container-px max-w-7xl mx-auto">
-          <div className="font-mono text-xs uppercase tracking-widest text-accent mb-6 animate-fade-up">
-            Кому подойдет
-          </div>
-          <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl max-w-4xl animate-fade-up">
-            {nbsp("Кому особенно полезен тренинг")}
-          </h2>
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {audience.map((item, i) => (
-              <div
-                key={item}
-                className="bg-card border border-foreground/15 p-6 hard-shadow animate-fade-up"
-                style={{ animationDelay: `${0.1 + i * 0.06}s` }}
-              >
-                <div className="flex gap-3">
-                  <span className="text-accent text-xl">✓</span>
-                  <span className="text-foreground/90 leading-relaxed">{nbsp(item)}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Outcomes */}
-      <section className="relative py-24 md:py-32 bg-grid">
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: "var(--grad-chalk)" }}
-        />
-        <div className="container-px max-w-7xl mx-auto relative">
-          <div className="font-mono text-xs uppercase tracking-widest text-accent mb-6 animate-fade-up">
-            Что заберете
-          </div>
-          <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl max-w-4xl animate-fade-up">
-            {nbsp("Результат после тренинга")}
-          </h2>
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-            {outcomes.map((item, i) => (
-              <div
-                key={item}
-                className="flex items-start gap-4 bg-card border border-foreground/15 p-6 hard-shadow animate-fade-up"
-                style={{ animationDelay: `${0.1 + i * 0.08}s` }}
-              >
-                <div className="w-10 h-10 rounded-full bg-accent/10 border border-accent/20 grid place-items-center shrink-0">
-                  <span className="text-accent font-display font-semibold">{i + 1}</span>
-                </div>
-                <p className="text-foreground/90 leading-relaxed pt-1">{nbsp(item)}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Promise */}
+      {/* Promise (accent) */}
       <section className="relative py-24 md:py-32 bg-board text-primary-foreground">
         <div className="container-px max-w-7xl mx-auto">
           <blockquote className="font-serif-display text-2xl md:text-4xl leading-snug max-w-4xl animate-fade-up">
@@ -469,6 +649,147 @@ const Negotiations = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Results — Что вам даст тренинг */}
+      <section className="relative py-20 md:py-28">
+        <div className="container-px max-w-5xl mx-auto">
+          <h2 className="font-serif-display font-semibold text-3xl md:text-5xl mb-4 text-center animate-fade-up">
+            {nbsp("Что вам даст тренинг")}
+          </h2>
+          <p className="text-base md:text-lg text-center mb-12 max-w-2xl mx-auto text-foreground/80 animate-fade-up">
+            <span className="text-accent font-semibold">10&nbsp;минут разговора</span>
+            {nbsp(", которые в нужный момент принесут вам ")}
+            <span className="text-accent font-semibold">
+              {nbsp("сотни тысяч рублей")}
+            </span>
+          </p>
+
+          <div className="grid sm:grid-cols-3 gap-4 mb-6">
+            {resultsFinancial.map((item, i) => (
+              <div
+                key={item}
+                className="bg-card border border-foreground/15 p-5 hard-shadow animate-fade-up"
+                style={{ animationDelay: `${0.1 + i * 0.06}s` }}
+              >
+                <div className="font-mono text-xs uppercase tracking-widest text-accent mb-2">
+                  ₽ Доход
+                </div>
+                <p className="text-foreground leading-relaxed">{nbsp(item)}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="grid sm:grid-cols-3 gap-4">
+            {resultsLifestyle.map((item, i) => (
+              <div
+                key={item}
+                className="bg-card border border-foreground/15 p-5 hard-shadow animate-fade-up"
+                style={{ animationDelay: `${0.1 + i * 0.06}s` }}
+              >
+                <div className="font-mono text-xs uppercase tracking-widest text-foreground/50 mb-2">
+                  Образ жизни
+                </div>
+                <p className="text-foreground leading-relaxed">{nbsp(item)}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="relative py-20 md:py-28 bg-card border-y border-foreground/10">
+        <div className="container-px max-w-6xl mx-auto">
+          <h2 className="font-serif-display font-semibold text-3xl md:text-5xl mb-12 text-center animate-fade-up">
+            {nbsp("Отзывы участников")}
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {testimonials.map((t, i) => {
+              const isLong = t.text.length > 220;
+              const isExpanded = expanded.has(i);
+              return (
+                <div
+                  key={t.name}
+                  className="bg-background border border-foreground/15 p-6 md:p-7 hard-shadow flex flex-col animate-fade-up"
+                  style={{ animationDelay: `${0.08 * i}s` }}
+                >
+                  <div className="text-accent font-serif-display text-3xl leading-none mb-3">
+                    “
+                  </div>
+                  <p
+                    className={`text-foreground/85 leading-relaxed whitespace-pre-line flex-1 ${
+                      !isExpanded && isLong ? "line-clamp-5" : ""
+                    }`}
+                  >
+                    {t.text}
+                  </p>
+                  {isLong && (
+                    <button
+                      type="button"
+                      onClick={() => toggle(i)}
+                      className="mt-2 self-start font-mono text-xs uppercase tracking-widest text-accent hover:underline"
+                    >
+                      {isExpanded ? "Свернуть" : "Читать полностью"}
+                    </button>
+                  )}
+                  <div className="mt-5 pt-5 border-t border-foreground/10 flex items-center gap-3">
+                    {t.avatar && (
+                      <img
+                        src={t.avatar}
+                        alt={t.name}
+                        className="w-11 h-11 rounded-full object-cover border border-foreground/15"
+                        loading="lazy"
+                      />
+                    )}
+                    <div>
+                      <p className="font-serif-display font-semibold text-sm">
+                        {nbsp(t.name)}
+                      </p>
+                      <p className="text-xs text-foreground/60">{nbsp(t.role)}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Introverts — Почему укрепление отношений */}
+      <section className="relative py-20 md:py-28">
+        <div className="container-px max-w-5xl mx-auto text-center">
+          <div className="font-mono text-xs uppercase tracking-widest text-accent mb-4 animate-fade-up">
+            Идеально для интровертов
+          </div>
+          <h2 className="font-serif-display font-semibold text-3xl md:text-5xl mb-12 animate-fade-up">
+            {nbsp("Почему укрепление отношений")}
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-5 mb-12">
+            {introverts.map((item, i) => (
+              <div
+                key={item}
+                className="bg-card border border-foreground/15 p-6 hard-shadow text-left animate-fade-up"
+                style={{ animationDelay: `${0.1 + i * 0.08}s` }}
+              >
+                <div className="w-8 h-8 border border-accent/30 bg-accent/10 grid place-items-center text-accent mb-4">
+                  ♥
+                </div>
+                <p className="text-foreground leading-relaxed">{nbsp(item)}</p>
+              </div>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={scrollToRegister}
+            className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
+          >
+            Записаться на&nbsp;тренинг
+            <span className="text-base">→</span>
+          </button>
         </div>
       </section>
 

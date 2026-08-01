@@ -59,6 +59,7 @@ const calendar = [
   { month: "Октябрь", discount: 40, seats: 8 },
   { month: "Ноябрь", discount: 50, seats: 4 },
   { month: "Декабрь", discount: 60, seats: 4 },
+  { month: "Январь 2027", discount: 60, seats: 8 },
 ];
 
 const results = [

@@ -5,7 +5,7 @@ import { CardConsultations } from "@/components/sections/CardConsultations";
 import { CardOffers } from "@/components/sections/CardOffers";
 import { CardTextbook } from "@/components/sections/CardTextbook";
 
-import vasilyLaptop from "@/assets/vasily-laptop.jpg";
+import vasilyHero from "@/assets/vasily-hero.png.asset.json";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { nbsp } from "@/lib/nbsp";
@@ -43,7 +43,7 @@ const Card = () => {
           <div className="lg:hidden">
             <figure className="relative w-full aspect-[4/5] max-h-[62svh] overflow-hidden border border-foreground/15 hard-shadow bg-card animate-fade-up">
               <img
-                src={vasilyLaptop}
+                src={vasilyHero.url}
                 alt="Василий Мещеряков"
                 className="h-full w-full object-cover"
                 loading="eager"
@@ -125,7 +125,7 @@ const Card = () => {
                 <div className="absolute -top-4 -left-4 w-16 h-16 bg-accent/15 pointer-events-none" aria-hidden />
                 <div className="relative overflow-hidden border border-foreground/15 hard-shadow aspect-[4/5] bg-card">
                   <img
-                    src={vasilyLaptop}
+                    src={vasilyHero.url}
                     alt="Василий Мещеряков"
                     className="h-full w-full object-cover"
                     loading="eager"

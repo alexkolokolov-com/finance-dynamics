@@ -49,10 +49,10 @@ const Card = () => {
                 loading="eager"
               />
               <div className="absolute top-3 left-3 right-3 flex flex-wrap gap-2">
-                <span className="badge-tag inline-flex items-center text-xs">
+                <span className="badge-tag !text-foreground !bg-background/95 !text-sm font-medium shadow-sm">
                   {nbsp("Василий Мещеряков")}
                 </span>
-                <span className="badge-tag inline-flex items-center text-xs">
+                <span className="badge-tag !text-foreground !bg-background/95 !text-sm font-medium shadow-sm">
                   {nbsp("экс-директор по продажам Procter & Gamble")}
                 </span>
               </div>
@@ -62,15 +62,14 @@ const Card = () => {
               className="mt-6 font-display font-semibold leading-[0.95] tracking-tight text-[clamp(1.75rem,6.5vw,2.5rem)] animate-fade-up"
               style={{ animationDelay: "0.1s" }}
             >
-              Вася <span className="italic font-light">и</span>{" "}
-              <span className="text-accent">финансы</span>
+              Вася и <span className="text-accent">финансы</span>
             </h1>
 
             <p
-              className="mt-4 font-body text-base text-foreground/75 leading-relaxed max-w-md animate-fade-up"
+              className="mt-4 font-body text-lg text-foreground leading-snug max-w-md animate-fade-up"
               style={{ animationDelay: "0.2s" }}
             >
-              <span className="font-semibold text-foreground">
+              <span className="font-semibold">
                 {nbsp("Простыми словами о том, как избавиться от финансовой тревоги и")}
               </span>
               {"\u00A0"}
@@ -80,26 +79,26 @@ const Card = () => {
             <div className="mt-6 animate-fade-up" style={{ animationDelay: "0.3s" }}>
               <Link
                 to="/consultations"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-foreground text-background text-sm hover:bg-accent transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-body text-sm hover:bg-accent hover:text-foreground transition-colors"
               >
-                Записаться на консультацию
+                {nbsp("Записаться на консультацию")}
               </Link>
             </div>
           </div>
+
 
           {/* Desktop */}
           <div className="hidden lg:grid grid-cols-12 gap-14 items-center min-h-[80vh]">
             <div className="col-span-7">
               <h1 className="font-display font-semibold leading-[0.95] tracking-tight text-[clamp(2.5rem,5vw,4rem)] animate-fade-up">
-                Вася <span className="italic font-light">и</span>{" "}
-                <span className="text-accent">финансы</span>
+                Вася и <span className="text-accent">финансы</span>
               </h1>
 
               <p
-                className="mt-6 font-body text-lg md:text-xl text-foreground/75 leading-relaxed max-w-xl animate-fade-up"
+                className="mt-6 font-body text-2xl xl:text-3xl text-foreground leading-snug max-w-xl animate-fade-up"
                 style={{ animationDelay: "0.1s" }}
               >
-                <span className="font-semibold text-foreground">
+                <span className="font-semibold">
                   {nbsp("Простыми словами о том, как избавиться от финансовой тревоги и")}
                 </span>
                 {"\u00A0"}
@@ -109,11 +108,12 @@ const Card = () => {
               <div className="mt-8 animate-fade-up" style={{ animationDelay: "0.2s" }}>
                 <Link
                   to="/consultations"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-foreground text-background text-sm hover:bg-accent transition-colors"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-body text-sm hover:bg-accent hover:text-foreground transition-colors"
                 >
-                  Записаться на консультацию
+                  {nbsp("Записаться на консультацию")}
                 </Link>
               </div>
+
             </div>
 
             <div className="col-span-5 animate-fade-up" style={{ animationDelay: "0.15s" }}>
@@ -132,13 +132,14 @@ const Card = () => {
                   />
                 </div>
                 <div className="absolute top-4 left-4 right-4 flex flex-wrap gap-2">
-                  <span className="badge-tag inline-flex items-center text-xs">
+                  <span className="badge-tag !text-foreground !bg-background/95 !text-sm font-medium shadow-sm">
                     {nbsp("Василий Мещеряков")}
                   </span>
-                  <span className="badge-tag inline-flex items-center text-xs">
+                  <span className="badge-tag !text-foreground !bg-background/95 !text-sm font-medium shadow-sm">
                     {nbsp("экс-директор по продажам Procter & Gamble")}
                   </span>
                 </div>
+
               </figure>
             </div>
           </div>

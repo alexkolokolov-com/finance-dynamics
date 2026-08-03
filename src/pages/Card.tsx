@@ -132,13 +132,14 @@ const Card = () => {
                   />
                 </div>
                 <div className="absolute top-4 left-4 right-4 flex flex-wrap gap-2">
-                  <span className="badge-tag inline-flex items-center text-xs">
+                  <span className="badge-tag !text-foreground !bg-background/95 !text-sm font-medium shadow-sm">
                     {nbsp("Василий Мещеряков")}
                   </span>
-                  <span className="badge-tag inline-flex items-center text-xs">
+                  <span className="badge-tag !text-foreground !bg-background/95 !text-sm font-medium shadow-sm">
                     {nbsp("экс-директор по продажам Procter & Gamble")}
                   </span>
                 </div>
+
               </figure>
             </div>
           </div>

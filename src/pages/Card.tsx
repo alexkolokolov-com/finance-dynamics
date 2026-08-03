@@ -1,21 +1,21 @@
-import { Link } from "react-router-dom";
 import { SiteHeader } from "@/components/SiteHeader";
 import { CardAbout } from "@/components/sections/CardAbout";
 import { CardConsultations } from "@/components/sections/CardConsultations";
 import { CardOffers } from "@/components/sections/CardOffers";
 import { CardTextbook } from "@/components/sections/CardTextbook";
 
-import vasilyHero from "@/assets/vasily-hero.png.asset.json";
+import vasilyPortrait from "@/assets/vasily-hero.png.asset.json";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { nbsp } from "@/lib/nbsp";
+
 
 const cardPageNav = [
-  { href: "/consultations", label: "Консультации" },
+  { href: "#about", label: "О проекте", id: "about" },
+  { href: "#consultations", label: "Консультации", id: "consultations" },
+  { href: "/bigbudget", label: "Марафон" },
   { href: "/cashback", label: "Кэшбэк-гайд" },
   { href: "/landing", label: "Обучение" },
   { href: "/blog", label: "Блог" },
-  { href: "/reviews", label: "Отзывы" },
 ];
 
 const Card = () => {
@@ -39,108 +39,38 @@ const Card = () => {
       <SiteHeader pageNav={cardPageNav} />
       <section className="relative min-h-screen pt-24 pb-16 overflow-hidden">
         <div className="container-px max-w-7xl mx-auto relative">
-          {/* Mobile / Tablet */}
-          <div className="lg:hidden">
-            <figure className="relative w-full aspect-[4/5] max-h-[62svh] overflow-hidden border border-foreground/15 hard-shadow bg-card animate-fade-up">
-              <img
-                src={vasilyHero.url}
-                alt="Василий Мещеряков"
-                className="h-full w-full object-cover"
-                loading="eager"
-              />
-              <div className="absolute top-3 left-3 right-3 flex flex-wrap gap-2">
-                <span className="badge-tag !text-foreground !bg-background/95 !text-sm font-medium shadow-sm">
-                  {nbsp("Василий Мещеряков")}
-                </span>
-                <span className="badge-tag !text-foreground !bg-background/95 !text-sm font-medium shadow-sm">
-                  {nbsp("экс-директор по продажам Procter & Gamble")}
-                </span>
-              </div>
-            </figure>
-
-            <h1
-              className="mt-6 font-display font-semibold leading-[0.95] tracking-tight text-[clamp(1.75rem,6.5vw,2.5rem)] animate-fade-up"
+          {/* split: текст слева / портрет справа */}
+          <div className="grid grid-cols-12 gap-8 lg:gap-12 items-center min-h-[80vh]">
+            <div
+              className="col-span-12 md:col-span-6 animate-fade-up"
               style={{ animationDelay: "0.1s" }}
             >
-              Вася и <span className="text-accent">финансы</span>
-            </h1>
-
-            <p
-              className="mt-4 font-body text-lg text-foreground leading-snug max-w-md animate-fade-up"
-              style={{ animationDelay: "0.2s" }}
-            >
-              <span className="font-semibold">
-                {nbsp("Простыми словами о том, как избавиться от финансовой тревоги и")}
-              </span>
-              {"\u00A0"}
-              <span className="italic">{nbsp("жить лучше за те же деньги")}</span>
-            </p>
-
-            <div className="mt-6 animate-fade-up" style={{ animationDelay: "0.3s" }}>
-              <Link
-                to="/consultations"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-body text-sm hover:bg-accent hover:text-foreground transition-colors"
-              >
-                {nbsp("Записаться на консультацию")}
-              </Link>
-            </div>
-          </div>
-
-
-          {/* Desktop */}
-          <div className="hidden lg:grid grid-cols-12 gap-14 items-center min-h-[80vh]">
-            <div className="col-span-7">
-              <h1 className="font-display font-semibold leading-[0.95] tracking-tight text-[clamp(2.5rem,5vw,4rem)] animate-fade-up">
-                Вася и <span className="text-accent">финансы</span>
+              <h1 className="font-display font-semibold leading-[0.95] tracking-tight text-[clamp(3rem,9vw,8rem)]">
+                Вася <br />
+                <span className="text-accent">и&nbsp;финансы</span>
               </h1>
 
-              <p
-                className="mt-6 font-body text-2xl xl:text-3xl text-foreground leading-snug max-w-xl animate-fade-up"
-                style={{ animationDelay: "0.1s" }}
-              >
-                <span className="font-semibold">
-                  {nbsp("Простыми словами о том, как избавиться от финансовой тревоги и")}
-                </span>
-                {"\u00A0"}
-                <span className="italic">{nbsp("жить лучше за те же деньги")}</span>
+              <p className="mt-8 font-display font-light leading-[1.25] tracking-tight text-[clamp(1.25rem,3vw,2.25rem)] text-foreground/85 max-w-xl">
+                Помогаю обычным людям спокойно разобраться с&nbsp;деньгами —
+                без&nbsp;паники, формул и&nbsp;громких обещаний.
               </p>
-
-              <div className="mt-8 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-                <Link
-                  to="/consultations"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-body text-sm hover:bg-accent hover:text-foreground transition-colors"
-                >
-                  {nbsp("Записаться на консультацию")}
-                </Link>
-              </div>
-
             </div>
 
-            <div className="col-span-5 animate-fade-up" style={{ animationDelay: "0.15s" }}>
-              <figure className="relative">
-                <div
-                  className="absolute -inset-4 border border-foreground/15 pointer-events-none"
-                  aria-hidden
-                />
-                <div className="absolute -top-4 -left-4 w-16 h-16 bg-accent/15 pointer-events-none" aria-hidden />
-                <div className="relative overflow-hidden border border-foreground/15 hard-shadow aspect-[4/5] bg-card">
-                  <img
-                    src={vasilyHero.url}
-                    alt="Василий Мещеряков"
-                    className="h-full w-full object-cover"
-                    loading="eager"
-                  />
-                </div>
-                <div className="absolute top-4 left-4 right-4 flex flex-wrap gap-2">
-                  <span className="badge-tag !text-foreground !bg-background/95 !text-sm font-medium shadow-sm">
-                    {nbsp("Василий Мещеряков")}
-                  </span>
-                  <span className="badge-tag !text-foreground !bg-background/95 !text-sm font-medium shadow-sm">
-                    {nbsp("экс-директор по продажам Procter & Gamble")}
-                  </span>
-                </div>
 
-              </figure>
+            {/* портрет справа — split-screen */}
+            <div
+              className="col-span-12 md:col-span-6 flex justify-center md:justify-end animate-fade-up"
+              style={{ animationDelay: "0.25s" }}
+            >
+              <div className="relative w-full max-w-md aspect-[4/5]">
+
+                <img
+                  src={vasilyPortrait.url}
+                  alt="Василий Мещеряков"
+                  className="w-full h-full object-contain rounded-[1.75rem]"
+                />
+
+              </div>
             </div>
           </div>
         </div>
@@ -150,6 +80,7 @@ const Card = () => {
       <CardConsultations />
       <CardOffers />
       <CardTextbook />
+
     </main>
   );
 };

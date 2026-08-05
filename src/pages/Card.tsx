@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { SiteHeader } from "@/components/SiteHeader";
 import { CardAbout } from "@/components/sections/CardAbout";
+import { CardCashback } from "@/components/sections/CardCashback";
 import { CardConsultations } from "@/components/sections/CardConsultations";
-import { CardOffers } from "@/components/sections/CardOffers";
+import { CardProfit } from "@/components/sections/CardProfit";
 import { CardTextbook } from "@/components/sections/CardTextbook";
 
 import vasilyPortrait from "@/assets/vasily-hero.png.asset.json";

@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Video, FileCheck, Users, Clock, Check, Plus, Waves, Repeat2, Wallet, Hourglass, Activity, Settings, ScanSearch, HandCoins, Landmark, HeartHandshake, type LucideIcon } from "lucide-react";
+import { Video, FileCheck, Users, Clock, Check, Waves, Repeat2, Wallet, Hourglass, Activity, Settings, ScanSearch, HandCoins, Landmark, HeartHandshake, type LucideIcon } from "lucide-react";
 import { TrafficRegisterDialog } from "@/components/traffic/TrafficRegisterDialog";
 import {
   programGoals,
@@ -9,6 +8,7 @@ import {
   bonuses,
   targetAudience,
   resultCategories,
+  paymentFormats,
 } from "@/data/presentationData";
 import { CardAbout } from "@/components/sections/CardAbout";
 

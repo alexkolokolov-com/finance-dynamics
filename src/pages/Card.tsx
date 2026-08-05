@@ -68,7 +68,7 @@ const Card = () => {
               className="col-span-12 md:col-span-6 flex flex-col items-center md:items-end animate-fade-up"
               style={{ animationDelay: "0.25s" }}
             >
-              <div className="relative w-full max-w-[280px] sm:max-w-[380px] md:max-w-lg aspect-[4/5] mx-auto md:mx-0 overflow-hidden rounded-[1.75rem]">
+              <div className="relative w-full max-w-[360px] sm:max-w-[420px] md:max-w-lg aspect-[4/5] mx-auto md:mx-0 overflow-hidden rounded-[1.75rem]">
                 <img
                   src={vasilyPortrait.url}
                   alt="Василий Мещеряков"
@@ -76,15 +76,15 @@ const Card = () => {
                 />
 
                 <div className="absolute inset-x-0 bottom-3 sm:bottom-4 z-10 flex justify-start px-3 sm:px-4">
-                  <span className="badge-tag bg-card/95 backdrop-blur-sm text-xs sm:text-sm md:text-base whitespace-nowrap px-3 py-1.5 inline-flex items-center gap-2 shadow-sm">
-                    <span className="font-medium">Василий Мещеряков</span>
+                  <span className="badge-tag bg-card/95 backdrop-blur-sm text-xs min-[360px]:text-sm md:text-base whitespace-nowrap px-2.5 py-1.5 inline-flex items-center gap-1.5 shadow-sm font-medium">
+                    <span>Василий Мещеряков</span>
                     <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" aria-hidden="true" />
-                    <span className="text-foreground/80">ex-sales director <span className="text-accent font-medium">P&amp;G</span></span>
+                    <span className="text-foreground/80">ex-sales director <span className="text-accent">P&amp;G</span></span>
                   </span>
                 </div>
               </div>
 
-              <div className="md:hidden mt-6 w-full max-w-[280px] sm:max-w-[380px] mx-auto">
+              <div className="md:hidden mt-6 w-full max-w-[360px] sm:max-w-[420px] mx-auto">
                 <Link
                   to="/consultations"
                   className="flex w-full items-center justify-center gap-2 px-6 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors"

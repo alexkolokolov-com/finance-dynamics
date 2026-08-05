@@ -54,7 +54,7 @@ const Card = () => {
                 Простыми словами о&nbsp;том, как избавиться от&nbsp;финансовой тревоги и&nbsp;<span className="italic">жить лучше за&nbsp;те&nbsp;же&nbsp;деньги</span>
               </p>
 
-              <div className="mt-8 md:mt-10">
+              <div className="mt-8 md:mt-10 hidden md:block">
                 <Link
                   to="/consultations"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors"
@@ -89,6 +89,16 @@ const Card = () => {
                   </span>
                 </div>
 
+              </div>
+
+              <div className="mt-6 md:hidden flex justify-center">
+                <Link
+                  to="/consultations"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors"
+                >
+                  <span>Записаться на&nbsp;консультацию</span>
+                  <span className="text-base">→</span>
+                </Link>
               </div>
             </div>
           </div>

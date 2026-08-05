@@ -65,11 +65,16 @@ jobs:
           }
           NODE
 
+      - name: Fetch Lovable CDN assets into dist
+        run: node scripts/fetch-lovable-assets.mjs
+
       - name: Add SPA entry points for deep links
         run: |
           cp dist/index.html dist/404.html
-          mkdir -p dist/event
-          cp dist/index.html dist/event/index.html
+          for route in bigbudget checklist budget-methods blog landing landing-deck support-2026 traffic calculator cashback conference consultations lectures decisions event negotiations oferta reviews old; do
+            mkdir -p "dist/$route"
+            cp dist/index.html "dist/$route/index.html"
+          done
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

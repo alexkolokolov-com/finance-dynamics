@@ -57,9 +57,10 @@ const Card = () => {
               <div className="mt-8 md:mt-10">
                 <Link
                   to="/consultations"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-foreground text-background text-sm font-medium hover:bg-accent transition-colors"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors"
                 >
-                  Записаться на&nbsp;консультацию
+                  <span>Записаться на&nbsp;консультацию</span>
+                  <span className="text-base">→</span>
                 </Link>
               </div>
             </div>

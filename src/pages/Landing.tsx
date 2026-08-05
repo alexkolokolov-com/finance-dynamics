@@ -191,7 +191,6 @@ const landingPageNav = [
 ];
 
 const Landing = () => {
-  const discountUntil = "до\u00A022\u00A0июня";
   return (
     <main className="physics-theme min-h-screen">
       <SiteHeader pageNav={landingPageNav} />

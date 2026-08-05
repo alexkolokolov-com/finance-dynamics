@@ -122,59 +122,6 @@ const graduationPoints = [
   
 ];
 
-const landingTariffs: Array<{
-  name: string;
-  price: string;
-  oldPrice: string;
-  features: Array<string | { text: string; plus?: boolean }>;
-  widgetId: number;
-  scriptHash: string;
-  soldOut?: boolean;
-  installment?: string;
-}> = [
-  {
-    name: "Всё сам",
-    price: "34 900 ₽",
-    oldPrice: "40 000 ₽",
-    features: [
-      "Все записи и материалы курса",
-      "Презентации, конспекты, шаблоны",
-      "Чат поддержки",
-    ],
-    widgetId: 1619139,
-    scriptHash: "161dd3f30c940fc854a581051b587bcc4480ad86",
-    installment: "5 816 руб/мес при оформлении в\u00A0рассрочку",
-  },
-  {
-    name: "С куратором",
-    price: "80 000 ₽",
-    oldPrice: "",
-    features: [
-      "Всё из тарифа «Всё сам»",
-      "Куратор с обратной связью",
-      "Проверка домашних заданий",
-      "Живые еженедельные эфиры с Василием",
-    ],
-    widgetId: 1619149,
-    scriptHash: "3bf00501d531755c7bf7a4a94d6695e757f4f6c9",
-    soldOut: true,
-    installment: "13 333 руб/мес при оформлении в\u00A0рассрочку",
-  },
-  {
-    name: "VIP",
-    price: "109 900 ₽",
-    oldPrice: "150 000 ₽",
-    features: [
-      "Всё из тарифа «С куратором»",
-      "Куратор — лично Василий",
-      "Прямая обратная связь и личные разборы",
-    ],
-    widgetId: 1619150,
-    scriptHash: "ed03b4fc4904e528fa34849b8cdeb4d42605c2a3",
-    installment: "18 316 руб/мес при оформлении в\u00A0рассрочку",
-  },
-]
-
 const scrollToPricing = () => {
   document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" });
 };

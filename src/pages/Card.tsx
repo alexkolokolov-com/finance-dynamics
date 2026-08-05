@@ -68,24 +68,24 @@ const Card = () => {
               className="col-span-12 md:col-span-6 flex flex-col items-center md:items-end animate-fade-up"
               style={{ animationDelay: "0.25s" }}
             >
-              <div className="relative w-full max-w-md aspect-[4/5]">
+              <div className="relative w-full max-w-[240px] sm:max-w-[320px] md:max-w-md aspect-[4/5] mx-auto md:mx-0">
                 <img
                   src={vasilyPortrait.url}
                   alt="Василий Мещеряков"
                   className="w-full h-full object-contain rounded-[1.75rem]"
                 />
 
-                <div className="absolute inset-x-0 bottom-2 sm:bottom-3 z-10 flex flex-wrap items-center justify-center gap-2 px-3">
-                  <span className="badge-tag bg-card/95 backdrop-blur-sm text-xs sm:text-sm">
+                <div className="absolute inset-x-0 bottom-3 sm:bottom-4 z-10 flex flex-col items-start gap-2 px-3 sm:px-4">
+                  <span className="badge-tag bg-card/95 backdrop-blur-sm text-base sm:text-lg px-4 py-2">
                     Василий Мещеряков
                   </span>
-                  <span className="badge-tag bg-card/95 backdrop-blur-sm text-xs sm:text-sm">
+                  <span className="badge-tag bg-card/95 backdrop-blur-sm text-base sm:text-lg px-4 py-2">
                     ex-sales director P&amp;G
                   </span>
                 </div>
               </div>
 
-              <div className="md:hidden mt-8 w-full max-w-md">
+              <div className="md:hidden mt-6 w-full max-w-[240px] sm:max-w-[320px] mx-auto">
                 <Link
                   to="/consultations"
                   className="flex w-full items-center justify-center gap-2 px-6 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors"

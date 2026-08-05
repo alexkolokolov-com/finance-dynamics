@@ -100,6 +100,7 @@ const Card = () => {
                   <span className="text-base">→</span>
                 </Link>
               </div>
+            </div>
           </div>
         </div>
       </section>

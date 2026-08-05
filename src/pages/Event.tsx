@@ -383,7 +383,7 @@ const Event = () => {
                   </div>
                   <div className="mt-2 inline-flex items-center gap-2 bg-accent text-accent-foreground px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest hard-shadow">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent-foreground animate-pulse" />
-                    {nbsp("Первые 10 мест")}
+                    {nbsp("Ранняя цена на первые 5 мест")}
                   </div>
                   <div className="mt-2 font-mono text-[11px] uppercase tracking-widest text-foreground/50">
                     {nbsp("Действует, пока есть места")}

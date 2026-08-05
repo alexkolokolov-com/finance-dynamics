@@ -53,7 +53,7 @@ const Card = () => {
                 Простыми словами о&nbsp;том, как избавиться от&nbsp;финансовой тревоги и&nbsp;<span className="italic">жить лучше за&nbsp;те&nbsp;же&nbsp;деньги</span>
               </p>
 
-              <div className="mt-8 md:mt-10">
+              <div className="hidden md:block mt-8 md:mt-10">
                 <Link
                   to="/consultations"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors"
@@ -65,7 +65,7 @@ const Card = () => {
             </div>
 
             <div
-              className="col-span-12 md:col-span-6 flex justify-center md:justify-end animate-fade-up"
+              className="col-span-12 md:col-span-6 flex flex-col items-center md:items-end animate-fade-up"
               style={{ animationDelay: "0.25s" }}
             >
               <div className="relative w-full max-w-md aspect-[4/5]">
@@ -84,8 +84,19 @@ const Card = () => {
                   </span>
                 </div>
               </div>
+
+              <div className="md:hidden mt-8 w-full max-w-md">
+                <Link
+                  to="/consultations"
+                  className="flex w-full items-center justify-center gap-2 px-6 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors"
+                >
+                  <span>Записаться на&nbsp;консультацию</span>
+                  <span className="text-base">→</span>
+                </Link>
+              </div>
             </div>
           </div>
+
         </div>
       </section>
 

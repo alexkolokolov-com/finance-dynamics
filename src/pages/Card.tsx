@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { SiteHeader } from "@/components/SiteHeader";
 import { CardAbout } from "@/components/sections/CardAbout";
 import { CardConsultations } from "@/components/sections/CardConsultations";
@@ -45,15 +46,22 @@ const Card = () => {
               className="col-span-12 md:col-span-6 animate-fade-up"
               style={{ animationDelay: "0.1s" }}
             >
-              <h1 className="font-display font-semibold leading-[0.95] tracking-tight text-[clamp(3rem,9vw,8rem)]">
-                Вася <br />
-                <span className="text-accent">и&nbsp;финансы</span>
+              <h1 className="font-display font-semibold leading-[0.95] tracking-tight text-[clamp(2rem,7vw,4.5rem)]">
+                Вася <span className="text-accent">и&nbsp;финансы</span>
               </h1>
 
-              <p className="mt-8 font-display font-light leading-[1.25] tracking-tight text-[clamp(1.25rem,3vw,2.25rem)] text-foreground/85 max-w-xl">
-                Помогаю обычным людям спокойно разобраться с&nbsp;деньгами —
-                без&nbsp;паники, формул и&nbsp;громких обещаний.
+              <p className="mt-6 md:mt-8 font-display font-semibold leading-[1.25] tracking-tight text-foreground/85 max-w-xl text-[clamp(1.1rem,2.5vw,1.75rem)]">
+                Простыми словами о&nbsp;том, как избавиться от&nbsp;финансовой тревоги и&nbsp;<span className="italic">жить лучше за&nbsp;те&nbsp;же&nbsp;деньги</span>
               </p>
+
+              <div className="mt-8 md:mt-10">
+                <Link
+                  to="/consultations"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-foreground text-background text-sm font-medium hover:bg-accent transition-colors"
+                >
+                  Записаться на&nbsp;консультацию
+                </Link>
+              </div>
             </div>
 
 

@@ -587,70 +587,42 @@ const Landing = () => {
             </h2>
           </div>
 
-          <div className="grid gap-6 lg:gap-8 md:grid-cols-3">
-            {landingTariffs.map((t, i) => (
-              <div
-                key={i}
-                className={`relative p-7 md:p-8 flex flex-col bg-background border ${i === 1 ? "border-foreground" : i === 2 ? "border-accent" : "border-foreground/15"}`}
-              >
-                <h3 className="font-serif-display text-2xl font-semibold mb-3">{t.name}</h3>
-                <div className="mb-7 pb-6 border-b border-foreground/10 space-y-1">
-                  {t.oldPrice && (
-                    <div className="font-mono text-base text-muted-foreground line-through">
-                      {t.oldPrice}
-                    </div>
-                  )}
-                  <div className="flex items-baseline gap-3 flex-wrap">
-                    <span className="number-display text-4xl text-accent">{t.price}</span>
-                    {t.oldPrice && (
-                      <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                        {discountUntil}
-                      </span>
-                    )}
-                  </div>
-                  {t.soldOut && (
-                    <div className="font-mono text-xs uppercase tracking-widest text-destructive">
-                      промо-места закончились
-                    </div>
-                  )}
+          <div className="max-w-3xl mx-auto">
+            <div className="relative bg-card border border-foreground/15 p-8 md:p-12 hard-shadow text-center">
+              <div className="mb-8 md:mb-10">
+                <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-3">
+                  Банковская рассрочка до 12 месяцев
                 </div>
-                <ul className="space-y-3 flex-grow mb-6">
-                  {t.features.map((f, fi) => {
-                    const text = typeof f === "string" ? f : f.text;
-                    const isPlus = typeof f === "object" && f.plus;
-                    const Icon = isPlus ? Plus : Check;
-                    const bold = i >= 1 && fi > 0;
-                    return (
-                      <li key={fi} className="flex items-start gap-3">
-                        <Icon className="w-4 h-4 text-accent shrink-0 mt-0.5" strokeWidth={2} />
-                        <span className={`text-sm leading-relaxed ${isPlus ? "text-accent font-semibold" : "text-foreground/85"} ${bold && !isPlus ? "font-semibold" : ""}`}>{text}</span>
-                      </li>
-                    );
-                  })}
-                </ul>
-                <TrafficRegisterDialog
-                  widgetId={t.widgetId}
-                  scriptHash={t.scriptHash}
-                  title={`Тариф «${t.name}»`}
-                  trigger={
-                    <button className="w-full mt-auto py-4 bg-accent text-accent-foreground font-mono text-xs uppercase tracking-widest hover:bg-foreground hover:text-background transition-colors">
-                      Купить
-                    </button>
-                  }
-                />
-                {t.installment && (
-                  <p className="mt-3 text-center text-sm font-semibold text-muted-foreground leading-relaxed">
-                    {t.installment.split(/(\d+(?:\s\d+)*)/).map((part, i) =>
-                      /^\d/.test(part) ? (
-                        <span key={i} className="text-lg">{part}</span>
-                      ) : (
-                        part
-                      )
-                    )}
-                  </p>
-                )}
+                <div className="font-display text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1]">
+                  от <span className="text-accent">5 000</span> ₽/мес
+                </div>
+                <div className="mt-4 font-body text-lg md:text-xl text-foreground/65">
+                  без переплат
+                </div>
               </div>
-            ))}
+
+              <div className="border-t border-foreground/10 pt-8 md:pt-10 mb-8 md:mb-10">
+                <ul className="space-y-4 text-left">
+                  {paymentFormats.map((format, i) => (
+                    <li key={i} className="flex items-start gap-3 text-foreground/85">
+                      <span className="font-mono text-accent mt-0.5">◆</span>
+                      <span className="font-body text-base md:text-lg leading-relaxed">{format}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <TrafficRegisterDialog
+                widgetId={1619139}
+                scriptHash="161dd3f30c940fc854a581051b587bcc4480ad86"
+                title="Записаться на программу"
+                trigger={
+                  <button className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-accent-foreground transition-colors">
+                    Записаться →
+                  </button>
+                }
+              />
+            </div>
           </div>
         </div>
       </section>

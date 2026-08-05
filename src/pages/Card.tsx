@@ -53,7 +53,7 @@ const Card = () => {
                 Простыми словами о&nbsp;том, как избавиться от&nbsp;финансовой тревоги и&nbsp;<span className="italic">жить лучше за&nbsp;те&nbsp;же&nbsp;деньги</span>
               </p>
 
-              <div className="mt-8 md:mt-10 hidden md:block">
+              <div className="mt-8 md:mt-10">
                 <Link
                   to="/consultations"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors"
@@ -64,40 +64,16 @@ const Card = () => {
               </div>
             </div>
 
-
-            {/* портрет справа — split-screen */}
             <div
               className="col-span-12 md:col-span-6 flex justify-center md:justify-end animate-fade-up"
               style={{ animationDelay: "0.25s" }}
             >
               <div className="relative w-full max-w-md aspect-[4/5]">
-
                 <img
                   src={vasilyPortrait.url}
                   alt="Василий Мещеряков"
                   className="w-full h-full object-contain rounded-[1.75rem]"
                 />
-
-                <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background via-background/50 to-transparent pointer-events-none rounded-b-[1.75rem]" />
-                <div className="absolute bottom-4 left-4 right-4 flex flex-wrap gap-2">
-                  <span className="inline-flex items-center gap-2 px-4 py-2 text-base font-body rounded-full bg-card text-foreground/90 border border-border">
-                    Василий Мещеряков
-                  </span>
-                  <span className="inline-flex items-center gap-2 px-4 py-2 text-base font-body rounded-full bg-card text-foreground/90 border border-border">
-                    экс-директор по продажам<br />Procter &amp; Gamble
-                  </span>
-                </div>
-
-              </div>
-
-              <div className="mt-6 md:hidden flex justify-center">
-                <Link
-                  to="/consultations"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors"
-                >
-                  <span>Записаться на&nbsp;консультацию</span>
-                  <span className="text-base">→</span>
-                </Link>
               </div>
             </div>
           </div>

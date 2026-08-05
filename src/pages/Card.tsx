@@ -79,6 +79,13 @@ const Card = () => {
                   className="w-full h-full object-contain rounded-[1.75rem]"
                 />
 
+                <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background via-background/50 to-transparent pointer-events-none rounded-b-[1.75rem]" />
+                <div className="absolute bottom-4 left-4 right-4 flex flex-wrap gap-2">
+                  <span className="badge-tag inline-flex items-center text-xs">
+                    Василий Мещеряков — экс-директор по продажам Procter &amp; Gamble
+                  </span>
+                </div>
+
               </div>
             </div>
           </div>

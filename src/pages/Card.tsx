@@ -72,7 +72,7 @@ const Card = () => {
                 <img
                   src={vasilyPortrait.url}
                   alt="Василий Мещеряков"
-                  className="absolute inset-0 w-full h-full object-cover object-center -translate-y-[10%]"
+                  className="absolute inset-0 w-full h-full object-cover object-center scale-[0.9]"
                 />
 
                 <div className="absolute inset-x-0 bottom-3 sm:bottom-4 z-10 flex justify-start px-3 sm:px-4">

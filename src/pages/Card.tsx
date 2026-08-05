@@ -74,6 +74,15 @@ const Card = () => {
                   alt="Василий Мещеряков"
                   className="w-full h-full object-contain rounded-[1.75rem]"
                 />
+
+                <div className="absolute inset-x-0 bottom-2 sm:bottom-3 z-10 flex flex-wrap items-center justify-center gap-2 px-3">
+                  <span className="badge-tag bg-card/95 backdrop-blur-sm text-xs sm:text-sm">
+                    Василий Мещеряков
+                  </span>
+                  <span className="badge-tag bg-card/95 backdrop-blur-sm text-xs sm:text-sm">
+                    ex-sales director P&amp;G
+                  </span>
+                </div>
               </div>
             </div>
           </div>

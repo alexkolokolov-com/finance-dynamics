@@ -15,12 +15,11 @@ export type HeaderNavLink = {
 // блог, статьи, оферта, 404). Лендинги (Card, BigBudget, Landing) передают свой
 // pageNav с якорями секций + CTA.
 export const globalNav: HeaderNavLink[] = [
-  { href: "/#about", label: "О проекте" },
-  { href: "/#consultations", label: "Консультации" },
-  { href: "/bigbudget", label: "Марафон" },
+  { href: "/consultations", label: "Консультации" },
   { href: "/cashback", label: "Кэшбэк-гайд" },
   { href: "/landing", label: "Обучение" },
   { href: "/blog", label: "Блог" },
+  { href: "/reviews", label: "Отзывы" },
 ];
 
 export const SiteHeader = ({ pageNav = globalNav }: { pageNav?: HeaderNavLink[] }) => {

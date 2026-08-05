@@ -11,12 +11,11 @@ import { useLocation } from "react-router-dom";
 
 
 const cardPageNav = [
-  { href: "#about", label: "О проекте", id: "about" },
-  { href: "#consultations", label: "Консультации", id: "consultations" },
-  { href: "/bigbudget", label: "Марафон" },
+  { href: "/consultations", label: "Консультации" },
   { href: "/cashback", label: "Кэшбэк-гайд" },
   { href: "/landing", label: "Обучение" },
   { href: "/blog", label: "Блог" },
+  { href: "/reviews", label: "Отзывы" },
 ];
 
 const Card = () => {

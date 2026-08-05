@@ -121,10 +121,10 @@ const Event = () => {
               {/* Pills over photo */}
               <div className="absolute top-3 left-3 right-3 flex flex-wrap gap-2">
                 <span className="badge-tag inline-flex items-center text-xs">
-                  Москва, Новоданиловская наб.&nbsp;4
+                  Екатеринбург, Декабристов&nbsp;69
                 </span>
                 <span className="badge-tag inline-flex items-center text-xs">
-                  1&nbsp;августа, 10:00–13:00
+                  8&nbsp;августа, 10:00–13:00
                 </span>
               </div>
               {/* Bottom gradient + subtitle */}
@@ -158,10 +158,10 @@ const Event = () => {
             <div className="col-span-7">
               <div className="flex flex-wrap items-center gap-3 animate-fade-up">
                 <span className="badge-tag inline-flex items-center text-xs">
-                  1&nbsp;августа, 10:00–13:00
+                  8&nbsp;августа, 10:00–13:00
                 </span>
                 <span className="badge-tag inline-flex items-center text-xs">
-                  Москва, Новоданиловская наб.&nbsp;4
+                  Екатеринбург, Декабристов&nbsp;69
                 </span>
               </div>
 
@@ -210,7 +210,7 @@ const Event = () => {
                   </picture>
                 </div>
                 <div className="absolute -bottom-4 -right-4 bg-foreground text-background px-4 py-2 font-mono text-[10px] uppercase tracking-widest hard-shadow">
-                  River Loft · Москва
+                  SOK · Екатеринбург
                 </div>
               </figure>
             </div>
@@ -373,30 +373,18 @@ const Event = () => {
                   <div className="font-serif-display font-semibold text-3xl md:text-4xl leading-none text-foreground/70 line-through decoration-2">
                     3 500 ₽
                   </div>
-                  <div className="mt-2 inline-flex items-center gap-2 bg-foreground/10 text-foreground/50 px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest hard-shadow">
-                    {nbsp("Первые 10 мест")} · SOLD OUT
-                  </div>
                 </div>
 
                 <div>
                   <div className="font-serif-display font-semibold text-5xl md:text-6xl leading-none text-accent">
-                    4 500 ₽
+                    3 000 ₽
                   </div>
                   <div className="mt-2 inline-flex items-center gap-2 bg-accent text-accent-foreground px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest hard-shadow">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent-foreground animate-pulse" />
-                    {nbsp("Актуальная цена")}
+                    {nbsp("Первые 10 мест")}
                   </div>
                   <div className="mt-2 font-mono text-[11px] uppercase tracking-widest text-foreground/50">
                     {nbsp("Действует, пока есть места")}
-                  </div>
-                </div>
-
-                <div className="opacity-50">
-                  <div className="font-serif-display font-semibold text-3xl md:text-4xl leading-none text-foreground/70 line-through decoration-2">
-                    6 000 ₽
-                  </div>
-                  <div className="mt-2 inline-flex items-center gap-2 bg-foreground/10 text-foreground/50 px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest hard-shadow">
-                    {nbsp("Стандартная цена")}
                   </div>
                 </div>
               </div>
@@ -406,7 +394,7 @@ const Event = () => {
                   widgetId={1630658}
                   scriptHash="0d8bfde3b9a4168fa6ff4c65c386affe00c6cc94"
                   title="Регистрация на бизнес-завтрак"
-                  subtitle="1 августа · Москва · River Loft"
+                  subtitle="8 августа · Екатеринбург · Коворкинг SOK"
                   trigger={
                     <button
                       type="button"
@@ -420,11 +408,11 @@ const Event = () => {
                 <div className="mt-5 space-y-1.5 font-mono text-[11px] uppercase tracking-widest text-foreground/60">
                   <div className="flex items-center gap-2">
                     <Calendar size={12} className="text-accent" />
-                    1&nbsp;августа · 10:00–13:00
+                    8&nbsp;августа · 10:00–13:00
                   </div>
                   <div className="flex items-center gap-2">
                     <MapPin size={12} className="text-accent" />
-                    Москва, Новоданиловская наб. 4
+                    Екатеринбург, Декабристов&nbsp;69
                   </div>
                 </div>
               </div>
@@ -445,31 +433,21 @@ const Event = () => {
             Место проведения
           </div>
           <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl max-w-4xl animate-fade-up">
-            River Loft.
+            Коворкинг SOK.
           </h2>
 
-          <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center animate-fade-up">
-            <div className="relative overflow-hidden rounded-2xl border border-foreground/10 aspect-[4/3] hard-shadow">
-              <img
-                src="/river-loft.png"
-                alt="River Loft — зал для бизнес-завтрака"
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-accent/10 border border-accent/20 grid place-items-center shrink-0">
-                  <MapPin size={18} className="text-accent" />
-                </div>
-                <div>
-                  <h3 className="font-serif-display font-semibold text-xl md:text-2xl">
-                    Москва, Новоданиловская наб. 4
-                  </h3>
-                  <p className="mt-1 text-foreground/70 text-base md:text-lg leading-relaxed">
-                    Уютное место на м. Тульская, на набережной. Удобно добраться, приятно провести время и поговорить о деньгах без спешки.
-                  </p>
-                </div>
+          <div className="mt-12 max-w-3xl animate-fade-up">
+            <div className="flex items-start gap-4">
+              <div className="w-10 h-10 rounded-full bg-accent/10 border border-accent/20 grid place-items-center shrink-0">
+                <MapPin size={18} className="text-accent" />
+              </div>
+              <div>
+                <h3 className="font-serif-display font-semibold text-xl md:text-2xl">
+                  {nbsp("Екатеринбург, Декабристов 69")}
+                </h3>
+                <p className="mt-1 text-foreground/70 text-base md:text-lg leading-relaxed">
+                  {nbsp("Стильная и функциональная площадка рядом с УГМК.")}
+                </p>
               </div>
             </div>
           </div>

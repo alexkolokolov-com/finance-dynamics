@@ -539,7 +539,7 @@ const Landing = () => {
                 <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-3">
                   Банковская рассрочка до 12 месяцев
                 </div>
-                <div className="font-display text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1]">
+                <div className="font-display text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1] whitespace-nowrap">
                   от <span className="text-accent">5 000</span> ₽/мес
                 </div>
                 <div className="mt-4 font-body text-lg md:text-xl text-foreground/65">

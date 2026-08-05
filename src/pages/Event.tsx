@@ -5,6 +5,8 @@ import { TrafficRegisterDialog } from "@/components/traffic/TrafficRegisterDialo
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import { nbsp } from "@/lib/nbsp";
 import expertAvatar from "@/assets/expert-vasily.jpg";
+import venueAsset from "@/assets/sok-venue.png.asset.json";
+
 const eventHeroPhoto = { url: `${import.meta.env.BASE_URL}event-hero.jpg` };
 
 const pageNav: HeaderNavLink[] = [
@@ -436,23 +438,45 @@ const Event = () => {
             Коворкинг SOK.
           </h2>
 
-          <div className="mt-12 max-w-3xl animate-fade-up">
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-full bg-accent/10 border border-accent/20 grid place-items-center shrink-0">
-                <MapPin size={18} className="text-accent" />
-              </div>
-              <div>
-                <h3 className="font-serif-display font-semibold text-xl md:text-2xl">
-                  {nbsp("Екатеринбург, Декабристов 69")}
-                </h3>
-                <p className="mt-1 text-foreground/70 text-base md:text-lg leading-relaxed">
-                  {nbsp("Стильная и функциональная площадка рядом с УГМК.")}
-                </p>
+          <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+            <div className="animate-fade-up">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-accent/10 border border-accent/20 grid place-items-center shrink-0">
+                  <MapPin size={18} className="text-accent" />
+                </div>
+                <div>
+                  <h3 className="font-serif-display font-semibold text-xl md:text-2xl">
+                    {nbsp("Екатеринбург, Декабристов 69")}
+                  </h3>
+                  <p className="mt-1 text-foreground/70 text-base md:text-lg leading-relaxed">
+                    {nbsp("Стильная и функциональная площадка рядом с УГМК.")}
+                  </p>
+                </div>
               </div>
             </div>
+
+            <figure className="relative animate-fade-up" style={{ animationDelay: "0.1s" }}>
+              <div
+                className="absolute -inset-4 border border-foreground/15 pointer-events-none"
+                aria-hidden
+              />
+              <div className="relative overflow-hidden border border-foreground/15 hard-shadow bg-card aspect-[4/3]">
+                <picture className="block h-full w-full">
+                  <img
+                    src={venueAsset.url}
+                    alt="Коворкинг SOK — переговорная с панорамными окнами"
+                    className="h-full w-full object-cover"
+                    width="1200"
+                    height="900"
+                    loading="lazy"
+                  />
+                </picture>
+              </div>
+            </figure>
           </div>
         </div>
       </section>
+
 
       <Footer />
     </main>

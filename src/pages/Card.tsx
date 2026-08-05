@@ -102,7 +102,8 @@ const Card = () => {
 
       <CardAbout />
       <CardConsultations />
-      <CardOffers />
+      <CardProfit />
+      <CardCashback />
       <CardTextbook />
 
     </main>

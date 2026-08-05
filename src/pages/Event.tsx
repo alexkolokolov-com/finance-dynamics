@@ -391,8 +391,8 @@ const Event = () => {
 
               <div className="md:border-l md:border-foreground/10 md:pl-12">
                 <TrafficRegisterDialog
-                  widgetId={1630658}
-                  scriptHash="0d8bfde3b9a4168fa6ff4c65c386affe00c6cc94"
+                  widgetId={1639009}
+                  scriptHash="ff0a0caff28380a7af385c1bdb2937afcc5ce6f3"
                   title="Регистрация на бизнес-завтрак"
                   subtitle="8 августа · Екатеринбург · Коворкинг SOK"
                   trigger={

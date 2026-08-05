@@ -40,7 +40,7 @@ const Card = () => {
       <section className="relative min-h-screen pt-24 pb-16 overflow-hidden">
         <div className="container-px max-w-7xl mx-auto relative">
           {/* split: текст слева / портрет справа */}
-          <div className="grid grid-cols-12 gap-8 lg:gap-12 items-center min-h-[80vh]">
+          <div className="grid grid-cols-12 gap-3 md:gap-8 lg:gap-12 items-center min-h-[80vh]">
             <div
               className="col-span-12 md:col-span-6 animate-fade-up"
               style={{ animationDelay: "0.1s" }}
@@ -49,7 +49,7 @@ const Card = () => {
                 Вася <span className="text-accent">и&nbsp;финансы</span>
               </h1>
 
-              <p className="mt-6 md:mt-8 font-display font-semibold leading-[1.2] tracking-tight text-foreground/85 max-w-2xl text-[clamp(1.35rem,3.2vw,2.5rem)]">
+              <p className="mt-4 md:mt-8 font-display font-semibold leading-[1.2] tracking-tight text-foreground/85 max-w-2xl text-[clamp(1.35rem,3.2vw,2.5rem)]">
                 Простыми словами о&nbsp;том, как избавиться от&nbsp;финансовой тревоги и&nbsp;<span className="italic">жить лучше за&nbsp;те&nbsp;же&nbsp;деньги</span>
               </p>
 

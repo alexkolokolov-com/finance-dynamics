@@ -256,7 +256,7 @@ const Consultations = () => {
       </section>
 
       {/* Для кого */}
-      <section className="relative py-24 md:py-32 overflow-hidden">
+      <section className="relative py-16 md:py-24 overflow-hidden">
         <div className="container-px max-w-7xl mx-auto">
           <div className="font-mono text-xs uppercase tracking-widest text-accent mb-6 animate-fade-up">
             Для кого
@@ -285,7 +285,7 @@ const Consultations = () => {
       </section>
 
       {/* Как проходит — горизонтально, 3 этапа */}
-      <section className="relative py-24 md:py-32 overflow-hidden bg-grid">
+      <section className="relative py-16 md:py-24 overflow-hidden bg-grid">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{ background: "var(--grad-chalk)" }}
@@ -323,7 +323,7 @@ const Consultations = () => {
       </section>
 
       {/* Календарь и бронирование */}
-      <section id="early-booking" className="relative py-24 md:py-32 overflow-hidden scroll-mt-20">
+      <section id="early-booking" className="relative py-16 md:py-24 overflow-hidden scroll-mt-20">
         <div className="container-px max-w-7xl mx-auto">
           <div className="animate-fade-up">
             <div className="font-mono text-xs uppercase tracking-widest text-accent mb-6">
@@ -458,7 +458,7 @@ const Consultations = () => {
       </section>
 
       {/* Логика цены */}
-      <section className="relative py-24 md:py-32 overflow-hidden bg-grid">
+      <section className="relative py-16 md:py-24 overflow-hidden bg-grid">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{ background: "var(--grad-chalk)" }}
@@ -518,7 +518,7 @@ const Consultations = () => {
       </section>
 
       {/* Результаты */}
-      <section className="relative py-24 md:py-32 overflow-hidden">
+      <section className="relative py-16 md:py-24 overflow-hidden">
         <div className="container-px max-w-7xl mx-auto relative">
           <div className="font-mono text-xs uppercase tracking-widest text-accent mb-6 animate-fade-up">
             Результаты
@@ -551,7 +551,7 @@ const Consultations = () => {
       </section>
 
       {/* Отзывы */}
-      <section className="relative py-24 md:py-32 overflow-hidden bg-grid">
+      <section className="relative py-16 md:py-24 overflow-hidden bg-grid">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{ background: "var(--grad-chalk)" }}

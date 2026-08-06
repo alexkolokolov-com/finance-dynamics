@@ -208,7 +208,7 @@ const Consultations = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             <div className="lg:col-span-7 animate-fade-up">
               <h1 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-[clamp(2.5rem,8vw,6rem)]">
-                Персональные <span className="italic font-normal">консультации</span>.
+                Персональные <span className="italic font-normal">консультации</span>
               </h1>
               <p
                 className="mt-8 font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-2xl"
@@ -262,7 +262,7 @@ const Consultations = () => {
             Для кого
           </div>
           <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl animate-fade-up max-w-4xl">
-            Типовые запросы, с которыми&nbsp;приходят.
+            Типовые запросы, с которыми&nbsp;приходят
           </h2>
 
           <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
@@ -293,7 +293,7 @@ const Consultations = () => {
         <div className="container-px max-w-7xl mx-auto relative">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16 animate-fade-up">
             <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl">
-              Как проходит.
+              Как проходит
             </h2>
             <div className="font-mono text-xs uppercase tracking-widest text-accent">
               Длительность — 90 минут
@@ -468,7 +468,7 @@ const Consultations = () => {
             Логика цены
           </div>
           <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl animate-fade-up max-w-4xl">
-            Почему чем дальше — тем дешевле.
+            Почему чем дальше — тем дешевле?
           </h2>
 
           <figure className="mt-16 bg-card border border-foreground/15 p-6 md:p-12 hard-shadow animate-fade-up">
@@ -524,7 +524,7 @@ const Consultations = () => {
             Результаты
           </div>
           <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl animate-fade-up max-w-4xl">
-            В&nbsp;чём выгода.
+            В&nbsp;чём выгода
           </h2>
 
           <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
@@ -561,7 +561,7 @@ const Consultations = () => {
             Истории
           </div>
           <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl animate-fade-up max-w-4xl">
-            Что говорят клиенты.
+            Что говорят клиенты
           </h2>
 
           <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">

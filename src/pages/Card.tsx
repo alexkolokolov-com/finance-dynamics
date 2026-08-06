@@ -5,6 +5,7 @@ import { CardCashback } from "@/components/sections/CardCashback";
 import { CardConsultations } from "@/components/sections/CardConsultations";
 import { CardProfit } from "@/components/sections/CardProfit";
 import { CardTextbook } from "@/components/sections/CardTextbook";
+import { Footer } from "@/components/sections/Footer";
 
 import vasilyPortrait from "@/assets/vasily-hero.png.asset.json";
 import { useEffect } from "react";

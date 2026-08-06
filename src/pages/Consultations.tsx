@@ -199,7 +199,7 @@ const Consultations = () => {
       <SiteHeader />
 
       {/* Hero */}
-      <section className="relative pt-28 md:pt-36 lg:pt-40 pb-16 md:pb-24 overflow-hidden bg-grid">
+      <section className="relative pt-24 md:pt-32 lg:pt-36 pb-12 md:pb-16 overflow-hidden bg-grid">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{ background: "var(--grad-chalk)" }}

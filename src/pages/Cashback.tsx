@@ -210,7 +210,6 @@ const tariffs = [
     name: "Стандарт",
     old: "19\u00A0900\u00A0₽",
     price: "9\u00A0900\u00A0₽",
-    promo: "Акция до\u00A08\u00A0июля",
     note: "Подписка на\u00A01\u00A0год. Все выпуски и\u00A0архив на\u00A0весь период доступа.",
     items: [
       "12\u00A0месяцев обновлений",
@@ -225,7 +224,6 @@ const tariffs = [
     name: "VIP",
     old: "79\u00A0900\u00A0₽",
     price: "39\u00A0900\u00A0₽",
-    promo: "Акция до\u00A08\u00A0июля",
     note: "Всё, что\u00A0в\u00A0тарифе Стандарт, плюс личное сопровождение весь год.",
     items: [
       "Всё из\u00A0тарифа Стандарт",
@@ -447,11 +445,6 @@ const Cashback = () => {
                 <div className="mt-6 font-serif-display text-5xl md:text-6xl leading-none tracking-tight">{t.price}</div>
                 <div className="mt-3 flex items-center gap-3 flex-wrap">
                   <span className="font-serif-display text-2xl md:text-3xl leading-none text-muted-foreground line-through">{t.old}</span>
-                  {t.promo && (
-                    <span className="inline-flex items-center font-mono text-[11px] uppercase tracking-widest text-accent border border-accent/40 rounded-full px-2.5 py-1">
-                      {t.promo}
-                    </span>
-                  )}
                 </div>
                 <p className="mt-5 text-[15px] leading-relaxed text-muted-foreground min-h-[78px]">{t.note}</p>
                 <ul className="mt-5 space-y-2 text-[15px] text-foreground/85 flex-1">

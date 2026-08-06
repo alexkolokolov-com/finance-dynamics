@@ -565,6 +565,9 @@ const Landing = () => {
               >
                 Оставить заявку →
               </a>
+              <p className="mt-4 max-w-md mx-auto text-center font-body text-sm md:text-base text-foreground/70 leading-relaxed">
+                ВАЖНО: заполнение заявки ни&nbsp;к&nbsp;чему вас не&nbsp;обязывает, но даёт возможность узнать об&nbsp;актуальной программе обучения, ваших возможных результатах и&nbsp;получить персональные условия на&nbsp;участие
+              </p>
             </div>
           </div>
         </div>

@@ -265,7 +265,7 @@ const Consultations = () => {
             Типовые запросы, с которыми&nbsp;приходят
           </h2>
 
-          <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
             {audience.map((a, i) => (
               <div
                 key={a.title}
@@ -340,7 +340,7 @@ const Consultations = () => {
             </div>
           </div>
 
-          <div className="mt-16 hidden md:block overflow-hidden border border-foreground/15 bg-card hard-shadow animate-fade-up">
+          <div className="mt-12 hidden md:block overflow-hidden border border-foreground/15 bg-card hard-shadow animate-fade-up">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[28rem]">
                 <thead>
@@ -408,7 +408,7 @@ const Consultations = () => {
             </div>
           </div>
 
-          <div className="mt-16 md:hidden overflow-hidden border border-foreground/15 bg-card hard-shadow animate-fade-up">
+          <div className="mt-12 md:hidden overflow-hidden border border-foreground/15 bg-card hard-shadow animate-fade-up">
             {calendar.map((c, i) => {
               const price = Math.round((BASE_PRICE * (100 - c.discount)) / 100);
               return (
@@ -471,7 +471,7 @@ const Consultations = () => {
             Почему чем дальше — тем дешевле?
           </h2>
 
-          <figure className="mt-16 bg-card border border-foreground/15 p-6 md:p-12 hard-shadow animate-fade-up">
+          <figure className="mt-12 bg-card border border-foreground/15 p-6 md:p-12 hard-shadow animate-fade-up">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
               <div className="flex items-center gap-4 md:flex-col md:items-start md:col-span-3 md:text-left">
                 <img
@@ -527,7 +527,7 @@ const Consultations = () => {
             В&nbsp;чём выгода
           </h2>
 
-          <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
             {results.map((r, i) => (
               <div
                 key={r.title}
@@ -544,7 +544,7 @@ const Consultations = () => {
             ))}
           </div>
 
-          <div className="mt-16 animate-fade-up">
+          <div className="mt-12 animate-fade-up">
             <BookButton />
           </div>
         </div>
@@ -564,13 +564,13 @@ const Consultations = () => {
             Что говорят клиенты
           </h2>
 
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
             {galleryReviews.map((r, i) => (
               <ReviewCard key={r.name} r={r} i={i} />
             ))}
           </div>
 
-          <div className="mt-16 animate-fade-up">
+          <div className="mt-12 animate-fade-up">
             <BookButton />
           </div>
         </div>

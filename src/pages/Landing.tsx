@@ -1,5 +1,4 @@
 import { Video, FileCheck, Users, Clock, Check, Waves, Repeat2, Wallet, Hourglass, Activity, Settings, ScanSearch, HandCoins, Landmark, HeartHandshake, type LucideIcon } from "lucide-react";
-import { TrafficRegisterDialog } from "@/components/traffic/TrafficRegisterDialog";
 import {
   programGoals,
   mainGoal,
@@ -558,16 +557,14 @@ const Landing = () => {
                 </ul>
               </div>
 
-              <TrafficRegisterDialog
-                widgetId={1619139}
-                scriptHash="161dd3f30c940fc854a581051b587bcc4480ad86"
-                title="Записаться на программу"
-                trigger={
-                  <button className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-accent-foreground transition-colors">
-                    Записаться →
-                  </button>
-                }
-              />
+              <a
+                href="https://nivz.getcourse.ru/diagnostic"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-accent-foreground transition-colors"
+              >
+                Оставить заявку →
+              </a>
             </div>
           </div>
         </div>

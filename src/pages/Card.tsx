@@ -107,6 +107,7 @@ const Card = () => {
       <CardCashback />
       <CardTextbook />
 
+      <Footer />
     </main>
   );
 };

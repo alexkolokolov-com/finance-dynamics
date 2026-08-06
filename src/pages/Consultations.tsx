@@ -53,7 +53,6 @@ const stages = [
 const BASE_PRICE = 20000;
 
 const calendar = [
-  { month: "Июль", discount: 0, seats: 2 },
   { month: "Август", discount: 20, seats: 5 },
   { month: "Сентябрь", discount: 30, seats: 5 },
   { month: "Октябрь", discount: 40, seats: 8 },

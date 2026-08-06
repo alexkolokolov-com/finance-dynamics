@@ -1,5 +1,4 @@
 import { Video, FileCheck, Users, Clock, Check, Waves, Repeat2, Wallet, Hourglass, Activity, Settings, ScanSearch, HandCoins, Landmark, HeartHandshake, type LucideIcon } from "lucide-react";
-import { TrafficRegisterDialog } from "@/components/traffic/TrafficRegisterDialog";
 import {
   programGoals,
   mainGoal,

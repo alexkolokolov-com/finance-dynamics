@@ -231,8 +231,7 @@ const Corporate = () => {
         </div>
       </section>
 
-        </div>
-      </section>
+
 
       {/* Problem */}
       <section id="about" className="relative py-16 md:py-24 overflow-hidden scroll-mt-20">

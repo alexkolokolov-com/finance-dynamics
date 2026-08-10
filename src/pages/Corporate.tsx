@@ -18,7 +18,6 @@ import expertPhoto from "@/assets/expert-vasily.jpg";
 const pageNav: HeaderNavLink[] = [
   { href: "#about", label: "О тренинге", id: "about" },
   { href: "#formats", label: "Форматы", id: "formats" },
-  { href: "#program", label: "Программа", id: "program" },
   { href: "#request", label: "Запросить", cta: true },
 ];
 
@@ -410,8 +409,8 @@ const Corporate = () => {
         </div>
       </section>
 
-      {/* Program intro-workshop */}
-      <section id="program" className="relative py-16 md:py-24 overflow-hidden scroll-mt-20">
+      {/* Program intro-workshop — hidden */}
+      <section id="program" className="hidden relative py-16 md:py-24 overflow-hidden scroll-mt-20">
         <div className="container-px max-w-7xl mx-auto">
           <SectionLabel>{nbsp("Программа интро-воркшопа")}</SectionLabel>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">

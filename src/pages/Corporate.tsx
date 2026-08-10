@@ -242,21 +242,16 @@ const Corporate = () => {
             {nbsp("Как сохранить сотрудников, без роста ФОТ?")}
           </h2>
 
-          <div className="mt-8 md:mt-12 bg-card border border-foreground/15 p-6 md:p-8 hard-shadow animate-fade-up max-w-3xl">
-            <div className="flex items-start gap-4">
-              <span className="font-serif-display text-4xl md:text-5xl text-accent leading-none">"</span>
-              <div>
-                <p className="font-serif-display text-lg md:text-2xl leading-snug text-foreground/90">
-                  {nbsp(
-                    "По исследованиям PwC — сотрудники, испытывающие проблемы с личными финансами, в 5 раз чаще отвлекаются на работе"
-                  )}
-                </p>
-                <p className="mt-2 font-mono text-xs uppercase tracking-widest text-foreground/50">
-                  {nbsp("PwC Employee Financial Wellness Survey")}
-                </p>
-              </div>
-            </div>
-          </div>
+          <figure className="mt-6 md:mt-8 animate-fade-up">
+            <blockquote className="font-serif-display italic font-normal text-xl md:text-3xl leading-[1.3] tracking-tight text-foreground/80 max-w-4xl">
+              {nbsp(
+                "«Сотрудники, испытывающие проблемы с личными финансами, в 5 раз чаще отвлекаются на работе»"
+              )}
+            </blockquote>
+            <figcaption className="mt-3 font-body text-xs md:text-sm text-foreground/50">
+              {nbsp("PwC Employee Financial Wellness Survey")}
+            </figcaption>
+          </figure>
 
           <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {problems.map((p, i) => {
@@ -264,16 +259,20 @@ const Corporate = () => {
               return (
                 <div
                   key={p.title}
-                  className="bg-card border border-foreground/15 p-7 md:p-8 hard-shadow animate-fade-up flex flex-col h-full"
+                  className="bg-board p-7 md:p-8 hard-shadow animate-fade-up flex flex-col h-full"
                   style={{ animationDelay: `${0.1 + i * 0.08}s` }}
                 >
-                  <div className="w-10 h-10 rounded-full border border-foreground/15 flex items-center justify-center text-accent mb-5">
-                    <Icon size={20} strokeWidth={1.5} />
+                  <div className="flex justify-end">
+                    <Icon
+                      size={44}
+                      strokeWidth={1}
+                      className="text-accent-soft/70 shrink-0"
+                    />
                   </div>
-                  <h3 className="font-serif-display font-semibold leading-[1.1] tracking-tight text-2xl md:text-3xl mb-4">
+                  <h3 className="mt-4 font-serif-display font-semibold leading-[1.1] tracking-tight text-2xl md:text-3xl mb-4">
                     {nbsp(p.title)}
                   </h3>
-                  <p className="font-body text-base text-foreground/75 leading-relaxed">
+                  <p className="font-body text-base text-primary-foreground/70 leading-relaxed">
                     {nbsp(p.text)}
                   </p>
                 </div>

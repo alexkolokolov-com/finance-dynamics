@@ -182,7 +182,7 @@ const Corporate = () => {
           style={{ background: "var(--grad-chalk)" }}
         />
         <div className="container-px max-w-7xl mx-auto relative">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-center">
             <div className="lg:col-span-7 animate-fade-up">
               <div className="font-mono text-xs uppercase tracking-widest text-accent mb-4 md:mb-6">
                 {nbsp("Тренинг для сотрудников")}
@@ -223,7 +223,7 @@ const Corporate = () => {
                 </div>
               </div>
 
-              <div className="lg:hidden mt-6 w-full max-w-[320px] sm:max-w-[380px] mx-auto">
+              <div className="lg:hidden mt-4 w-full max-w-[320px] sm:max-w-[380px] mx-auto">
                 <RequestButton className="w-full" />
               </div>
             </div>

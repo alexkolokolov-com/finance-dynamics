@@ -17,6 +17,7 @@ export type HeaderNavLink = {
 export const globalNav: HeaderNavLink[] = [
   { href: "/consultations", label: "Консультации" },
   { href: "/landing", label: "Сопровождение" },
+  { href: "/corporate", label: "Для компаний" },
   { href: "/cashback", label: "Кэшбэк-гайд" },
   { href: "/blog", label: "Блог" },
   { href: "/reviews", label: "Отзывы" },

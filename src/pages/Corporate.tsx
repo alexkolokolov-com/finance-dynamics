@@ -6,6 +6,7 @@ import {
   DoorOpen,
   PiggyBank,
   Users,
+  Clock,
   ArrowRight,
   Send,
   Mail,

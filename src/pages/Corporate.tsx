@@ -29,17 +29,17 @@ const pageNav: HeaderNavLink[] = [
 const problems = [
   {
     icon: HeartPulse,
-    title: "Финансовый стресс",
+    title: "Финансовый\nстресс",
     text: "Сотрудники отвлекаются на личные деньги, снижается фокус и вовлечённость.",
   },
   {
     icon: DoorOpen,
-    title: "Уход лучших специалистов",
+    title: "Уход лучших\nспециалистов",
     text: "Ключевые люди уходят туда, где предлагают больше, а не туда, где им комфортнее.",
   },
   {
     icon: PiggyBank,
-    title: "Нет возможности поднимать зарплату",
+    title: "Нет возможности\nподнимать зарплату",
     text: "Бюджет ограничен, но отток кадров и падение продуктивности обходятся дороже.",
   },
 ];
@@ -257,25 +257,25 @@ const Corporate = () => {
             {problems.map((p, i) => {
               const Icon = p.icon;
               return (
-                <div
-                  key={p.title}
-                  className="relative bg-board p-7 md:p-8 hard-shadow animate-fade-up flex flex-col h-full overflow-hidden"
-                  style={{ animationDelay: `${0.1 + i * 0.08}s` }}
-                >
-                  <div className="absolute top-5 right-5 md:top-6 md:right-6 opacity-15 pointer-events-none">
-                    <Icon
-                      size={72}
-                      strokeWidth={1}
-                      className="text-accent-soft shrink-0"
-                    />
-                  </div>
-                  <h3 className="relative font-serif-display font-semibold leading-[1.1] tracking-tight text-2xl md:text-3xl mb-12 md:mb-14">
-                    {nbsp(p.title)}
-                  </h3>
-                  <p className="relative mt-auto font-body text-base text-primary-foreground/70 leading-relaxed">
-                    {nbsp(p.text)}
-                  </p>
+              <div
+                key={p.title}
+                className="relative bg-board p-7 md:p-8 hard-shadow animate-fade-up flex flex-col h-full overflow-hidden"
+                style={{ animationDelay: `${0.1 + i * 0.08}s` }}
+              >
+                <div className="absolute top-5 right-5 md:top-6 md:right-6 pointer-events-none">
+                  <Icon
+                    size={72}
+                    strokeWidth={1}
+                    className="text-accent/30 shrink-0"
+                  />
                 </div>
+                <h3 className="relative font-serif-display font-semibold leading-[1.1] tracking-tight text-2xl md:text-3xl mb-12 md:mb-14 whitespace-pre-line pr-16">
+                  {nbsp(p.title)}
+                </h3>
+                <p className="relative mt-auto font-body text-base text-primary-foreground/70 leading-relaxed">
+                  {nbsp(p.text)}
+                </p>
+              </div>
               );
             })}
           </div>

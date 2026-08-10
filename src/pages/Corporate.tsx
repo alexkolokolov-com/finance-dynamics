@@ -349,18 +349,21 @@ const Corporate = () => {
             ))}
           </div>
 
-          <div className="mt-12 bg-accent/10 border border-accent/20 p-6 md:p-8 hard-shadow animate-fade-up">
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-full bg-accent text-accent-foreground flex items-center justify-center shrink-0">
-                <Target size={20} strokeWidth={1.5} />
+          <figure className="mt-12 animate-fade-up">
+            <div className="flex gap-4 md:gap-6">
+              <div className="w-1 bg-accent shrink-0" aria-hidden="true" />
+              <div>
+                <p className="font-serif-display italic text-accent text-lg md:text-xl mb-2">
+                  {nbsp("Важно:")}
+                </p>
+                <p className="font-serif-display text-lg md:text-2xl leading-snug text-foreground/90">
+                  {nbsp(
+                    "инвестиция в финансовую грамотность сотрудников окупается через 3–6 месяцев за счёт снижения текучести кадров и роста производительности труда"
+                  )}
+                </p>
               </div>
-              <p className="font-serif-display text-lg md:text-2xl leading-snug text-foreground/90">
-                {nbsp(
-                  "Важно: инвестиция в финансовую грамотность сотрудников окупается через 3–6 месяцев за счёт снижения текучести кадров и роста производительности труда"
-                )}
-              </p>
             </div>
-          </div>
+          </figure>
         </div>
       </section>
 

@@ -71,7 +71,7 @@ jobs:
       - name: Add SPA entry points for deep links
         run: |
           cp dist/index.html dist/404.html
-          for route in bigbudget checklist budget-methods blog landing landing-deck support-2026 traffic calculator cashback conference consultations lectures decisions event negotiations oferta reviews old; do
+          for route in bigbudget checklist budget-methods blog landing landing-deck support-2026 traffic calculator cashback conference consultations corporate lectures decisions event negotiations oferta reviews old; do
             mkdir -p "dist/$route"
             cp dist/index.html "dist/$route/index.html"
           done

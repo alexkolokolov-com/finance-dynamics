@@ -6,9 +6,6 @@ import {
   DoorOpen,
   PiggyBank,
   Users,
-  Presentation,
-  BookOpen,
-  Calendar,
   Clock,
   ArrowRight,
   Send,
@@ -71,7 +68,6 @@ const companyBenefits = [
 
 const formats = [
   {
-    icon: Presentation,
     title: "Интро-воркшоп",
     duration: "1,5–2 часа",
     text: "Пилотный формат для знакомства команды с ключевыми инструментами. Идеален для тестирования программы или корпоративных мероприятий.",
@@ -82,7 +78,6 @@ const formats = [
     ],
   },
   {
-    icon: BookOpen,
     title: "Корпоративный интенсив",
     duration: "1–2 дня",
     text: "Глубокая проработка главных финансовых навыков с практическими заданиями. Участники создают собственную финансовую систему.",
@@ -94,7 +89,6 @@ const formats = [
     ],
   },
   {
-    icon: Calendar,
     title: "Квартальная программа сопровождения",
     duration: "3 месяца",
     text: "Комплексная поддержка с регулярными встречами, индивидуальными консультациями и аналитикой для HR.",
@@ -378,28 +372,27 @@ const Corporate = () => {
             {nbsp("Подберите формат под задачи")}
           </h2>
 
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            {formats.map((f, i) => {
-              const Icon = f.icon;
-              return (
-                <div
-                  key={f.title}
-                  className="bg-card border border-foreground/15 p-7 md:p-8 hard-shadow animate-fade-up flex flex-col h-full"
-                  style={{ animationDelay: `${0.1 + i * 0.08}s` }}
-                >
-                  <div className="w-10 h-10 rounded-full border border-foreground/15 flex items-center justify-center text-accent mb-5">
-                    <Icon size={20} strokeWidth={1.5} />
-                  </div>
-                  <div className="font-mono text-xs uppercase tracking-widest text-accent mb-3">
-                    {nbsp(f.duration)}
-                  </div>
-                  <h3 className="font-serif-display font-semibold leading-[1.1] tracking-tight text-2xl md:text-3xl mb-4">
+          <div className="mt-12 space-y-6 lg:space-y-8">
+            {formats.map((f, i) => (
+              <div
+                key={f.title}
+                className="bg-card border border-foreground/15 p-7 md:p-8 lg:p-10 hard-shadow animate-fade-up"
+                style={{ animationDelay: `${0.1 + i * 0.08}s` }}
+              >
+                <div className="flex items-start justify-between gap-6">
+                  <h3 className="font-serif-display font-semibold leading-[1.1] tracking-tight text-2xl md:text-3xl max-w-2xl">
                     {nbsp(f.title)}
                   </h3>
-                  <p className="font-body text-base text-foreground/75 leading-relaxed mb-5">
+                  <div className="font-mono text-xs uppercase tracking-widest text-accent shrink-0 pt-1 text-right">
+                    {nbsp(f.duration)}
+                  </div>
+                </div>
+
+                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-start">
+                  <p className="font-body text-base text-foreground/75 leading-relaxed">
                     {nbsp(f.text)}
                   </p>
-                  <ul className="mt-auto space-y-2">
+                  <ul className="space-y-2">
                     {f.bullets.map((b, j) => (
                       <li key={j} className="flex items-start gap-2 font-body text-sm text-foreground/75">
                         <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" />
@@ -408,9 +401,12 @@ const Corporate = () => {
                     ))}
                   </ul>
                 </div>
-              );
-            })}
+
+                <RequestButton className="mt-8" />
+              </div>
+            ))}
           </div>
+
         </div>
       </section>
 

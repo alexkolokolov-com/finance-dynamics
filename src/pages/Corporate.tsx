@@ -259,20 +259,20 @@ const Corporate = () => {
               return (
                 <div
                   key={p.title}
-                  className="bg-board p-7 md:p-8 hard-shadow animate-fade-up flex flex-col h-full"
+                  className="relative bg-board p-7 md:p-8 hard-shadow animate-fade-up flex flex-col h-full overflow-hidden"
                   style={{ animationDelay: `${0.1 + i * 0.08}s` }}
                 >
-                  <div className="flex justify-end">
+                  <div className="absolute top-5 right-5 md:top-6 md:right-6 opacity-15 pointer-events-none">
                     <Icon
-                      size={44}
+                      size={72}
                       strokeWidth={1}
-                      className="text-accent-soft/70 shrink-0"
+                      className="text-accent-soft shrink-0"
                     />
                   </div>
-                  <h3 className="mt-4 font-serif-display font-semibold leading-[1.1] tracking-tight text-2xl md:text-3xl mb-4">
+                  <h3 className="relative font-serif-display font-semibold leading-[1.1] tracking-tight text-2xl md:text-3xl mb-12 md:mb-14">
                     {nbsp(p.title)}
                   </h3>
-                  <p className="font-body text-base text-primary-foreground/70 leading-relaxed">
+                  <p className="relative mt-auto font-body text-base text-primary-foreground/70 leading-relaxed">
                     {nbsp(p.text)}
                   </p>
                 </div>

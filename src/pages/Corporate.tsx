@@ -10,7 +10,6 @@ import {
   BookOpen,
   Calendar,
   Clock,
-  Target,
   ArrowRight,
   Send,
   Mail,

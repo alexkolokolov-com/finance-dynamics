@@ -294,7 +294,8 @@ const Corporate = () => {
             <div className="animate-fade-up">
               <SectionLabel>{nbsp("Решение")}</SectionLabel>
               <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl max-w-4xl">
-                {nbsp("Не повышать ЗП, а научить жить лучше за те же деньги")}
+                {nbsp("Не повышать ЗП, а научить")}{" "}
+                <span className="italic text-accent">{nbsp("жить лучше за те же деньги")}</span>
               </h2>
               <p className="mt-8 font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-2xl">
                 {nbsp(

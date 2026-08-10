@@ -176,23 +176,23 @@ const Corporate = () => {
       <SiteHeader pageNav={pageNav} />
 
       {/* Hero */}
-      <section className="relative pt-24 md:pt-32 lg:pt-36 pb-12 md:pb-16 overflow-hidden bg-grid">
+      <section className="relative pt-20 md:pt-32 lg:pt-36 pb-10 md:pb-16 overflow-hidden bg-grid">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{ background: "var(--grad-chalk)" }}
         />
         <div className="container-px max-w-7xl mx-auto relative">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
             <div className="lg:col-span-7 animate-fade-up">
-              <div className="font-mono text-xs uppercase tracking-widest text-accent mb-6">
+              <div className="font-mono text-xs uppercase tracking-widest text-accent mb-4 md:mb-6">
                 {nbsp("Тренинг для сотрудников")}
               </div>
-              <h1 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-[clamp(2.5rem,8vw,6rem)]">
+              <h1 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-[clamp(2rem,7vw,6rem)]">
                 {nbsp("Личная финансовая")}{" "}
                 <span className="italic font-normal">{nbsp("устойчивость")}</span>
               </h1>
               <p
-                className="mt-8 font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-2xl"
+                className="mt-4 md:mt-8 font-serif-display text-lg md:text-2xl leading-snug text-foreground/80 max-w-2xl"
                 style={{ animationDelay: "0.1s" }}
               >
                 {nbsp(
@@ -200,37 +200,37 @@ const Corporate = () => {
                 )}
               </p>
 
-              <div className="mt-10" style={{ animationDelay: "0.2s" }}>
+              <div className="hidden lg:block mt-10" style={{ animationDelay: "0.2s" }}>
                 <RequestButton />
               </div>
             </div>
 
             <div
-              className="lg:col-span-5 animate-fade-up"
+              className="lg:col-span-5 animate-fade-up flex flex-col items-center lg:items-end"
               style={{ animationDelay: "0.2s" }}
             >
-              <div className="relative max-w-md lg:max-w-none mx-auto lg:mx-0">
-                <div className="absolute -inset-4 md:-inset-6 bg-accent/10 rounded-[2rem] -rotate-3 pointer-events-none" />
-                <div
-                  className="absolute inset-0 rounded-2xl opacity-30 pointer-events-none bg-grid"
-                  style={{ maskImage: "linear-gradient(180deg, black 40%, transparent 100%)" }}
+              <div className="relative w-full max-w-[320px] sm:max-w-[380px] lg:max-w-md aspect-[4/5] mx-auto lg:mx-0 overflow-hidden rounded-2xl">
+                <img
+                  src={expertPhoto}
+                  alt="Василий Мещеряков"
+                  className="absolute inset-0 w-full h-full object-cover object-center"
+                  loading="eager"
                 />
-                <div className="relative overflow-hidden rounded-2xl border border-foreground/10 shadow-hard aspect-[3/4] md:aspect-[4/5] max-h-[70vh] lg:max-h-none">
-                  <img
-                    src={expertPhoto}
-                    alt="Василий Мещеряков"
-                    className="w-full h-full object-cover object-center"
-                    loading="eager"
-                  />
-                </div>
-                <div className="absolute -bottom-4 -left-4 md:-bottom-6 md:-left-6 bg-card border border-foreground/15 px-4 py-2 shadow-hard rounded-full">
-                  <span className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-accent">
+                <div className="absolute inset-x-0 bottom-3 sm:bottom-4 z-10 flex justify-start px-3 sm:px-4">
+                  <span className="badge-tag bg-card/95 backdrop-blur-sm rounded-full px-3 py-1.5 shadow-sm font-mono text-[10px] md:text-xs uppercase tracking-widest text-accent whitespace-nowrap">
                     Василий Мещеряков · ex P&amp;G (Band 3)
                   </span>
                 </div>
               </div>
+
+              <div className="lg:hidden mt-6 w-full max-w-[320px] sm:max-w-[380px] mx-auto">
+                <RequestButton className="w-full" />
+              </div>
             </div>
           </div>
+        </div>
+      </section>
+
         </div>
       </section>
 

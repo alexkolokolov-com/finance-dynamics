@@ -176,23 +176,23 @@ const Corporate = () => {
       <SiteHeader pageNav={pageNav} />
 
       {/* Hero */}
-      <section className="relative pt-14 md:pt-32 lg:pt-36 pb-8 md:pb-16 overflow-hidden bg-grid">
+      <section className="relative pt-20 md:pt-32 lg:pt-36 pb-10 md:pb-16 overflow-hidden bg-grid">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{ background: "var(--grad-chalk)" }}
         />
         <div className="container-px max-w-7xl mx-auto relative">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-center">
             <div className="lg:col-span-7 animate-fade-up">
-              <div className="font-mono text-xs uppercase tracking-widest text-accent mb-2 md:mb-6">
+              <div className="font-mono text-xs uppercase tracking-widest text-accent mb-4 md:mb-6">
                 {nbsp("Тренинг для сотрудников")}
               </div>
-              <h1 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-[clamp(1.75rem,6.5vw,6rem)]">
+              <h1 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-[clamp(2rem,7vw,6rem)]">
                 {nbsp("Личная финансовая")}{" "}
                 <span className="italic font-normal">{nbsp("устойчивость")}</span>
               </h1>
               <p
-                className="mt-3 md:mt-8 font-serif-display text-base md:text-2xl leading-snug text-foreground/80 max-w-2xl"
+                className="mt-4 md:mt-8 font-serif-display text-lg md:text-2xl leading-snug text-foreground/80 max-w-2xl"
                 style={{ animationDelay: "0.1s" }}
               >
                 {nbsp(
@@ -209,15 +209,15 @@ const Corporate = () => {
               className="lg:col-span-5 animate-fade-up flex flex-col items-center lg:items-end"
               style={{ animationDelay: "0.2s" }}
             >
-              <div className="relative w-full max-w-[240px] sm:max-w-[320px] lg:max-w-md aspect-[4/5] mx-auto lg:mx-0 overflow-hidden rounded-2xl">
+              <div className="relative w-full max-w-[320px] sm:max-w-[380px] lg:max-w-md aspect-square mx-auto lg:mx-0 overflow-hidden rounded-2xl">
                 <img
                   src={expertPhoto}
                   alt="Василий Мещеряков"
-                  className="absolute inset-0 w-full h-full object-cover object-center"
+                  className="absolute inset-0 w-full h-full object-cover object-[50%_18%]"
                   loading="eager"
                 />
-                <div className="absolute inset-x-0 bottom-2 sm:bottom-4 z-10 flex justify-start px-2 sm:px-4">
-                  <span className="badge-tag bg-card/95 backdrop-blur-sm rounded-full px-2.5 py-1 shadow-sm font-mono text-[9px] md:text-xs uppercase tracking-widest text-accent whitespace-nowrap">
+                <div className="absolute inset-x-0 bottom-3 sm:bottom-4 z-10 flex justify-start px-3 sm:px-4">
+                  <span className="badge-tag bg-card/95 backdrop-blur-sm rounded-full px-3 py-1.5 shadow-sm font-mono text-[10px] md:text-xs uppercase tracking-widest text-accent whitespace-nowrap">
                     Василий Мещеряков · ex P&amp;G (Band 3)
                   </span>
                 </div>
@@ -230,6 +230,7 @@ const Corporate = () => {
           </div>
         </div>
       </section>
+
 
 
 

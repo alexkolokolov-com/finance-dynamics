@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import {
-  Wallet,
-  TrendingUp,
-  CreditCard,
+  HeartPulse,
+  DoorOpen,
+  PiggyBank,
   Users,
   Presentation,
   BookOpen,
@@ -15,7 +15,6 @@ import {
   Send,
   Mail,
   Check,
-  Quote,
 } from "lucide-react";
 import { nbsp } from "@/lib/nbsp";
 import expertPhoto from "@/assets/expert-vasily.jpg";
@@ -29,17 +28,17 @@ const pageNav: HeaderNavLink[] = [
 
 const problems = [
   {
-    icon: Wallet,
+    icon: HeartPulse,
     title: "Финансовый стресс",
     text: "Сотрудники отвлекаются на личные деньги, снижается фокус и вовлечённость.",
   },
   {
-    icon: TrendingUp,
+    icon: DoorOpen,
     title: "Уход лучших специалистов",
     text: "Ключевые люди уходят туда, где предлагают больше, а не туда, где им комфортнее.",
   },
   {
-    icon: CreditCard,
+    icon: PiggyBank,
     title: "Нет возможности поднимать зарплату",
     text: "Бюджет ограничен, но отток кадров и падение продуктивности обходятся дороже.",
   },

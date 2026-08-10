@@ -18,6 +18,7 @@ import Calculator from "./pages/Calculator.tsx";
 import Cashback from "./pages/Cashback.tsx";
 import Conference from "./pages/Conference.tsx";
 import Consultations from "./pages/Consultations.tsx";
+import Corporate from "./pages/Corporate.tsx";
 import Lectures from "./pages/Lectures.tsx";
 import Decisions from "./pages/Decisions.tsx";
 import Event from "./pages/Event.tsx";

@@ -5,7 +5,6 @@ import { TrafficRegisterDialog } from "@/components/traffic/TrafficRegisterDialo
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import { nbsp } from "@/lib/nbsp";
 import expertAvatar from "@/assets/expert-vasily.jpg";
-import venueAsset from "@/assets/sok-venue.png.asset.json";
 
 const eventHeroPhoto = { url: `${import.meta.env.BASE_URL}event-hero.jpg` };
 
@@ -123,10 +122,10 @@ const Event = () => {
               {/* Pills over photo */}
               <div className="absolute top-3 left-3 right-3 flex flex-wrap gap-2">
                 <span className="badge-tag inline-flex items-center text-xs">
-                  Екатеринбург, Декабристов&nbsp;69
+                  Санкт-Петербург (локация уточняется)
                 </span>
                 <span className="badge-tag inline-flex items-center text-xs">
-                  8&nbsp;августа, 10:00–13:00
+                  23&nbsp;августа, 10:00–13:00
                 </span>
               </div>
               {/* Bottom gradient + subtitle */}
@@ -160,10 +159,10 @@ const Event = () => {
             <div className="col-span-7">
               <div className="flex flex-wrap items-center gap-3 animate-fade-up">
                 <span className="badge-tag inline-flex items-center text-xs">
-                  8&nbsp;августа, 10:00–13:00
+                  23&nbsp;августа, 10:00–13:00
                 </span>
                 <span className="badge-tag inline-flex items-center text-xs">
-                  Екатеринбург, Декабристов&nbsp;69
+                  Санкт-Петербург (локация уточняется)
                 </span>
               </div>
 
@@ -212,7 +211,7 @@ const Event = () => {
                   </picture>
                 </div>
                 <div className="absolute -bottom-4 -right-4 bg-foreground text-background px-4 py-2 font-mono text-[10px] uppercase tracking-widest hard-shadow">
-                  SOK · Екатеринбург
+                  Санкт-Петербург
                 </div>
               </figure>
             </div>
@@ -396,7 +395,7 @@ const Event = () => {
                   widgetId={1639009}
                   scriptHash="ff0a0caff28380a7af385c1bdb2937afcc5ce6f3"
                   title="Регистрация на бизнес-завтрак"
-                  subtitle="8 августа · Екатеринбург · Коворкинг SOK"
+                  subtitle="23 августа · Санкт-Петербург"
                   trigger={
                     <button
                       type="button"
@@ -410,11 +409,11 @@ const Event = () => {
                 <div className="mt-5 space-y-1.5 font-mono text-[11px] uppercase tracking-widest text-foreground/60">
                   <div className="flex items-center gap-2">
                     <Calendar size={12} className="text-accent" />
-                    8&nbsp;августа · 10:00–13:00
+                    23&nbsp;августа · 10:00–13:00
                   </div>
                   <div className="flex items-center gap-2">
                     <MapPin size={12} className="text-accent" />
-                    Екатеринбург, Декабристов&nbsp;69
+                    Санкт-Петербург (локация уточняется)
                   </div>
                 </div>
               </div>
@@ -424,56 +423,22 @@ const Event = () => {
       </section>
 
 
-      {/* Venue */}
+      {/* Location */}
       <section className="relative py-24 md:py-32 overflow-hidden bg-grid">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{ background: "var(--grad-chalk)" }}
         />
-        <div className="container-px max-w-7xl mx-auto relative">
+        <div className="container-px max-w-7xl mx-auto relative text-center">
           <div className="font-mono text-xs uppercase tracking-widest text-accent mb-6 animate-fade-up">
             Место проведения
           </div>
-          <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl max-w-4xl animate-fade-up">
-            Коворкинг SOK.
+          <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-5xl md:text-7xl lg:text-8xl animate-fade-up">
+            Санкт-Петербург
           </h2>
-
-          <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-            <div className="animate-fade-up">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-accent/10 border border-accent/20 grid place-items-center shrink-0">
-                  <MapPin size={18} className="text-accent" />
-                </div>
-                <div>
-                  <h3 className="font-serif-display font-semibold text-xl md:text-2xl">
-                    {nbsp("Екатеринбург, Декабристов 69")}
-                  </h3>
-                  <p className="mt-1 text-foreground/70 text-base md:text-lg leading-relaxed">
-                    {nbsp("Стильная и функциональная площадка рядом с УГМК-Ареной и набережной Исети")}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <figure className="relative animate-fade-up" style={{ animationDelay: "0.1s" }}>
-              <div
-                className="absolute -inset-4 border border-foreground/15 pointer-events-none"
-                aria-hidden
-              />
-              <div className="relative overflow-hidden border border-foreground/15 hard-shadow bg-card aspect-[4/3]">
-                <picture className="block h-full w-full">
-                  <img
-                    src={venueAsset.url}
-                    alt="Коворкинг SOK — переговорная с панорамными окнами"
-                    className="h-full w-full object-cover"
-                    width="1200"
-                    height="900"
-                    loading="lazy"
-                  />
-                </picture>
-              </div>
-            </figure>
-          </div>
+          <p className="mt-6 md:mt-8 font-serif-display text-xl md:text-3xl lg:text-4xl text-foreground/80 animate-fade-up">
+            локация уточняется
+          </p>
         </div>
       </section>
 

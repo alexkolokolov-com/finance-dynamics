@@ -144,13 +144,21 @@ const Event = () => {
             </h1>
 
             <div className="mt-5 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-              <a
-                href="#register"
-                className="inline-flex items-center justify-center gap-3 px-7 py-3.5 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
-              >
-                Зарегистрироваться
-                <span className="text-base">→</span>
-              </a>
+              <TrafficRegisterDialog
+                widgetId={1630658}
+                scriptHash="0d8bfde3b9a4168fa6ff4c65c386affe00c6cc94"
+                title="Регистрация на бизнес-завтрак"
+                subtitle="23 августа · Санкт-Петербург"
+                trigger={
+                  <button
+                    type="button"
+                    className="inline-flex items-center justify-center gap-3 px-7 py-3.5 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
+                  >
+                    Зарегистрироваться
+                    <span className="text-base">→</span>
+                  </button>
+                }
+              />
             </div>
           </div>
 
@@ -181,13 +189,21 @@ const Event = () => {
               </p>
 
               <div className="mt-10 animate-fade-up" style={{ animationDelay: "0.3s" }}>
-                <a
-                  href="#register"
-                  className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
-                >
-                  Зарегистрироваться
-                  <span className="text-base">→</span>
-                </a>
+                <TrafficRegisterDialog
+                  widgetId={1630658}
+                  scriptHash="0d8bfde3b9a4168fa6ff4c65c386affe00c6cc94"
+                  title="Регистрация на бизнес-завтрак"
+                  subtitle="23 августа · Санкт-Петербург"
+                  trigger={
+                    <button
+                      type="button"
+                      className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow"
+                    >
+                      Зарегистрироваться
+                      <span className="text-base">→</span>
+                    </button>
+                  }
+                />
               </div>
             </div>
 
@@ -271,7 +287,7 @@ const Event = () => {
             Программа
           </div>
           <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl max-w-4xl animate-fade-up">
-            Что будет на завтраке.
+            Что будет на завтраке
           </h2>
 
           <div className="mt-16 grid grid-cols-1 gap-6">
@@ -357,7 +373,7 @@ const Event = () => {
             Регистрация
           </div>
           <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl max-w-4xl animate-fade-up">
-            Забронировать место.
+            Забронировать место
           </h2>
 
           <div
@@ -372,13 +388,13 @@ const Event = () => {
 
                 <div className="opacity-50">
                   <div className="font-serif-display font-semibold text-3xl md:text-4xl leading-none text-foreground/70 line-through decoration-2">
-                    3 500 ₽
+                    4 000 ₽
                   </div>
                 </div>
 
                 <div>
                   <div className="font-serif-display font-semibold text-5xl md:text-6xl leading-none text-accent">
-                    3 000 ₽
+                    3 500 ₽
                   </div>
                   <div className="mt-2 inline-flex items-center gap-2 bg-accent text-accent-foreground px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest hard-shadow">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent-foreground animate-pulse" />
@@ -392,8 +408,8 @@ const Event = () => {
 
               <div className="md:border-l md:border-foreground/10 md:pl-12">
                 <TrafficRegisterDialog
-                  widgetId={1639009}
-                  scriptHash="ff0a0caff28380a7af385c1bdb2937afcc5ce6f3"
+                  widgetId={1630658}
+                  scriptHash="0d8bfde3b9a4168fa6ff4c65c386affe00c6cc94"
                   title="Регистрация на бизнес-завтрак"
                   subtitle="23 августа · Санкт-Петербург"
                   trigger={

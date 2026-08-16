@@ -122,7 +122,7 @@ const Event = () => {
               {/* Pills over photo */}
               <div className="absolute top-3 left-3 right-3 flex flex-wrap gap-2">
                 <span className="badge-tag inline-flex items-center text-xs">
-                  Санкт-Петербург (локация уточняется)
+                  Санкт-Петербург, адрес: Толстого, 1–3
                 </span>
                 <span className="badge-tag inline-flex items-center text-xs">
                   23&nbsp;августа, 10:00–13:00
@@ -170,7 +170,7 @@ const Event = () => {
                   23&nbsp;августа, 10:00–13:00
                 </span>
                 <span className="badge-tag inline-flex items-center text-xs">
-                  Санкт-Петербург (локация уточняется)
+                  Санкт-Петербург, адрес: Толстого, 1–3
                 </span>
               </div>
 
@@ -429,7 +429,7 @@ const Event = () => {
                   </div>
                   <div className="flex items-center gap-2">
                     <MapPin size={12} className="text-accent" />
-                    Санкт-Петербург (локация уточняется)
+                    Санкт-Петербург, адрес: Толстого, 1–3
                   </div>
                 </div>
               </div>
@@ -453,7 +453,7 @@ const Event = () => {
             Санкт-Петербург
           </h2>
           <p className="mt-6 md:mt-8 font-serif-display text-xl md:text-3xl lg:text-4xl text-foreground/80 animate-fade-up">
-            локация уточняется
+            адрес: Толстого, 1–3
           </p>
         </div>
       </section>

@@ -973,6 +973,8 @@ const LandingDeck = ({ pdfMode: pdfModeProp }: LandingDeckProps = {}) => {
                     {t.features.map((f, fi) => {
                       const text = typeof f === "string" ? f : f.text;
                       const isPlus = typeof f === "object" && f.plus;
+                      // В PDF-коммерческом предложении не показываем "+ поддержка на год"
+                      if (effectivePdfMode && isPlus) return null;
                       const Icon = isPlus ? Plus : Check;
                       const bold = i >= 1 && fi > 0;
                       const hidden = isPlus && !effectivePdfMode && !supportRevealed;

@@ -349,25 +349,24 @@ const CrisisDecisions = () => {
         </div>
       </section>
 
-      <section id="krizis" className="py-12 md:py-16 scroll-mt-24">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection id="krizis">
+        <ArticleFlow>
           <H2>А теперь добавьте к&nbsp;этому кризис</H2>
-
-          <p className="font-body text-lg leading-relaxed text-foreground/80">
+          <p>
             К&nbsp;вашим условным тридцати нерешённым вопросам моментально
             добавляются новые. Именно в&nbsp;тот момент, когда особенно важно
             принимать хорошие финансовые решения, их&nbsp;количество резко
             возрастает.
           </p>
-          <blockquote className="mt-8 pl-6 border-l-4 border-accent font-display font-semibold leading-[1.35] text-[clamp(1.3rem,2.6vw,1.8rem)]">
+          <blockquote className="pl-6 border-l-4 border-accent font-display font-semibold leading-[1.35] text-[clamp(1.3rem,2.6vw,1.8rem)]">
             Количество решений растёт —{" "}
             <span className="italic font-normal text-accent">
               качество каждого следующего падает
             </span>
             .
           </blockquote>
-        </div>
-      </section>
+        </ArticleFlow>
+      </ArticleSection>
 
       <section
         id="strategiya"

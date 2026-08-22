@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
+import { nbsp } from "@/lib/nbsp";
 import heroImg from "@/assets/plan-hero.jpg";
 import sellersImg from "@/assets/plan-sellers.jpg";
 import depositImg from "@/assets/plan-deposit.jpg";
 import treeImg from "@/assets/plan-tree.jpg";
 import wheelImg from "@/assets/plan-wheel.jpg";
+import expertAvatar from "@/assets/expert-vasily.jpg";
 
 const H2 = ({ children }: { children: React.ReactNode }) => (
   <h2 className="font-display font-semibold leading-[1.12] tracking-tight text-[clamp(1.6rem,3.6vw,2.4rem)] mb-6">

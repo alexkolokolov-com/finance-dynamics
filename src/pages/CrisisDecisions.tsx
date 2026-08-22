@@ -195,12 +195,6 @@ const verdict = (n: number) => {
 };
 
 
-const H2 = ({ children }: { children: React.ReactNode }) => (
-  <h2 className="font-display font-semibold leading-[1.12] tracking-tight text-[clamp(1.6rem,3.6vw,2.4rem)] mb-6">
-    {children}
-  </h2>
-);
-
 const CrisisDecisions = () => {
   const [checked, setChecked] = useState<number[]>([]);
 

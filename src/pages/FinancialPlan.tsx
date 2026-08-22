@@ -43,7 +43,7 @@ const Figure = ({
       loading="lazy"
       width={1600}
       height={912}
-      className="w-full rounded-2xl border border-border"
+      className="w-full aspect-square object-cover md:aspect-auto md:object-contain rounded-2xl border border-border"
     />
     <figcaption className="mt-3 text-center font-body text-sm text-foreground/55">
       {caption}
@@ -327,7 +327,7 @@ const FinancialPlan = () => {
             alt="Человек с мешком денег на перекрёстке: банк, квартира, инвестиции"
             width={1600}
             height={912}
-            className="w-full rounded-2xl border border-border"
+            className="w-full aspect-square object-cover md:aspect-auto md:object-contain rounded-2xl border border-border"
           />
         </div>
       </section>

@@ -290,8 +290,8 @@ const FinancialPlan = () => {
       </ArticleSection>
 
       {/* Цитата эксперта */}
-      <section className="py-6 md:py-8">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection>
+        <ArticleFlow>
           <figure className="bg-card border border-border rounded-2xl p-6 md:p-10">
             <div className="flex items-start gap-4 md:gap-6">
               <div className="w-14 h-14 md:w-20 md:h-20 rounded-full overflow-hidden shrink-0">
@@ -314,8 +314,8 @@ const FinancialPlan = () => {
               </div>
             </div>
           </figure>
-        </div>
-      </section>
+        </ArticleFlow>
+      </ArticleSection>
 
 
       {/* Продавцы */}

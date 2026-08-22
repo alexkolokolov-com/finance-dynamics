@@ -8,8 +8,9 @@ type StorySectionProps = {
   side?: "left" | "right";
   paragraphs: ReactNode[];
   /** Реплика эксперта — выводится акцентной плашкой в конце текста */
-  comment: ReactNode;
+  comment: ReactNode | ReactNode[];
 };
+
 
 export const StorySection = ({
   id,

@@ -283,8 +283,7 @@ const CrisisDecisions = () => {
             из&nbsp;найма и&nbsp;открыть бизнес?
           </p>
 
-
-          <div className="my-8 flex flex-col md:flex-row md:items-center gap-4 md:gap-7 bg-card border border-border rounded-2xl p-6 md:p-7">
+          <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-7 bg-card border border-border rounded-2xl p-6 md:p-7">
             <div className="font-display font-semibold text-accent leading-none text-[clamp(2.6rem,6vw,4rem)] whitespace-nowrap">
               30–50
             </div>
@@ -295,7 +294,7 @@ const CrisisDecisions = () => {
             </p>
           </div>
 
-          <p className="font-body text-lg leading-relaxed text-foreground/80">
+          <p>
             Многие считают: если вы&nbsp;способны хорошо принять одно финансовое
             решение, то&nbsp;так же хорошо примете двадцать одновременно.{" "}
             <strong>Так не&nbsp;работает.</strong> Внимание размазывается, часть
@@ -304,7 +303,7 @@ const CrisisDecisions = () => {
           </p>
 
           {/* счётчик вопросов */}
-          <div className="mt-10 bg-card border border-border rounded-2xl p-6 md:p-8">
+          <div className="bg-card border border-border rounded-2xl p-6 md:p-8">
             <h3 className="font-display font-semibold text-xl">
               Посчитайте свои
             </h3>
@@ -343,8 +342,8 @@ const CrisisDecisions = () => {
               </p>
             </div>
           </div>
-        </div>
-      </section>
+        </ArticleFlow>
+      </ArticleSection>
 
       <ArticleSection id="krizis">
         <ArticleFlow>

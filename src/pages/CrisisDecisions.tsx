@@ -254,38 +254,35 @@ const CrisisDecisions = () => {
         ))}
       </div>
 
-      <section className="py-10 md:py-14">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection>
+        <ArticleFlow>
           <H2>Что объединяет эти три истории?</H2>
-          <p className="font-body text-lg leading-relaxed text-foreground/80">
+          <p>
             Моя версия: это не&nbsp;глупость. Во&nbsp;всех трёх случаях люди были
             перегружены <strong>количеством финансовых решений</strong> —
             и&nbsp;все эти решения были важными.
           </p>
-        </div>
-      </section>
+        </ArticleFlow>
+      </ArticleSection>
 
-
-      <section id="paradoks" className="py-12 md:py-16 scroll-mt-24">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection id="paradoks">
+        <ArticleFlow>
           <H2>Чем больше зарабатываешь, тем тяжелее</H2>
+          <p>
+            Это одна из&nbsp;самых недооценённых проблем в&nbsp;личных
+            финансах. И&nbsp;здесь есть парадокс: чем больше человек
+            зарабатывает и&nbsp;чем серьёзнее занимается своими деньгами, тем
+            актуальнее она становится.
+          </p>
+          <p>
+            Что делать с&nbsp;ипотекой? Куда вложить накопления? Как учесть
+            инфляцию? Как реагировать на&nbsp;курс доллара? Сколько держать
+            в&nbsp;подушке и&nbsp;в&nbsp;какой валюте? Сколько откладывать
+            детям? Когда менять машину? Как готовиться к&nbsp;пенсии?
+            А&nbsp;если через два года переезд? А&nbsp;если хочется уйти
+            из&nbsp;найма и&nbsp;открыть бизнес?
+          </p>
 
-          <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
-            <p>
-              Это одна из&nbsp;самых недооценённых проблем в&nbsp;личных
-              финансах. И&nbsp;здесь есть парадокс: чем больше человек
-              зарабатывает и&nbsp;чем серьёзнее занимается своими деньгами, тем
-              актуальнее она становится.
-            </p>
-            <p>
-              Что делать с&nbsp;ипотекой? Куда вложить накопления? Как учесть
-              инфляцию? Как реагировать на&nbsp;курс доллара? Сколько держать
-              в&nbsp;подушке и&nbsp;в&nbsp;какой валюте? Сколько откладывать
-              детям? Когда менять машину? Как готовиться к&nbsp;пенсии?
-              А&nbsp;если через два года переезд? А&nbsp;если хочется уйти
-              из&nbsp;найма и&nbsp;открыть бизнес?
-            </p>
-          </div>
 
           <div className="my-8 flex flex-col md:flex-row md:items-center gap-4 md:gap-7 bg-card border border-border rounded-2xl p-6 md:p-7">
             <div className="font-display font-semibold text-accent leading-none text-[clamp(2.6rem,6vw,4rem)] whitespace-nowrap">

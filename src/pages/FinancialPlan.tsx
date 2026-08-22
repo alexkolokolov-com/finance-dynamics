@@ -1,6 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
+import { ArticleSection } from "@/components/article/ArticleSection";
+import { ArticleFlow } from "@/components/article/ArticleFlow";
+import { H2 } from "@/components/article/H2";
+import { H3 } from "@/components/article/H3";
+import { Pull } from "@/components/article/Pull";
+import { Figure } from "@/components/article/Figure";
 import { nbsp } from "@/lib/nbsp";
 import heroImg from "@/assets/plan-hero.jpg";
 import sellersImg from "@/assets/plan-sellers.jpg";
@@ -8,50 +14,6 @@ import depositImg from "@/assets/plan-deposit.jpg";
 import treeImg from "@/assets/plan-tree.jpg";
 import wheelImg from "@/assets/plan-wheel.jpg";
 import expertAvatar from "@/assets/expert-vasily.jpg";
-
-const H2 = ({ children }: { children: React.ReactNode }) => (
-  <h2 className="font-display font-semibold leading-[1.12] tracking-tight text-[clamp(1.6rem,3.6vw,2.4rem)] mb-6">
-    {children}
-  </h2>
-);
-
-const H3 = ({ children }: { children: React.ReactNode }) => (
-  <h3 className="font-display font-semibold leading-[1.18] tracking-tight text-[clamp(1.25rem,2.6vw,1.6rem)] mb-4">
-    {children}
-  </h3>
-);
-
-const Pull = ({ children }: { children: React.ReactNode }) => (
-  <div className="my-8 rounded-xl border border-border border-l-2 border-l-accent bg-card px-5 py-4">
-    <p className="font-body text-[17px] md:text-lg leading-relaxed text-foreground/85">
-      {children}
-    </p>
-  </div>
-);
-
-const Figure = ({
-  src,
-  alt,
-  caption,
-}: {
-  src: string;
-  alt: string;
-  caption: string;
-}) => (
-  <figure className="container-px max-w-5xl mx-auto py-6">
-    <img
-      src={src}
-      alt={alt}
-      loading="lazy"
-      width={1600}
-      height={912}
-      className="w-full aspect-square object-cover md:aspect-auto md:object-contain rounded-2xl border border-border"
-    />
-    <figcaption className="mt-3 text-center font-body text-sm text-foreground/55">
-      {caption}
-    </figcaption>
-  </figure>
-);
 
 const people = [
   {
@@ -316,20 +278,20 @@ const FinancialPlan = () => {
         </div>
       </section>
 
-      <section className="py-8 md:py-12">
-        <div className="container-px max-w-3xl mx-auto space-y-5 font-body text-lg leading-relaxed text-foreground/80">
+      <ArticleSection>
+        <ArticleFlow>
           <p>
             {nbsp("Вы несколько лет хорошо зарабатывали. Или получили крупную премию, продали квартиру или бизнес. На руках — свободный миллион, 3, 5, 10... Вроде бы начинается приятная часть — распоряжаться этими деньгами. Но вместе с ними приходят и риски.")}
           </p>
           <p>
             <strong>{nbsp("Чем больше сумма, тем выше цена ошибки.")}</strong>
           </p>
-        </div>
-      </section>
+        </ArticleFlow>
+      </ArticleSection>
 
       {/* Цитата эксперта */}
-      <section className="py-6 md:py-8">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection>
+        <ArticleFlow>
           <figure className="bg-card border border-border rounded-2xl p-6 md:p-10">
             <div className="flex items-start gap-4 md:gap-6">
               <div className="w-14 h-14 md:w-20 md:h-20 rounded-full overflow-hidden shrink-0">
@@ -352,22 +314,20 @@ const FinancialPlan = () => {
               </div>
             </div>
           </figure>
-        </div>
-      </section>
+        </ArticleFlow>
+      </ArticleSection>
 
 
       {/* Продавцы */}
-      <section id="prodavcy" className="py-10 md:py-14 scroll-mt-24">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection id="prodavcy">
+        <ArticleFlow>
           <H2>{nbsp("Ваши деньги притягивают «продавцов счастья»")}</H2>
-          <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
-            <p>
-              {nbsp("Вокруг появляются люди, которые точно знают, как их вложить: недвижимость, бизнес, закрытый клуб, криптовалюта. Они давно не похожи на мошенников: офисы, договоры, известные партнёры. ")}
-              <strong>{nbsp("Чем выше ваш доход, тем качественнее вам продают.")}</strong>
-            </p>
-          </div>
-        </div>
-      </section>
+          <p>
+            {nbsp("Вокруг появляются люди, которые точно знают, как их вложить: недвижимость, бизнес, закрытый клуб, криптовалюта. Они давно не похожи на мошенников: офисы, договоры, известные партнёры. ")}
+            <strong>{nbsp("Чем выше ваш доход, тем качественнее вам продают.")}</strong>
+          </p>
+        </ArticleFlow>
+      </ArticleSection>
 
       <Figure
         src={sellersImg}
@@ -375,29 +335,25 @@ const FinancialPlan = () => {
         caption="Честный товар не значит подходящий вам"
       />
 
-      <section className="py-10 md:py-14">
-        <div className="container-px max-w-3xl mx-auto">
-          <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
-            <p>
-              {nbsp("Но главный риск — не мошенники. Брокер предложит инвестиционный продукт. Застройщик — квартиру. Предприниматель, которому нужны деньги, — долю в своём бизнесе. И каждый будет честен: квартира существует, облигация настоящая, бизнес работает. ")}
-              <strong>{nbsp("Только они продают то, что выгодно им, а не вам.")}</strong>
-            </p>
-          </div>
-        </div>
-      </section>
+      <ArticleSection>
+        <ArticleFlow>
+          <p>
+            {nbsp("Но главный риск — не мошенники. Брокер предложит инвестиционный продукт. Застройщик — квартиру. Предприниматель, которому нужны деньги, — долю в своём бизнесе. И каждый будет честен: квартира существует, облигация настоящая, бизнес работает. ")}
+            <strong>{nbsp("Только они продают то, что выгодно им, а не вам.")}</strong>
+          </p>
+        </ArticleFlow>
+      </ArticleSection>
 
 
       {/* Депозит */}
-      <section id="depozit" className="py-10 md:py-14 scroll-mt-24">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection id="depozit">
+        <ArticleFlow>
           <H2>{nbsp("Депозит: коварное спокойствие")}</H2>
-          <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
-            <p>
-              {nbsp("«Тогда просто депозит», — скажете вы. Спокойно: деньги в банке, проценты капают, ничего делать не нужно. Но вопросы никуда не деваются: какую часть капитала держать в банках, что делать с суммой выше страхового покрытия, в какой валюте хранить, что останется после инфляции.")}
-            </p>
-          </div>
-        </div>
-      </section>
+          <p>
+            {nbsp("«Тогда просто депозит», — скажете вы. Спокойно: деньги в банке, проценты капают, ничего делать не нужно. Но вопросы никуда не деваются: какую часть капитала держать в банках, что делать с суммой выше страхового покрытия, в какой валюте хранить, что останется после инфляции.")}
+          </p>
+        </ArticleFlow>
+      </ArticleSection>
 
       <Figure
         src={depositImg}
@@ -405,85 +361,77 @@ const FinancialPlan = () => {
         caption="Депозит защищает от воров, но не от инфляции и не от несбывшихся целей"
       />
 
-      <section className="py-10 md:py-14">
-        <div className="container-px max-w-3xl mx-auto">
-          <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
-            <p>
-              <strong>{nbsp("Но главный вопрос — достаточно ли этой доходности для ваших целей?")}</strong>{" "}
-              {nbsp("Можно несколько лет радоваться хорошей ставке, а потом обнаружить: капитал вырос — а нужная квартира, образование детей или пассивный доход не приблизились.")}
-            </p>
-          </div>
-        </div>
-      </section>
+      <ArticleSection>
+        <ArticleFlow>
+          <p>
+            <strong>{nbsp("Но главный вопрос — достаточно ли этой доходности для ваших целей?")}</strong>{" "}
+            {nbsp("Можно несколько лет радоваться хорошей ставке, а потом обнаружить: капитал вырос — а нужная квартира, образование детей или пассивный доход не приблизились.")}
+          </p>
+        </ArticleFlow>
+      </ArticleSection>
 
 
-      <section className="py-10 md:py-14">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection>
+        <ArticleFlow>
           <H2>
             {nbsp("В бизнесе это очевидно, а в личных финансах — почему-то нет")}
           </H2>
-        </div>
-      </section>
+        </ArticleFlow>
+      </ArticleSection>
 
 
       {/* Методика */}
-      <section id="plan" className="py-10 md:py-14 scroll-mt-24">
-        <div className="container-px max-w-3xl mx-auto">
-          <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
-            <p>
-              {nbsp("Предлагаю на минуту отложить выбор между депозитом, квартирой и облигациями и ответить на вопрос: если у вас есть свободные деньги — ")}
-              <strong>{nbsp("у вас есть финансовый план?")}</strong>{" "}
-              {nbsp("Не список активов в приложении брокера и не абстрактное «хочу финансовую свободу».")}
-            </p>
-            <p>
-              {nbsp("Вы могли находить в интернете стандартный рецепт: посчитайте доходы и расходы, накопите подушку, поставьте цели и потом наполняйте его инструментами. ")}
-              <strong>{nbsp("Всё правильно, но в реальности не работает.")}</strong>
-            </p>
-            <p>
-              {nbsp("Хотя вы понимаете, что бизнесом движет не бухгалтерский учёт, а коммерческая функция: поиск, где купить за рубль и продать за сто. Бизнес-план будет хоть на салфетке, но в нём поставлены цели: на что мы тратим и за счёт каких действий получим прибыль. Может при этом быть кривым и косым — но заточенным под одну главную возможность. Математика обслуживает её, а всё остальное написано крупными мазками.")}
-            </p>
-          </div>
+      <ArticleSection id="plan">
+        <ArticleFlow>
+          <p>
+            {nbsp("Предлагаю на минуту отложить выбор между депозитом, квартирой и облигациями и ответить на вопрос: если у вас есть свободные деньги — ")}
+            <strong>{nbsp("у вас есть финансовый план?")}</strong>{" "}
+            {nbsp("Не список активов в приложении брокера и не абстрактное «хочу финансовую свободу».")}
+          </p>
+          <p>
+            {nbsp("Вы могли находить в интернете стандартный рецепт: посчитайте доходы и расходы, накопите подушку, поставьте цели и потом наполняйте его инструментами. ")}
+            <strong>{nbsp("Всё правильно, но в реальности не работает.")}</strong>
+          </p>
+          <p>
+            {nbsp("Хотя вы понимаете, что бизнесом движет не бухгалтерский учёт, а коммерческая функция: поиск, где купить за рубль и продать за сто. Бизнес-план будет хоть на салфетке, но в нём поставлены цели: на что мы тратим и за счёт каких действий получим прибыль. Может при этом быть кривым и косым — но заточенным под одну главную возможность. Математика обслуживает её, а всё остальное написано крупными мазками.")}
+          </p>
           <Pull>{nbsp("Простота и понятность плана важнее его правильности.")}</Pull>
-          <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
-            <p>
-              <strong>{nbsp("Личный финансовый план")}</strong>{" "}
-              {nbsp("— это как в бизнесе, не про учёт расходов, а про поиск точки приложения ваших усилий. И я предлагаю вам следующие 5 минут сделать пару шагов в сторону вашего личного бизнес-плана.")}
-            </p>
-          </div>
-        </div>
-      </section>
+          <p>
+            <strong>{nbsp("Личный финансовый план")}</strong>{" "}
+            {nbsp("— это как в бизнесе, не про учёт расходов, а про поиск точки приложения ваших усилий. И я предлагаю вам следующие 5 минут сделать пару шагов в сторону вашего личного бизнес-плана.")}
+          </p>
+        </ArticleFlow>
+      </ArticleSection>
 
       {/* Дерево доходов */}
-      <section className="py-10 md:py-14">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection>
+        <ArticleFlow>
           <H2>{nbsp("Дерево роста доходов")}</H2>
-          <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
-            <p>
-              Работая с&nbsp;чужими бюджетами, я&nbsp;заметил странную вещь: все
-              фокусируются на&nbsp;расходах. Доход дан «по&nbsp;умолчанию»,
-              а&nbsp;расходы экономят, оптимизируют, налаживают эффективность.
-              Складывается ощущение, что никто не&nbsp;хочет больше
-              зарабатывать — все хотят эффективнее тратить.
-            </p>
-            <p>
-              Поэтому я&nbsp;пришёл к&nbsp;простой модели: в&nbsp;любом бюджете
-              50% места и&nbsp;усилий должны занимать доходы —
-              и&nbsp;только оставшиеся 50% расходы. Резонный вопрос: как, если
-              доход — это зарплата и&nbsp;премия, а&nbsp;категорий расходов
-              двадцать?
-            </p>
-            <p>
-              Отвечая на&nbsp;это «как», я&nbsp;сделал до&nbsp;тупости простую
-              вещь, которая оказалась рабочей: собрал бюджеты людей,
-              у&nbsp;которых получается растить доход, в&nbsp;единую ментальную
-              карту. Она не&nbsp;из&nbsp;интернета и&nbsp;не&nbsp;из&nbsp;мотивационных
-              книг — это обобщённые реальные истории. Дерево не&nbsp;работает
-              быстро и&nbsp;не&nbsp;сразу, но&nbsp;шаг за&nbsp;шагом смещает
-              фокус с&nbsp;расходов на&nbsp;доходы.
-            </p>
-          </div>
-        </div>
-      </section>
+          <p>
+            Работая с&nbsp;чужими бюджетами, я&nbsp;заметил странную вещь: все
+            фокусируются на&nbsp;расходах. Доход дан «по&nbsp;умолчанию»,
+            а&nbsp;расходы экономят, оптимизируют, налаживают эффективность.
+            Складывается ощущение, что никто не&nbsp;хочет больше
+            зарабатывать — все хотят эффективнее тратить.
+          </p>
+          <p>
+            Поэтому я&nbsp;пришёл к&nbsp;простой модели: в&nbsp;любом бюджете
+            50% места и&nbsp;усилий должны занимать доходы —
+            и&nbsp;только оставшиеся 50% расходы. Резонный вопрос: как, если
+            доход — это зарплата и&nbsp;премия, а&nbsp;категорий расходов
+            двадцать?
+          </p>
+          <p>
+            Отвечая на&nbsp;это «как», я&nbsp;сделал до&nbsp;тупости простую
+            вещь, которая оказалась рабочей: собрал бюджеты людей,
+            у&nbsp;которых получается растить доход, в&nbsp;единую ментальную
+            карту. Она не&nbsp;из&nbsp;интернета и&nbsp;не&nbsp;из&nbsp;мотивационных
+            книг — это обобщённые реальные истории. Дерево не&nbsp;работает
+            быстро и&nbsp;не&nbsp;сразу, но&nbsp;шаг за&nbsp;шагом смещает
+            фокус с&nbsp;расходов на&nbsp;доходы.
+          </p>
+        </ArticleFlow>
+      </ArticleSection>
 
       <Figure
         src={treeImg}
@@ -491,69 +439,65 @@ const FinancialPlan = () => {
         caption="Дерево роста доходов — ментальная карта, собранная из реальных бюджетов"
       />
 
-      <section className="py-10 md:py-14">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection>
+        <ArticleFlow>
           <H3>
             Расходы: не&nbsp;«где сэкономить», а&nbsp;«что я&nbsp;покупаю
             на&nbsp;самом деле»
           </H3>
-          <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
-            <p>
-              Второй блок — расходы. Здесь тоже есть методика глубже, чем
-              «записывайте траты месяц»: разложить бюджет не&nbsp;по&nbsp;статьям
-              из&nbsp;приложения банка, а&nbsp;по&nbsp;смыслу. Сколько уходит
-              на&nbsp;здоровье, сколько на&nbsp;образование — своё
-              и&nbsp;детей, сколько на&nbsp;жильё и&nbsp;среду, сколько
-              на&nbsp;семью и&nbsp;отдых — и&nbsp;сколько на&nbsp;то, что
-              перестаёт радовать через неделю.
-            </p>
-            <p>
-              Такой разбор обычно показывает не&nbsp;перерасход,
-              а&nbsp;перекос: деньги есть, но&nbsp;распределены они
-              не&nbsp;в&nbsp;пользу того, что человек сам называет важным.
-            </p>
-          </div>
-        </div>
-      </section>
+          <p>
+            Второй блок — расходы. Здесь тоже есть методика глубже, чем
+            «записывайте траты месяц»: разложить бюджет не&nbsp;по&nbsp;статьям
+            из&nbsp;приложения банка, а&nbsp;по&nbsp;смыслу. Сколько уходит
+            на&nbsp;здоровье, сколько на&nbsp;образование — своё
+            и&nbsp;детей, сколько на&nbsp;жильё и&nbsp;среду, сколько
+            на&nbsp;семью и&nbsp;отдых — и&nbsp;сколько на&nbsp;то, что
+            перестаёт радовать через неделю.
+          </p>
+          <p>
+            Такой разбор обычно показывает не&nbsp;перерасход,
+            а&nbsp;перекос: деньги есть, но&nbsp;распределены они
+            не&nbsp;в&nbsp;пользу того, что человек сам называет важным.
+          </p>
+        </ArticleFlow>
+      </ArticleSection>
 
       {/* Качество жизни */}
-      <section id="kachestvo" className="py-10 md:py-14 scroll-mt-24">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection id="kachestvo">
+        <ArticleFlow>
           <H2>
             Во&nbsp;что вы&nbsp;на&nbsp;самом деле инвестируете: как измерить
             качество жизни
           </H2>
-          <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
-            <p>
-              Остался вопрос, на&nbsp;который бизнес-план предприятия
-              не&nbsp;отвечает, а&nbsp;личный — обязан. Если личный финансовый
-              план — это план на&nbsp;жизнь, он должен отвечать
-              на&nbsp;вопрос: в&nbsp;чём конкретно повысится моё качество жизни?
-            </p>
-            <p>
-              Качество жизни чаще всего меряют в&nbsp;двух координатах: шмотки
-              стали дороже, машина стала дороже. Но&nbsp;система координат шире:
-              здоровье, образование — своё и&nbsp;детей, жильё и&nbsp;среда,
-              время на&nbsp;семью и&nbsp;на&nbsp;себя, впечатления, отношения
-              с&nbsp;детьми и&nbsp;родителями.
-            </p>
-            <p>
-              Расходы не&nbsp;равны по&nbsp;отдаче. Одни радуют неделю, другие
-              работают годами: вылеченные зубы, выученный язык, квартира
-              с&nbsp;окнами в&nbsp;парк, поездка, которую вспоминаете десять
-              лет, время с&nbsp;родителями, пока оно есть. Когда люди
-              раскладывают бюджет по&nbsp;этим осям, часто выясняется:
-              на&nbsp;действительно важное вы&nbsp;тратите меньше, чем могли
-              бы, — разница уходит на&nbsp;импульсивные покупки и&nbsp;статусные
-              вещи, которые перестали радовать ещё в&nbsp;примерочной.
-            </p>
-          </div>
+          <p>
+            Остался вопрос, на&nbsp;который бизнес-план предприятия
+            не&nbsp;отвечает, а&nbsp;личный — обязан. Если личный финансовый
+            план — это план на&nbsp;жизнь, он должен отвечать
+            на&nbsp;вопрос: в&nbsp;чём конкретно повысится моё качество жизни?
+          </p>
+          <p>
+            Качество жизни чаще всего меряют в&nbsp;двух координатах: шмотки
+            стали дороже, машина стала дороже. Но&nbsp;система координат шире:
+            здоровье, образование — своё и&nbsp;детей, жильё и&nbsp;среда,
+            время на&nbsp;семью и&nbsp;на&nbsp;себя, впечатления, отношения
+            с&nbsp;детьми и&nbsp;родителями.
+          </p>
+          <p>
+            Расходы не&nbsp;равны по&nbsp;отдаче. Одни радуют неделю, другие
+            работают годами: вылеченные зубы, выученный язык, квартира
+            с&nbsp;окнами в&nbsp;парк, поездка, которую вспоминаете десять
+            лет, время с&nbsp;родителями, пока оно есть. Когда люди
+            раскладывают бюджет по&nbsp;этим осям, часто выясняется:
+            на&nbsp;действительно важное вы&nbsp;тратите меньше, чем могли
+            бы, — разница уходит на&nbsp;импульсивные покупки и&nbsp;статусные
+            вещи, которые перестали радовать ещё в&nbsp;примерочной.
+          </p>
           <Pull>
             Качество жизни измеряется не&nbsp;ценой вещей, а&nbsp;тем,
             в&nbsp;какие сферы жизни на&nbsp;самом деле уходят деньги.
           </Pull>
-        </div>
-      </section>
+        </ArticleFlow>
+      </ArticleSection>
 
       <Figure
         src={wheelImg}

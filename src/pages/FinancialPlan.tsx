@@ -1,6 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
+import { ArticleSection } from "@/components/article/ArticleSection";
+import { ArticleFlow } from "@/components/article/ArticleFlow";
+import { H2 } from "@/components/article/H2";
+import { H3 } from "@/components/article/H3";
+import { Pull } from "@/components/article/Pull";
+import { Figure } from "@/components/article/Figure";
 import { nbsp } from "@/lib/nbsp";
 import heroImg from "@/assets/plan-hero.jpg";
 import sellersImg from "@/assets/plan-sellers.jpg";
@@ -8,50 +14,6 @@ import depositImg from "@/assets/plan-deposit.jpg";
 import treeImg from "@/assets/plan-tree.jpg";
 import wheelImg from "@/assets/plan-wheel.jpg";
 import expertAvatar from "@/assets/expert-vasily.jpg";
-
-const H2 = ({ children }: { children: React.ReactNode }) => (
-  <h2 className="font-display font-semibold leading-[1.12] tracking-tight text-[clamp(1.6rem,3.6vw,2.4rem)] mb-6">
-    {children}
-  </h2>
-);
-
-const H3 = ({ children }: { children: React.ReactNode }) => (
-  <h3 className="font-display font-semibold leading-[1.18] tracking-tight text-[clamp(1.25rem,2.6vw,1.6rem)] mb-4">
-    {children}
-  </h3>
-);
-
-const Pull = ({ children }: { children: React.ReactNode }) => (
-  <div className="my-8 rounded-xl border border-border border-l-2 border-l-accent bg-card px-5 py-4">
-    <p className="font-body text-[17px] md:text-lg leading-relaxed text-foreground/85">
-      {children}
-    </p>
-  </div>
-);
-
-const Figure = ({
-  src,
-  alt,
-  caption,
-}: {
-  src: string;
-  alt: string;
-  caption: string;
-}) => (
-  <figure className="container-px max-w-5xl mx-auto py-6">
-    <img
-      src={src}
-      alt={alt}
-      loading="lazy"
-      width={1600}
-      height={912}
-      className="w-full aspect-square object-cover md:aspect-auto md:object-contain rounded-2xl border border-border"
-    />
-    <figcaption className="mt-3 text-center font-body text-sm text-foreground/55">
-      {caption}
-    </figcaption>
-  </figure>
-);
 
 const people = [
   {

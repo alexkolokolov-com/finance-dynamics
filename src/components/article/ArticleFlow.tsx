@@ -9,6 +9,8 @@ export const ArticleFlow = ({
 }) => (
   <div
     className={`container-px max-w-3xl mx-auto
+      [&>p]:font-body [&>p]:text-lg [&>p]:leading-relaxed [&>p]:text-foreground/80
+      [&>ul]:font-body [&>ul]:text-lg [&>ul]:leading-relaxed [&>ul]:text-foreground/80
       [&>*:not(:first-child)]:mt-5
       [&>h2:not(:first-child)]:mt-6 [&>h2:not(:first-child)]:md:mt-8
       [&>h2+*]:mt-3

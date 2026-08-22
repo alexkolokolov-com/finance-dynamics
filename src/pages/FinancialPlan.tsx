@@ -506,39 +506,37 @@ const FinancialPlan = () => {
       />
 
       {/* Колесо сфер */}
-      <section id="koleso" className="py-10 md:py-14 scroll-mt-24">
-        <div className="container-px max-w-5xl mx-auto">
-          <div className="max-w-3xl">
-            <H3>Колесо сфер жизни: важность и&nbsp;результат</H3>
-            <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
-              <p>
-                В&nbsp;классических методиках диагностики просят оценить каждую
-                сферу жизни от&nbsp;1&nbsp;до&nbsp;10 — «насколько
-                вы&nbsp;довольны». Но&nbsp;это оценка настроения,
-                а&nbsp;не&nbsp;факта.
-              </p>
-              <p>
-                Я&nbsp;предлагаю две точки вместо одной, обе
-                по&nbsp;десятибалльной шкале: насколько сфера вам важна —
-                и&nbsp;какой у&nbsp;вас в&nbsp;ней результат сейчас. Важность —
-                это ваши слова. Результат — это факты: здоровье, жильё,
-                отношения, время. И&nbsp;разрыв между этими двумя оценками —
-                самая честная диагностика, которая у&nbsp;вас есть: именно
-                он&nbsp;подсказывает, куда направить деньги и&nbsp;время
-                в&nbsp;первую очередь.
-              </p>
-              <p>
-                Попробуйте прямо здесь. Поставьте два ползунка по&nbsp;каждой
-                сфере — и&nbsp;посмотрите на&nbsp;своё колесо.
-              </p>
-            </div>
-          </div>
+      <ArticleSection id="koleso">
+        <ArticleFlow>
+          <H3>Колесо сфер жизни: важность и&nbsp;результат</H3>
+          <p>
+            В&nbsp;классических методиках диагностики просят оценить каждую
+            сферу жизни от&nbsp;1&nbsp;до&nbsp;10 — «насколько
+            вы&nbsp;довольны». Но&nbsp;это оценка настроения,
+            а&nbsp;не&nbsp;факта.
+          </p>
+          <p>
+            Я&nbsp;предлагаю две точки вместо одной, обе
+            по&nbsp;десятибалльной шкале: насколько сфера вам важна —
+            и&nbsp;какой у&nbsp;вас в&nbsp;ней результат сейчас. Важность —
+            это ваши слова. Результат — это факты: здоровье, жильё,
+            отношения, время. И&nbsp;разрыв между этими двумя оценками —
+            самая честная диагностика, которая у&nbsp;вас есть: именно
+            он&nbsp;подсказывает, куда направить деньги и&nbsp;время
+            в&nbsp;первую очередь.
+          </p>
+          <p>
+            Попробуйте прямо здесь. Поставьте два ползунка по&nbsp;каждой
+            сфере — и&nbsp;посмотрите на&nbsp;своё колесо.
+          </p>
+        </ArticleFlow>
 
-          <div className="mt-8">
-            <Wheel />
-          </div>
+        <div className="container-px max-w-5xl mx-auto mt-6 md:mt-8">
+          <Wheel />
+        </div>
 
-          <p className="mt-8 max-w-3xl font-body text-lg leading-relaxed text-foreground/80">
+        <ArticleFlow className="mt-6 md:mt-8">
+          <p>
             Если по&nbsp;какой-то сфере терракотовая линия отстала
             от&nbsp;тёмной — вы&nbsp;нашли место, где деньги и&nbsp;время могут
             купить больше качества жизни, чем любая инвестиция. Это тоже часть
@@ -546,24 +544,24 @@ const FinancialPlan = () => {
             но&nbsp;и&nbsp;«куда направить расходы, чтобы жизнь стала лучше уже
             сейчас».
           </p>
-        </div>
-      </section>
+        </ArticleFlow>
+      </ArticleSection>
 
       {/* Пример */}
-      <section className="py-10 md:py-14">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection>
+        <ArticleFlow>
           <H2>
             Одни и&nbsp;те&nbsp;же 5&nbsp;миллионов — четыре разных правильных
             решения
           </H2>
-          <p className="font-body text-lg leading-relaxed text-foreground/80">
+          <p>
             Только после того, как собран план, появляется смысл обсуждать
             инструменты. Смотрите, как одна и&nbsp;та&nbsp;же сумма превращается
             в&nbsp;четыре разных правильных решения — в&nbsp;зависимости
             от&nbsp;плана человека.
           </p>
 
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2">
             {people.map((p) => (
               <div
                 key={p.num}
@@ -579,7 +577,7 @@ const FinancialPlan = () => {
             ))}
           </div>
 
-          <p className="mt-6 font-body text-lg leading-relaxed text-foreground/80">
+          <p>
             Инструмент один. Правильное решение — разное. И&nbsp;выбрать его
             можно не&nbsp;по&nbsp;принципу «где сейчас обещают больше
             процентов», а&nbsp;по&nbsp;тому, насколько каждый вариант приближает
@@ -587,18 +585,16 @@ const FinancialPlan = () => {
             выбираете ответ — а&nbsp;потом пытаетесь придумать, к&nbsp;какому
             вопросу он подходит.
           </p>
-        </div>
-      </section>
+        </ArticleFlow>
+      </ArticleSection>
 
       {/* Два формата */}
-      <section id="format" className="py-10 md:py-14 scroll-mt-24">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection id="format">
+        <ArticleFlow>
           <H2>Как собрать свой план: курс или&nbsp;персональный разбор</H2>
-          <p className="font-body text-lg leading-relaxed text-foreground/80">
-            У&nbsp;меня два формата работы, и&nbsp;логика у&nbsp;них разная.
-          </p>
+          <p>У&nbsp;меня два формата работы, и&nbsp;логика у&nbsp;них разная.</p>
 
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2">
             <div className="bg-card border border-border rounded-xl p-5">
               <div className="font-body text-xs uppercase tracking-[0.1em] text-accent mb-2">
                 Формат 1 · Курс
@@ -642,22 +638,20 @@ const FinancialPlan = () => {
             </div>
           </div>
 
-          <div className="mt-6 space-y-5 font-body text-lg leading-relaxed text-foreground/80">
-            <p>
-              В&nbsp;результате вопрос «куда вложить деньги» перестаёт
-              существовать сам по&nbsp;себе и&nbsp;становится частью
-              последовательности: что я&nbsp;хочу получить → когда понадобятся
-              деньги → сколько нужно накопить → какой риск допустим →
-              и&nbsp;только потом какие инструменты подходят.
-            </p>
-            <p>
-              Это безопаснее, чем сначала заработать несколько миллионов,
-              а&nbsp;потом ходить по&nbsp;рынку и&nbsp;искать, кому бы
-              их&nbsp;отдать.
-            </p>
-          </div>
-        </div>
-      </section>
+          <p>
+            В&nbsp;результате вопрос «куда вложить деньги» перестаёт
+            существовать сам по&nbsp;себе и&nbsp;становится частью
+            последовательности: что я&nbsp;хочу получить → когда понадобятся
+            деньги → сколько нужно накопить → какой риск допустим →
+            и&nbsp;только потом какие инструменты подходят.
+          </p>
+          <p>
+            Это безопаснее, чем сначала заработать несколько миллионов,
+            а&nbsp;потом ходить по&nbsp;рынку и&nbsp;искать, кому бы
+            их&nbsp;отдать.
+          </p>
+        </ArticleFlow>
+      </ArticleSection>
 
       {/* CTA */}
       <section

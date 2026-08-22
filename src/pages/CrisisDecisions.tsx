@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { StorySection } from "@/components/article/StorySection";
+import { ArticleSection } from "@/components/article/ArticleSection";
+import { ArticleFlow } from "@/components/article/ArticleFlow";
+import { H2 } from "@/components/article/H2";
+import { Figure } from "@/components/article/Figure";
 import heroImg from "@/assets/krizis-hero.jpg";
 import cardsImg from "@/assets/krizis-cards.jpg";
 import story1Img from "@/assets/krizis-story-1.jpg";
@@ -191,12 +195,6 @@ const verdict = (n: number) => {
 };
 
 
-const H2 = ({ children }: { children: React.ReactNode }) => (
-  <h2 className="font-display font-semibold leading-[1.12] tracking-tight text-[clamp(1.6rem,3.6vw,2.4rem)] mb-6">
-    {children}
-  </h2>
-);
-
 const CrisisDecisions = () => {
   const [checked, setChecked] = useState<number[]>([]);
 
@@ -256,40 +254,36 @@ const CrisisDecisions = () => {
         ))}
       </div>
 
-      <section className="py-10 md:py-14">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection>
+        <ArticleFlow>
           <H2>Что объединяет эти три истории?</H2>
-          <p className="font-body text-lg leading-relaxed text-foreground/80">
+          <p>
             Моя версия: это не&nbsp;глупость. Во&nbsp;всех трёх случаях люди были
             перегружены <strong>количеством финансовых решений</strong> —
             и&nbsp;все эти решения были важными.
           </p>
-        </div>
-      </section>
+        </ArticleFlow>
+      </ArticleSection>
 
-
-      <section id="paradoks" className="py-12 md:py-16 scroll-mt-24">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection id="paradoks">
+        <ArticleFlow>
           <H2>Чем больше зарабатываешь, тем тяжелее</H2>
+          <p>
+            Это одна из&nbsp;самых недооценённых проблем в&nbsp;личных
+            финансах. И&nbsp;здесь есть парадокс: чем больше человек
+            зарабатывает и&nbsp;чем серьёзнее занимается своими деньгами, тем
+            актуальнее она становится.
+          </p>
+          <p>
+            Что делать с&nbsp;ипотекой? Куда вложить накопления? Как учесть
+            инфляцию? Как реагировать на&nbsp;курс доллара? Сколько держать
+            в&nbsp;подушке и&nbsp;в&nbsp;какой валюте? Сколько откладывать
+            детям? Когда менять машину? Как готовиться к&nbsp;пенсии?
+            А&nbsp;если через два года переезд? А&nbsp;если хочется уйти
+            из&nbsp;найма и&nbsp;открыть бизнес?
+          </p>
 
-          <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
-            <p>
-              Это одна из&nbsp;самых недооценённых проблем в&nbsp;личных
-              финансах. И&nbsp;здесь есть парадокс: чем больше человек
-              зарабатывает и&nbsp;чем серьёзнее занимается своими деньгами, тем
-              актуальнее она становится.
-            </p>
-            <p>
-              Что делать с&nbsp;ипотекой? Куда вложить накопления? Как учесть
-              инфляцию? Как реагировать на&nbsp;курс доллара? Сколько держать
-              в&nbsp;подушке и&nbsp;в&nbsp;какой валюте? Сколько откладывать
-              детям? Когда менять машину? Как готовиться к&nbsp;пенсии?
-              А&nbsp;если через два года переезд? А&nbsp;если хочется уйти
-              из&nbsp;найма и&nbsp;открыть бизнес?
-            </p>
-          </div>
-
-          <div className="my-8 flex flex-col md:flex-row md:items-center gap-4 md:gap-7 bg-card border border-border rounded-2xl p-6 md:p-7">
+          <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-7 bg-card border border-border rounded-2xl p-6 md:p-7">
             <div className="font-display font-semibold text-accent leading-none text-[clamp(2.6rem,6vw,4rem)] whitespace-nowrap">
               30–50
             </div>
@@ -300,7 +294,7 @@ const CrisisDecisions = () => {
             </p>
           </div>
 
-          <p className="font-body text-lg leading-relaxed text-foreground/80">
+          <p>
             Многие считают: если вы&nbsp;способны хорошо принять одно финансовое
             решение, то&nbsp;так же хорошо примете двадцать одновременно.{" "}
             <strong>Так не&nbsp;работает.</strong> Внимание размазывается, часть
@@ -309,7 +303,7 @@ const CrisisDecisions = () => {
           </p>
 
           {/* счётчик вопросов */}
-          <div className="mt-10 bg-card border border-border rounded-2xl p-6 md:p-8">
+          <div className="bg-card border border-border rounded-2xl p-6 md:p-8">
             <h3 className="font-display font-semibold text-xl">
               Посчитайте свои
             </h3>
@@ -348,38 +342,36 @@ const CrisisDecisions = () => {
               </p>
             </div>
           </div>
-        </div>
-      </section>
+        </ArticleFlow>
+      </ArticleSection>
 
-      <section id="krizis" className="py-12 md:py-16 scroll-mt-24">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection id="krizis">
+        <ArticleFlow>
           <H2>А теперь добавьте к&nbsp;этому кризис</H2>
-
-          <p className="font-body text-lg leading-relaxed text-foreground/80">
+          <p>
             К&nbsp;вашим условным тридцати нерешённым вопросам моментально
             добавляются новые. Именно в&nbsp;тот момент, когда особенно важно
             принимать хорошие финансовые решения, их&nbsp;количество резко
             возрастает.
           </p>
-          <blockquote className="mt-8 pl-6 border-l-4 border-accent font-display font-semibold leading-[1.35] text-[clamp(1.3rem,2.6vw,1.8rem)]">
+          <blockquote className="pl-6 border-l-4 border-accent font-display font-semibold leading-[1.35] text-[clamp(1.3rem,2.6vw,1.8rem)]">
             Количество решений растёт —{" "}
             <span className="italic font-normal text-accent">
               качество каждого следующего падает
             </span>
             .
           </blockquote>
-        </div>
-      </section>
+        </ArticleFlow>
+      </ArticleSection>
 
       <section
         id="strategiya"
-        className="py-14 md:py-20 my-6 scroll-mt-24"
+        className="py-10 md:py-14 mt-6 md:mt-8 scroll-mt-24"
         style={{ background: "hsl(var(--accent-soft) / 0.35)" }}
       >
-        <div className="container-px max-w-3xl mx-auto">
+        <ArticleFlow>
           <H2>Меньше решений, а&nbsp;не&nbsp;больше усилий</H2>
-
-          <p className="font-body text-lg leading-relaxed text-foreground/80">
+          <p>
             Поэтому моя стратегия подготовки к&nbsp;кризису звучит так:{" "}
             <strong>
               снизьте до&nbsp;минимума количество принимаемых финансовых решений.
@@ -388,7 +380,7 @@ const CrisisDecisions = () => {
             подход из&nbsp;трёх шагов.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-4 my-8">
+          <div className="grid md:grid-cols-3 gap-4">
             {steps.map((s) => (
               <div
                 key={s.num}
@@ -407,31 +399,23 @@ const CrisisDecisions = () => {
             ))}
           </div>
 
-          <p className="font-body text-lg leading-relaxed text-foreground/80">
+          <p>
             Например: в&nbsp;этом месяце разбираемся с&nbsp;недвижимостью.
             В&nbsp;следующем — с&nbsp;ростом дохода. Потом инвестиции, подушка,
             налоги, автомобиль, образование детей. Последовательность
             у&nbsp;каждого своя, потому что финансовая жизнь у&nbsp;каждого своя.
           </p>
-        </div>
+        </ArticleFlow>
       </section>
 
-      <figure className="container-px max-w-5xl mx-auto py-6">
-        <img
-          src={cardsImg}
-          alt="Человек держит одну карту, позади — аккуратная стопка из двенадцати карт"
-          loading="lazy"
-          width={1600}
-          height={912}
-          className="w-full rounded-2xl border border-border"
-        />
-        <figcaption className="mt-3 text-center font-body text-sm text-foreground/55">
-          Один месяц — один важный денежный вопрос
-        </figcaption>
-      </figure>
+      <Figure
+        src={cardsImg}
+        alt="Человек держит одну карту, позади — аккуратная стопка из двенадцати карт"
+        caption="Один месяц — один важный денежный вопрос"
+      />
 
-      <section className="py-12 md:py-16">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection>
+        <ArticleFlow>
           <H2>
             Через год — не&nbsp;папка со&nbsp;статьями, а&nbsp;12&nbsp;закрытых
             проблем
@@ -457,8 +441,7 @@ const CrisisDecisions = () => {
             ))}
           </div>
 
-
-          <div className="mt-6 flex flex-col md:flex-row md:items-center gap-4 md:gap-7 bg-card border border-border rounded-2xl p-6 md:p-7">
+          <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-7 bg-card border border-border rounded-2xl p-6 md:p-7">
             <div className="font-display font-semibold text-accent leading-none text-[clamp(2.4rem,5.5vw,3.6rem)] whitespace-nowrap">
               2% → 24%
             </div>
@@ -467,42 +450,39 @@ const CrisisDecisions = () => {
               у&nbsp;тех, кто уже в&nbsp;работе.
             </p>
           </div>
-        </div>
-      </section>
+        </ArticleFlow>
+      </ArticleSection>
 
-      <section id="format" className="py-12 md:py-16 scroll-mt-24">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection id="format">
+        <ArticleFlow>
           <H2>«12 самых важных денежных вопросов»</H2>
-
-          <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
-            <p>
-              Вокруг этой идеи я&nbsp;сейчас строю новый формат работы — условно
-              я&nbsp;называю его «12&nbsp;самых важных денежных вопросов». Моя
-              задача — не&nbsp;добавить вам ещё финансовой грамотности.
-              Я&nbsp;просто помогаю есть «финансового слона» по&nbsp;частям.
-            </p>
-            <p>
-              Если сейчас на&nbsp;вас одновременно висят ипотека, инвестиции,
-              квартира, пенсия, дети, налоги, курс валют, карьера
-              и&nbsp;«а&nbsp;вдруг завтра кризис» — моя задача не&nbsp;научить вас
-              лучше жонглировать этими шарами.
-            </p>
-            <p>
-              <strong>
-                Моя задача — постепенно убрать большую часть шаров вообще.
-              </strong>
-            </p>
-            <p>
-              Тогда любой кризис вы&nbsp;встретите не&nbsp;человеком
-              с&nbsp;пятьюдесятью нерешёнными денежными вопросами,
-              а&nbsp;человеком, у&nbsp;которого финансовая жизнь уже собрана
-              в&nbsp;систему — и&nbsp;которому нужно принять лишь несколько
-              действительно важных решений. Это и&nbsp;есть финансовая
-              устойчивость.
-            </p>
-          </div>
-        </div>
-      </section>
+          <p>
+            Вокруг этой идеи я&nbsp;сейчас строю новый формат работы — условно
+            я&nbsp;называю его «12&nbsp;самых важных денежных вопросов». Моя
+            задача — не&nbsp;добавить вам ещё финансовой грамотности.
+            Я&nbsp;просто помогаю есть «финансового слона» по&nbsp;частям.
+          </p>
+          <p>
+            Если сейчас на&nbsp;вас одновременно висят ипотека, инвестиции,
+            квартира, пенсия, дети, налоги, курс валют, карьера
+            и&nbsp;«а&nbsp;вдруг завтра кризис» — моя задача не&nbsp;научить вас
+            лучше жонглировать этими шарами.
+          </p>
+          <p>
+            <strong>
+              Моя задача — постепенно убрать большую часть шаров вообще.
+            </strong>
+          </p>
+          <p>
+            Тогда любой кризис вы&nbsp;встретите не&nbsp;человеком
+            с&nbsp;пятьюдесятью нерешёнными денежными вопросами,
+            а&nbsp;человеком, у&nbsp;которого финансовая жизнь уже собрана
+            в&nbsp;систему — и&nbsp;которому нужно принять лишь несколько
+            действительно важных решений. Это и&nbsp;есть финансовая
+            устойчивость.
+          </p>
+        </ArticleFlow>
+      </ArticleSection>
 
       <section id="diagnostika" className="py-16 md:py-24 bg-board text-background scroll-mt-24">
         <div className="container-px max-w-3xl mx-auto text-center">

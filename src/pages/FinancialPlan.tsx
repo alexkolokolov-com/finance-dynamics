@@ -318,8 +318,9 @@ const FinancialPlan = () => {
           <p className="mt-6 font-body text-lg md:text-xl leading-relaxed text-foreground/75 max-w-2xl mx-auto">
             {nbsp("Почему вопрос ")}
             <strong>{nbsp("куда вложить деньги")}</strong>
-            {nbsp(" — самый последний вопрос. И что должно появиться раньше любых инвестиций.")}
+            {nbsp(" — самый последний. И что должно появиться раньше любых инвестиций.")}
           </p>
+
         </div>
 
         <div className="container-px max-w-5xl mx-auto mt-10 md:mt-14">
@@ -349,26 +350,29 @@ const FinancialPlan = () => {
         <div className="container-px max-w-3xl mx-auto">
           <figure className="bg-card border border-border rounded-2xl p-6 md:p-10">
             <div className="flex items-start gap-4 md:gap-6">
-              <img
-                src={expertAvatar}
-                alt="Василий Мещеряков"
-                className="w-14 h-14 md:w-20 md:h-20 rounded-full object-cover shrink-0"
-                loading="lazy"
-              />
+              <div className="w-14 h-14 md:w-20 md:h-20 rounded-full overflow-hidden shrink-0">
+                <img
+                  src={expertAvatar}
+                  alt="Василий Мещеряков"
+                  className="w-full h-full object-cover object-top scale-125"
+                  loading="lazy"
+                />
+              </div>
               <div className="space-y-3">
-                <figcaption className="font-body text-[15px] md:text-base leading-snug text-foreground/80">
-                  <strong className="text-foreground">{nbsp("Василий Мещеряков")}</strong>
-                  {", "}
-                  {nbsp("автор книги «Ленивый бюджет»:")}
-                </figcaption>
                 <blockquote className="font-body text-lg md:text-xl leading-relaxed text-foreground/90">
                   {nbsp("В этой статье я расскажу, как избежать этих рисков и дам инструмент диагностики, как найти сферы вложения под ваши личные цели и ценности, не только по доходности.")}
                 </blockquote>
+                <figcaption className="font-body text-[15px] md:text-base leading-snug text-foreground/80">
+                  <strong className="text-foreground">{nbsp("Василий Мещеряков")}</strong>
+                  {", "}
+                  {nbsp("автор книги «Ленивый бюджет»")}
+                </figcaption>
               </div>
             </div>
           </figure>
         </div>
       </section>
+
 
       {/* Продавцы */}
       <section id="prodavcy" className="py-10 md:py-14 scroll-mt-24">
@@ -400,11 +404,6 @@ const FinancialPlan = () => {
         </div>
       </section>
 
-      <Figure
-        src={sellersImg}
-        alt="Банкир, брокер, застройщик и предприниматель — каждый продаёт свой продукт"
-        caption="Честный товар не значит подходящий вам"
-      />
 
       {/* Депозит */}
       <section id="depozit" className="py-10 md:py-14 scroll-mt-24">
@@ -435,49 +434,33 @@ const FinancialPlan = () => {
         </div>
       </section>
 
-      <Figure
-        src={depositImg}
-        alt="Копилка спит в надёжном сейфе, но сейф стоит на тающей льдине"
-        caption="Депозит защищает от воров, но не от инфляции и не от несбывшихся целей"
-      />
 
       {/* Принцип */}
       <section className="py-10 md:py-14">
         <div className="container-px max-w-3xl mx-auto">
           <H2>
-            В&nbsp;бизнесе это очевидно, а&nbsp;в&nbsp;личных финансах —
-            почему-то нет
+            {nbsp("В бизнесе это очевидно, а в личных финансах — почему-то нет")}
           </H2>
           <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
             <p>
-              Обычно поиск выглядит так: человек с&nbsp;условными пятью
-              миллионами спрашивает знакомых, читает Telegram, идёт в&nbsp;банк,
-              разговаривает с&nbsp;брокером — и&nbsp;вариантов становится
-              больше, чем было вначале. При&nbsp;этом пропущен один важный шаг.
-            </p>
-            <p>
-              Ни&nbsp;один банк не&nbsp;вкладывает деньги, не&nbsp;посмотрев
-              прогноз окупаемости. Ни&nbsp;одно предприятие не&nbsp;запускает
-              серьёзный проект без бизнес-плана. Ни&nbsp;один инвестор
-              не&nbsp;отдаёт деньги, не&nbsp;понимая срока возврата, доходности
-              и&nbsp;риска.
+              {nbsp("Ни один банк не вкладывает деньги, не посмотрев прогноз окупаемости. Ни одно предприятие не запускает серьёзный проект без бизнес-плана. Ни один инвестор не отдаёт деньги, не понимая срока возврата, доходности и риска.")}
             </p>
           </div>
           <Pull>
-            В&nbsp;нормальном бизнесе логика обратная. Сначала цифры
-            и&nbsp;план. Потом — решение.
+            {nbsp("В нормальном бизнесе логика обратная. Сначала цифры и план. Потом — решение.")}
           </Pull>
           <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
             <p>
-              Их&nbsp;объединяет одна скучная вещь: у&nbsp;них есть{" "}
-              <strong>финансовый план</strong>.
+              {nbsp("Их объединяет одна скучная вещь: у них есть ")}
+              <strong>{nbsp("финансовый план")}</strong>.
             </p>
             <p>
-              <strong>А&nbsp;у&nbsp;вас он есть?</strong>
+              <strong>{nbsp("А у вас он есть?")}</strong>
             </p>
           </div>
         </div>
       </section>
+
 
       {/* Методика */}
       <section id="plan" className="py-10 md:py-14 scroll-mt-24">

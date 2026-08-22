@@ -361,16 +361,14 @@ const FinancialPlan = () => {
         caption="Депозит защищает от воров, но не от инфляции и не от несбывшихся целей"
       />
 
-      <section className="py-10 md:py-14">
-        <div className="container-px max-w-3xl mx-auto">
-          <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
-            <p>
-              <strong>{nbsp("Но главный вопрос — достаточно ли этой доходности для ваших целей?")}</strong>{" "}
-              {nbsp("Можно несколько лет радоваться хорошей ставке, а потом обнаружить: капитал вырос — а нужная квартира, образование детей или пассивный доход не приблизились.")}
-            </p>
-          </div>
-        </div>
-      </section>
+      <ArticleSection>
+        <ArticleFlow>
+          <p>
+            <strong>{nbsp("Но главный вопрос — достаточно ли этой доходности для ваших целей?")}</strong>{" "}
+            {nbsp("Можно несколько лет радоваться хорошей ставке, а потом обнаружить: капитал вырос — а нужная квартира, образование детей или пассивный доход не приблизились.")}
+          </p>
+        </ArticleFlow>
+      </ArticleSection>
 
 
       <section className="py-10 md:py-14">

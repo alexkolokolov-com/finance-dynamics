@@ -349,26 +349,29 @@ const FinancialPlan = () => {
         <div className="container-px max-w-3xl mx-auto">
           <figure className="bg-card border border-border rounded-2xl p-6 md:p-10">
             <div className="flex items-start gap-4 md:gap-6">
-              <img
-                src={expertAvatar}
-                alt="Василий Мещеряков"
-                className="w-14 h-14 md:w-20 md:h-20 rounded-full object-cover shrink-0"
-                loading="lazy"
-              />
+              <div className="w-14 h-14 md:w-20 md:h-20 rounded-full overflow-hidden shrink-0">
+                <img
+                  src={expertAvatar}
+                  alt="Василий Мещеряков"
+                  className="w-full h-full object-cover object-top scale-125"
+                  loading="lazy"
+                />
+              </div>
               <div className="space-y-3">
-                <figcaption className="font-body text-[15px] md:text-base leading-snug text-foreground/80">
-                  <strong className="text-foreground">{nbsp("Василий Мещеряков")}</strong>
-                  {", "}
-                  {nbsp("автор книги «Ленивый бюджет»:")}
-                </figcaption>
                 <blockquote className="font-body text-lg md:text-xl leading-relaxed text-foreground/90">
                   {nbsp("В этой статье я расскажу, как избежать этих рисков и дам инструмент диагностики, как найти сферы вложения под ваши личные цели и ценности, не только по доходности.")}
                 </blockquote>
+                <figcaption className="font-body text-[15px] md:text-base leading-snug text-foreground/80">
+                  <strong className="text-foreground">{nbsp("Василий Мещеряков")}</strong>
+                  {", "}
+                  {nbsp("автор книги «Ленивый бюджет»")}
+                </figcaption>
               </div>
             </div>
           </figure>
         </div>
       </section>
+
 
       {/* Продавцы */}
       <section id="prodavcy" className="py-10 md:py-14 scroll-mt-24">

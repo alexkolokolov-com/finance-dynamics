@@ -247,55 +247,23 @@ const CrisisDecisions = () => {
         </div>
       </section>
 
-      <section id="istorii" className="py-12 md:py-16 scroll-mt-24">
+      <div id="istorii" className="scroll-mt-24">
+        {stories.map((s) => (
+          <StorySection key={s.id} {...s} />
+        ))}
+      </div>
+
+      <section className="py-10 md:py-14">
         <div className="container-px max-w-3xl mx-auto">
-          <H2>Три истории. Что их объединяет?</H2>
-
-          <p className="font-body text-lg leading-relaxed text-foreground/80">
-            Вчера я&nbsp;рассказал три истории и&nbsp;спросил, что у&nbsp;них
-            общего.
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-4 my-8">
-            {stories.map((s) => (
-              <div
-                key={s.num}
-                className="bg-card border border-border rounded-xl p-5"
-              >
-                <div className="font-display text-3xl leading-none text-accent mb-2">
-                  {s.num}
-                </div>
-                <h3 className="font-display font-semibold text-base mb-2">
-                  {s.title}
-                </h3>
-                <p className="font-body text-[15px] leading-relaxed text-foreground/75">
-                  {s.text}
-                </p>
-              </div>
-            ))}
-          </div>
-
+          <H2>Что объединяет эти три истории?</H2>
           <p className="font-body text-lg leading-relaxed text-foreground/80">
             Моя версия: это не&nbsp;глупость. Во&nbsp;всех трёх случаях люди были
             перегружены <strong>количеством финансовых решений</strong> —
             и&nbsp;все эти решения были важными.
           </p>
         </div>
-
-        <figure className="container-px max-w-5xl mx-auto mt-10">
-          <img
-            src={storiesImg}
-            alt="Три истории: разговор с мошенниками, усталость от бюджета, ссора пары из-за денег"
-            loading="lazy"
-            width={1600}
-            height={912}
-            className="w-full rounded-2xl border border-border"
-          />
-          <figcaption className="mt-3 text-center font-body text-sm text-foreground/55">
-            Три разные истории — одна причина
-          </figcaption>
-        </figure>
       </section>
+
 
       <section id="paradoks" className="py-12 md:py-16 scroll-mt-24">
         <div className="container-px max-w-3xl mx-auto">

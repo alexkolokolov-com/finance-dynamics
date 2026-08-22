@@ -8,8 +8,9 @@ type StorySectionProps = {
   side?: "left" | "right";
   paragraphs: ReactNode[];
   /** Реплика эксперта — выводится акцентной плашкой в конце текста */
-  comment: ReactNode;
+  comment: ReactNode | ReactNode[];
 };
+
 
 export const StorySection = ({
   id,
@@ -39,14 +40,17 @@ export const StorySection = ({
             </div>
 
             {/* Комментарий эксперта */}
-            <div
-              className="mt-6 rounded-xl border-l-2 border-accent px-5 py-4"
-              style={{ background: "hsl(var(--accent-soft) / 0.35)" }}
-            >
-              <p className="font-body italic text-[15px] md:text-base leading-relaxed text-foreground/85">
-                {comment}
-              </p>
+            <div className="mt-6 rounded-xl border border-border border-l-2 border-l-accent bg-card px-5 py-4 space-y-3">
+              {(Array.isArray(comment) ? comment : [comment]).map((c, i) => (
+                <p
+                  key={i}
+                  className="font-body text-[15px] md:text-base leading-relaxed text-foreground/85"
+                >
+                  {c}
+                </p>
+              ))}
             </div>
+
           </div>
 
           {/* Иллюстрация: 1/3, на мобильном — квадрат под текстом */}

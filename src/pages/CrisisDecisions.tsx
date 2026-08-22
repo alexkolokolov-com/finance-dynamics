@@ -93,18 +93,6 @@ const verdict = (n: number) => {
   );
 };
 
-const ChapterNo = ({ children, light }: { children: string; light?: boolean }) => (
-  <div
-    className={`flex items-center gap-4 mb-5 text-[11px] uppercase tracking-[0.28em] font-body font-semibold ${
-      light ? "text-background/90" : "text-accent"
-    }`}
-  >
-    <span className="whitespace-nowrap">{children}</span>
-    <span
-      className={`flex-1 h-px ${light ? "bg-background/30" : "bg-foreground/15"}`}
-    />
-  </div>
-);
 
 const H2 = ({ children }: { children: React.ReactNode }) => (
   <h2 className="font-display font-semibold leading-[1.12] tracking-tight text-[clamp(1.6rem,3.6vw,2.4rem)] mb-6">
@@ -141,12 +129,7 @@ const CrisisDecisions = () => {
       {/* Hero */}
       <section className="pt-28 md:pt-36 pb-10 md:pb-14">
         <div className="container-px max-w-4xl mx-auto text-center animate-fade-up">
-          <div className="inline-flex items-center gap-4 text-[11px] font-body font-semibold uppercase tracking-[0.22em] text-foreground/55">
-            <span className="w-8 h-px bg-foreground/30" />
-            Личные финансы · Лонгрид
-            <span className="w-8 h-px bg-foreground/30" />
-          </div>
-          <h1 className="mt-6 font-display font-semibold leading-[1.08] tracking-tight text-[clamp(2rem,5.4vw,3.6rem)]">
+          <h1 className="font-display font-semibold leading-[1.08] tracking-tight text-[clamp(2rem,5.4vw,3.6rem)]">
             Почему в&nbsp;кризис нужно принимать{" "}
             <span className="italic font-normal text-accent">меньше</span>{" "}
             финансовых решений
@@ -156,10 +139,8 @@ const CrisisDecisions = () => {
             а&nbsp;от&nbsp;перегрузки. И&nbsp;простая технология: один месяц —
             один важный денежный вопрос.
           </p>
-          <div className="mt-8 text-[11px] font-body font-semibold uppercase tracking-[0.16em] text-foreground/45">
-            Чтение · около 7&nbsp;минут
-          </div>
         </div>
+
 
         <div className="container-px max-w-5xl mx-auto mt-10 md:mt-14">
           <img
@@ -172,11 +153,10 @@ const CrisisDecisions = () => {
         </div>
       </section>
 
-      {/* Глава 1 */}
       <section id="istorii" className="py-12 md:py-16 scroll-mt-24">
         <div className="container-px max-w-3xl mx-auto">
-          <ChapterNo>Глава 01 · Истории</ChapterNo>
           <H2>Три истории. Что их объединяет?</H2>
+
           <p className="font-body text-lg leading-relaxed text-foreground/80">
             Вчера я&nbsp;рассказал три истории и&nbsp;спросил, что у&nbsp;них
             общего.
@@ -223,11 +203,10 @@ const CrisisDecisions = () => {
         </figure>
       </section>
 
-      {/* Глава 2 */}
       <section id="paradoks" className="py-12 md:py-16 scroll-mt-24">
         <div className="container-px max-w-3xl mx-auto">
-          <ChapterNo>Глава 02 · Парадокс</ChapterNo>
           <H2>Чем больше зарабатываешь, тем тяжелее</H2>
+
           <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
             <p>
               Это одна из&nbsp;самых недооценённых проблем в&nbsp;личных
@@ -307,11 +286,10 @@ const CrisisDecisions = () => {
         </div>
       </section>
 
-      {/* Глава 3 */}
       <section id="krizis" className="py-12 md:py-16 scroll-mt-24">
         <div className="container-px max-w-3xl mx-auto">
-          <ChapterNo>Глава 03 · Кризис</ChapterNo>
           <H2>А теперь добавьте к&nbsp;этому кризис</H2>
+
           <p className="font-body text-lg leading-relaxed text-foreground/80">
             К&nbsp;вашим условным тридцати нерешённым вопросам моментально
             добавляются новые. Именно в&nbsp;тот момент, когда особенно важно

@@ -414,19 +414,11 @@ const CrisisDecisions = () => {
         </div>
       </section>
 
-      <figure className="container-px max-w-5xl mx-auto py-6">
-        <img
-          src={cardsImg}
-          alt="Человек держит одну карту, позади — аккуратная стопка из двенадцати карт"
-          loading="lazy"
-          width={1600}
-          height={912}
-          className="w-full rounded-2xl border border-border"
-        />
-        <figcaption className="mt-3 text-center font-body text-sm text-foreground/55">
-          Один месяц — один важный денежный вопрос
-        </figcaption>
-      </figure>
+      <Figure
+        src={cardsImg}
+        alt="Человек держит одну карту, позади — аккуратная стопка из двенадцати карт"
+        caption="Один месяц — один важный денежный вопрос"
+      />
 
       <ArticleSection>
         <ArticleFlow>

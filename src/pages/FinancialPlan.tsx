@@ -336,19 +336,37 @@ const FinancialPlan = () => {
       <section className="py-8 md:py-12">
         <div className="container-px max-w-3xl mx-auto space-y-5 font-body text-lg leading-relaxed text-foreground/80">
           <p>
-            Человек несколько лет хорошо зарабатывал. Или&nbsp;получил крупную
-            премию, продал квартиру или&nbsp;бизнес. На&nbsp;руках — 3,
-            5,&nbsp;10&nbsp;миллионов рублей. Вроде бы&nbsp;начинается приятная
-            часть: деньги должны работать. Но&nbsp;вместе со&nbsp;свободными
-            деньгами приходят и&nbsp;риски.
+            {nbsp("Вы несколько лет хорошо зарабатывали. Или получили крупную премию, продали квартиру или бизнес. На руках — свободный миллион, 3, 5, 10... Вроде бы начинается приятная часть — распоряжаться этими деньгами. Но вместе с ними приходят и риски.")}
           </p>
           <p>
-            Депозит, квартира, облигации, акции, валюта, чужой бизнес —
-            или&nbsp;вообще пока ничего не&nbsp;делать?
+            <strong>{nbsp("Чем больше сумма, тем выше цена ошибки.")}</strong>
           </p>
-          <p>
-            <strong>Чем больше сумма, тем выше цена ошибки.</strong>
-          </p>
+        </div>
+      </section>
+
+      {/* Цитата эксперта */}
+      <section className="py-6 md:py-8">
+        <div className="container-px max-w-3xl mx-auto">
+          <figure className="bg-card border border-border rounded-2xl p-6 md:p-10">
+            <div className="flex items-start gap-4 md:gap-6">
+              <img
+                src={expertAvatar}
+                alt="Василий Мещеряков"
+                className="w-14 h-14 md:w-20 md:h-20 rounded-full object-cover shrink-0"
+                loading="lazy"
+              />
+              <div className="space-y-3">
+                <figcaption className="font-body text-[15px] md:text-base leading-snug text-foreground/80">
+                  <strong className="text-foreground">{nbsp("Василий Мещеряков")}</strong>
+                  {", "}
+                  {nbsp("автор книги «Ленивый бюджет»:")}
+                </figcaption>
+                <blockquote className="font-body text-lg md:text-xl leading-relaxed text-foreground/90">
+                  {nbsp("В этой статье я расскажу, как избежать этих рисков и дам инструмент диагностики, как найти сферы вложения под ваши личные цели и ценности, не только по доходности.")}
+                </blockquote>
+              </div>
+            </div>
+          </figure>
         </div>
       </section>
 

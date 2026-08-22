@@ -371,13 +371,13 @@ const FinancialPlan = () => {
       </ArticleSection>
 
 
-      <section className="py-10 md:py-14">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection>
+        <ArticleFlow>
           <H2>
             {nbsp("В бизнесе это очевидно, а в личных финансах — почему-то нет")}
           </H2>
-        </div>
-      </section>
+        </ArticleFlow>
+      </ArticleSection>
 
 
       {/* Методика */}

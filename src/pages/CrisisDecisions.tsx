@@ -428,8 +428,8 @@ const CrisisDecisions = () => {
         </figcaption>
       </figure>
 
-      <section className="py-12 md:py-16">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection>
+        <ArticleFlow>
           <H2>
             Через год — не&nbsp;папка со&nbsp;статьями, а&nbsp;12&nbsp;закрытых
             проблем
@@ -455,8 +455,7 @@ const CrisisDecisions = () => {
             ))}
           </div>
 
-
-          <div className="mt-6 flex flex-col md:flex-row md:items-center gap-4 md:gap-7 bg-card border border-border rounded-2xl p-6 md:p-7">
+          <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-7 bg-card border border-border rounded-2xl p-6 md:p-7">
             <div className="font-display font-semibold text-accent leading-none text-[clamp(2.4rem,5.5vw,3.6rem)] whitespace-nowrap">
               2% → 24%
             </div>
@@ -465,8 +464,8 @@ const CrisisDecisions = () => {
               у&nbsp;тех, кто уже в&nbsp;работе.
             </p>
           </div>
-        </div>
-      </section>
+        </ArticleFlow>
+      </ArticleSection>
 
       <ArticleSection id="format">
         <ArticleFlow>

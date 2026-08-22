@@ -589,14 +589,12 @@ const FinancialPlan = () => {
       </ArticleSection>
 
       {/* Два формата */}
-      <section id="format" className="py-10 md:py-14 scroll-mt-24">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection id="format">
+        <ArticleFlow>
           <H2>Как собрать свой план: курс или&nbsp;персональный разбор</H2>
-          <p className="font-body text-lg leading-relaxed text-foreground/80">
-            У&nbsp;меня два формата работы, и&nbsp;логика у&nbsp;них разная.
-          </p>
+          <p>У&nbsp;меня два формата работы, и&nbsp;логика у&nbsp;них разная.</p>
 
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2">
             <div className="bg-card border border-border rounded-xl p-5">
               <div className="font-body text-xs uppercase tracking-[0.1em] text-accent mb-2">
                 Формат 1 · Курс
@@ -640,22 +638,20 @@ const FinancialPlan = () => {
             </div>
           </div>
 
-          <div className="mt-6 space-y-5 font-body text-lg leading-relaxed text-foreground/80">
-            <p>
-              В&nbsp;результате вопрос «куда вложить деньги» перестаёт
-              существовать сам по&nbsp;себе и&nbsp;становится частью
-              последовательности: что я&nbsp;хочу получить → когда понадобятся
-              деньги → сколько нужно накопить → какой риск допустим →
-              и&nbsp;только потом какие инструменты подходят.
-            </p>
-            <p>
-              Это безопаснее, чем сначала заработать несколько миллионов,
-              а&nbsp;потом ходить по&nbsp;рынку и&nbsp;искать, кому бы
-              их&nbsp;отдать.
-            </p>
-          </div>
-        </div>
-      </section>
+          <p>
+            В&nbsp;результате вопрос «куда вложить деньги» перестаёт
+            существовать сам по&nbsp;себе и&nbsp;становится частью
+            последовательности: что я&nbsp;хочу получить → когда понадобятся
+            деньги → сколько нужно накопить → какой риск допустим →
+            и&nbsp;только потом какие инструменты подходят.
+          </p>
+          <p>
+            Это безопаснее, чем сначала заработать несколько миллионов,
+            а&nbsp;потом ходить по&nbsp;рынку и&nbsp;искать, кому бы
+            их&nbsp;отдать.
+          </p>
+        </ArticleFlow>
+      </ArticleSection>
 
       {/* CTA */}
       <section

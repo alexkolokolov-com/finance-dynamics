@@ -318,8 +318,9 @@ const FinancialPlan = () => {
           <p className="mt-6 font-body text-lg md:text-xl leading-relaxed text-foreground/75 max-w-2xl mx-auto">
             {nbsp("Почему вопрос ")}
             <strong>{nbsp("куда вложить деньги")}</strong>
-            {nbsp(" — самый последний вопрос. И что должно появиться раньше любых инвестиций.")}
+            {nbsp(" — самый последний. И что должно появиться раньше любых инвестиций.")}
           </p>
+
         </div>
 
         <div className="container-px max-w-5xl mx-auto mt-10 md:mt-14">

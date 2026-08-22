@@ -417,6 +417,15 @@ const FinancialPlan = () => {
       </section>
 
 
+      <section className="py-10 md:py-14">
+        <div className="container-px max-w-3xl mx-auto">
+          <H2>
+            {nbsp("В бизнесе это очевидно, а в личных финансах — почему-то нет")}
+          </H2>
+        </div>
+      </section>
+
+
       {/* Методика */}
       <section id="plan" className="py-10 md:py-14 scroll-mt-24">
         <div className="container-px max-w-3xl mx-auto">

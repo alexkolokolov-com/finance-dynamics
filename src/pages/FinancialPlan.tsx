@@ -400,11 +400,6 @@ const FinancialPlan = () => {
         </div>
       </section>
 
-      <Figure
-        src={sellersImg}
-        alt="Банкир, брокер, застройщик и предприниматель — каждый продаёт свой продукт"
-        caption="Честный товар не значит подходящий вам"
-      />
 
       {/* Депозит */}
       <section id="depozit" className="py-10 md:py-14 scroll-mt-24">

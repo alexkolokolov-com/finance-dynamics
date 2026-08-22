@@ -319,17 +319,15 @@ const FinancialPlan = () => {
 
 
       {/* Продавцы */}
-      <section id="prodavcy" className="py-10 md:py-14 scroll-mt-24">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection id="prodavcy">
+        <ArticleFlow>
           <H2>{nbsp("Ваши деньги притягивают «продавцов счастья»")}</H2>
-          <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
-            <p>
-              {nbsp("Вокруг появляются люди, которые точно знают, как их вложить: недвижимость, бизнес, закрытый клуб, криптовалюта. Они давно не похожи на мошенников: офисы, договоры, известные партнёры. ")}
-              <strong>{nbsp("Чем выше ваш доход, тем качественнее вам продают.")}</strong>
-            </p>
-          </div>
-        </div>
-      </section>
+          <p>
+            {nbsp("Вокруг появляются люди, которые точно знают, как их вложить: недвижимость, бизнес, закрытый клуб, криптовалюта. Они давно не похожи на мошенников: офисы, договоры, известные партнёры. ")}
+            <strong>{nbsp("Чем выше ваш доход, тем качественнее вам продают.")}</strong>
+          </p>
+        </ArticleFlow>
+      </ArticleSection>
 
       <Figure
         src={sellersImg}

@@ -278,16 +278,16 @@ const FinancialPlan = () => {
         </div>
       </section>
 
-      <section className="py-8 md:py-12">
-        <div className="container-px max-w-3xl mx-auto space-y-5 font-body text-lg leading-relaxed text-foreground/80">
+      <ArticleSection>
+        <ArticleFlow>
           <p>
             {nbsp("Вы несколько лет хорошо зарабатывали. Или получили крупную премию, продали квартиру или бизнес. На руках — свободный миллион, 3, 5, 10... Вроде бы начинается приятная часть — распоряжаться этими деньгами. Но вместе с ними приходят и риски.")}
           </p>
           <p>
             <strong>{nbsp("Чем больше сумма, тем выше цена ошибки.")}</strong>
           </p>
-        </div>
-      </section>
+        </ArticleFlow>
+      </ArticleSection>
 
       {/* Цитата эксперта */}
       <section className="py-6 md:py-8">

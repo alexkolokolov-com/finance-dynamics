@@ -306,15 +306,14 @@ const CrisisDecisions = () => {
         </div>
       </section>
 
-      {/* Глава 4 */}
       <section
         id="strategiya"
         className="py-14 md:py-20 my-6 scroll-mt-24"
         style={{ background: "hsl(var(--accent-soft) / 0.35)" }}
       >
         <div className="container-px max-w-3xl mx-auto">
-          <ChapterNo>Глава 04 · Стратегия</ChapterNo>
           <H2>Меньше решений, а&nbsp;не&nbsp;больше усилий</H2>
+
           <p className="font-body text-lg leading-relaxed text-foreground/80">
             Поэтому моя стратегия подготовки к&nbsp;кризису звучит так:{" "}
             <strong>
@@ -366,10 +365,8 @@ const CrisisDecisions = () => {
         </figcaption>
       </figure>
 
-      {/* Глава 5 */}
       <section className="py-12 md:py-16">
         <div className="container-px max-w-3xl mx-auto">
-          <ChapterNo>Глава 05 · Результат</ChapterNo>
           <H2>
             Через год — не&nbsp;папка со&nbsp;статьями, а&nbsp;12&nbsp;закрытых
             проблем
@@ -378,27 +375,23 @@ const CrisisDecisions = () => {
           <div className="grid md:grid-cols-2 gap-4">
             {[
               {
-                tag: "Обычно",
                 text: "Папка с сохранёнными статьями, несколько купленных курсов и двадцать вопросов, которыми «обязательно надо когда-нибудь заняться».",
               },
               {
-                tag: "Через год такой работы",
                 text: "Двенадцать закрытых проблем. Финансы занимают в голове всё меньше места — и жизнь становится проще.",
               },
-            ].map((c) => (
+            ].map((c, i) => (
               <div
-                key={c.tag}
+                key={i}
                 className="bg-card border border-border rounded-xl p-5"
               >
-                <span className="inline-block font-body font-semibold text-[11px] uppercase tracking-[0.16em] bg-foreground text-background rounded-full px-3 py-1 mb-3">
-                  {c.tag}
-                </span>
                 <p className="font-body text-[15px] leading-relaxed text-foreground/80">
                   {c.text}
                 </p>
               </div>
             ))}
           </div>
+
 
           <div className="mt-6 flex flex-col md:flex-row md:items-center gap-4 md:gap-7 bg-card border border-border rounded-2xl p-6 md:p-7">
             <div className="font-display font-semibold text-accent leading-none text-[clamp(2.4rem,5.5vw,3.6rem)] whitespace-nowrap">
@@ -412,11 +405,10 @@ const CrisisDecisions = () => {
         </div>
       </section>
 
-      {/* Глава 6 */}
       <section id="format" className="py-12 md:py-16 scroll-mt-24">
         <div className="container-px max-w-3xl mx-auto">
-          <ChapterNo>Глава 06 · Формат</ChapterNo>
           <H2>«12 самых важных денежных вопросов»</H2>
+
           <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
             <p>
               Вокруг этой идеи я&nbsp;сейчас строю новый формат работы — условно
@@ -447,13 +439,10 @@ const CrisisDecisions = () => {
         </div>
       </section>
 
-      {/* CTA */}
       <section id="diagnostika" className="py-16 md:py-24 bg-board text-background scroll-mt-24">
         <div className="container-px max-w-3xl mx-auto text-center">
-          <div className="flex items-center justify-center gap-4 mb-5 text-[11px] uppercase tracking-[0.28em] font-body font-semibold text-background/80">
-            Бесплатная диагностика
-          </div>
           <h2 className="font-display font-semibold leading-[1.12] tracking-tight text-[clamp(1.6rem,3.6vw,2.4rem)] mb-4">
+
             Сколько вопросов висит на&nbsp;вас прямо сейчас?
           </h2>
           <p className="font-body text-lg leading-relaxed text-background/85">

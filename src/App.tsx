@@ -10,6 +10,7 @@ import BigBudget from "./pages/BigBudget.tsx";
 import Checklist from "./pages/Checklist.tsx";
 import BudgetMethods from "./pages/BudgetMethods.tsx";
 import Blog from "./pages/Blog.tsx";
+import CrisisDecisions from "./pages/CrisisDecisions.tsx";
 import Landing from "./pages/Landing.tsx";
 import LandingDeck from "./pages/LandingDeck.tsx";
 import Support2026 from "./pages/Support2026.tsx";
@@ -42,6 +43,7 @@ const App = () => (
           <Route path="/checklist" element={<Checklist />} />
           <Route path="/budget-methods" element={<BudgetMethods />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/crisis-decisions" element={<CrisisDecisions />} />
           <Route path="/landing" element={<Landing />} />
           <Route path="/landing-deck" element={<LandingDeck />} />
           <Route path="/support-2026" element={<Support2026 />} />

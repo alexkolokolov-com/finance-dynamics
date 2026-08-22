@@ -1,3 +1,5 @@
+import krizisCover from "@/assets/krizis-hero.jpg";
+
 export type BlogPost = {
   tag: string;
   title: string;
@@ -47,7 +49,26 @@ const budgetIllustration = (
   </svg>
 );
 
+const krizisIllustration = (
+  <img
+    src={krizisCover}
+    alt="Человек жонглирует шарами с финансовыми символами и начинает их ронять"
+    loading="lazy"
+    width={1600}
+    height={912}
+    className="w-full h-auto rounded-lg"
+  />
+);
+
 export const blogPosts: BlogPost[] = [
+  {
+    tag: "лонгрид",
+    title: "Почему в кризис нужно принимать меньше финансовых решений",
+    text: "Три истории о&nbsp;том, как теряют деньги не&nbsp;от&nbsp;глупости, а&nbsp;от&nbsp;перегрузки. И&nbsp;простая технология: один месяц — один важный денежный вопрос.",
+    cta: "Читать лонгрид",
+    href: "/crisis-decisions",
+    illustration: krizisIllustration,
+  },
   {
     tag: "чек-лист",
     title: "Финансовый чек-лист для пары",

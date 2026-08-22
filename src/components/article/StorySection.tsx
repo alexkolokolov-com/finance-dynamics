@@ -23,10 +23,21 @@ export const StorySection = ({
 }: StorySectionProps) => {
   const imageFirst = side === "left";
 
+  const renderImage = (extraClass = "") => (
+    <img
+      src={image}
+      alt={alt}
+      loading="lazy"
+      width={1200}
+      height={1200}
+      className={`w-full max-w-sm mx-auto lg:max-w-none aspect-square object-cover rounded-2xl border border-border bg-card ${extraClass}`}
+    />
+  );
+
   return (
     <section id={id} className="py-10 md:py-14 scroll-mt-24">
       <div className="container-px max-w-6xl mx-auto">
-        <div className="grid gap-8 lg:gap-12 lg:grid-cols-3 lg:items-center">
+        <div className="grid gap-8 lg:gap-12 lg:grid-cols-3 lg:items-start">
           {/* Текст: 2/3 */}
           <div className={`lg:col-span-2 ${imageFirst ? "lg:order-2" : "lg:order-1"}`}>
             <h2 className="font-display font-semibold leading-[1.14] tracking-tight text-[clamp(1.5rem,3.4vw,2.2rem)] mb-5">
@@ -37,6 +48,11 @@ export const StorySection = ({
               {paragraphs.map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
+            </div>
+
+            {/* Мобильная иллюстрация — перед акцентным блоком */}
+            <div className="mt-6 lg:hidden">
+              {renderImage()}
             </div>
 
             {/* Комментарий эксперта */}
@@ -53,16 +69,9 @@ export const StorySection = ({
 
           </div>
 
-          {/* Иллюстрация: 1/3, на мобильном — квадрат под текстом */}
-          <div className={`lg:col-span-1 ${imageFirst ? "lg:order-1" : "lg:order-2"}`}>
-            <img
-              src={image}
-              alt={alt}
-              loading="lazy"
-              width={1200}
-              height={1200}
-              className="w-full max-w-sm mx-auto lg:max-w-none aspect-square object-cover rounded-2xl border border-border bg-card"
-            />
+          {/* Десктопная иллюстрация: 1/3 */}
+          <div className={`hidden lg:block lg:col-span-1 ${imageFirst ? "lg:order-1" : "lg:order-2"}`}>
+            {renderImage()}
           </div>
         </div>
       </div>

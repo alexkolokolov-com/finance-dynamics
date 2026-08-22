@@ -417,39 +417,9 @@ const FinancialPlan = () => {
       </section>
 
 
-      {/* Принцип */}
-      <section className="py-10 md:py-14">
-        <div className="container-px max-w-3xl mx-auto">
-          <H2>
-            {nbsp("В бизнесе это очевидно, а в личных финансах — почему-то нет")}
-          </H2>
-          <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
-            <p>
-              {nbsp("Ни один банк не вкладывает деньги, не посмотрев прогноз окупаемости. Ни одно предприятие не запускает серьёзный проект без бизнес-плана. Ни один инвестор не отдаёт деньги, не понимая срока возврата, доходности и риска.")}
-            </p>
-          </div>
-          <Pull>
-            {nbsp("В нормальном бизнесе логика обратная. Сначала цифры и план. Потом — решение.")}
-          </Pull>
-          <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
-            <p>
-              {nbsp("Их объединяет одна скучная вещь: у них есть ")}
-              <strong>{nbsp("финансовый план")}</strong>.
-            </p>
-            <p>
-              <strong>{nbsp("А у вас он есть?")}</strong>
-            </p>
-          </div>
-        </div>
-      </section>
-
-
       {/* Методика */}
       <section id="plan" className="py-10 md:py-14 scroll-mt-24">
         <div className="container-px max-w-3xl mx-auto">
-          <H2>
-            {nbsp("Личный финансовый план — это не таблица, а поиск точки роста")}
-          </H2>
           <div className="space-y-5 font-body text-lg leading-relaxed text-foreground/80">
             <p>
               {nbsp("Предлагаю на минуту отложить выбор между депозитом, квартирой и облигациями и ответить на вопрос: если у вас есть свободные деньги — ")}

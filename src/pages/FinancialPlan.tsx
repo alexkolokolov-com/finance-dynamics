@@ -435,11 +435,6 @@ const FinancialPlan = () => {
         </div>
       </section>
 
-      <Figure
-        src={depositImg}
-        alt="Копилка спит в надёжном сейфе, но сейф стоит на тающей льдине"
-        caption="Депозит защищает от воров, но не от инфляции и не от несбывшихся целей"
-      />
 
       {/* Принцип */}
       <section className="py-10 md:py-14">

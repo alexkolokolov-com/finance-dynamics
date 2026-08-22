@@ -548,20 +548,20 @@ const FinancialPlan = () => {
       </ArticleSection>
 
       {/* Пример */}
-      <section className="py-10 md:py-14">
-        <div className="container-px max-w-3xl mx-auto">
+      <ArticleSection>
+        <ArticleFlow>
           <H2>
             Одни и&nbsp;те&nbsp;же 5&nbsp;миллионов — четыре разных правильных
             решения
           </H2>
-          <p className="font-body text-lg leading-relaxed text-foreground/80">
+          <p>
             Только после того, как собран план, появляется смысл обсуждать
             инструменты. Смотрите, как одна и&nbsp;та&nbsp;же сумма превращается
             в&nbsp;четыре разных правильных решения — в&nbsp;зависимости
             от&nbsp;плана человека.
           </p>
 
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2">
             {people.map((p) => (
               <div
                 key={p.num}
@@ -577,7 +577,7 @@ const FinancialPlan = () => {
             ))}
           </div>
 
-          <p className="mt-6 font-body text-lg leading-relaxed text-foreground/80">
+          <p>
             Инструмент один. Правильное решение — разное. И&nbsp;выбрать его
             можно не&nbsp;по&nbsp;принципу «где сейчас обещают больше
             процентов», а&nbsp;по&nbsp;тому, насколько каждый вариант приближает
@@ -585,8 +585,8 @@ const FinancialPlan = () => {
             выбираете ответ — а&nbsp;потом пытаетесь придумать, к&nbsp;какому
             вопросу он подходит.
           </p>
-        </div>
-      </section>
+        </ArticleFlow>
+      </ArticleSection>
 
       {/* Два формата */}
       <section id="format" className="py-10 md:py-14 scroll-mt-24">

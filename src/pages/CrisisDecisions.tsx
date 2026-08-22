@@ -371,13 +371,12 @@ const CrisisDecisions = () => {
 
       <section
         id="strategiya"
-        className="py-14 md:py-20 my-6 scroll-mt-24"
+        className="py-10 md:py-14 mt-6 md:mt-8 scroll-mt-24"
         style={{ background: "hsl(var(--accent-soft) / 0.35)" }}
       >
-        <div className="container-px max-w-3xl mx-auto">
+        <ArticleFlow>
           <H2>Меньше решений, а&nbsp;не&nbsp;больше усилий</H2>
-
-          <p className="font-body text-lg leading-relaxed text-foreground/80">
+          <p>
             Поэтому моя стратегия подготовки к&nbsp;кризису звучит так:{" "}
             <strong>
               снизьте до&nbsp;минимума количество принимаемых финансовых решений.
@@ -386,7 +385,7 @@ const CrisisDecisions = () => {
             подход из&nbsp;трёх шагов.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-4 my-8">
+          <div className="grid md:grid-cols-3 gap-4">
             {steps.map((s) => (
               <div
                 key={s.num}
@@ -405,13 +404,13 @@ const CrisisDecisions = () => {
             ))}
           </div>
 
-          <p className="font-body text-lg leading-relaxed text-foreground/80">
+          <p>
             Например: в&nbsp;этом месяце разбираемся с&nbsp;недвижимостью.
             В&nbsp;следующем — с&nbsp;ростом дохода. Потом инвестиции, подушка,
             налоги, автомобиль, образование детей. Последовательность
             у&nbsp;каждого своя, потому что финансовая жизнь у&nbsp;каждого своя.
           </p>
-        </div>
+        </ArticleFlow>
       </section>
 
       <Figure

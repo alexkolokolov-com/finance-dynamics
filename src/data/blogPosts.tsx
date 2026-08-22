@@ -1,4 +1,5 @@
 import krizisCover from "@/assets/krizis-hero.jpg";
+import planCover from "@/assets/plan-hero.jpg";
 
 export type BlogPost = {
   tag: string;
@@ -49,6 +50,17 @@ const budgetIllustration = (
   </svg>
 );
 
+const planIllustration = (
+  <img
+    src={planCover}
+    alt="Человек с мешком денег на перекрёстке: банк, квартира, инвестиции"
+    loading="lazy"
+    width={1600}
+    height={912}
+    className="w-full h-auto rounded-lg"
+  />
+);
+
 const krizisIllustration = (
   <img
     src={krizisCover}
@@ -61,6 +73,14 @@ const krizisIllustration = (
 );
 
 export const blogPosts: BlogPost[] = [
+  {
+    tag: "лонгрид",
+    title: "Вы заработали деньги. Теперь главное — не потерять их",
+    text: "Почему вопрос «куда вложить деньги» — последний, а&nbsp;не&nbsp;первый. Личный финансовый план как бизнес-план вашей жизни: доходы, расходы, качество жизни и&nbsp;колесо сфер в&nbsp;деньгах.",
+    cta: "Читать лонгрид",
+    href: "/financial-plan",
+    illustration: planIllustration,
+  },
   {
     tag: "лонгрид",
     title: "Почему в кризис нужно принимать меньше финансовых решений",

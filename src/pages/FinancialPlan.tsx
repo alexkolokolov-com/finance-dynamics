@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
+import { Expert } from "@/components/sections/Expert";
 import { ArticleSection } from "@/components/article/ArticleSection";
 import { ArticleFlow } from "@/components/article/ArticleFlow";
 import { H2 } from "@/components/article/H2";
@@ -26,7 +26,6 @@ import icTime from "@/assets/wheel-time.png";
 import icRelations from "@/assets/wheel-relations.png";
 import icFinance from "@/assets/wheel-finance.png";
 import expertAvatar from "@/assets/expert-vasily.jpg";
-import vasilyPortrait from "@/assets/vasily-hero.png.asset.json";
 
 
 

@@ -11,6 +11,7 @@ import { nbsp } from "@/lib/nbsp";
 import heroImg from "@/assets/plan-hero.jpg";
 import sellersImg from "@/assets/plan-sellers.jpg";
 import depositImg from "@/assets/plan-deposit.jpg";
+import napkinImg from "@/assets/plan-napkin.jpg";
 import treeImg from "@/assets/plan-tree.jpg";
 import wheelImg from "@/assets/plan-wheel.jpg";
 import expertAvatar from "@/assets/expert-vasily.jpg";

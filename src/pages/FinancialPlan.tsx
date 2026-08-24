@@ -12,9 +12,13 @@ import heroImg from "@/assets/plan-hero.jpg";
 import sellersImg from "@/assets/plan-sellers.jpg";
 import depositImg from "@/assets/plan-deposit.jpg";
 import napkinImg from "@/assets/plan-napkin.jpg";
-import treeImg from "@/assets/plan-tree.jpg";
 import wheelImg from "@/assets/plan-wheel.jpg";
 import expertAvatar from "@/assets/expert-vasily.jpg";
+import cardNumbersImg from "@/assets/plan-card-numbers.jpg";
+import cardTablesImg from "@/assets/plan-card-tables.jpg";
+import cardBothImg from "@/assets/plan-card-both.jpg";
+import mindmapImg from "@/assets/plan-mindmap.jpg";
+
 
 const people = [
   {
@@ -415,17 +419,83 @@ const FinancialPlan = () => {
         </ArticleFlow>
       </ArticleSection>
 
+      {/* С чего начинается личный финансовый план */}
+      <ArticleSection>
+        <ArticleFlow>
+          <H2>{nbsp("С чего начинается личный финансовый план")}</H2>
+          <p>
+            {nbsp("Универсального шаблона не существует: чужой бизнес-план можно скачать, но докручивать придётся под себя. Каркас общий — доходы, расходы, финансовая подушка, цели, капитал... Но это скелет, а не план. План — то, куда конкретно вы приложите усилия.")}
+          </p>
+          <p>
+            {nbsp("Первый вопрос я задаю: а как вы мыслите? То есть я пытаюсь понять, а что в принципе человек думает про деньги, как он размышляет? Все мы умеем планировать свою жизнь, но выражаем это разными словами, фиксируем разными способами. Тут важно понять тот, который будет вам органичен. Иначе вы забросите это дело через 2 недели.")}
+          </p>
+          <p className="font-semibold">
+            {nbsp("Я выделяю 3 группы людей:")}
+          </p>
+
+          <div className="grid gap-4 lg:grid-cols-3">
+            <div className="bg-card border border-border rounded-2xl p-5 flex flex-col">
+              <img
+                src={cardNumbersImg}
+                alt="Человек работает с таблицей и диаграммой на ноутбуке"
+                width={1024}
+                height={768}
+                loading="lazy"
+                className="w-full aspect-[4/3] object-cover rounded-xl mb-4"
+              />
+              <H3 className="text-[clamp(1.1rem,2vw,1.3rem)]">
+                {nbsp("Вы дружите с цифрами")}
+              </H3>
+              <p className="mt-2 font-body text-[15px] leading-relaxed text-foreground/80">
+                {nbsp("Собираем модель в Excel. Иногда подробную, иногда предельно простую: какая сумма есть и какие у неё сценарии. Моя роль — помочь настроить и упростить: вы видели одну свою таблицу, я — тысячу.")}
+              </p>
+            </div>
+
+            <div className="bg-card border border-border rounded-2xl p-5 flex flex-col">
+              <img
+                src={cardTablesImg}
+                alt="Простой план на салфетке с крупными цифрами и стрелками"
+                width={1024}
+                height={768}
+                loading="lazy"
+                className="w-full aspect-[4/3] object-cover rounded-xl mb-4"
+              />
+              <H3 className="text-[clamp(1.1rem,2vw,1.3rem)]">
+                {nbsp("Вы не любите таблицы")}
+              </H3>
+              <p className="mt-2 font-body text-[15px] leading-relaxed text-foreground/80">
+                {nbsp("Составляем простейший план: заработаю столько-то, потрачу столько-то, останется столько-то; умножаем на десять лет — хватает ли на жизнь? Если нет, ищем, где усилить. Часто это карьерный план или план роста бизнеса, а финансовый план остаётся одной большой цифрой.")}
+              </p>
+            </div>
+
+            <div className="bg-card border border-border rounded-2xl p-5 flex flex-col">
+              <img
+                src={cardBothImg}
+                alt="Стол с бюджетной таблицей, блокнотом и стикерами"
+                width={1024}
+                height={768}
+                loading="lazy"
+                className="w-full aspect-[4/3] object-cover rounded-xl mb-4"
+              />
+              <H3 className="text-[clamp(1.1rem,2vw,1.3rem)]">
+                {nbsp("И то, и другое")}
+              </H3>
+              <p className="mt-2 font-body text-[15px] leading-relaxed text-foreground/80">
+                {nbsp("Один базовый табличный элемент, от которого отталкиваемся, — например бюджет. Его прорабатываем подробно: доходы, расходы или инвестиционный план. А всё остальное докручиваем без таблиц.")}
+              </p>
+            </div>
+          </div>
+
+          <p>
+            {nbsp("Работая с чужими бюджетами, я заметил странную вещь: все фокусируются на расходах. Доход дан «по умолчанию», а расходы экономят, оптимизируют, налаживают эффективность. Складывается ощущение, что никто не хочет больше зарабатывать — все хотят эффективнее тратить.")}
+          </p>
+        </ArticleFlow>
+      </ArticleSection>
+
       {/* Дерево доходов */}
       <ArticleSection>
         <ArticleFlow>
           <H2>{nbsp("Дерево роста доходов")}</H2>
-          <p>
-            Работая с&nbsp;чужими бюджетами, я&nbsp;заметил странную вещь: все
-            фокусируются на&nbsp;расходах. Доход дан «по&nbsp;умолчанию»,
-            а&nbsp;расходы экономят, оптимизируют, налаживают эффективность.
-            Складывается ощущение, что никто не&nbsp;хочет больше
-            зарабатывать — все хотят эффективнее тратить.
-          </p>
           <p>
             Поэтому я&nbsp;пришёл к&nbsp;простой модели: в&nbsp;любом бюджете
             50% места и&nbsp;усилий должны занимать доходы —
@@ -446,10 +516,11 @@ const FinancialPlan = () => {
       </ArticleSection>
 
       <Figure
-        src={treeImg}
-        alt="Дерево роста доходов: корни — навыки и знания, плоды — доход"
-        caption="Дерево роста доходов — ментальная карта, собранная из реальных бюджетов"
+        src={mindmapImg}
+        alt="Ментальная карта источников дохода: зарплата, бизнес, инвестиции, сдача недвижимости, фриланс"
+        caption="Ментальная карта источников дохода — отправная точка для роста"
       />
+
 
       <ArticleSection>
         <ArticleFlow>

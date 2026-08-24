@@ -122,6 +122,10 @@ export const captureTrackingParams = () => {
   writeStored({ ...prev, ...fresh });
 };
 
+/** Tracked params previously captured from the URL. */
+export const getStoredParams = (): Record<string, string> =>
+  readStored()?.params ?? {};
+
 /** Append stored tracking params to a URL (used for nivz.getcourse.ru anketa links). */
 export const appendStoredParams = (url: string): string => {
   const stored = readStored();

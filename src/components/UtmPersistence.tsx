@@ -34,7 +34,45 @@ export const UtmPersistence = () => {
     );
   }, [location.pathname, location.search, location.hash, navigate]);
 
+  // Rewrite same-origin links on click so tracking params travel with the
+  // navigation itself (works for full page loads, middle-click, new tab).
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      const anchor = target?.closest?.("a") as HTMLAnchorElement | null;
+      if (!anchor) return;
+      const href = anchor.getAttribute("href");
+      if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) return;
+
+      let url: URL;
+      try {
+        url = new URL(anchor.href, window.location.origin);
+      } catch {
+        return;
+      }
+      if (url.origin !== window.location.origin) return;
+
+      const stored = getStoredParams();
+      let changed = false;
+      for (const [k, v] of Object.entries(stored)) {
+        if (!url.searchParams.has(k)) {
+          url.searchParams.set(k, v);
+          changed = true;
+        }
+      }
+      if (changed) anchor.setAttribute("href", url.pathname + url.search + url.hash);
+    };
+
+    document.addEventListener("click", onClick, true);
+    document.addEventListener("auxclick", onClick, true);
+    return () => {
+      document.removeEventListener("click", onClick, true);
+      document.removeEventListener("auxclick", onClick, true);
+    };
+  }, []);
+
   return null;
 };
+
 
 export default UtmPersistence;

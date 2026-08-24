@@ -74,14 +74,14 @@ const people = [
 ];
 
 const SPHERES = [
-  { name: "Здоровье", Icon: HeartPulse },
-  { name: "Образование", Icon: GraduationCap },
-  { name: "Жильё и среда", Icon: Home },
-  { name: "Семья", Icon: Users },
-  { name: "Впечатления", Icon: Sparkles },
-  { name: "Время на себя", Icon: Coffee },
-  { name: "Отношения", Icon: Heart },
-  { name: "Финансы", Icon: Wallet },
+  { name: "Здоровье", icon: icHealth },
+  { name: "Образование", icon: icEducation },
+  { name: "Жильё", icon: icHome },
+  { name: "Семья", icon: icFamily },
+  { name: "Впечатления", icon: icImpressions },
+  { name: "Время на себя", icon: icTime },
+  { name: "Отношения", icon: icRelations },
+  { name: "Финансы", icon: icFinance },
 ];
 
 const Wheel = () => {
@@ -92,15 +92,15 @@ const Wheel = () => {
 
   const size = 400;
   const c = size / 2;
-  const R = size / 2 - 60; // место под подписи с иконками
-  const R0 = 54; // «дырка» в центре под фото человека
+  const R = size / 2 - 62; // место под иконки и подписи
+  const R0 = 60; // «дырка» в центре под рисованную фигуру
 
   const angle = (i: number) =>
     (Math.PI * 2 * i) / SPHERES.length - Math.PI / 2;
 
   const point = (i: number, v: number) => {
     const a = angle(i);
-    const r = R0 + ((v - 0) / 10) * (R - R0);
+    const r = R0 + (v / 10) * (R - R0);
     return [c + r * Math.cos(a), c + r * Math.sin(a)];
   };
 
@@ -126,9 +126,9 @@ const Wheel = () => {
   }, [importance, result]);
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[2fr_1fr] lg:items-start">
+    <div className="grid gap-5 lg:grid-cols-[2fr_1fr] lg:items-start">
       {/* Диаграмма */}
-      <div className="bg-card border border-border rounded-2xl p-4 md:p-6">
+      <div className="bg-card border border-border rounded-2xl p-3 md:p-5">
         <div className="relative w-full max-w-[520px] mx-auto aspect-square">
           <svg
             viewBox={`0 0 ${size} ${size}`}
@@ -136,12 +136,6 @@ const Wheel = () => {
             role="img"
             aria-label="Колесо сфер жизни: важность и результат"
           >
-            <defs>
-              <clipPath id="wheel-person">
-                <circle cx={c} cy={c} r={R0 - 8} />
-              </clipPath>
-            </defs>
-
             {[2.5, 5, 7.5, 10].map((v) => (
               <polygon
                 key={v}
@@ -149,7 +143,7 @@ const Wheel = () => {
                 fill="none"
                 stroke="hsl(var(--foreground))"
                 strokeWidth="0.8"
-                opacity="0.16"
+                opacity="0.14"
               />
             ))}
             {SPHERES.map((s, i) => {
@@ -164,7 +158,7 @@ const Wheel = () => {
                   y2={y2}
                   stroke="hsl(var(--foreground))"
                   strokeWidth="0.8"
-                  opacity="0.16"
+                  opacity="0.14"
                 />
               );
             })}
@@ -172,7 +166,7 @@ const Wheel = () => {
             <polygon
               points={poly(importance)}
               fill="hsl(var(--foreground))"
-              fillOpacity="0.07"
+              fillOpacity="0.06"
               stroke="hsl(var(--foreground))"
               strokeWidth="1.6"
             />
@@ -186,55 +180,36 @@ const Wheel = () => {
             {SPHERES.map((s, i) => {
               const [x, y] = point(i, result[i]);
               return (
-                <circle
-                  key={s.name}
-                  cx={x}
-                  cy={y}
-                  r="3.2"
-                  fill="hsl(var(--accent))"
-                />
+                <circle key={s.name} cx={x} cy={y} r="3.2" fill="hsl(var(--accent))" />
               );
             })}
-
-            {/* человек в центре */}
-            <circle
-              cx={c}
-              cy={c}
-              r={R0 - 8}
-              fill="hsl(var(--background))"
-            />
-            <image
-              href={expertAvatar}
-              x={c - (R0 - 8)}
-              y={c - (R0 - 8)}
-              width={(R0 - 8) * 2}
-              height={(R0 - 8) * 2}
-              clipPath="url(#wheel-person)"
-              preserveAspectRatio="xMidYMid slice"
-            />
-            <circle
-              cx={c}
-              cy={c}
-              r={R0 - 8}
-              fill="none"
-              stroke="hsl(var(--foreground))"
-              strokeOpacity="0.18"
-              strokeWidth="1.2"
-            />
           </svg>
 
-          {/* Подписи с иконками и значениями */}
+          {/* Рисованная фигура в центре */}
+          <img
+            src={wheelCenter}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none"
+            style={{ width: `${((R0 - 4) * 2 * 100) / size}%` }}
+          />
+
+          {/* Иконки сфер, подписи и значения */}
           {SPHERES.map((s, i) => {
-            const [x, y] = atRadius(i, R + 32);
+            const [x, y] = atRadius(i, R + 34);
             return (
               <div
                 key={s.name}
-                className="absolute -translate-x-1/2 -translate-y-1/2 w-[24%] text-center"
+                className="absolute -translate-x-1/2 -translate-y-1/2 w-[26%] text-center"
                 style={{ left: `${(x / size) * 100}%`, top: `${(y / size) * 100}%` }}
               >
-                <s.Icon
-                  className="mx-auto mb-0.5 h-[clamp(14px,3.2vw,18px)] w-[clamp(14px,3.2vw,18px)] text-foreground/70"
-                  strokeWidth={1.6}
+                <img
+                  src={s.icon}
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  className="mx-auto mb-1 w-[clamp(26px,6.4vw,38px)] h-[clamp(26px,6.4vw,38px)]"
                 />
                 <div className="font-display font-semibold leading-tight text-[clamp(9px,1.9vw,12px)]">
                   {s.name}
@@ -249,16 +224,7 @@ const Wheel = () => {
           })}
         </div>
 
-        <div className="mt-2 flex flex-wrap justify-center gap-4 font-body text-[13px] text-foreground/65">
-          <span className="inline-flex items-center gap-2">
-            <span className="w-4 h-[2px] bg-foreground" /> Насколько важно
-          </span>
-          <span className="inline-flex items-center gap-2">
-            <span className="w-4 h-[2px] bg-accent" /> Мой результат
-          </span>
-        </div>
-
-        <p className="mt-3 font-body text-[15px] leading-relaxed text-foreground/80">
+        <p className="mt-2 font-body text-[15px] leading-relaxed text-foreground/80">
           {gap.value <= 1 ? (
             <>
               Разрывов почти нет — важность и&nbsp;результат совпадают.
@@ -277,51 +243,59 @@ const Wheel = () => {
       </div>
 
       {/* Ползунки */}
-      <div className="bg-card border border-border rounded-2xl p-4 divide-y divide-border">
-        {SPHERES.map((s, i) => (
-          <div key={s.name} className="py-2.5 first:pt-0 last:pb-0">
-            <div className="flex items-center gap-2">
-              <s.Icon className="h-4 w-4 shrink-0 text-foreground/60" strokeWidth={1.6} />
-              <span className="font-display font-semibold text-[14px] leading-none">
-                {s.name}
-              </span>
-              <span className="ml-auto font-body text-[12px] tabular-nums text-foreground/60">
-                {importance[i]} / <span className="text-accent">{result[i]}</span>
-              </span>
+      <div className="bg-card border border-border rounded-2xl p-4">
+        <div className="flex flex-wrap gap-x-4 gap-y-1 font-body text-[12px] text-foreground/60">
+          <span className="inline-flex items-center gap-1.5">
+            <span className="w-4 h-[2px] bg-foreground" /> важность
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="w-4 h-[2px] bg-accent" /> результат
+          </span>
+        </div>
+
+        <div className="mt-3 space-y-3.5">
+          {SPHERES.map((s, i) => (
+            <div key={s.name}>
+              <div className="flex items-baseline gap-2">
+                <span className="font-display font-semibold text-[13px] leading-none">
+                  {s.name}
+                </span>
+                <span className="ml-auto font-body text-[12px] tabular-nums text-foreground/60">
+                  {importance[i]} / <span className="text-accent">{result[i]}</span>
+                </span>
+              </div>
+              <input
+                type="range"
+                min={1}
+                max={10}
+                value={importance[i]}
+                onChange={(e) =>
+                  setImportance((p) =>
+                    p.map((v, j) => (j === i ? +e.target.value : v)),
+                  )
+                }
+                className="mt-1 w-full h-1 accent-foreground"
+                aria-label={`Важность: ${s.name}`}
+              />
+              <input
+                type="range"
+                min={1}
+                max={10}
+                value={result[i]}
+                onChange={(e) =>
+                  setResult((p) => p.map((v, j) => (j === i ? +e.target.value : v)))
+                }
+                className="mt-0.5 w-full h-1 accent-[hsl(var(--accent))]"
+                aria-label={`Результат: ${s.name}`}
+              />
             </div>
-            <input
-              type="range"
-              min={1}
-              max={10}
-              value={importance[i]}
-              onChange={(e) =>
-                setImportance((p) =>
-                  p.map((v, j) => (j === i ? +e.target.value : v)),
-                )
-              }
-              className="mt-1.5 w-full h-1 accent-foreground"
-              aria-label={`Важность: ${s.name}`}
-            />
-            <input
-              type="range"
-              min={1}
-              max={10}
-              value={result[i]}
-              onChange={(e) =>
-                setResult((p) => p.map((v, j) => (j === i ? +e.target.value : v)))
-              }
-              className="mt-1 w-full h-1 accent-[hsl(var(--accent))]"
-              aria-label={`Результат: ${s.name}`}
-            />
-          </div>
-        ))}
-        <p className="pt-2 font-body text-[11px] uppercase tracking-[0.08em] text-foreground/45">
-          Верхний ползунок — важность, нижний — результат
-        </p>
+          ))}
+        </div>
       </div>
     </div>
   );
 };
+
 
 
 const FinancialPlan = () => {

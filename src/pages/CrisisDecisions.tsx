@@ -496,7 +496,9 @@ const CrisisDecisions = () => {
             какой вопрос вы&nbsp;закроете в&nbsp;этом месяце.
           </p>
           <a
-            href="/consultations"
+            href="https://nivz.getcourse.ru/diagnostic_article"
+            target="_blank"
+            rel="noopener noreferrer"
             className="mt-8 inline-flex items-center rounded-full bg-accent text-accent-foreground font-body font-semibold text-sm uppercase tracking-[0.08em] px-8 py-4 hover:bg-background hover:text-foreground transition-colors"
           >
             Записаться на&nbsp;диагностику

@@ -22,7 +22,6 @@ import heroImg from "@/assets/plan-hero.jpg";
 import sellersImg from "@/assets/plan-sellers.jpg";
 import depositImg from "@/assets/plan-deposit.jpg";
 import napkinImg from "@/assets/plan-napkin.jpg";
-import wheelImg from "@/assets/plan-wheel.jpg";
 import expertAvatar from "@/assets/expert-vasily.jpg";
 import cardNumbersImg from "@/assets/plan-card-numbers.jpg";
 import cardTablesImg from "@/assets/plan-card-tables.jpg";

@@ -682,11 +682,8 @@ const FinancialPlan = () => {
         </ArticleFlow>
       </ArticleSection>
 
-      <Figure
-        src={wheelImg}
-        alt="Личная орбитальная система: в центре человек, вокруг — сферы жизни"
-        caption="Личная «орбитальная система»: в центре вы, вокруг — сферы, в которые вы инвестируете"
-      />
+
+
 
       {/* Колесо сфер */}
       <ArticleSection id="koleso">

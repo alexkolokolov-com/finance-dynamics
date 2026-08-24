@@ -11,6 +11,7 @@ import { nbsp } from "@/lib/nbsp";
 import heroImg from "@/assets/plan-hero.jpg";
 import sellersImg from "@/assets/plan-sellers.jpg";
 import depositImg from "@/assets/plan-deposit.jpg";
+import napkinImg from "@/assets/plan-napkin.jpg";
 import treeImg from "@/assets/plan-tree.jpg";
 import wheelImg from "@/assets/plan-wheel.jpg";
 import expertAvatar from "@/assets/expert-vasily.jpg";
@@ -395,6 +396,17 @@ const FinancialPlan = () => {
           <p>
             {nbsp("Хотя вы понимаете, что бизнесом движет не бухгалтерский учёт, а коммерческая функция: поиск, где купить за рубль и продать за сто. Бизнес-план будет хоть на салфетке, но в нём поставлены цели: на что мы тратим и за счёт каких действий получим прибыль. Может при этом быть кривым и косым — но заточенным под одну главную возможность. Математика обслуживает её, а всё остальное написано крупными мазками.")}
           </p>
+        </ArticleFlow>
+      </ArticleSection>
+
+      <Figure
+        src={napkinImg}
+        alt="План на салфетке рядом с закрытой бухгалтерской книгой"
+        caption="Бизнес-план на салфетке работает, если в нём есть главная возможность"
+      />
+
+      <ArticleSection>
+        <ArticleFlow>
           <Pull>{nbsp("Простота и понятность плана важнее его правильности.")}</Pull>
           <p>
             <strong>{nbsp("Личный финансовый план")}</strong>{" "}

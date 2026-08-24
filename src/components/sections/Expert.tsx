@@ -1,6 +1,14 @@
+import { Link } from "react-router-dom";
 import vasilyBench from "@/assets/vasily-bench.jpg";
 
-export const Expert = () => {
+type ExpertProps = {
+  cta?: {
+    label: string;
+    href: string;
+  };
+};
+
+export const Expert = ({ cta }: ExpertProps) => {
   const facts = [
     { k: "14 лет", v: "корпоративной карьеры" },
     { k: "6 млрд ₽", v: "бюджет в управлении" },
@@ -34,6 +42,18 @@ export const Expert = () => {
                 без героических усилий.
               </p>
             </div>
+
+            {cta && (
+              <div className="mt-8 md:mt-10">
+                <Link
+                  to={cta.href}
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-background text-foreground font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors"
+                >
+                  <span>{cta.label}</span>
+                  <span className="text-base">→</span>
+                </Link>
+              </div>
+            )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-background/15 border border-background/15 mt-10">
               {facts.map((f) => (

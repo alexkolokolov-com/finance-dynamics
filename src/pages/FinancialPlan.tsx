@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
+import { Expert } from "@/components/sections/Expert";
 import { ArticleSection } from "@/components/article/ArticleSection";
 import { ArticleFlow } from "@/components/article/ArticleFlow";
 import { H2 } from "@/components/article/H2";
@@ -26,7 +26,6 @@ import icTime from "@/assets/wheel-time.png";
 import icRelations from "@/assets/wheel-relations.png";
 import icFinance from "@/assets/wheel-finance.png";
 import expertAvatar from "@/assets/expert-vasily.jpg";
-import vasilyPortrait from "@/assets/vasily-hero.png.asset.json";
 
 
 
@@ -745,47 +744,7 @@ const FinancialPlan = () => {
       </ArticleSection>
 
       {/* Блок эксперта */}
-      <section className="py-16 md:py-24 bg-background">
-        <div className="container-px max-w-7xl mx-auto">
-          <div className="grid grid-cols-12 gap-6 md:gap-10 lg:gap-14 items-center">
-            <div className="col-span-12 md:col-span-6 order-2 md:order-1">
-              <h2 className="font-display font-semibold leading-[1.05] tracking-tight text-[clamp(1.8rem,5vw,3rem)]">
-                Василий <span className="text-accent">Мещеряков</span>
-              </h2>
-              <p className="mt-4 md:mt-6 font-display font-semibold leading-[1.25] tracking-tight text-foreground/85 max-w-2xl text-[clamp(1.1rem,2.4vw,1.6rem)]">
-                {nbsp("Простыми словами о том, как избавиться от финансовой тревоги и")}{" "}
-                <span className="italic text-accent">{nbsp("жить лучше за те же деньги")}</span>
-              </p>
-              <div className="mt-6 md:mt-8">
-                <Link
-                  to="/consultations"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors"
-                >
-                  <span>Записаться на&nbsp;диагностику</span>
-                  <span className="text-base">→</span>
-                </Link>
-              </div>
-            </div>
-
-            <div className="col-span-12 md:col-span-6 order-1 md:order-2 flex justify-center md:justify-end">
-              <div className="relative w-full max-w-[320px] sm:max-w-[380px] md:max-w-md aspect-[4/5] overflow-hidden rounded-[1.75rem]">
-                <img
-                  src={vasilyPortrait.url}
-                  alt="Василий Мещеряков"
-                  className="absolute inset-0 w-full h-full object-cover object-center scale-[0.9]"
-                />
-                <div className="absolute inset-x-0 bottom-3 sm:bottom-4 z-10 flex justify-start px-3 sm:px-4">
-                  <span className="badge-tag bg-card/95 backdrop-blur-sm text-xs min-[360px]:text-sm md:text-base whitespace-nowrap px-2.5 py-1.5 inline-flex items-center gap-1.5 shadow-sm font-medium">
-                    <span>Василий Мещеряков</span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" aria-hidden="true" />
-                    <span className="text-foreground/80">ex-sales director <span className="text-accent">P&amp;G</span></span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Expert cta={{ label: "Записаться на\u00A0диагностику", href: "/consultations" }} />
 
       <Footer />
     </main>

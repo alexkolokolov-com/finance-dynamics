@@ -1,4 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
+import {
+  HeartPulse,
+  GraduationCap,
+  Home,
+  Users,
+  Sparkles,
+  Coffee,
+  Heart,
+  Wallet,
+} from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { ArticleSection } from "@/components/article/ArticleSection";

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
-import { Expert } from "@/components/sections/Expert";
+import { CardAbout } from "@/components/sections/CardAbout";
 import { ArticleSection } from "@/components/article/ArticleSection";
 import { ArticleFlow } from "@/components/article/ArticleFlow";
 import { H2 } from "@/components/article/H2";
@@ -744,7 +744,16 @@ const FinancialPlan = () => {
       </ArticleSection>
 
       {/* Блок эксперта */}
-      <Expert cta={{ label: "Записаться на\u00A0диагностику", href: "/consultations" }} />
+      <CardAbout
+        eyebrow="Диагностика"
+        heading={
+          <>
+            Личные финансы — это{" "}
+            <span className="italic font-normal">диагностика</span>, а не{" "}
+            <span className="italic font-normal">гадание</span>.
+          </>
+        }
+      />
 
       <Footer />
     </main>

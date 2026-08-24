@@ -86,14 +86,14 @@ const SPHERES = [
 
 const Wheel = () => {
   const [importance, setImportance] = useState<number[]>(
-    () => SPHERES.map(() => 7),
+    () => SPHERES.map(() => 5),
   );
   const [result, setResult] = useState<number[]>(() => SPHERES.map(() => 5));
 
   const size = 400;
   const c = size / 2;
-  const R = size / 2 - 62; // место под иконки и подписи
-  const R0 = 60; // «дырка» в центре под рисованную фигуру
+  const R = size / 2 - 44; // место под иконки и подписи над ними
+  const R0 = 18; // маленькая «дырка» в центре
 
   const angle = (i: number) =>
     (Math.PI * 2 * i) / SPHERES.length - Math.PI / 2;
@@ -126,175 +126,176 @@ const Wheel = () => {
   }, [importance, result]);
 
   return (
-    <div className="grid gap-5 lg:grid-cols-[2fr_1fr] lg:items-start">
-      {/* Диаграмма */}
-      <div className="bg-card border border-border rounded-2xl p-3 md:p-5">
-        <div className="relative w-full max-w-[520px] mx-auto aspect-square">
-          <svg
-            viewBox={`0 0 ${size} ${size}`}
-            className="absolute inset-0 w-full h-full"
-            role="img"
-            aria-label="Колесо сфер жизни: важность и результат"
-          >
-            {[2.5, 5, 7.5, 10].map((v) => (
-              <polygon
-                key={v}
-                points={poly(SPHERES.map(() => v))}
-                fill="none"
-                stroke="hsl(var(--foreground))"
-                strokeWidth="0.8"
-                opacity="0.14"
-              />
-            ))}
-            {SPHERES.map((s, i) => {
-              const [x1, y1] = atRadius(i, R0);
-              const [x2, y2] = atRadius(i, R);
-              return (
-                <line
-                  key={s.name}
-                  x1={x1}
-                  y1={y1}
-                  x2={x2}
-                  y2={y2}
+    <div className="bg-card border border-border rounded-2xl overflow-hidden">
+      <div className="grid lg:grid-cols-[2fr_1fr]">
+        {/* Диаграмма */}
+        <div className="p-4 md:p-5">
+          <div className="flex flex-wrap gap-x-4 gap-y-1 font-body text-[12px] text-foreground/60">
+            <span className="inline-flex items-center gap-1.5">
+              <span className="w-4 h-[2px] bg-foreground" /> важность
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <span className="w-4 h-[2px] bg-accent" /> результат
+            </span>
+          </div>
+
+          <div className="relative w-full max-w-[560px] mx-auto aspect-square">
+            <svg
+              viewBox={`0 0 ${size} ${size}`}
+              className="absolute inset-0 w-full h-full"
+              role="img"
+              aria-label="Колесо сфер жизни: важность и результат"
+            >
+              {[2, 4, 6, 8, 10].map((v) => (
+                <polygon
+                  key={v}
+                  points={poly(SPHERES.map(() => v))}
+                  fill="none"
                   stroke="hsl(var(--foreground))"
                   strokeWidth="0.8"
-                  opacity="0.14"
+                  opacity="0.08"
                 />
-              );
-            })}
+              ))}
+              {SPHERES.map((s, i) => {
+                const [x1, y1] = atRadius(i, R0);
+                const [x2, y2] = atRadius(i, R);
+                return (
+                  <line
+                    key={s.name}
+                    x1={x1}
+                    y1={y1}
+                    x2={x2}
+                    y2={y2}
+                    stroke="hsl(var(--foreground))"
+                    strokeWidth="0.8"
+                    opacity="0.08"
+                  />
+                );
+              })}
 
-            <polygon
-              points={poly(importance)}
-              fill="hsl(var(--foreground))"
-              fillOpacity="0.06"
-              stroke="hsl(var(--foreground))"
-              strokeWidth="1.6"
-            />
-            <polygon
-              points={poly(result)}
-              fill="hsl(var(--accent))"
-              fillOpacity="0.16"
-              stroke="hsl(var(--accent))"
-              strokeWidth="2"
-            />
+              <polygon
+                points={poly(importance)}
+                fill="hsl(var(--foreground))"
+                fillOpacity="0.05"
+                stroke="hsl(var(--foreground))"
+                strokeWidth="1.6"
+              />
+              <polygon
+                points={poly(result)}
+                fill="hsl(var(--accent))"
+                fillOpacity="0.16"
+                stroke="hsl(var(--accent))"
+                strokeWidth="2"
+              />
+              {SPHERES.map((s, i) => {
+                const [x, y] = point(i, result[i]);
+                const a = angle(i);
+                return (
+                  <g key={s.name}>
+                    <circle cx={x} cy={y} r="3.2" fill="hsl(var(--accent))" />
+                    <text
+                      x={x + Math.cos(a) * 12}
+                      y={y + Math.sin(a) * 12}
+                      textAnchor="middle"
+                      dominantBaseline="central"
+                      className="fill-accent font-body"
+                      style={{ fontSize: "12px", fontWeight: 600 }}
+                    >
+                      {result[i]}
+                    </text>
+                  </g>
+                );
+              })}
+            </svg>
+
+            {/* Иконки сфер с подписями над ними */}
             {SPHERES.map((s, i) => {
-              const [x, y] = point(i, result[i]);
+              const [x, y] = atRadius(i, R + 22);
               return (
-                <circle key={s.name} cx={x} cy={y} r="3.2" fill="hsl(var(--accent))" />
+                <div
+                  key={s.name}
+                  className="absolute -translate-x-1/2 -translate-y-1/2 w-[24%] text-center"
+                  style={{ left: `${(x / size) * 100}%`, top: `${(y / size) * 100}%` }}
+                >
+                  <div className="font-display font-semibold leading-tight text-[clamp(9px,1.8vw,11px)] text-foreground/70">
+                    {s.name}
+                  </div>
+                  <img
+                    src={s.icon}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                    className="mx-auto mt-0.5 w-[clamp(24px,5.6vw,34px)] h-[clamp(24px,5.6vw,34px)]"
+                  />
+                </div>
               );
             })}
-          </svg>
+          </div>
 
-          {/* Рисованная фигура в центре */}
-          <img
-            src={wheelCenter}
-            alt=""
-            aria-hidden="true"
-            loading="lazy"
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none"
-            style={{ width: `${((R0 - 4) * 2 * 100) / size}%` }}
-          />
+          <p className="mt-2 font-body text-[15px] leading-relaxed text-foreground/80">
+            {gap.value <= 1 ? (
+              <>
+                Разрывов почти нет — важность и&nbsp;результат совпадают.
+                Это редкая и&nbsp;хорошая ситуация.
+              </>
+            ) : (
+              <>
+                Самый большой разрыв — <strong className="text-accent">
+                  {SPHERES[gap.idx].name.toLowerCase()}
+                </strong>{" "}
+                ({gap.value} баллов). Именно здесь деньги и&nbsp;время могут
+                купить больше качества жизни, чем любая инвестиция.
+              </>
+            )}
+          </p>
+        </div>
 
-          {/* Иконки сфер, подписи и значения */}
-          {SPHERES.map((s, i) => {
-            const [x, y] = atRadius(i, R + 34);
-            return (
-              <div
-                key={s.name}
-                className="absolute -translate-x-1/2 -translate-y-1/2 w-[26%] text-center"
-                style={{ left: `${(x / size) * 100}%`, top: `${(y / size) * 100}%` }}
-              >
-                <img
-                  src={s.icon}
-                  alt=""
-                  aria-hidden="true"
-                  loading="lazy"
-                  className="mx-auto mb-1 w-[clamp(26px,6.4vw,38px)] h-[clamp(26px,6.4vw,38px)]"
+        {/* Ползунки — в том же фрейме, за разделителем */}
+        <div className="p-4 md:p-5 border-t lg:border-t-0 lg:border-l border-border">
+          <div className="grid gap-x-6 gap-y-3.5 sm:grid-cols-2 lg:grid-cols-1">
+            {SPHERES.map((s, i) => (
+              <div key={s.name}>
+                <div className="flex items-baseline gap-2">
+                  <span className="font-display font-semibold text-[13px] leading-none">
+                    {s.name}
+                  </span>
+                  <span className="ml-auto font-body text-[12px] tabular-nums text-foreground/60">
+                    {importance[i]} / <span className="text-accent">{result[i]}</span>
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min={1}
+                  max={10}
+                  value={importance[i]}
+                  onChange={(e) =>
+                    setImportance((p) =>
+                      p.map((v, j) => (j === i ? +e.target.value : v)),
+                    )
+                  }
+                  className="mt-1 w-full h-1 accent-foreground"
+                  aria-label={`Важность: ${s.name}`}
                 />
-                <div className="font-display font-semibold leading-tight text-[clamp(9px,1.9vw,12px)]">
-                  {s.name}
-                </div>
-                <div className="font-body leading-tight text-[clamp(9px,1.9vw,12px)] tabular-nums">
-                  <span className="text-foreground/75">{importance[i]}</span>
-                  <span className="text-foreground/35"> / </span>
-                  <span className="text-accent font-semibold">{result[i]}</span>
-                </div>
+                <input
+                  type="range"
+                  min={1}
+                  max={10}
+                  value={result[i]}
+                  onChange={(e) =>
+                    setResult((p) => p.map((v, j) => (j === i ? +e.target.value : v)))
+                  }
+                  className="mt-0.5 w-full h-1 accent-[hsl(var(--accent))]"
+                  aria-label={`Результат: ${s.name}`}
+                />
               </div>
-            );
-          })}
-        </div>
-
-        <p className="mt-2 font-body text-[15px] leading-relaxed text-foreground/80">
-          {gap.value <= 1 ? (
-            <>
-              Разрывов почти нет — важность и&nbsp;результат совпадают.
-              Это редкая и&nbsp;хорошая ситуация.
-            </>
-          ) : (
-            <>
-              Самый большой разрыв — <strong className="text-accent">
-                {SPHERES[gap.idx].name.toLowerCase()}
-              </strong>{" "}
-              ({gap.value} баллов). Именно здесь деньги и&nbsp;время могут
-              купить больше качества жизни, чем любая инвестиция.
-            </>
-          )}
-        </p>
-      </div>
-
-      {/* Ползунки */}
-      <div className="bg-card border border-border rounded-2xl p-4">
-        <div className="flex flex-wrap gap-x-4 gap-y-1 font-body text-[12px] text-foreground/60">
-          <span className="inline-flex items-center gap-1.5">
-            <span className="w-4 h-[2px] bg-foreground" /> важность
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <span className="w-4 h-[2px] bg-accent" /> результат
-          </span>
-        </div>
-
-        <div className="mt-3 space-y-3.5">
-          {SPHERES.map((s, i) => (
-            <div key={s.name}>
-              <div className="flex items-baseline gap-2">
-                <span className="font-display font-semibold text-[13px] leading-none">
-                  {s.name}
-                </span>
-                <span className="ml-auto font-body text-[12px] tabular-nums text-foreground/60">
-                  {importance[i]} / <span className="text-accent">{result[i]}</span>
-                </span>
-              </div>
-              <input
-                type="range"
-                min={1}
-                max={10}
-                value={importance[i]}
-                onChange={(e) =>
-                  setImportance((p) =>
-                    p.map((v, j) => (j === i ? +e.target.value : v)),
-                  )
-                }
-                className="mt-1 w-full h-1 accent-foreground"
-                aria-label={`Важность: ${s.name}`}
-              />
-              <input
-                type="range"
-                min={1}
-                max={10}
-                value={result[i]}
-                onChange={(e) =>
-                  setResult((p) => p.map((v, j) => (j === i ? +e.target.value : v)))
-                }
-                className="mt-0.5 w-full h-1 accent-[hsl(var(--accent))]"
-                aria-label={`Результат: ${s.name}`}
-              />
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
   );
 };
+
 
 
 

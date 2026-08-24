@@ -158,3 +158,6 @@ export const handleCartAnketaClick = (e: React.MouseEvent<HTMLAnchorElement>) =>
 
 export const handleDiagnosAnketaClick = (e: React.MouseEvent<HTMLAnchorElement>) =>
   handleAnketaClick(e, trackDiagnos);
+
+export const handleDiagnosticClick = (e: React.MouseEvent<HTMLAnchorElement>) =>
+  handleAnketaClick(e, trackDiagnosticCart);

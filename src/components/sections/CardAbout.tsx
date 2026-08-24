@@ -132,7 +132,11 @@ export const CardAbout = ({
         </h2>
 
         {/* двухколоночная сетка: речь / эксперт — на планшете тоже в две колонки */}
-        <div className="grid grid-cols-12 gap-8 md:gap-10 lg:gap-12 mt-16 items-start">
+        <div
+          className={`grid grid-cols-12 gap-8 md:gap-10 lg:gap-12 items-start ${
+            isArticle ? "mt-10 md:mt-12" : "mt-16"
+          }`}
+        >
           {/* левая колонка — прямая речь */}
           <div
             className="col-span-12 md:col-span-7 animate-fade-up relative"
@@ -140,21 +144,42 @@ export const CardAbout = ({
           >
             {/* иконка цитаты слева */}
             <Quote
-              className="absolute -left-1 -top-3 md:-left-6 md:-top-6 text-accent/70 rotate-180"
+              className={`absolute -left-1 -top-3 md:-left-6 md:-top-6 text-accent/70 rotate-180 ${
+                isArticle ? "hidden" : ""
+              }`}
               size={40}
               strokeWidth={1.5}
               aria-hidden="true"
             />
             <Quote
-              className="hidden md:block absolute -left-6 -top-6 text-accent/70 rotate-180"
-              size={56}
+              className={`absolute -left-6 -top-6 text-accent/70 rotate-180 ${
+                isArticle ? "hidden md:block" : "hidden md:block"
+              }`}
+              size={isArticle ? 40 : 56}
               strokeWidth={1.5}
               aria-hidden="true"
             />
 
-            <div className="font-display text-xl md:text-2xl lg:text-[1.7rem] leading-[1.45] tracking-tight space-y-6 pl-7 md:pl-14">
+            <div
+              className={`font-display leading-[1.45] tracking-tight pl-7 md:pl-14 ${
+                isArticle
+                  ? "text-lg md:text-xl space-y-4"
+                  : "text-xl md:text-2xl lg:text-[1.7rem] space-y-6"
+              }`}
+            >
               {quote ?? defaultQuote}
             </div>
+
+            {cta && (
+              <div className="pl-7 md:pl-14 mt-6 md:mt-8 animate-fade-up" style={{ animationDelay: "0.2s" }}>
+                <Link
+                  to={cta.href}
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors"
+                >
+                  {cta.label}
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* правая колонка — фото эксперта (квадрат) */}

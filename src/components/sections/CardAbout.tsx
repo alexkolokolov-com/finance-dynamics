@@ -202,7 +202,9 @@ export const CardAbout = ({
 
         {/* лента фактов: 3 пары карточек с разделителями между парами */}
         <div
-          className="mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 border border-foreground/15 bg-card animate-fade-up"
+          className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 border border-foreground/15 bg-card animate-fade-up ${
+            isArticle ? "mt-10 md:mt-12" : "mt-16 md:mt-20"
+          }`}
           style={{ animationDelay: "0.45s" }}
         >
           {facts.map((f, i) => {

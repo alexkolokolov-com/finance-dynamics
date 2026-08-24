@@ -93,15 +93,26 @@ const defaultQuote = (
   </>
 );
 
-export const CardAbout = ({ eyebrow, heading, quote }: CardAboutProps = {}) => {
+export const CardAbout = ({
+  eyebrow,
+  heading,
+  quote,
+  scale = "hero",
+  cta,
+}: CardAboutProps = {}) => {
+  const isArticle = scale === "article";
   return (
-    <section id="about" className="relative pt-8 md:pt-12 pb-24 md:pb-32 overflow-hidden bg-grid scroll-mt-20">
+    <section
+      id="about"
+      className={`relative overflow-hidden bg-grid scroll-mt-20 ${
+        isArticle ? "pt-6 md:pt-8 pb-16 md:pb-20" : "pt-8 md:pt-12 pb-24 md:pb-32"
+      }`}
+    >
       {/* плавный градиент-перетекание */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{ background: "var(--grad-chalk)" }}
       />
-
 
       <div className="container-px max-w-7xl mx-auto relative">
         {/* заголовок */}
@@ -110,7 +121,13 @@ export const CardAbout = ({ eyebrow, heading, quote }: CardAboutProps = {}) => {
             {eyebrow}
           </div>
         )}
-        <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-[clamp(2.5rem,8vw,6rem)] animate-fade-up">
+        <h2
+          className={`font-semibold tracking-tight animate-fade-up ${
+            isArticle
+              ? "font-display leading-[1.12] text-[clamp(1.6rem,3.6vw,2.4rem)]"
+              : "font-serif-display leading-[0.95] text-[clamp(2.5rem,8vw,6rem)]"
+          }`}
+        >
           {heading ?? defaultHeading}
         </h2>
 

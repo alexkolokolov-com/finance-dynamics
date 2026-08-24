@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { ArticleSection } from "@/components/article/ArticleSection";
@@ -25,6 +26,7 @@ import icTime from "@/assets/wheel-time.png";
 import icRelations from "@/assets/wheel-relations.png";
 import icFinance from "@/assets/wheel-finance.png";
 import expertAvatar from "@/assets/expert-vasily.jpg";
+import vasilyPortrait from "@/assets/vasily-hero.png.asset.json";
 
 
 

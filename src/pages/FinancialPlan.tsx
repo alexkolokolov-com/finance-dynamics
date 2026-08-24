@@ -744,96 +744,45 @@ const FinancialPlan = () => {
         </ArticleFlow>
       </ArticleSection>
 
-      {/* Два формата */}
-      <ArticleSection id="format">
-        <ArticleFlow>
-          <H2>Как собрать свой план: курс или&nbsp;персональный разбор</H2>
-          <p>У&nbsp;меня два формата работы, и&nbsp;логика у&nbsp;них разная.</p>
-
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="bg-card border border-border rounded-xl p-5">
-              <div className="font-body text-xs uppercase tracking-[0.1em] text-accent mb-2">
-                Формат 1 · Курс
-              </div>
-              <div className="space-y-3 font-body text-[15px] leading-relaxed text-foreground/80">
-                <p>
-                  Проходит 2–3&nbsp;раза в&nbsp;год, в&nbsp;группе — поэтому
-                  дешевле. Это учебник о&nbsp;том, как не&nbsp;потерять деньги:
-                  доходы, расходы, подушка, цели, капитал, инструменты.
-                </p>
-                <p>
-                  Курс обычно выбирают те, кто давно читает мой канал:
-                  информации много, но&nbsp;самостоятельно она
-                  не&nbsp;складывается в&nbsp;систему. Если это про&nbsp;вас —
-                  напишите мне и&nbsp;отметьте «курс»: расскажем программу
-                  и&nbsp;даты ближайшего потока.
-                </p>
+      {/* Блок эксперта */}
+      <section className="py-16 md:py-24 bg-background">
+        <div className="container-px max-w-7xl mx-auto">
+          <div className="grid grid-cols-12 gap-6 md:gap-10 lg:gap-14 items-center">
+            <div className="col-span-12 md:col-span-6 order-2 md:order-1">
+              <h2 className="font-display font-semibold leading-[1.05] tracking-tight text-[clamp(1.8rem,5vw,3rem)]">
+                Василий <span className="text-accent">Мещеряков</span>
+              </h2>
+              <p className="mt-4 md:mt-6 font-display font-semibold leading-[1.25] tracking-tight text-foreground/85 max-w-2xl text-[clamp(1.1rem,2.4vw,1.6rem)]">
+                {nbsp("Простыми словами о том, как избавиться от финансовой тревоги и")}{" "}
+                <span className="italic text-accent">{nbsp("жить лучше за те же деньги")}</span>
+              </p>
+              <div className="mt-6 md:mt-8">
+                <Link
+                  to="/consultations"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors"
+                >
+                  <span>Записаться на&nbsp;диагностику</span>
+                  <span className="text-base">→</span>
+                </Link>
               </div>
             </div>
 
-            <div className="bg-card border border-border rounded-xl p-5">
-              <div className="font-body text-xs uppercase tracking-[0.1em] text-accent mb-2">
-                Формат 2 · Персональный разбор
-              </div>
-              <div className="space-y-3 font-body text-[15px] leading-relaxed text-foreground/80">
-                <p>
-                  Индивидуальная работа, бесплатно. Это моя рекомендация для
-                  читателя этой статьи — человека, у&nbsp;которого вопрос
-                  доходов и&nbsp;расходов базово решён. Главная задача другая:
-                  не&nbsp;потерять накопленную разницу.
-                </p>
-                <p>
-                  Цена ошибки здесь совсем иная. Одно дело — зарабатывать
-                  150&nbsp;тысяч, тратить 140 и&nbsp;искать дополнительные 10.
-                  Совсем другое — держать на&nbsp;руках 5&nbsp;миллионов,
-                  ошибиться на&nbsp;10% и&nbsp;потерять 500. Здесь время дороже
-                  сэкономленных денег: пока вы&nbsp;учитесь на&nbsp;своих
-                  ошибках, можно совершить несколько очень дорогих.
-                </p>
+            <div className="col-span-12 md:col-span-6 order-1 md:order-2 flex justify-center md:justify-end">
+              <div className="relative w-full max-w-[320px] sm:max-w-[380px] md:max-w-md aspect-[4/5] overflow-hidden rounded-[1.75rem]">
+                <img
+                  src={vasilyPortrait.url}
+                  alt="Василий Мещеряков"
+                  className="absolute inset-0 w-full h-full object-cover object-center scale-[0.9]"
+                />
+                <div className="absolute inset-x-0 bottom-3 sm:bottom-4 z-10 flex justify-start px-3 sm:px-4">
+                  <span className="badge-tag bg-card/95 backdrop-blur-sm text-xs min-[360px]:text-sm md:text-base whitespace-nowrap px-2.5 py-1.5 inline-flex items-center gap-1.5 shadow-sm font-medium">
+                    <span>Василий Мещеряков</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" aria-hidden="true" />
+                    <span className="text-foreground/80">ex-sales director <span className="text-accent">P&amp;G</span></span>
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-
-          <p>
-            В&nbsp;результате вопрос «куда вложить деньги» перестаёт
-            существовать сам по&nbsp;себе и&nbsp;становится частью
-            последовательности: что я&nbsp;хочу получить → когда понадобятся
-            деньги → сколько нужно накопить → какой риск допустим →
-            и&nbsp;только потом какие инструменты подходят.
-          </p>
-          <p>
-            Это безопаснее, чем сначала заработать несколько миллионов,
-            а&nbsp;потом ходить по&nbsp;рынку и&nbsp;искать, кому бы
-            их&nbsp;отдать.
-          </p>
-        </ArticleFlow>
-      </ArticleSection>
-
-      {/* CTA */}
-      <section
-        id="diagnostika"
-        className="py-16 md:py-24 bg-board text-background scroll-mt-24"
-      >
-        <div className="container-px max-w-3xl mx-auto text-center">
-          <h2 className="font-display font-semibold leading-[1.12] tracking-tight text-[clamp(1.6rem,3.6vw,2.4rem)] mb-4">
-            Если у&nbsp;вас сейчас как раз есть вопрос «что делать
-            с&nbsp;деньгами?»
-          </h2>
-          <p className="font-body text-lg leading-relaxed text-background/85">
-            Начните с&nbsp;бесплатной диагностики. Мы&nbsp;смотрим, какие задачи
-            у&nbsp;вас есть сейчас и&nbsp;чего не&nbsp;хватает в&nbsp;вашей
-            системе. В&nbsp;любом случае после диагностики вы&nbsp;получите
-            шаблоны финансовых планов и&nbsp;рекомендации, с&nbsp;чего
-            бы&nbsp;я&nbsp;начал именно в&nbsp;вашей ситуации.
-          </p>
-          <a
-            href="/consultations"
-            className="mt-8 inline-flex items-center rounded-full bg-accent text-accent-foreground font-body font-semibold text-sm uppercase tracking-[0.08em] px-8 py-4 hover:bg-background hover:text-foreground transition-colors"
-          >
-            Хочу на&nbsp;персональный разбор
-          </a>
-          <div className="mt-4 font-body text-[13px] text-background/70">
-            Диагностика бесплатна и&nbsp;ни&nbsp;к&nbsp;чему не&nbsp;обязывает
           </div>
         </div>
       </section>

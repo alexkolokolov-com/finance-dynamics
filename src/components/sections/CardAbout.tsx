@@ -65,6 +65,11 @@ type CardAboutProps = {
   eyebrow?: string;
   heading?: ReactNode;
   quote?: ReactNode;
+  scale?: "hero" | "article";
+  cta?: {
+    label: string;
+    href: string;
+  };
 };
 
 const defaultHeading = (

@@ -745,6 +745,7 @@ const FinancialPlan = () => {
 
       {/* Блок эксперта */}
       <CardAbout
+        scale="article"
         eyebrow="Диагностика"
         heading={
           <>
@@ -763,6 +764,7 @@ const FinancialPlan = () => {
             </p>
           </>
         }
+        cta={{ label: "Записаться на диагностику", href: "/consultations" }}
       />
 
       <Footer />

@@ -16,7 +16,6 @@ import cardNumbersImg from "@/assets/plan-card-numbers.jpg";
 import cardTablesImg from "@/assets/plan-card-tables.jpg";
 import cardBothImg from "@/assets/plan-card-both.jpg";
 import mindmapImg from "@/assets/plan-mindmap.jpg";
-import wheelCenter from "@/assets/wheel-center.png";
 import icHealth from "@/assets/wheel-health.png";
 import icEducation from "@/assets/wheel-education.png";
 import icHome from "@/assets/wheel-home.png";

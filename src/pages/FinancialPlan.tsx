@@ -433,56 +433,68 @@ const FinancialPlan = () => {
             {nbsp("Я выделяю 3 группы людей:")}
           </p>
 
-          <div className="grid gap-4 lg:grid-cols-3">
-            <div className="bg-card border border-border rounded-2xl p-5 flex flex-col">
-              <img
-                src={cardNumbersImg}
-                alt="Человек работает с таблицей и диаграммой на ноутбуке"
-                width={1024}
-                height={768}
-                loading="lazy"
-                className="w-full aspect-[4/3] object-cover rounded-xl mb-4"
-              />
-              <H3 className="text-[clamp(1.1rem,2vw,1.3rem)]">
-                {nbsp("Вы дружите с цифрами")}
-              </H3>
-              <p className="mt-2 font-body text-[15px] leading-relaxed text-foreground/80">
-                {nbsp("Собираем модель в Excel. Иногда подробную, иногда предельно простую: какая сумма есть и какие у неё сценарии. Моя роль — помочь настроить и упростить: вы видели одну свою таблицу, я — тысячу.")}
-              </p>
+          <div className="space-y-4">
+            <div className="bg-card border border-border rounded-2xl p-5 flex flex-col md:flex-row gap-5">
+              <div className="md:w-1/3">
+                <img
+                  src={cardNumbersImg}
+                  alt="Человек работает с таблицей и диаграммой на ноутбуке"
+                  width={1024}
+                  height={768}
+                  loading="lazy"
+                  className="w-full aspect-[4/3] md:aspect-auto md:h-full md:object-cover rounded-xl"
+                />
+              </div>
+              <div className="md:w-2/3 flex flex-col justify-center">
+                <H3 className="text-[clamp(1.1rem,2vw,1.3rem)]">
+                  {nbsp("Вы дружите с цифрами")}
+                </H3>
+                <p className="mt-2 font-body text-[15px] leading-relaxed text-foreground/80">
+                  {nbsp("Собираем модель в Excel. Иногда подробную, иногда предельно простую: какая сумма есть и какие у неё сценарии. Моя роль — помочь настроить и упростить: вы видели одну свою таблицу, я — тысячу.")}
+                </p>
+              </div>
             </div>
 
-            <div className="bg-card border border-border rounded-2xl p-5 flex flex-col">
-              <img
-                src={cardTablesImg}
-                alt="Простой план на салфетке с крупными цифрами и стрелками"
-                width={1024}
-                height={768}
-                loading="lazy"
-                className="w-full aspect-[4/3] object-cover rounded-xl mb-4"
-              />
-              <H3 className="text-[clamp(1.1rem,2vw,1.3rem)]">
-                {nbsp("Вы не любите таблицы")}
-              </H3>
-              <p className="mt-2 font-body text-[15px] leading-relaxed text-foreground/80">
-                {nbsp("Составляем простейший план: заработаю столько-то, потрачу столько-то, останется столько-то; умножаем на десять лет — хватает ли на жизнь? Если нет, ищем, где усилить. Часто это карьерный план или план роста бизнеса, а финансовый план остаётся одной большой цифрой.")}
-              </p>
+            <div className="bg-card border border-border rounded-2xl p-5 flex flex-col md:flex-row-reverse gap-5">
+              <div className="md:w-1/3">
+                <img
+                  src={cardTablesImg}
+                  alt="Простой план на салфетке с крупными цифрами и стрелками"
+                  width={1024}
+                  height={768}
+                  loading="lazy"
+                  className="w-full aspect-[4/3] md:aspect-auto md:h-full md:object-cover rounded-xl"
+                />
+              </div>
+              <div className="md:w-2/3 flex flex-col justify-center">
+                <H3 className="text-[clamp(1.1rem,2vw,1.3rem)]">
+                  {nbsp("Вы не любите таблицы")}
+                </H3>
+                <p className="mt-2 font-body text-[15px] leading-relaxed text-foreground/80">
+                  {nbsp("Составляем простейший план: заработаю столько-то, потрачу столько-то, останется столько-то; умножаем на десять лет — хватает ли на жизнь? Если нет, ищем, где усилить. Часто это карьерный план или план роста бизнеса, а финансовый план остаётся одной большой цифрой.")}
+                </p>
+              </div>
             </div>
 
-            <div className="bg-card border border-border rounded-2xl p-5 flex flex-col">
-              <img
-                src={cardBothImg}
-                alt="Стол с бюджетной таблицей, блокнотом и стикерами"
-                width={1024}
-                height={768}
-                loading="lazy"
-                className="w-full aspect-[4/3] object-cover rounded-xl mb-4"
-              />
-              <H3 className="text-[clamp(1.1rem,2vw,1.3rem)]">
-                {nbsp("И то, и другое")}
-              </H3>
-              <p className="mt-2 font-body text-[15px] leading-relaxed text-foreground/80">
-                {nbsp("Один базовый табличный элемент, от которого отталкиваемся, — например бюджет. Его прорабатываем подробно: доходы, расходы или инвестиционный план. А всё остальное докручиваем без таблиц.")}
-              </p>
+            <div className="bg-card border border-border rounded-2xl p-5 flex flex-col md:flex-row gap-5">
+              <div className="md:w-1/3">
+                <img
+                  src={cardBothImg}
+                  alt="Стол с бюджетной таблицей, блокнотом и стикерами"
+                  width={1024}
+                  height={768}
+                  loading="lazy"
+                  className="w-full aspect-[4/3] md:aspect-auto md:h-full md:object-cover rounded-xl"
+                />
+              </div>
+              <div className="md:w-2/3 flex flex-col justify-center">
+                <H3 className="text-[clamp(1.1rem,2vw,1.3rem)]">
+                  {nbsp("И то, и другое")}
+                </H3>
+                <p className="mt-2 font-body text-[15px] leading-relaxed text-foreground/80">
+                  {nbsp("Один базовый табличный элемент, от которого отталкиваемся, — например бюджет. Его прорабатываем подробно: доходы, расходы или инвестиционный план. А всё остальное докручиваем без таблиц.")}
+                </p>
+              </div>
             </div>
           </div>
 

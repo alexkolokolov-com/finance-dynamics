@@ -433,7 +433,7 @@ const FinancialPlan = () => {
             {nbsp("Я выделяю 3 группы людей:")}
           </p>
 
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-4 lg:grid-cols-3">
             <div className="bg-card border border-border rounded-2xl p-5 flex flex-col">
               <img
                 src={cardNumbersImg}

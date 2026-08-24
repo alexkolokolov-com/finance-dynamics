@@ -1,14 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import {
-  HeartPulse,
-  GraduationCap,
-  Home,
-  Users,
-  Sparkles,
-  Coffee,
-  Heart,
-  Wallet,
-} from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { ArticleSection } from "@/components/article/ArticleSection";
@@ -22,11 +12,20 @@ import heroImg from "@/assets/plan-hero.jpg";
 import sellersImg from "@/assets/plan-sellers.jpg";
 import depositImg from "@/assets/plan-deposit.jpg";
 import napkinImg from "@/assets/plan-napkin.jpg";
-import expertAvatar from "@/assets/expert-vasily.jpg";
 import cardNumbersImg from "@/assets/plan-card-numbers.jpg";
 import cardTablesImg from "@/assets/plan-card-tables.jpg";
 import cardBothImg from "@/assets/plan-card-both.jpg";
 import mindmapImg from "@/assets/plan-mindmap.jpg";
+import wheelCenter from "@/assets/wheel-center.png";
+import icHealth from "@/assets/wheel-health.png";
+import icEducation from "@/assets/wheel-education.png";
+import icHome from "@/assets/wheel-home.png";
+import icFamily from "@/assets/wheel-family.png";
+import icImpressions from "@/assets/wheel-impressions.png";
+import icTime from "@/assets/wheel-time.png";
+import icRelations from "@/assets/wheel-relations.png";
+import icFinance from "@/assets/wheel-finance.png";
+
 
 
 const people = [

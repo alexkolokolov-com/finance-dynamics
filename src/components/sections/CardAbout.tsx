@@ -172,12 +172,24 @@ export const CardAbout = ({
 
             {cta && (
               <div className="pl-7 md:pl-14 mt-6 md:mt-8 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-                <Link
-                  to={cta.href}
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors"
-                >
-                  {cta.label}
-                </Link>
+                {/^https?:\/\//.test(cta.href) ? (
+                  <a
+                    href={cta.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={cta.onClick}
+                    className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors"
+                  >
+                    {cta.label}
+                  </a>
+                ) : (
+                  <Link
+                    to={cta.href}
+                    className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors"
+                  >
+                    {cta.label}
+                  </Link>
+                )}
               </div>
             )}
           </div>

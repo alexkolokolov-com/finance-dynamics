@@ -1,6 +1,14 @@
+import { Link } from "react-router-dom";
 import vasilyBench from "@/assets/vasily-bench.jpg";
 
-export const Expert = () => {
+type ExpertProps = {
+  cta?: {
+    label: string;
+    href: string;
+  };
+};
+
+export const Expert = ({ cta }: ExpertProps) => {
   const facts = [
     { k: "14 лет", v: "корпоративной карьеры" },
     { k: "6 млрд ₽", v: "бюджет в управлении" },

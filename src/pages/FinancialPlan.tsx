@@ -9,6 +9,8 @@ import { H3 } from "@/components/article/H3";
 import { Pull } from "@/components/article/Pull";
 import { Figure } from "@/components/article/Figure";
 import { nbsp } from "@/lib/nbsp";
+import { Varioqub } from "@/components/Varioqub";
+import { handleDiagnosticClick } from "@/lib/ymGoals";
 import heroImg from "@/assets/plan-hero.jpg";
 import sellersImg from "@/assets/plan-sellers.jpg";
 import depositImg from "@/assets/plan-deposit.jpg";
@@ -764,8 +766,14 @@ const FinancialPlan = () => {
             </p>
           </>
         }
-        cta={{ label: "Записаться на диагностику", href: "/consultations" }}
+        cta={{
+          label: "Записаться на диагностику",
+          href: "https://nivz.getcourse.ru/diagnostic",
+          onClick: handleDiagnosticClick,
+        }}
       />
+
+      <Varioqub antiFlicker />
 
       <Footer />
     </main>

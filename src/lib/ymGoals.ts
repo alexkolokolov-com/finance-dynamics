@@ -65,6 +65,11 @@ export const trackGuideCart = () => {
   sendGoalOnce("guide_cart");
 };
 
+/** Fired once per visit on «Записаться на диагностику» (статьи блога). */
+export const trackDiagnosticCart = () => {
+  sendGoalOnce("diagnostic_cart");
+};
+
 // Backwards-compatible aliases — all map to the single fizfin_cart goal.
 export const trackCartOpen = trackFizfinCart;
 export const trackDiagnos = trackFizfinCart;
@@ -153,3 +158,6 @@ export const handleCartAnketaClick = (e: React.MouseEvent<HTMLAnchorElement>) =>
 
 export const handleDiagnosAnketaClick = (e: React.MouseEvent<HTMLAnchorElement>) =>
   handleAnketaClick(e, trackDiagnos);
+
+export const handleDiagnosticClick = (e: React.MouseEvent<HTMLAnchorElement>) =>
+  handleAnketaClick(e, trackDiagnosticCart);

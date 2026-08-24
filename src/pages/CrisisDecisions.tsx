@@ -6,6 +6,8 @@ import { ArticleSection } from "@/components/article/ArticleSection";
 import { ArticleFlow } from "@/components/article/ArticleFlow";
 import { H2 } from "@/components/article/H2";
 import { Figure } from "@/components/article/Figure";
+import { Varioqub } from "@/components/Varioqub";
+import { handleDiagnosticClick } from "@/lib/ymGoals";
 import heroImg from "@/assets/krizis-hero.jpg";
 import cardsImg from "@/assets/krizis-cards.jpg";
 import story1Img from "@/assets/krizis-story-1.jpg";
@@ -496,9 +498,10 @@ const CrisisDecisions = () => {
             какой вопрос вы&nbsp;закроете в&nbsp;этом месяце.
           </p>
           <a
-            href="https://nivz.getcourse.ru/diagnostic_article"
+            href="https://nivz.getcourse.ru/diagnostic"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={handleDiagnosticClick}
             className="mt-8 inline-flex items-center rounded-full bg-accent text-accent-foreground font-body font-semibold text-sm uppercase tracking-[0.08em] px-8 py-4 hover:bg-background hover:text-foreground transition-colors"
           >
             Записаться на&nbsp;диагностику
@@ -508,6 +511,8 @@ const CrisisDecisions = () => {
           </div>
         </div>
       </section>
+
+      <Varioqub />
 
       <Footer />
     </main>

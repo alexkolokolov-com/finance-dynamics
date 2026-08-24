@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Link } from "react-router-dom";
 import vasily from "@/assets/expert-vasily.jpg";
 import { Atom, Briefcase, Quote, type LucideIcon } from "lucide-react";
 
@@ -64,6 +65,11 @@ type CardAboutProps = {
   eyebrow?: string;
   heading?: ReactNode;
   quote?: ReactNode;
+  scale?: "hero" | "article";
+  cta?: {
+    label: string;
+    href: string;
+  };
 };
 
 const defaultHeading = (
@@ -87,15 +93,26 @@ const defaultQuote = (
   </>
 );
 
-export const CardAbout = ({ eyebrow, heading, quote }: CardAboutProps = {}) => {
+export const CardAbout = ({
+  eyebrow,
+  heading,
+  quote,
+  scale = "hero",
+  cta,
+}: CardAboutProps = {}) => {
+  const isArticle = scale === "article";
   return (
-    <section id="about" className="relative pt-8 md:pt-12 pb-24 md:pb-32 overflow-hidden bg-grid scroll-mt-20">
+    <section
+      id="about"
+      className={`relative overflow-hidden bg-grid scroll-mt-20 ${
+        isArticle ? "pt-6 md:pt-8 pb-16 md:pb-20" : "pt-8 md:pt-12 pb-24 md:pb-32"
+      }`}
+    >
       {/* плавный градиент-перетекание */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{ background: "var(--grad-chalk)" }}
       />
-
 
       <div className="container-px max-w-7xl mx-auto relative">
         {/* заголовок */}
@@ -104,12 +121,22 @@ export const CardAbout = ({ eyebrow, heading, quote }: CardAboutProps = {}) => {
             {eyebrow}
           </div>
         )}
-        <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-[clamp(2.5rem,8vw,6rem)] animate-fade-up">
+        <h2
+          className={`font-semibold tracking-tight animate-fade-up ${
+            isArticle
+              ? "font-display leading-[1.12] text-[clamp(1.6rem,3.6vw,2.4rem)]"
+              : "font-serif-display leading-[0.95] text-[clamp(2.5rem,8vw,6rem)]"
+          }`}
+        >
           {heading ?? defaultHeading}
         </h2>
 
         {/* двухколоночная сетка: речь / эксперт — на планшете тоже в две колонки */}
-        <div className="grid grid-cols-12 gap-8 md:gap-10 lg:gap-12 mt-16 items-start">
+        <div
+          className={`grid grid-cols-12 gap-8 md:gap-10 lg:gap-12 items-start ${
+            isArticle ? "mt-10 md:mt-12" : "mt-16"
+          }`}
+        >
           {/* левая колонка — прямая речь */}
           <div
             className="col-span-12 md:col-span-7 animate-fade-up relative"
@@ -117,21 +144,42 @@ export const CardAbout = ({ eyebrow, heading, quote }: CardAboutProps = {}) => {
           >
             {/* иконка цитаты слева */}
             <Quote
-              className="absolute -left-1 -top-3 md:-left-6 md:-top-6 text-accent/70 rotate-180"
+              className={`absolute -left-1 -top-3 md:-left-6 md:-top-6 text-accent/70 rotate-180 ${
+                isArticle ? "hidden" : ""
+              }`}
               size={40}
               strokeWidth={1.5}
               aria-hidden="true"
             />
             <Quote
-              className="hidden md:block absolute -left-6 -top-6 text-accent/70 rotate-180"
-              size={56}
+              className={`absolute -left-6 -top-6 text-accent/70 rotate-180 ${
+                isArticle ? "hidden md:block" : "hidden md:block"
+              }`}
+              size={isArticle ? 40 : 56}
               strokeWidth={1.5}
               aria-hidden="true"
             />
 
-            <div className="font-display text-xl md:text-2xl lg:text-[1.7rem] leading-[1.45] tracking-tight space-y-6 pl-7 md:pl-14">
+            <div
+              className={`font-display leading-[1.45] tracking-tight pl-7 md:pl-14 ${
+                isArticle
+                  ? "text-lg md:text-xl space-y-4"
+                  : "text-xl md:text-2xl lg:text-[1.7rem] space-y-6"
+              }`}
+            >
               {quote ?? defaultQuote}
             </div>
+
+            {cta && (
+              <div className="pl-7 md:pl-14 mt-6 md:mt-8 animate-fade-up" style={{ animationDelay: "0.2s" }}>
+                <Link
+                  to={cta.href}
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors"
+                >
+                  {cta.label}
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* правая колонка — фото эксперта (квадрат) */}
@@ -154,7 +202,9 @@ export const CardAbout = ({ eyebrow, heading, quote }: CardAboutProps = {}) => {
 
         {/* лента фактов: 3 пары карточек с разделителями между парами */}
         <div
-          className="mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 border border-foreground/15 bg-card animate-fade-up"
+          className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 border border-foreground/15 bg-card animate-fade-up ${
+            isArticle ? "mt-10 md:mt-12" : "mt-16 md:mt-20"
+          }`}
           style={{ animationDelay: "0.45s" }}
         >
           {facts.map((f, i) => {

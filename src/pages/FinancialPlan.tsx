@@ -744,7 +744,16 @@ const FinancialPlan = () => {
       </ArticleSection>
 
       {/* Блок эксперта */}
-      <Expert cta={{ label: "Записаться на\u00A0диагностику", href: "/consultations" }} />
+      <CardAbout
+        eyebrow="Диагностика"
+        heading={
+          <>
+            Личные финансы — это{" "}
+            <span className="italic font-normal">диагностика</span>, а не{" "}
+            <span className="italic font-normal">гадание</span>.
+          </>
+        }
+      />
 
       <Footer />
     </main>

@@ -18,22 +18,22 @@ type FactCard =
     };
 
 const facts: FactCard[] = [
-  // пара 1 — биография
+  // пара 1 — биография
   {
     kind: "bio",
     label: "образование",
     title: "ФТИ УрФУ",
-    sub: "Прикладная физика и математика",
+    sub: "Прикладная физика и математика",
     icon: Atom,
   },
   {
     kind: "bio",
     label: "карьера",
     title: "Procter & Gamble",
-    sub: "Директор по продажам",
+    sub: "Директор по продажам",
     icon: Briefcase,
   },
-  // пара 2 — корпоративный результат
+  // пара 2 — корпоративный результат
   {
     kind: "metric",
     value: "14",
@@ -44,9 +44,9 @@ const facts: FactCard[] = [
     kind: "metric",
     value: "6",
     unit: "млрд ₽",
-    sub: "бюджет в управлении",
+    sub: "бюджет в управлении",
   },
-  // пара 3 — практика консультанта
+  // пара 3 — практика консультанта
   {
     kind: "metric",
     value: "3",
@@ -63,16 +63,31 @@ const facts: FactCard[] = [
 type CardAboutProps = {
   eyebrow?: string;
   heading?: ReactNode;
+  quote?: ReactNode;
 };
 
 const defaultHeading = (
   <>
-    Личные финансы — это <span className="italic font-normal">физика</span>,
-    а не <span className="italic font-normal">магия</span>.
+    Личные финансы — это <span className="italic font-normal">физика</span>,
+    а не <span className="italic font-normal">магия</span>.
   </>
 );
 
-export const CardAbout = ({ eyebrow, heading }: CardAboutProps = {}) => {
+const defaultQuote = (
+  <>
+    <p>
+      Многие совершают ошибки в личных финансах, потому что верят в
+      чудеса.
+    </p>
+
+    <p>
+      Я доступным языком расскажу вам о{" "}
+      <span className="underline-accent">законах, по которым приумножается капитал</span>.
+    </p>
+  </>
+);
+
+export const CardAbout = ({ eyebrow, heading, quote }: CardAboutProps = {}) => {
   return (
     <section id="about" className="relative pt-8 md:pt-12 pb-24 md:pb-32 overflow-hidden bg-grid scroll-mt-20">
       {/* плавный градиент-перетекание */}
@@ -93,9 +108,9 @@ export const CardAbout = ({ eyebrow, heading }: CardAboutProps = {}) => {
           {heading ?? defaultHeading}
         </h2>
 
-        {/* двухколоночная сетка: речь / эксперт — на планшете тоже в две колонки */}
+        {/* двухколоночная сетка: речь / эксперт — на планшете тоже в две колонки */}
         <div className="grid grid-cols-12 gap-8 md:gap-10 lg:gap-12 mt-16 items-start">
-          {/* левая колонка — прямая речь */}
+          {/* левая колонка — прямая речь */}
           <div
             className="col-span-12 md:col-span-7 animate-fade-up relative"
             style={{ animationDelay: "0.15s" }}
@@ -115,19 +130,11 @@ export const CardAbout = ({ eyebrow, heading }: CardAboutProps = {}) => {
             />
 
             <div className="font-display text-xl md:text-2xl lg:text-[1.7rem] leading-[1.45] tracking-tight space-y-6 pl-7 md:pl-14">
-              <p>
-                Многие совершают ошибки в личных финансах, потому что верят в
-                чудеса.
-              </p>
-
-              <p>
-                Я доступным языком расскажу вам о{" "}
-                <span className="underline-accent">законах, по которым приумножается капитал</span>.
-              </p>
+              {quote ?? defaultQuote}
             </div>
           </div>
 
-          {/* правая колонка — фото эксперта (квадрат) */}
+          {/* правая колонка — фото эксперта (квадрат) */}
           <div
             className="col-span-12 md:col-span-5 animate-fade-up"
             style={{ animationDelay: "0.3s" }}
@@ -145,16 +152,16 @@ export const CardAbout = ({ eyebrow, heading }: CardAboutProps = {}) => {
           </div>
         </div>
 
-        {/* лента фактов: 3 пары карточек с разделителями между парами */}
+        {/* лента фактов: 3 пары карточек с разделителями между парами */}
         <div
           className="mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 border border-foreground/15 bg-card animate-fade-up"
           style={{ animationDelay: "0.45s" }}
         >
           {facts.map((f, i) => {
             // разделитель между парами:
-            // lg (6 колонок в ряд): жирная левая граница на 3-й и 5-й (i=2,4)
-            // md (3 колонки = 1 пара в ряд): жирная верхняя граница на 3-й и 5-й
-            // mobile (2 колонки = 1 пара в ряд): то же — верхняя граница на 3-й и 5-й
+            // lg (6 колонок в ряд): жирная левая граница на 3-й и 5-й (i=2,4)
+            // md (3 колонки = 1 пара в ряд): жирная верхняя граница на 3-й и 5-й
+            // mobile (2 колонки = 1 пара в ряд): то же — верхняя граница на 3-й и 5-й
             const isPairStart = i === 2 || i === 4;
             const dividerCls = isPairStart
               ? "border-t-2 border-t-foreground/40 md:border-t-2 md:border-t-foreground/40 lg:border-t-0 lg:border-l-2 lg:border-l-foreground/40"

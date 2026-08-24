@@ -25,6 +25,8 @@ import icImpressions from "@/assets/wheel-impressions.png";
 import icTime from "@/assets/wheel-time.png";
 import icRelations from "@/assets/wheel-relations.png";
 import icFinance from "@/assets/wheel-finance.png";
+import expertAvatar from "@/assets/expert-vasily.jpg";
+
 
 
 

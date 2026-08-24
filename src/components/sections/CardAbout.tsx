@@ -69,6 +69,7 @@ type CardAboutProps = {
   cta?: {
     label: string;
     href: string;
+    onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   };
 };
 

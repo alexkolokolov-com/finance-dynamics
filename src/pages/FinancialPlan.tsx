@@ -712,14 +712,24 @@ const FinancialPlan = () => {
             {people.map((p) => (
               <div
                 key={p.num}
-                className="bg-card border border-border rounded-xl p-5"
+                className="bg-card border border-border rounded-xl overflow-hidden flex flex-col"
               >
-                <div className="font-body text-xs uppercase tracking-[0.1em] text-accent mb-2">
-                  {p.num}
+                <img
+                  src={p.img}
+                  alt=""
+                  width={1024}
+                  height={768}
+                  loading="lazy"
+                  className="w-full aspect-[4/3] object-cover border-b border-border/70"
+                />
+                <div className="p-5">
+                  <div className="font-body text-xs uppercase tracking-[0.1em] text-accent mb-2">
+                    {p.num}
+                  </div>
+                  <p className="font-body text-[15px] leading-relaxed text-foreground/80">
+                    {p.text}
+                  </p>
                 </div>
-                <p className="font-body text-[15px] leading-relaxed text-foreground/80">
-                  {p.text}
-                </p>
               </div>
             ))}
           </div>

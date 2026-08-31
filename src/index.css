@@ -305,3 +305,75 @@
   transform-origin: center;
   display: inline-block;
 }
+
+/* ===== Mind-map connectors (Дерево роста доходов) ===== */
+.mm-tree {
+  position: relative;
+}
+.mm-node {
+  position: relative;
+  padding-left: 1.15rem;
+}
+@media (min-width: 768px) {
+  .mm-node {
+    padding-left: 1.5rem;
+  }
+}
+.mm-node::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  border-left: 1px solid hsl(var(--border));
+}
+.mm-node:last-child::before {
+  height: 0.85rem;
+}
+.mm-node::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.85rem;
+  width: 1.15rem;
+  border-top: 1px solid hsl(var(--border));
+}
+@media (min-width: 768px) {
+  .mm-node::after {
+    width: 1.5rem;
+  }
+}
+/* level 2 — ветка от ствола: акцентная и толще */
+.mm-tree--trunk > .mm-node::before {
+  border-left-width: 2px;
+  border-left-color: hsl(var(--accent) / 0.55);
+}
+.mm-tree--trunk > .mm-node::after {
+  border-top-width: 2px;
+  border-top-color: hsl(var(--accent) / 0.55);
+}
+/* level 3 — усы: тоньше и бледнее */
+.mm-tree--twig > .mm-node::before,
+.mm-tree--twig > .mm-node::after {
+  border-color: hsl(var(--border) / 0.6);
+}
+.mm-tree--twig > .mm-node {
+  padding-left: 0.9rem;
+}
+.mm-tree--twig > .mm-node::after {
+  width: 0.9rem;
+}
+/* стволовой отвод от пилюли ветви */
+.mm-stem {
+  position: relative;
+}
+@media (min-width: 768px) {
+  .mm-stem::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    width: 1.5rem;
+    border-top: 2px solid hsl(var(--accent) / 0.55);
+  }
+}

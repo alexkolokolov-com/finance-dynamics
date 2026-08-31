@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
-import { CardAbout } from "@/components/sections/CardAbout";
 import { ArticleSection } from "@/components/article/ArticleSection";
 import { ArticleFlow } from "@/components/article/ArticleFlow";
 import { H2 } from "@/components/article/H2";

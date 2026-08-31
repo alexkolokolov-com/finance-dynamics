@@ -619,8 +619,7 @@ const FinancialPlan = () => {
       <ArticleSection id="kachestvo">
         <ArticleFlow>
           <H2>
-            Во&nbsp;что вы&nbsp;на&nbsp;самом деле инвестируете: как измерить
-            качество жизни
+            На&nbsp;что вы&nbsp;на&nbsp;самом деле тратите
           </H2>
           <p>
             Остался вопрос, на&nbsp;который бизнес-план предприятия

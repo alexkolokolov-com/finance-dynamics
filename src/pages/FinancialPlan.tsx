@@ -453,7 +453,8 @@ const FinancialPlan = () => {
       <ArticleSection>
         <ArticleFlow>
           <H2>
-            {nbsp("В бизнесе это очевидно, а в личных финансах — почему-то нет")}
+            {nbsp("Риск 3. В бизнесе это очевидно, а в личных финансах — почему-то нет")}
+
           </H2>
         </ArticleFlow>
       </ArticleSection>

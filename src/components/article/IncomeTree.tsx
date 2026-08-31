@@ -147,46 +147,42 @@ const branches: Branch[] = [
   },
 ];
 
-const GroupBlock = ({ group }: { group: Group }) => (
-  <div className="rounded-xl border border-border bg-background/60 px-4 py-3">
-    <h4 className="font-display text-[15px] md:text-base font-semibold text-foreground">
-      {nbsp(group.title)}
-    </h4>
-    <ul className="mt-2 space-y-2 border-l border-border/70 pl-3">
+const GroupNode = ({ group }: { group: Group }) => (
+  <li className="mm-node pt-0">
+    <div className="inline-flex rounded-lg bg-background/70 border border-border/70 px-3 py-1">
+      <h4 className="font-display text-[14px] md:text-[15px] font-semibold leading-snug text-foreground">
+        {nbsp(group.title)}
+      </h4>
+    </div>
+    <ul className="mm-tree mm-tree--twig mt-1.5 ml-2 md:ml-3 space-y-1.5">
       {group.items.map((item) => (
-        <li key={item.title}>
+        <li key={item.title} className="mm-node">
           <p className="font-body text-sm md:text-[15px] leading-snug text-foreground/85 hyphens-auto">
             {nbsp(item.title)}
           </p>
           {item.notes && (
-            <p className="mt-1 font-body text-[13px] md:text-sm leading-snug text-foreground/55 hyphens-auto">
+            <p className="mt-0.5 font-body text-[13px] md:text-sm leading-snug text-foreground/50 hyphens-auto">
               {nbsp(item.notes.join(" · "))}
             </p>
           )}
         </li>
       ))}
     </ul>
-  </div>
+  </li>
 );
 
-const BranchColumn = ({
-  branch,
-  index,
-}: {
-  branch: Branch;
-  index: number;
-}) => {
+const BranchRow = ({ branch, index }: { branch: Branch; index: number }) => {
   const [open, setOpen] = useState(index === 0);
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-4 md:p-5">
+    <div className="md:flex md:items-start md:gap-6">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className="flex w-full items-center justify-between gap-3 text-left md:pointer-events-none"
+        className="mm-stem flex w-full md:w-[9.5rem] shrink-0 items-center justify-between gap-3 text-left md:pointer-events-none md:mt-0.5"
       >
-        <span className="inline-flex items-center rounded-full bg-accent px-3 py-1 font-display text-[13px] md:text-sm font-semibold uppercase tracking-wide text-accent-foreground">
+        <span className="inline-flex items-center rounded-full bg-accent px-3.5 py-1.5 font-display text-[13px] md:text-sm font-semibold uppercase tracking-wide text-accent-foreground">
           {branch.title}
         </span>
         <ChevronDown
@@ -197,11 +193,13 @@ const BranchColumn = ({
         />
       </button>
 
-      <div className={`${open ? "block" : "hidden"} md:block mt-4 space-y-3`}>
+      <ul
+        className={`${open ? "block" : "hidden"} md:block mm-tree mm-tree--trunk mt-2.5 md:mt-0 ml-1 md:ml-0 flex-1 space-y-3`}
+      >
         {branch.groups.map((group) => (
-          <GroupBlock key={group.title} group={group} />
+          <GroupNode key={group.title} group={group} />
         ))}
-      </div>
+      </ul>
     </div>
   );
 };
@@ -216,9 +214,9 @@ export const IncomeTree = ({ caption }: { caption?: string }) => (
         <span className="badge-tag">{nbsp("Финансовый план на 5–10 лет")}</span>
       </div>
 
-      <div className="mt-4 grid gap-3 md:mt-5 md:grid-cols-2 lg:grid-cols-3 md:items-start">
+      <div className="mt-5 space-y-5 md:mt-6 md:space-y-7 divide-y divide-border/60 [&>*+*]:pt-5 md:[&>*+*]:pt-7">
         {branches.map((branch, i) => (
-          <BranchColumn key={branch.title} branch={branch} index={i} />
+          <BranchRow key={branch.title} branch={branch} index={i} />
         ))}
       </div>
     </div>

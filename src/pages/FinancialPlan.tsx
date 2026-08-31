@@ -374,7 +374,7 @@ const FinancialPlan = () => {
               </div>
               <div className="space-y-3">
                 <blockquote className="font-body text-lg md:text-xl leading-relaxed text-foreground/90">
-                  {nbsp("В этой статье я расскажу, как избежать этих рисков и дам инструмент диагностики, как найти сферы вложения под ваши личные цели и ценности, не только по доходности.")}
+                  {nbsp("В этой статье расскажу, как избежать самых главных рисков для вас и дам инструмент диагностики, чтобы достигать максимального результата.")}
                 </blockquote>
                 <figcaption className="font-body text-[15px] md:text-base leading-snug text-foreground/80">
                   <strong className="text-foreground">{nbsp("Василий Мещеряков")}</strong>

@@ -8,6 +8,7 @@ import { H2 } from "@/components/article/H2";
 import { H3 } from "@/components/article/H3";
 import { Pull } from "@/components/article/Pull";
 import { Figure } from "@/components/article/Figure";
+import { IncomeTree } from "@/components/article/IncomeTree";
 import { nbsp } from "@/lib/nbsp";
 import { Varioqub } from "@/components/Varioqub";
 import { handleDiagnosticClick } from "@/lib/ymGoals";
@@ -18,7 +19,7 @@ import napkinImg from "@/assets/plan-napkin.jpg";
 import cardNumbersImg from "@/assets/plan-card-numbers.jpg";
 import cardTablesImg from "@/assets/plan-card-tables.jpg";
 import cardBothImg from "@/assets/plan-card-both.jpg";
-import mindmapImg from "@/assets/plan-mindmap.jpg";
+
 import icHealth from "@/assets/wheel-health.png";
 import icEducation from "@/assets/wheel-education.png";
 import icHome from "@/assets/wheel-home.png";
@@ -363,26 +364,24 @@ const FinancialPlan = () => {
       <ArticleSection>
         <ArticleFlow>
           <figure className="bg-card border border-border rounded-2xl p-6 md:p-10">
-            <div className="flex items-start gap-4 md:gap-6">
-              <div className="w-14 h-14 md:w-20 md:h-20 rounded-full overflow-hidden shrink-0">
+            <blockquote className="font-body text-lg md:text-xl leading-relaxed text-foreground/90">
+              {nbsp("В этой статье расскажу, как избежать самых главных рисков для вас и дам инструмент диагностики, чтобы достигать максимального результата.")}
+            </blockquote>
+            <figcaption className="mt-5 flex items-center gap-3 md:gap-4">
+              <span className="w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden shrink-0 block">
                 <img
                   src={expertAvatar}
                   alt="Василий Мещеряков"
                   className="w-full h-full object-cover object-top scale-125"
                   loading="lazy"
                 />
-              </div>
-              <div className="space-y-3">
-                <blockquote className="font-body text-lg md:text-xl leading-relaxed text-foreground/90">
-                  {nbsp("В этой статье расскажу, как избежать самых главных рисков для вас и дам инструмент диагностики, чтобы достигать максимального результата.")}
-                </blockquote>
-                <figcaption className="font-body text-[15px] md:text-base leading-snug text-foreground/80">
-                  <strong className="text-foreground">{nbsp("Василий Мещеряков")}</strong>
-                  {", "}
-                  {nbsp("автор книги «Ленивый бюджет»")}
-                </figcaption>
-              </div>
-            </div>
+              </span>
+              <span className="font-body text-[15px] md:text-base leading-snug text-foreground/80">
+                <strong className="text-foreground">{nbsp("Василий Мещеряков")}</strong>
+                {", "}
+                {nbsp("автор книги «Ленивый бюджет»")}
+              </span>
+            </figcaption>
           </figure>
         </ArticleFlow>
       </ArticleSection>
@@ -592,19 +591,11 @@ const FinancialPlan = () => {
         </ArticleFlow>
       </ArticleSection>
 
-      <Figure
-        src={mindmapImg}
-        alt="Ментальная карта источников дохода: зарплата, бизнес, инвестиции, сдача недвижимости, фриланс"
-        caption="Ментальная карта источников дохода — отправная точка для роста"
-      />
+      <IncomeTree caption="Дерево роста доходов: три направления и четыре уровня решений" />
 
 
       <ArticleSection>
         <ArticleFlow>
-          <H3>
-            Расходы: не&nbsp;«где сэкономить», а&nbsp;«что я&nbsp;покупаю
-            на&nbsp;самом деле»
-          </H3>
           <p>
             Второй блок — расходы. Здесь тоже есть методика глубже, чем
             «записывайте траты месяц»: разложить бюджет не&nbsp;по&nbsp;статьям
@@ -614,11 +605,11 @@ const FinancialPlan = () => {
             на&nbsp;семью и&nbsp;отдых — и&nbsp;сколько на&nbsp;то, что
             перестаёт радовать через неделю.
           </p>
-          <p>
+          <Pull>
             Такой разбор обычно показывает не&nbsp;перерасход,
             а&nbsp;перекос: деньги есть, но&nbsp;распределены они
             не&nbsp;в&nbsp;пользу того, что человек сам называет важным.
-          </p>
+          </Pull>
         </ArticleFlow>
       </ArticleSection>
 
@@ -626,8 +617,7 @@ const FinancialPlan = () => {
       <ArticleSection id="kachestvo">
         <ArticleFlow>
           <H2>
-            Во&nbsp;что вы&nbsp;на&nbsp;самом деле инвестируете: как измерить
-            качество жизни
+            На&nbsp;что вы&nbsp;на&nbsp;самом деле тратите
           </H2>
           <p>
             Остался вопрос, на&nbsp;который бизнес-план предприятия

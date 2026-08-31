@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
-import { CardAbout } from "@/components/sections/CardAbout";
 import { ArticleSection } from "@/components/article/ArticleSection";
 import { ArticleFlow } from "@/components/article/ArticleFlow";
 import { H2 } from "@/components/article/H2";
@@ -15,7 +14,6 @@ import { handleDiagnosticClick } from "@/lib/ymGoals";
 import heroImg from "@/assets/plan-hero.jpg";
 import sellersImg from "@/assets/plan-sellers.jpg";
 import depositImg from "@/assets/plan-deposit.jpg";
-import napkinImg from "@/assets/plan-napkin.jpg";
 import cardNumbersImg from "@/assets/plan-card-numbers.jpg";
 import cardTablesImg from "@/assets/plan-card-tables.jpg";
 import cardBothImg from "@/assets/plan-card-both.jpg";
@@ -475,12 +473,6 @@ const FinancialPlan = () => {
         </ArticleFlow>
       </ArticleSection>
 
-      <Figure
-        src={napkinImg}
-        alt="План на салфетке рядом с закрытой бухгалтерской книгой"
-        caption="Бизнес-план на салфетке работает, если в нём есть главная возможность"
-      />
-
       <ArticleSection>
         <ArticleFlow>
           <Pull>{nbsp("Простота и понятность плана важнее его правильности.")}</Pull>
@@ -754,32 +746,49 @@ const FinancialPlan = () => {
       </ArticleSection>
 
       {/* Блок эксперта */}
-      <CardAbout
-        scale="article"
-        eyebrow="Диагностика"
-        heading={
-          <>
-            Личные финансы — это{" "}
-            <span className="italic font-normal">диагностика</span>, а не{" "}
-            <span className="italic font-normal">гадание</span>.
-          </>
-        }
-        quote={
-          <>
-            <p>
+      <ArticleSection className="mb-10 md:mb-14">
+        <ArticleFlow>
+          <div className="bg-card border border-border rounded-2xl p-6 md:p-10">
+            <div className="font-body text-xs uppercase tracking-[0.1em] text-accent mb-3">
+              Диагностика
+            </div>
+            <H2>{nbsp("Давайте поговорим")}</H2>
+            <p className="font-body text-lg leading-relaxed text-foreground/80 mt-4">
               {nbsp("Многие ищут правильный инвестиционный продукт, не поняв сначала, чего хотят от жизни.")}
             </p>
-            <p>
+            <p className="font-body text-lg leading-relaxed text-foreground/80 mt-4">
               {nbsp("Я помогу разобрать ваши доходы, расходы, цели и ценности — и найти, где деньги работают, а где текут.")}
             </p>
-          </>
-        }
-        cta={{
-          label: "Записаться на диагностику",
-          href: "https://nivz.getcourse.ru/diagnostic",
-          onClick: handleDiagnosticClick,
-        }}
-      />
+
+            <div className="mt-6 md:mt-8 flex flex-col sm:flex-row sm:items-center gap-5">
+              <a
+                href="https://nivz.getcourse.ru/diagnostic"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={handleDiagnosticClick}
+                className="inline-flex items-center justify-center px-7 py-4 rounded-full bg-accent text-background font-body text-[15px] font-medium whitespace-nowrap hover:bg-foreground transition-colors"
+              >
+                {nbsp("Записаться на диагностику")}
+              </a>
+              <span className="flex items-center gap-3">
+                <span className="w-12 h-12 rounded-full overflow-hidden shrink-0 block">
+                  <img
+                    src={expertAvatar}
+                    alt="Василий Мещеряков"
+                    className="w-full h-full object-cover object-top scale-125"
+                    loading="lazy"
+                  />
+                </span>
+                <span className="font-body text-[15px] leading-snug text-foreground/80">
+                  <strong className="text-foreground">{nbsp("Василий Мещеряков")}</strong>
+                  <br />
+                  {nbsp("автор книги «Ленивый бюджет»")}
+                </span>
+              </span>
+            </div>
+          </div>
+        </ArticleFlow>
+      </ArticleSection>
 
       <Varioqub antiFlicker />
 

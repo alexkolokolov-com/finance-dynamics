@@ -773,7 +773,7 @@ const FinancialPlan = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={handleDiagnosticClick}
-                className="inline-flex items-center justify-center px-7 py-4 rounded-full bg-accent text-background font-body text-[15px] font-medium hover:bg-foreground transition-colors"
+                className="inline-flex items-center justify-center px-7 py-4 rounded-full bg-accent text-background font-body text-[15px] font-medium whitespace-nowrap hover:bg-foreground transition-colors"
               >
                 {nbsp("Записаться на диагностику")}
               </a>

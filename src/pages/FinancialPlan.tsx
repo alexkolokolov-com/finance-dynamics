@@ -8,6 +8,7 @@ import { H2 } from "@/components/article/H2";
 import { H3 } from "@/components/article/H3";
 import { Pull } from "@/components/article/Pull";
 import { Figure } from "@/components/article/Figure";
+import { IncomeTree } from "@/components/article/IncomeTree";
 import { nbsp } from "@/lib/nbsp";
 import { Varioqub } from "@/components/Varioqub";
 import { handleDiagnosticClick } from "@/lib/ymGoals";

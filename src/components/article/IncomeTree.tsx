@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
 import { nbsp } from "@/lib/nbsp";
 
 type Leaf = { title: string; notes?: string[] };
@@ -13,39 +11,24 @@ const branches: Branch[] = [
       {
         title: "Текущая карьера",
         items: [
-          {
-            title: "Карьерный план",
-            notes: ["самостоятельно", "консультант", "тренинги"],
-          },
-          {
-            title: "Ментор (подойдёт всем)",
-            notes: ["на текущей работе", "вне работы", "контакты менторов"],
-          },
-          {
-            title: "«Разговор с руководителем»",
-            notes: ["«Деньги»", "«Развитие»", "«Обстоятельства»"],
-          },
+          { title: "Карьерный план", notes: ["самостоятельно", "консультант", "тренинги"] },
+          { title: "Ментор (подойдёт всем)", notes: ["на работе", "вне работы", "контакты менторов"] },
+          { title: "«Разговор с руководителем»", notes: ["«Деньги»", "«Развитие»", "«Обстоятельства»"] },
         ],
       },
       {
         title: "Альтернативная карьера",
         items: [
           { title: "Карьерный план", notes: ["консультант"] },
-          {
-            title: "Поиск вакансий и executive search",
-            notes: ["список агентств и сайтов", "спросить у того, кто ушёл"],
-          },
-          {
-            title: "Бывшие коллеги",
-            notes: ["актуально и для тех, кто работает на себя: партнёры, конкуренты"],
-          },
+          { title: "Вакансии и executive search", notes: ["агентства и сайты", "спросить у того, кто ушёл"] },
+          { title: "Бывшие коллеги", notes: ["партнёры, конкуренты"] },
         ],
       },
       {
         title: "Новая профессия",
         items: [
           { title: "Аналитик данных" },
-          { title: "IT", notes: ["получается у 2–3 из 10, но зарплата 300К+"] },
+          { title: "IT", notes: ["получается у 2–3 из 10, зарплата 300К+"] },
         ],
       },
     ],
@@ -57,42 +40,20 @@ const branches: Branch[] = [
         title: "Фриланс / работа на себя",
         items: [
           { title: "План на 5–10 лет" },
-          {
-            title: "Нетворкинг",
-            notes: [
-              "минимум 1 новый контакт в неделю",
-              "форумы, выступления, соцсети",
-            ],
-          },
-          {
-            title: "«Фоном» смотреть, где можно консультировать",
-            notes: ["сделать визитку себя или своего бизнеса"],
-          },
+          { title: "Нетворкинг", notes: ["1 новый контакт в неделю", "форумы, выступления, соцсети"] },
+          { title: "Смотреть, где можно консультировать", notes: ["визитка себя или бизнеса"] },
         ],
       },
       {
         title: "Бизнес",
-        items: [
-          { title: "Нужно выбирать одно направление" },
-          { title: "Партнёрства" },
-        ],
+        items: [{ title: "Выбрать одно направление" }, { title: "Партнёрства" }],
       },
       {
         title: "Социальные инструменты",
         items: [
-          {
-            title: "Экспертный блог",
-            notes: [
-              "мессенджеры и соцсети",
-              "платформы услуг",
-              "инфопродукт или реклама",
-            ],
-          },
+          { title: "Экспертный блог", notes: ["соцсети", "платформы услуг", "инфопродукт или реклама"] },
           { title: "Форумы и мастермайнды" },
-          {
-            title: "Друзья: говорить про деньги",
-            notes: ["дружба и партнёрство", "кофе раз в 2 недели"],
-          },
+          { title: "Друзья: говорить про деньги", notes: ["кофе раз в 2 недели"] },
         ],
       },
     ],
@@ -103,37 +64,22 @@ const branches: Branch[] = [
       {
         title: "Инструменты в бюджете",
         items: [
-          {
-            title: "Что актуально через 5 лет?",
-            notes: ["сколько часов в неделю перерабатываешь?"],
-          },
+          { title: "Что актуально через 5 лет?", notes: ["сколько часов перерабатываешь?"] },
           { title: "Базовое", notes: ["НДФЛ-вычеты, кешбэки, ИИС, ДМС"] },
-          {
-            title: "Финансовые услуги как инструмент",
-            notes: ["20–30 тыс/мес при работе 2 ч/день"],
-          },
+          { title: "Финансовые услуги как инструмент", notes: ["20–30 тыс/мес при 2 ч/день"] },
         ],
       },
       {
         title: "Монетизация хобби",
         items: [
-          {
-            title: "Тематические сообщества",
-            notes: ["активность — поиск партнёров и клиентов"],
-          },
-          {
-            title: "Монетизация обучений",
-            notes: ["план монетизации ДО начала обучения"],
-          },
+          { title: "Тематические сообщества", notes: ["поиск партнёров и клиентов"] },
+          { title: "Монетизация обучений", notes: ["план монетизации ДО обучения"] },
           { title: "Бизнес" },
         ],
       },
       {
         title: "«Государство»",
-        items: [
-          { title: "Гранты", notes: ["учёные", "для детей", "стартапы"] },
-          { title: "Тендеры" },
-        ],
+        items: [{ title: "Гранты", notes: ["учёные", "для детей", "стартапы"] }, { title: "Тендеры" }],
       },
       {
         title: "Творчество",
@@ -141,85 +87,234 @@ const branches: Branch[] = [
       },
       {
         title: "Семья",
-        items: [{ title: "Поиск мужа" }, { title: "Детские каналы и контент" }],
+        items: [{ title: "Поиск партнёра" }, { title: "Детские каналы и контент" }],
       },
     ],
   },
 ];
 
-const GroupNode = ({ group }: { group: Group }) => (
-  <li className="mm-node pt-0">
-    <div className="inline-flex rounded-lg bg-background/70 border border-border/70 px-3 py-1">
-      <h4 className="font-display text-[14px] md:text-[15px] font-semibold leading-snug text-foreground">
-        {nbsp(group.title)}
-      </h4>
-    </div>
-    <ul className="mm-tree mm-tree--twig mt-1.5 ml-2 md:ml-3 space-y-1.5">
-      {group.items.map((item) => (
-        <li key={item.title} className="mm-node">
-          <p className="font-body text-sm md:text-[15px] leading-snug text-foreground/85 hyphens-auto">
-            {nbsp(item.title)}
-          </p>
-          {item.notes && (
-            <p className="mt-0.5 font-body text-[13px] md:text-sm leading-snug text-foreground/50 hyphens-auto">
-              {nbsp(item.notes.join(" · "))}
-            </p>
-          )}
-        </li>
-      ))}
-    </ul>
-  </li>
-);
+/* ---------- layout ---------- */
 
-const BranchRow = ({ branch, index }: { branch: Branch; index: number }) => {
-  const [open, setOpen] = useState(index === 0);
+const W = 1200;
+const COL_W = 360;
+const COL_GAP = 60;
+const ROOT_Y = 46;
+const BRANCH_Y = 150;
+const GROUP_GAP = 22;
+const TITLE_LH = 21;
+const ITEM_LH = 18;
+const NOTE_LH = 15;
 
-  return (
-    <div className="md:flex md:items-start md:gap-6">
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-        className="mm-stem flex w-full md:w-[9.5rem] shrink-0 items-center justify-between gap-3 text-left md:pointer-events-none md:mt-0.5"
-      >
-        <span className="inline-flex items-center rounded-full bg-accent px-3.5 py-1.5 font-display text-[13px] md:text-sm font-semibold uppercase tracking-wide text-accent-foreground">
-          {branch.title}
-        </span>
-        <ChevronDown
-          className={`h-5 w-5 shrink-0 text-foreground/50 transition-transform md:hidden ${
-            open ? "rotate-180" : ""
-          }`}
-          aria-hidden
-        />
-      </button>
-
-      <ul
-        className={`${open ? "block" : "hidden"} md:block mm-tree mm-tree--trunk mt-2.5 md:mt-0 ml-1 md:ml-0 flex-1 space-y-3`}
-      >
-        {branch.groups.map((group) => (
-          <GroupNode key={group.title} group={group} />
-        ))}
-      </ul>
-    </div>
-  );
+const wrap = (text: string, maxChars: number) => {
+  const words = text.split(" ");
+  const lines: string[] = [];
+  let cur = "";
+  for (const w of words) {
+    const next = cur ? `${cur} ${w}` : w;
+    if (next.length > maxChars && cur) {
+      lines.push(cur);
+      cur = w;
+    } else {
+      cur = next;
+    }
+  }
+  if (cur) lines.push(cur);
+  return lines;
 };
+
+type LaidItem = { lines: string[]; noteLines: string[]; y: number; h: number };
+type LaidGroup = { titleLines: string[]; y: number; h: number; items: LaidItem[] };
+type LaidCol = { x: number; groups: LaidGroup[]; bottom: number };
+
+const layout = (): { cols: LaidCol[]; height: number } => {
+  const cols = branches.map((branch, ci) => {
+    const x = (W - (COL_W * 3 + COL_GAP * 2)) / 2 + ci * (COL_W + COL_GAP);
+    let y = BRANCH_Y + 54;
+    const groups: LaidGroup[] = branch.groups.map((g) => {
+      const titleLines = wrap(g.title, 30);
+      let gy = y;
+      let inner = titleLines.length * TITLE_LH + 8;
+      const items: LaidItem[] = g.items.map((it) => {
+        const lines = wrap(it.title, 38);
+        const noteLines = it.notes ? wrap(it.notes.join(" · "), 44) : [];
+        const h = lines.length * ITEM_LH + noteLines.length * NOTE_LH + 6;
+        const iy = gy + inner;
+        inner += h;
+        return { lines, noteLines, y: iy, h };
+      });
+      const laid: LaidGroup = { titleLines, y: gy, h: inner, items };
+      y = gy + inner + GROUP_GAP;
+      return laid;
+    });
+    return { x, groups, bottom: y - GROUP_GAP };
+  });
+  return { cols, height: Math.max(...cols.map((c) => c.bottom)) + 30 };
+};
+
+const { cols, height: H } = layout();
+
+const Map = () => (
+  <svg
+    viewBox={`0 0 ${W} ${H}`}
+    className="w-full h-auto"
+    role="img"
+    aria-label="Майнд-карта дерева роста доходов: три направления — найм, работа на себя и общие инструменты"
+  >
+    {/* root */}
+    <g>
+      <rect
+        x={W / 2 - 250}
+        y={ROOT_Y - 24}
+        width={500}
+        height={48}
+        rx={24}
+        fill="hsl(var(--accent))"
+      />
+      <text
+        x={W / 2}
+        y={ROOT_Y + 6}
+        textAnchor="middle"
+        fill="hsl(var(--accent-foreground))"
+        className="font-display"
+        fontSize={19}
+        fontWeight={600}
+      >
+        Дерево роста доходов
+      </text>
+    </g>
+
+    {cols.map((col, ci) => {
+      const cx = col.x + COL_W / 2;
+      const spineX = col.x + 8;
+      return (
+        <g key={branches[ci].title}>
+          {/* root -> branch */}
+          <path
+            d={`M ${W / 2} ${ROOT_Y + 26} C ${W / 2} ${BRANCH_Y - 40}, ${cx} ${ROOT_Y + 40}, ${cx} ${BRANCH_Y - 20}`}
+            fill="none"
+            stroke="hsl(var(--accent))"
+            strokeWidth={2.5}
+            strokeLinecap="round"
+          />
+          {/* branch pill */}
+          <rect
+            x={cx - 90}
+            y={BRANCH_Y - 20}
+            width={180}
+            height={40}
+            rx={20}
+            fill="hsl(var(--foreground))"
+          />
+          <text
+            x={cx}
+            y={BRANCH_Y + 6}
+            textAnchor="middle"
+            fill="hsl(var(--background))"
+            className="font-display"
+            fontSize={17}
+            fontWeight={600}
+          >
+            {branches[ci].title}
+          </text>
+          {/* spine */}
+          <path
+            d={`M ${cx} ${BRANCH_Y + 22} C ${cx} ${BRANCH_Y + 40}, ${spineX} ${BRANCH_Y + 30}, ${spineX} ${BRANCH_Y + 54} L ${spineX} ${col.bottom - 6}`}
+            fill="none"
+            stroke="hsl(var(--accent))"
+            strokeWidth={2}
+            strokeLinecap="round"
+          />
+
+          {col.groups.map((g, gi) => {
+            const gx = col.x + 30;
+            return (
+              <g key={gi}>
+                {/* twig to group */}
+                <path
+                  d={`M ${spineX} ${g.y + 4} C ${spineX + 10} ${g.y + 4}, ${gx - 18} ${g.y + 4}, ${gx - 8} ${g.y + 4}`}
+                  fill="none"
+                  stroke="hsl(var(--accent))"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                />
+                <circle cx={gx - 8} cy={g.y + 4} r={3.5} fill="hsl(var(--accent))" />
+                {g.titleLines.map((line, li) => (
+                  <text
+                    key={li}
+                    x={gx}
+                    y={g.y + 9 + li * TITLE_LH}
+                    fill="hsl(var(--foreground))"
+                    className="font-display"
+                    fontSize={16}
+                    fontWeight={600}
+                  >
+                    {nbsp(line)}
+                  </text>
+                ))}
+                {/* items */}
+                {g.items.map((it, ii) => (
+                  <g key={ii}>
+                    <path
+                      d={`M ${gx + 4} ${it.y - 4} L ${gx + 4} ${it.y + 6} L ${gx + 14} ${it.y + 6}`}
+                      fill="none"
+                      stroke="hsl(var(--accent) / 0.45)"
+                      strokeWidth={1.5}
+                      strokeLinecap="round"
+                    />
+                    {it.lines.map((line, li) => (
+                      <text
+                        key={li}
+                        x={gx + 20}
+                        y={it.y + 10 + li * ITEM_LH}
+                        fill="hsl(var(--foreground) / 0.85)"
+                        className="font-body"
+                        fontSize={14}
+                      >
+                        {nbsp(line)}
+                      </text>
+                    ))}
+                    {it.noteLines.map((line, li) => (
+                      <text
+                        key={`n${li}`}
+                        x={gx + 20}
+                        y={it.y + 10 + it.lines.length * ITEM_LH + li * NOTE_LH}
+                        fill="hsl(var(--foreground) / 0.5)"
+                        className="font-body"
+                        fontSize={12}
+                      >
+                        {nbsp(line)}
+                      </text>
+                    ))}
+                  </g>
+                ))}
+              </g>
+            );
+          })}
+        </g>
+      );
+    })}
+  </svg>
+);
 
 export const IncomeTree = ({ caption }: { caption?: string }) => (
   <figure className="container-px max-w-5xl mx-auto mt-6 md:mt-8">
-    <div className="rounded-2xl border border-border bg-card/60 p-4 md:p-6">
-      <div className="flex flex-wrap gap-2">
-        <span className="badge-tag">
-          {nbsp("Максимизация эффективности текущих доходов")}
-        </span>
-        <span className="badge-tag">{nbsp("Финансовый план на 5–10 лет")}</span>
-      </div>
-
-      <div className="mt-5 space-y-5 md:mt-6 md:space-y-7 divide-y divide-border/60 [&>*+*]:pt-5 md:[&>*+*]:pt-7">
-        {branches.map((branch, i) => (
-          <BranchRow key={branch.title} branch={branch} index={i} />
-        ))}
-      </div>
+    {/* desktop / tablet: full vertical mind map */}
+    <div className="hidden sm:block rounded-2xl border border-border bg-card/60 p-4 md:p-6">
+      <Map />
     </div>
+
+    {/* mobile: square frame, pan to explore */}
+    <div className="sm:hidden">
+      <div className="relative aspect-square overflow-auto rounded-2xl border border-border bg-card/60">
+        <div className="w-[860px] p-4">
+          <Map />
+        </div>
+      </div>
+      <p className="mt-2 text-center font-body text-xs text-foreground/45">
+        {nbsp("Проведите по карте, чтобы рассмотреть детали")}
+      </p>
+    </div>
+
     {caption && (
       <figcaption className="mt-3 text-center font-body text-sm text-foreground/55">
         {caption}

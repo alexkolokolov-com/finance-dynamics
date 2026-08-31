@@ -19,6 +19,10 @@ import napkinImg from "@/assets/plan-napkin.jpg";
 import cardNumbersImg from "@/assets/plan-card-numbers.jpg";
 import cardTablesImg from "@/assets/plan-card-tables.jpg";
 import cardBothImg from "@/assets/plan-card-both.jpg";
+import person1Img from "@/assets/plan-person-1.jpg";
+import person2Img from "@/assets/plan-person-2.jpg";
+import person3Img from "@/assets/plan-person-3.jpg";
+import person4Img from "@/assets/plan-person-4.jpg";
 
 import icHealth from "@/assets/wheel-health.png";
 import icEducation from "@/assets/wheel-education.png";
@@ -36,6 +40,7 @@ import expertAvatar from "@/assets/expert-vasily.jpg";
 const people = [
   {
     num: "Человек 1",
+    img: person1Img,
     text: (
       <>
         Доход стабилен, целей в&nbsp;ближайшие 10&nbsp;лет нет, подушка собрана.
@@ -46,6 +51,7 @@ const people = [
   },
   {
     num: "Человек 2",
+    img: person2Img,
     text: (
       <>
         Через два года — покупка квартиры. Его 5&nbsp;млн — это будущий
@@ -56,6 +62,7 @@ const people = [
   },
   {
     num: "Человек 3",
+    img: person3Img,
     text: (
       <>
         Доход высокий, но&nbsp;неровный, подушки нет. Его первые деньги должны
@@ -66,6 +73,7 @@ const people = [
   },
   {
     num: "Человек 4",
+    img: person4Img,
     text: (
       <>
         Через два года деньги понадобятся на&nbsp;бизнес. Ему вообще

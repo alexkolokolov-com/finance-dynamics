@@ -748,47 +748,47 @@ const FinancialPlan = () => {
       {/* Блок эксперта */}
       <ArticleSection className="mb-10 md:mb-14">
         <ArticleFlow>
-          <div className="bg-card border border-border rounded-2xl p-6 md:p-10">
-            <div className="font-body text-xs uppercase tracking-[0.1em] text-accent mb-3">
-              Диагностика
-            </div>
-            <H2>{nbsp("Давайте поговорим")}</H2>
-            <p className="font-body text-lg leading-relaxed text-foreground/80 mt-4">
-              {nbsp("Многие ищут правильный инвестиционный продукт, не поняв сначала, чего хотят от жизни.")}
-            </p>
-            <p className="font-body text-lg leading-relaxed text-foreground/80 mt-4">
-              {nbsp("Я помогу разобрать ваши доходы, расходы, цели и ценности — и найти, где деньги работают, а где текут.")}
-            </p>
+          <H2>{nbsp("Давайте поговорим")}</H2>
+          <p className="font-body text-lg leading-relaxed text-foreground/80 mt-4">
+            {nbsp("Многие ищут правильный инвестиционный продукт, не поняв сначала, чего хотят от жизни.")}
+          </p>
+          <p className="font-body text-lg leading-relaxed text-foreground/80 mt-4">
+            {nbsp("Я помогу разобрать ваши доходы, расходы, цели и ценности — и найти, где деньги работают, а где текут.")}
+          </p>
 
-            <div className="mt-6 md:mt-8 flex flex-col sm:flex-row sm:items-center gap-5">
-              <a
-                href="https://nivz.getcourse.ru/diagnostic"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={handleDiagnosticClick}
-                className="inline-flex items-center justify-center px-7 py-4 rounded-full bg-accent text-background font-body text-[15px] font-medium whitespace-nowrap hover:bg-foreground transition-colors"
-              >
-                {nbsp("Записаться на диагностику")}
-              </a>
-              <span className="flex items-center gap-3">
-                <span className="w-12 h-12 rounded-full overflow-hidden shrink-0 block">
-                  <img
-                    src={expertAvatar}
-                    alt="Василий Мещеряков"
-                    className="w-full h-full object-cover object-top scale-125"
-                    loading="lazy"
-                  />
-                </span>
-                <span className="font-body text-[15px] leading-snug text-foreground/80">
-                  <strong className="text-foreground">{nbsp("Василий Мещеряков")}</strong>
-                  <br />
-                  {nbsp("автор книги «Ленивый бюджет»")}
-                </span>
+          <div className="mt-6 md:mt-8 flex flex-col sm:flex-row sm:items-center gap-5">
+            <a
+              href="https://nivz.getcourse.ru/diagnostic"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={handleDiagnosticClick}
+              className="inline-flex items-center justify-center px-7 py-4 rounded-full bg-accent text-background font-body text-[15px] font-medium whitespace-nowrap hover:bg-foreground transition-colors"
+            >
+              {nbsp("Записаться на диагностику")}
+            </a>
+            <span className="flex items-center gap-3">
+              <span className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden shrink-0 block">
+                <img
+                  src={expertAvatar}
+                  alt="Василий Мещеряков"
+                  className="w-full h-full object-cover object-top scale-125"
+                  loading="lazy"
+                />
               </span>
-            </div>
+              <span className="font-body text-[15px] leading-snug text-foreground/80">
+                <strong className="text-foreground">{nbsp("Василий Мещеряков")}</strong>
+                <br />
+                {nbsp("автор книги «Ленивый бюджет»")}
+              </span>
+            </span>
           </div>
+
+          <p className="font-body text-sm text-foreground/70 mt-4">
+            {nbsp("Диагностика бесплатна и ни к чему не обязывает")}
+          </p>
         </ArticleFlow>
       </ArticleSection>
+
 
       <Varioqub antiFlicker />
 

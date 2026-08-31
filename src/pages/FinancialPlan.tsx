@@ -14,7 +14,6 @@ import { handleDiagnosticClick } from "@/lib/ymGoals";
 import heroImg from "@/assets/plan-hero.jpg";
 import sellersImg from "@/assets/plan-sellers.jpg";
 import depositImg from "@/assets/plan-deposit.jpg";
-import napkinImg from "@/assets/plan-napkin.jpg";
 import cardNumbersImg from "@/assets/plan-card-numbers.jpg";
 import cardTablesImg from "@/assets/plan-card-tables.jpg";
 import cardBothImg from "@/assets/plan-card-both.jpg";
@@ -473,12 +472,6 @@ const FinancialPlan = () => {
           </p>
         </ArticleFlow>
       </ArticleSection>
-
-      <Figure
-        src={napkinImg}
-        alt="План на салфетке рядом с закрытой бухгалтерской книгой"
-        caption="Бизнес-план на салфетке работает, если в нём есть главная возможность"
-      />
 
       <ArticleSection>
         <ArticleFlow>

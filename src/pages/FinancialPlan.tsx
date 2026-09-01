@@ -20,6 +20,12 @@ import person1Img from "@/assets/plan-person-1.jpg";
 import person2Img from "@/assets/plan-person-2.jpg";
 import person3Img from "@/assets/plan-person-3.jpg";
 import person4Img from "@/assets/plan-person-4.jpg";
+import stress1Img from "@/assets/stress-1.jpg";
+import stress2Img from "@/assets/stress-2.jpg";
+import stress3Img from "@/assets/stress-3.jpg";
+import stress4Img from "@/assets/stress-4.jpg";
+import stress5Img from "@/assets/stress-5.jpg";
+
 
 import icHealth from "@/assets/wheel-health.png";
 import icEducation from "@/assets/wheel-education.png";
@@ -614,6 +620,14 @@ const FinancialPlan = () => {
           <p>
             {nbsp("Очень часто уже на этом этапе оказывается, что никаких «5 млн для инвестиций» у вас нет. Есть, например, 1 млн резерва, 3 млн на квартиру через три года и ещё 2 млн действительно долгосрочного капитала. И относиться к этим трём суммам одинаково довольно странно.")}
           </p>
+        </ArticleFlow>
+        <Figure
+          src={stress1Img}
+          alt="Иллюстрация: деньги на разные сроки"
+          caption={nbsp("Одна и та же сумма — это три разных капитала с разными сроками")}
+        />
+        <ArticleFlow className="mt-6 md:mt-8">
+
 
           <H3>{nbsp("2. Что должно произойти благодаря этим деньгам?")}</H3>
           <p>
@@ -637,6 +651,14 @@ const FinancialPlan = () => {
           <p>
             {nbsp("❗️ Последний пункт, кстати, ничем не хуже остальных. Финансовый план нужен не только для того, чтобы больше накопить. Иногда его задача — доказать человеку, что он уже может больше тратить.")}
           </p>
+        </ArticleFlow>
+        <Figure
+          src={stress2Img}
+          alt="Иллюстрация: деньги превращаются в события жизни"
+          caption={nbsp("Важно не сколько денег на счёте, а что они позволяют сделать")}
+        />
+        <ArticleFlow className="mt-6 md:mt-8">
+
 
           <H3>{nbsp("3. Хватит ли вам вообще этих денег?")}</H3>
           <p>
@@ -674,6 +696,14 @@ const FinancialPlan = () => {
           <p>
             {nbsp("А через два года ему пришлось бы продавать активы тогда, когда нужны деньги, а не тогда, когда это выгодно.")}
           </p>
+        </ArticleFlow>
+        <Figure
+          src={stress3Img}
+          alt="Иллюстрация: капитал распадается на будущие траты"
+          caption={nbsp("Часть капитала уже распределена — просто вы об этом пока не посчитали")}
+        />
+        <ArticleFlow className="mt-6 md:mt-8">
+
 
           <H3>{nbsp("4. Что произойдёт, если ваша жизнь изменится?")}</H3>
           <p>
@@ -688,6 +718,14 @@ const FinancialPlan = () => {
           <p>
             {nbsp("❗️ Я люблю проверять планы именно так: что должно произойти, чтобы этот план перестал работать? Если небольшое отклонение от сценария ломает всю конструкцию, значит это повод скорректировать прогноз.")}
           </p>
+        </ArticleFlow>
+        <Figure
+          src={stress4Img}
+          alt="Иллюстрация: план выдерживает повороты жизни"
+          caption={nbsp("Хороший план не угадывает жизнь, а выдерживает её повороты")}
+        />
+        <ArticleFlow className="mt-6 md:mt-8">
+
 
           <H3>{nbsp("5. А точно ли эти деньги нужно инвестировать?")}</H3>
           <p>
@@ -706,7 +744,13 @@ const FinancialPlan = () => {
             {nbsp("Поэтому прежде чем распределять капитал между акциями, облигациями, депозитами и недвижимостью, я бы сделал ещё одну вещь:")}
           </p>
         </ArticleFlow>
+        <Figure
+          src={stress5Img}
+          alt="Иллюстрация: выбор между ростом цифры и жизнью"
+          caption={nbsp("Деньги существуют для жизни, а не жизнь для цифры на счёте")}
+        />
       </ArticleSection>
+
 
 
 
@@ -714,7 +758,7 @@ const FinancialPlan = () => {
       {/* Колесо сфер */}
       <ArticleSection id="koleso">
         <ArticleFlow>
-          <H3>Колесо сфер жизни: важность и&nbsp;результат</H3>
+          <H2>Колесо сфер жизни: важность и&nbsp;результат</H2>
           <p>
             В&nbsp;классических методиках диагностики просят оценить каждую
             сферу жизни от&nbsp;1&nbsp;до&nbsp;10 — «насколько

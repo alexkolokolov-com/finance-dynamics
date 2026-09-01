@@ -349,13 +349,13 @@ const FinancialPlan = () => {
 
         </div>
 
-        <div className="container-px max-w-5xl mx-auto mt-10 md:mt-14">
+        <div className="md:container-px md:max-w-5xl md:mx-auto mt-10 md:mt-14">
           <img
             src={heroImg}
             alt="Человек с мешком денег на перекрёстке: банк, квартира, инвестиции"
             width={1600}
             height={912}
-            className="w-full h-auto object-contain rounded-2xl border border-border bg-card"
+            className="w-full h-auto aspect-[16/10] object-cover object-center bg-card md:aspect-auto md:object-contain md:rounded-2xl md:border md:border-border"
           />
         </div>
       </section>
@@ -781,7 +781,7 @@ const FinancialPlan = () => {
                   width={1024}
                   height={768}
                   loading="lazy"
-                  className="w-full h-auto md:aspect-[4/3] md:object-contain bg-card border-b border-border/70"
+                  className="w-full aspect-[4/3] object-cover bg-card border-b border-border/70"
                 />
                 <div className="p-5">
                   <div className="font-body text-xs uppercase tracking-[0.1em] text-accent mb-2">

@@ -7,6 +7,7 @@ import { H2 } from "@/components/article/H2";
 import { H3 } from "@/components/article/H3";
 import { Pull } from "@/components/article/Pull";
 import { Figure } from "@/components/article/Figure";
+import { ArticleToc } from "@/components/article/ArticleToc";
 import { nbsp } from "@/lib/nbsp";
 import { Varioqub } from "@/components/Varioqub";
 import { handleDiagnosticClick } from "@/lib/ymGoals";
@@ -331,6 +332,7 @@ const FinancialPlan = () => {
   return (
     <main className="bg-background text-foreground">
       <SiteHeader />
+      <ArticleToc title="Содержание" />
 
       {/* Hero */}
       <section className="pt-28 md:pt-36 pb-10 md:pb-14">
@@ -524,7 +526,7 @@ const FinancialPlan = () => {
                 />
               </div>
               <div className="md:w-2/3 flex flex-col justify-center">
-                <H3 className="text-[clamp(1.1rem,2vw,1.3rem)]">
+                <H3 toc={false} className="text-[clamp(1.1rem,2vw,1.3rem)]">
                   {nbsp("Вы дружите с цифрами")}
                 </H3>
                 <p className="mt-2 font-body text-[15px] leading-relaxed text-foreground/80">
@@ -545,7 +547,7 @@ const FinancialPlan = () => {
                 />
               </div>
               <div className="md:w-2/3 flex flex-col justify-center">
-                <H3 className="text-[clamp(1.1rem,2vw,1.3rem)]">
+                <H3 toc={false} className="text-[clamp(1.1rem,2vw,1.3rem)]">
                   {nbsp("Вы не любите таблицы")}
                 </H3>
                 <p className="mt-2 font-body text-[15px] leading-relaxed text-foreground/80">
@@ -566,7 +568,7 @@ const FinancialPlan = () => {
                 />
               </div>
               <div className="md:w-2/3 flex flex-col justify-center">
-                <H3 className="text-[clamp(1.1rem,2vw,1.3rem)]">
+                <H3 toc={false} className="text-[clamp(1.1rem,2vw,1.3rem)]">
                   {nbsp("И то, и другое")}
                 </H3>
                 <p className="mt-2 font-body text-[15px] leading-relaxed text-foreground/80">

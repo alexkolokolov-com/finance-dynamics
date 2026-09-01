@@ -520,7 +520,7 @@ const FinancialPlan = () => {
                   width={1024}
                   height={768}
                   loading="lazy"
-                  className="w-full aspect-[4/3] md:aspect-auto md:h-full md:object-cover rounded-xl"
+                  className="w-full h-auto md:aspect-auto md:h-full md:object-cover rounded-xl"
                 />
               </div>
               <div className="md:w-2/3 flex flex-col justify-center">
@@ -541,7 +541,7 @@ const FinancialPlan = () => {
                   width={1024}
                   height={768}
                   loading="lazy"
-                  className="w-full aspect-[4/3] md:aspect-auto md:h-full md:object-cover rounded-xl"
+                  className="w-full h-auto md:aspect-auto md:h-full md:object-cover rounded-xl"
                 />
               </div>
               <div className="md:w-2/3 flex flex-col justify-center">
@@ -562,7 +562,7 @@ const FinancialPlan = () => {
                   width={1024}
                   height={768}
                   loading="lazy"
-                  className="w-full aspect-[4/3] md:aspect-auto md:h-full md:object-cover rounded-xl"
+                  className="w-full h-auto md:aspect-auto md:h-full md:object-cover rounded-xl"
                 />
               </div>
               <div className="md:w-2/3 flex flex-col justify-center">

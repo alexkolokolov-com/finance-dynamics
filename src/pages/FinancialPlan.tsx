@@ -355,7 +355,7 @@ const FinancialPlan = () => {
             alt="Человек с мешком денег на перекрёстке: банк, квартира, инвестиции"
             width={1600}
             height={912}
-            className="w-full aspect-square object-cover md:aspect-auto md:object-contain rounded-2xl border border-border"
+            className="w-full h-auto object-contain rounded-2xl border border-border bg-card"
           />
         </div>
       </section>
@@ -520,7 +520,7 @@ const FinancialPlan = () => {
                   width={1024}
                   height={768}
                   loading="lazy"
-                  className="w-full aspect-[4/3] md:aspect-auto md:h-full md:object-cover rounded-xl"
+                  className="w-full h-auto md:aspect-auto md:h-full md:object-cover rounded-xl"
                 />
               </div>
               <div className="md:w-2/3 flex flex-col justify-center">
@@ -541,7 +541,7 @@ const FinancialPlan = () => {
                   width={1024}
                   height={768}
                   loading="lazy"
-                  className="w-full aspect-[4/3] md:aspect-auto md:h-full md:object-cover rounded-xl"
+                  className="w-full h-auto md:aspect-auto md:h-full md:object-cover rounded-xl"
                 />
               </div>
               <div className="md:w-2/3 flex flex-col justify-center">
@@ -562,7 +562,7 @@ const FinancialPlan = () => {
                   width={1024}
                   height={768}
                   loading="lazy"
-                  className="w-full aspect-[4/3] md:aspect-auto md:h-full md:object-cover rounded-xl"
+                  className="w-full h-auto md:aspect-auto md:h-full md:object-cover rounded-xl"
                 />
               </div>
               <div className="md:w-2/3 flex flex-col justify-center">
@@ -781,7 +781,7 @@ const FinancialPlan = () => {
                   width={1024}
                   height={768}
                   loading="lazy"
-                  className="w-full aspect-[4/3] object-cover border-b border-border/70"
+                  className="w-full h-auto md:aspect-[4/3] md:object-contain bg-card border-b border-border/70"
                 />
                 <div className="p-5">
                   <div className="font-body text-xs uppercase tracking-[0.1em] text-accent mb-2">

@@ -14,7 +14,7 @@ export const Figure = ({
       loading="lazy"
       width={1600}
       height={912}
-      className="w-full aspect-square object-cover md:aspect-auto md:object-contain rounded-2xl border border-border"
+      className="w-full h-auto object-contain rounded-2xl border border-border bg-card"
     />
     <figcaption className="mt-3 text-center font-body text-sm text-foreground/55">
       {caption}

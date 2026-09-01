@@ -30,7 +30,7 @@ export const StorySection = ({
       loading="lazy"
       width={1200}
       height={1200}
-      className={`w-full max-w-sm mx-auto lg:max-w-none aspect-square object-cover rounded-2xl border border-border bg-card ${extraClass}`}
+      className={`w-full max-w-sm mx-auto lg:max-w-none h-auto object-contain rounded-2xl border border-border bg-card ${extraClass}`}
     />
   );
 

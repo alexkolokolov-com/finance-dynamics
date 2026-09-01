@@ -7,6 +7,7 @@ import { H2 } from "@/components/article/H2";
 import { H3 } from "@/components/article/H3";
 import { Pull } from "@/components/article/Pull";
 import { Figure } from "@/components/article/Figure";
+import { ArticleToc } from "@/components/article/ArticleToc";
 import { nbsp } from "@/lib/nbsp";
 import { Varioqub } from "@/components/Varioqub";
 import { handleDiagnosticClick } from "@/lib/ymGoals";
@@ -331,6 +332,7 @@ const FinancialPlan = () => {
   return (
     <main className="bg-background text-foreground">
       <SiteHeader />
+      <ArticleToc title="Содержание" />
 
       {/* Hero */}
       <section className="pt-28 md:pt-36 pb-10 md:pb-14">
@@ -349,13 +351,13 @@ const FinancialPlan = () => {
 
         </div>
 
-        <div className="container-px max-w-5xl mx-auto mt-10 md:mt-14">
+        <div className="md:container-px md:max-w-5xl md:mx-auto mt-10 md:mt-14">
           <img
             src={heroImg}
             alt="Человек с мешком денег на перекрёстке: банк, квартира, инвестиции"
             width={1600}
             height={912}
-            className="w-full h-auto object-contain rounded-2xl border border-border bg-card"
+            className="w-full h-auto aspect-[16/10] object-cover object-center bg-card md:aspect-auto md:object-contain md:rounded-2xl md:border md:border-border"
           />
         </div>
       </section>
@@ -524,7 +526,7 @@ const FinancialPlan = () => {
                 />
               </div>
               <div className="md:w-2/3 flex flex-col justify-center">
-                <H3 className="text-[clamp(1.1rem,2vw,1.3rem)]">
+                <H3 toc={false} className="text-[clamp(1.1rem,2vw,1.3rem)]">
                   {nbsp("Вы дружите с цифрами")}
                 </H3>
                 <p className="mt-2 font-body text-[15px] leading-relaxed text-foreground/80">
@@ -545,7 +547,7 @@ const FinancialPlan = () => {
                 />
               </div>
               <div className="md:w-2/3 flex flex-col justify-center">
-                <H3 className="text-[clamp(1.1rem,2vw,1.3rem)]">
+                <H3 toc={false} className="text-[clamp(1.1rem,2vw,1.3rem)]">
                   {nbsp("Вы не любите таблицы")}
                 </H3>
                 <p className="mt-2 font-body text-[15px] leading-relaxed text-foreground/80">
@@ -566,7 +568,7 @@ const FinancialPlan = () => {
                 />
               </div>
               <div className="md:w-2/3 flex flex-col justify-center">
-                <H3 className="text-[clamp(1.1rem,2vw,1.3rem)]">
+                <H3 toc={false} className="text-[clamp(1.1rem,2vw,1.3rem)]">
                   {nbsp("И то, и другое")}
                 </H3>
                 <p className="mt-2 font-body text-[15px] leading-relaxed text-foreground/80">
@@ -781,7 +783,7 @@ const FinancialPlan = () => {
                   width={1024}
                   height={768}
                   loading="lazy"
-                  className="w-full h-auto md:aspect-[4/3] md:object-contain bg-card border-b border-border/70"
+                  className="w-full aspect-[4/3] object-cover bg-card border-b border-border/70"
                 />
                 <div className="p-5">
                   <div className="font-body text-xs uppercase tracking-[0.1em] text-accent mb-2">

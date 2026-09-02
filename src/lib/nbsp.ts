@@ -14,7 +14,7 @@ const serviceRe = new RegExp(
   "gi"
 );
 const particlesRe = /(?<=[а-яёА-ЯЁ])\s+(?=же|бы|ли)(?=\s|$|[.,;:!?])/gi;
-const dashRe = /(?<=\S)\s+(?=[—])/g;
+const dashRe = /(?<=\S)\s+(?=[—–])/g;
 const numberWordRe = /(\d)\s+(?=[а-яёА-ЯЁ])/g;
 
 export const nbsp = (text: string): string =>

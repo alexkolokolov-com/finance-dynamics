@@ -244,7 +244,7 @@ const Corporate = () => {
         <div className="container-px max-w-7xl mx-auto">
           <SectionLabel>{nbsp("Проблема")}</SectionLabel>
           <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl animate-fade-up max-w-4xl">
-            {nbsp("Как сохранить сотрудников, без роста ФОТ?")}
+            {nbsp("Почему рост зарплаты не всегда решает финансовые проблемы сотрудника?")}
           </h2>
 
           <figure className="mt-6 md:mt-8 animate-fade-up">

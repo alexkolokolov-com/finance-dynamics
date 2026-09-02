@@ -1,133 +1,200 @@
 import { useEffect } from "react";
 import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
-import {
-  HeartPulse,
-  DoorOpen,
-  PiggyBank,
-  Users,
-  Clock,
-  ArrowRight,
-  Send,
-  Mail,
-  Check,
-} from "lucide-react";
+import { Send, Mail } from "lucide-react";
 import { nbsp } from "@/lib/nbsp";
 import expertPhoto from "@/assets/expert-vasily.jpg";
 
 const pageNav: HeaderNavLink[] = [
-  { href: "#about", label: "О тренинге", id: "about" },
+  { href: "#requests", label: "Запросы людей", id: "requests" },
+  { href: "#program", label: "Программа", id: "program" },
   { href: "#formats", label: "Форматы", id: "formats" },
-  { href: "#request", label: "Запросить", cta: true },
+  { href: "#diagnostic", label: "Диагностика", cta: true },
 ];
 
-const problems = [
+const TG = "https://t.me/Vasily_Mescheryakov";
+
+const chain = [
+  "Рост дохода",
+  "Больше обязательств и решений",
+  "Нет системы",
+  "Финансовый хаос, тревога, жизнь «в ноль»",
+];
+
+const commitments = [
+  "Ипотека",
+  "Машина",
+  "Дети",
+  "Путешествия",
+  "Инвестиции",
+  "Страховки",
+  "Налоги",
+  "Крупные покупки",
+  "Помощь родителям",
+  "Будущая пенсия",
+];
+
+const bigCases = [
   {
-    icon: HeartPulse,
-    title: "Финансовый\nстресс",
-    text: "Сотрудники отвлекаются на личные деньги, снижается фокус и вовлечённость.",
+    income: "450 000 ₽",
+    who: "Нефтегазовая отрасль",
+    quote: "Не выходить в ноль перед зарплатой",
   },
   {
-    icon: DoorOpen,
-    title: "Уход лучших\nспециалистов",
-    text: "Ключевые люди уходят туда, где предлагают больше, а не туда, где им комфортнее.",
+    income: "340 000 ₽",
+    who: "Менеджер фармацевтической компании",
+    quote: "Не могу позволить себе отдых, который хочу",
   },
   {
-    icon: PiggyBank,
-    title: "Нет возможности\nподнимать зарплату",
-    text: "Бюджет ограничен, но отток кадров и падение продуктивности обходятся дороже.",
+    income: "300 000 ₽",
+    who: "Руководитель отдела продаж",
+    quote: "Победить хаос в личных финансах",
   },
 ];
 
-const skills = [
-  "Эффективно управлять бюджетом без импульсивных трат",
-  "Формировать финансовую подушку",
-  "Находить доп. доход без подработки: кешбэки, налоговые вычеты и другие лайфхаки",
-  "Внедрять дисциплину работы с финансами",
+const smallRequests = [
+  "Доход вырос, но всё равно выходим примерно в ноль",
+  "Деньги каждый месяц заканчиваются в ноль. Не могу накопить вообще ни на что",
+  "Хочу понять, сколько реально стоит моя жизнь в месяц и в год",
+  "Хочу финансовый план на 15–20 лет",
+  "Хочу перестать тревожиться из-за денег",
+  "Хочу понять, сколько мне нужно накопить к пенсии",
 ];
 
-const companyBenefits = [
+const steps = [
   {
-    title: "Удержание ключевых сотрудников",
-    text: "Без финансовых вложений в повышение зарплат.",
+    n: "01",
+    title: "Считает реальную стоимость своей жизни",
+    text: "Не «сколько я примерно трачу», а сколько на самом деле стоит месяц и год с учётом отпусков, страховок, ремонта, крупных покупок и нерегулярных расходов.",
   },
   {
-    title: "Повышение лояльности",
-    text: "Забота о финансовом благополучии укрепляет связь с компанией.",
+    n: "02",
+    title: "Собирает бюджет, которым реально сможет пользоваться",
+    text: "Без необходимости записывать каждую чашку кофе.",
   },
   {
-    title: "Рост продуктивности команды",
-    text: "Сотрудники без финансового стресса продуктивнее на 25–30%.",
+    n: "03",
+    title: "Определяет размер финансовой подушки",
+    text: "И понимает, где и в каких инструментах её хранить.",
   },
   {
-    title: "Оптимизация расходов на персонал",
-    text: "Меньшее давление на ФОТ при сохранении мотивации.",
+    n: "04",
+    title: "Планирует крупные расходы заранее",
+    text: "Машина, ремонт, путешествия, образование детей, переезд и другие большие траты перестают возникать «внезапно».",
   },
+  {
+    n: "05",
+    title: "Разбирается с кредитами и ипотекой",
+    text: "Когда выгодно гасить досрочно, когда нет, и как долговая нагрузка влияет на остальные цели.",
+  },
+  {
+    n: "06",
+    title: "Формулирует финансовые цели на несколько горизонтов",
+    text: "1 год → 3 года → 10+ лет.",
+  },
+  {
+    n: "07",
+    title: "Понимает, какой капитал ему понадобится",
+    text: "В том числе для пенсии, образования детей и других долгосрочных целей.",
+  },
+  {
+    n: "08",
+    title: "Собирает личный финансовый план",
+    text: "Не набор советов, а систему принятия финансовых решений на годы вперёд.",
+  },
+];
+
+const companyValue = [
+  {
+    label: "Финансовое wellbeing",
+    text: "Компания помогает снизить один из постоянных источников бытового стресса — неопределённость вокруг денег.",
+  },
+  {
+    label: "Ценность компенсационного пакета",
+    text: "Сотрудник получает инструмент, который может иметь для него практическую ценность годами.",
+  },
+  {
+    label: "Забота, которую можно почувствовать",
+    text: "Не абстрактный доступ к ещё одной образовательной платформе, а решение собственных финансовых вопросов.",
+  },
+  {
+    label: "Более устойчивая команда",
+    text: "Когда личные финансовые вопросы структурированы, сотруднику проще планировать свою жизнь и принимать решения без постоянной финансовой неопределённости.",
+  },
+];
+
+const noSell = [
+  "инвестиционные продукты",
+  "страховки",
+  "брокерские счета",
+  "банковские продукты",
+  "дополнительные финансовые услуги",
+];
+
+const facts = [
+  "ex P&G, руководящие позиции",
+  "2,5+ года провожу корпоративные тренинги",
+  "Тысячи участников образовательных программ",
+  "Telegram-сообщество 10 000+ человек",
+  "Автор собственной методики личного финансового плана",
 ];
 
 const formats = [
   {
-    title: "Интро-воркшоп",
+    kicker: "Формат 1 · Знакомство с темой",
+    title: "Вводный воркшоп",
     duration: "1,5–2 часа",
-    text: "Пилотный формат для знакомства команды с ключевыми инструментами. Идеален для тестирования программы или корпоративных мероприятий.",
-    bullets: [
-      "Базовые принципы управления бюджетом",
-      "Диагностика финансовых утечек",
-      "Быстрые win-решения для сотрудников",
+    fitLabel: "Подходит, если компания хочет",
+    fit: [
+      "проверить интерес сотрудников",
+      "провести полезное корпоративное мероприятие",
+      "впервые запустить тему financial wellbeing",
+    ],
+    insideLabel: "Что внутри",
+    inside: [
+      "диагностика финансовых проблем",
+      "основные принципы личной финансовой системы",
+      "несколько решений, которые можно внедрить сразу",
     ],
   },
   {
+    kicker: "Формат 2 · Собрать собственную систему",
     title: "Корпоративный интенсив",
     duration: "1–2 дня",
-    text: "Глубокая проработка главных финансовых навыков с практическими заданиями. Участники создают собственную финансовую систему.",
-    bullets: [
-      "Понятная система личного бюджетирования",
-      "Работа с финансовыми целями",
-      "Стратегии накопления и инвестирования",
-      "Разбор реальных кейсов участников",
+    fitLabel: "Подходит, если нужен практический результат",
+    fit: ["сотрудники работают со своими реальными цифрами, а не с примерами из учебника"],
+    insideLabel: "Что собирают участники",
+    inside: [
+      "бюджет",
+      "систему целей",
+      "финансовую подушку",
+      "план крупных расходов",
+      "базовый личный финансовый план",
     ],
   },
   {
-    title: "Квартальная программа сопровождения",
+    kicker: "Формат 3 · Изменить финансовые привычки",
+    title: "Программа сопровождения",
     duration: "3 месяца",
-    text: "Комплексная поддержка с регулярными встречами, индивидуальными консультациями и аналитикой для HR.",
-    bullets: [
-      "Ежемесячные групповые сессии",
-      "Персональные разборы бюджетов",
-      "Аналитические отчёты для HR-службы",
-      "Рекомендации по работе с финансовым стрессом в команде",
+    fitLabel: "Подходит компаниям, которые хотят",
+    fit: ["сделать financial wellbeing полноценным корпоративным benefit"],
+    insideLabel: "Внутри",
+    inside: [
+      "регулярные групповые встречи",
+      "практические задания",
+      "разбор финансовых ситуаций",
+      "индивидуальная работа, если она входит в пакет",
+      "отслеживание прогресса",
+      "агрегированная обратная связь для HR без раскрытия персональных финансовых данных сотрудников",
     ],
   },
 ];
 
-const program = [
-  {
-    n: "01",
-    title: "«Деньги есть, но денег нет» — где теряются деньги",
-    text: "Как понять, куда утекают деньги, и найти +10–20% в бюджете. Без экономии и отказа в удовольствиях.",
-  },
-  {
-    n: "02",
-    title: "Простая система бюджета: за 2 часа в месяц",
-    text: "Планирование по методике «ленивого бюджета» — без сложных таблиц и ежедневного учёта. Всего 2 часа в месяц для полного контроля финансов.",
-  },
-  {
-    n: "03",
-    title: "Эмоциональные и импульсивные траты",
-    text: "Как их контролировать и превращать сэкономленные деньги в реальные активы. Практические техники, которые съедают до 30% бюджета.",
-  },
-  {
-    n: "04",
-    title: "Накопления на крупные цели",
-    text: "Квартира, машина, пенсия — конкретные стратегии и инструменты. Пошаговый план от постановки цели до её реализации.",
-  },
-];
-
-const credentials = [
-  "2,5 года корпоративных тренингов",
-  "Тысячи специалистов обрели контроль над финансами",
-  "ТГ-комьюнити из 10 000 подписчиков",
-  "Авторская методика личных финансовых планов",
+const diagnosticOutcomes = [
+  "какие денежные вопросы беспокоят сотрудников",
+  "какие темы для них наиболее актуальны",
+  "где сотрудники чувствуют наибольшую неопределённость",
+  "какой образовательный формат имеет смысл запускать",
 ];
 
 const SectionLabel = ({ children }: { children: string }) => (
@@ -136,24 +203,48 @@ const SectionLabel = ({ children }: { children: string }) => (
   </div>
 );
 
-const RequestButton = ({ className = "" }: { className?: string }) => (
-  <a
-    href="https://t.me/Vasily_Mescheryakov"
-    target="_blank"
-    rel="noopener noreferrer"
-    className={`inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-foreground transition-colors hard-shadow ${className}`}
+const H2 = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
+  <h2
+    className={`font-serif-display font-semibold leading-[1.02] tracking-tight text-3xl md:text-5xl lg:text-6xl animate-fade-up max-w-4xl ${className}`}
   >
-    <span>Запросить программу</span>
-    <span className="text-base">→</span>
-  </a>
+    {children}
+  </h2>
 );
+
+const Cta = ({
+  label,
+  className = "",
+  variant = "solid",
+}: {
+  label: string;
+  className?: string;
+  variant?: "solid" | "outline" | "inverse";
+}) => {
+  const styles =
+    variant === "solid"
+      ? "bg-foreground text-background hover:bg-accent hover:text-foreground hard-shadow"
+      : variant === "inverse"
+        ? "bg-primary-foreground text-primary hover:bg-accent hover:text-primary-foreground"
+        : "border border-foreground/25 text-foreground hover:border-accent hover:text-accent";
+  return (
+    <a
+      href={TG}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`inline-flex items-center justify-center gap-2 px-8 py-4 font-mono text-xs uppercase tracking-widest transition-colors ${styles} ${className}`}
+    >
+      <span>{label}</span>
+      <span className="text-base">→</span>
+    </a>
+  );
+};
 
 const Corporate = () => {
   useEffect(() => {
-    document.title = "Корпоративное обучение «Вася и финансы»";
+    document.title = "Личная финансовая устойчивость сотрудников — корпоративная программа";
     const desc = document.querySelector('meta[name="description"]');
     const content =
-      "Тренинги для сотрудников по личной финансовой устойчивости. Удержание команды, рост продуктивности и забота о финансовом благополучии без роста ФОТ.";
+      "Корпоративная программа по личной финансовой устойчивости сотрудников: бюджет, финансовая подушка, крупные цели и личный финансовый план. Первый шаг — анонимная диагностика финансовых запросов команды.";
     if (desc) desc.setAttribute("content", content);
     else {
       const m = document.createElement("meta");
@@ -167,313 +258,327 @@ const Corporate = () => {
     <main className="min-h-screen bg-background text-foreground">
       <SiteHeader pageNav={pageNav} />
 
-      {/* Hero */}
-      <section className="relative pt-20 md:pt-32 lg:pt-36 pb-10 md:pb-16 overflow-hidden bg-grid">
+      {/* 1. Hero */}
+      <section className="relative pt-24 md:pt-36 lg:pt-40 pb-16 md:pb-28 overflow-hidden">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{ background: "var(--grad-chalk)" }}
         />
         <div className="container-px max-w-7xl mx-auto relative">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
             <div className="lg:col-span-7 animate-fade-up">
-              <div className="font-mono text-xs uppercase tracking-widest text-accent mb-4 md:mb-6">
-                {nbsp("Тренинг для сотрудников")}
+              <div className="font-mono text-xs uppercase tracking-widest text-accent mb-6 md:mb-10">
+                {nbsp("Корпоративная программа для сотрудников")}
               </div>
-              <h1 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-[clamp(2rem,7vw,6rem)]">
-                {nbsp("Личная финансовая")}{" "}
-                <span className="italic font-normal">{nbsp("устойчивость")}</span>
+              <h1 className="font-serif-display font-semibold leading-[1.0] tracking-tight text-[clamp(2rem,6vw,5rem)]">
+                {nbsp("Зарплата выросла.")}
+                <br />
+                <span className="italic font-normal">
+                  {nbsp("А ощущения, что денег стало больше — нет.")}
+                </span>
               </h1>
-              <p
-                className="mt-4 md:mt-8 font-serif-display text-lg md:text-2xl leading-snug text-foreground/80 max-w-2xl"
-                style={{ animationDelay: "0.1s" }}
-              >
-                {nbsp(
-                  "Помогаю сотрудникам обрести контроль над личными финансами, а компаниям — сохранить команду без роста ФОТ"
-                )}
-              </p>
 
-              <div className="hidden lg:block mt-10" style={{ animationDelay: "0.2s" }}>
-                <RequestButton />
+              <div className="mt-8 md:mt-12 max-w-2xl space-y-5 font-body text-base md:text-lg leading-relaxed text-foreground/75">
+                <p>
+                  {nbsp(
+                    "У сотрудника может быть хороший доход и одновременно ипотека, кредитки, отсутствие накоплений, тревога перед крупными покупками и ощущение «куда опять делись деньги?»."
+                  )}
+                </p>
+                <p>
+                  {nbsp(
+                    "Я помогаю сотрудникам превратить доход в понятную систему: бюджет, финансовую подушку, крупные цели и личный финансовый план."
+                  )}
+                </p>
+              </div>
+
+              <div className="mt-10">
+                <Cta label="Обсудить программу" />
+                <p className="mt-4 font-body text-xs md:text-sm text-foreground/50">
+                  {nbsp("Василий Мещеряков · ex P&G · автор проекта «Вася и финансы»")}
+                </p>
               </div>
             </div>
 
-            <div
-              className="lg:col-span-5 animate-fade-up flex flex-col items-center lg:items-end"
-              style={{ animationDelay: "0.2s" }}
-            >
-              <div className="relative w-full max-w-[320px] sm:max-w-[380px] lg:max-w-md aspect-square mx-auto lg:mx-0 overflow-hidden rounded-2xl">
+            <div className="lg:col-span-5 animate-fade-up" style={{ animationDelay: "0.15s" }}>
+              <div className="relative w-full max-w-[380px] lg:max-w-none aspect-square mx-auto overflow-hidden rounded-2xl">
                 <img
                   src={expertPhoto}
                   alt="Василий Мещеряков"
                   className="absolute inset-0 w-full h-full object-cover object-[50%_18%]"
                   loading="eager"
                 />
-                <div className="absolute inset-x-0 bottom-3 sm:bottom-4 z-10 flex justify-start px-3 sm:px-4">
-                  <span className="badge-tag bg-card/95 backdrop-blur-sm rounded-full px-3 py-1.5 shadow-sm font-mono text-[10px] md:text-xs uppercase tracking-widest text-accent whitespace-nowrap">
-                    Василий Мещеряков · ex P&amp;G (Band 3)
-                  </span>
-                </div>
-              </div>
-
-              <div className="lg:hidden mt-4 w-full max-w-[320px] sm:max-w-[380px] mx-auto">
-                <RequestButton className="w-full" />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-
-
-
-
-      {/* Problem */}
-      <section id="about" className="relative py-16 md:py-24 overflow-hidden scroll-mt-20">
+      {/* 2. Парадокс */}
+      <section className="relative py-16 md:py-28 border-t border-foreground/10">
         <div className="container-px max-w-7xl mx-auto">
-          <SectionLabel>{nbsp("Проблема")}</SectionLabel>
-          <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl animate-fade-up max-w-4xl">
-            {nbsp("Как сохранить сотрудников, без роста ФОТ?")}
-          </h2>
+          <SectionLabel>{nbsp("Парадокс")}</SectionLabel>
+          <H2>{nbsp("Хороший доход не гарантирует финансового спокойствия")}</H2>
 
-          <figure className="mt-6 md:mt-8 animate-fade-up">
-            <blockquote className="font-serif-display italic font-normal text-xl md:text-3xl leading-[1.3] tracking-tight text-foreground/80 max-w-4xl">
-              {nbsp(
-                "«Сотрудники, испытывающие проблемы с личными финансами, в 5 раз чаще отвлекаются на работе»"
-              )}
-            </blockquote>
-            <figcaption className="mt-3 font-body text-xs md:text-sm text-foreground/50">
-              {nbsp("PwC Employee Financial Wellness Survey")}
-            </figcaption>
-          </figure>
-
-          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {problems.map((p, i) => {
-              const Icon = p.icon;
-              return (
-              <div
-                key={p.title}
-                className="relative bg-board p-7 md:p-8 hard-shadow animate-fade-up flex flex-col h-full overflow-hidden"
-                style={{ animationDelay: `${0.1 + i * 0.08}s` }}
-              >
-                <div className="absolute top-5 right-5 md:top-6 md:right-6 pointer-events-none">
-                  <Icon
-                    size={72}
-                    strokeWidth={1}
-                    className="text-accent/30 shrink-0"
-                  />
-                </div>
-                <h3 className="relative font-serif-display font-semibold leading-[1.1] tracking-tight text-2xl md:text-3xl mb-12 md:mb-14 whitespace-pre-line pr-16">
-                  {nbsp(p.title)}
-                </h3>
-                <p className="relative mt-auto font-body text-base text-primary-foreground/70 leading-relaxed">
-                  {nbsp(p.text)}
-                </p>
-              </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Solution */}
-      <section className="relative py-16 md:py-24 overflow-hidden bg-grid">
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: "var(--grad-chalk)" }}
-        />
-        <div className="container-px max-w-7xl mx-auto relative">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-            <div className="animate-fade-up">
-              <SectionLabel>{nbsp("Решение")}</SectionLabel>
-              <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl max-w-4xl">
-                {nbsp("Не повышать ЗП, а научить")}{" "}
-                <span className="italic text-accent">{nbsp("жить лучше за те же деньги")}</span>
-              </h2>
-              <p className="mt-8 font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-2xl">
+          <div className="mt-10 md:mt-16 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+            <div className="lg:col-span-7 space-y-6 font-body text-base md:text-lg leading-relaxed text-foreground/80 animate-fade-up">
+              <p>
                 {nbsp(
-                  "Ваши сотрудники получат навыки, которые остаются с ними на всю жизнь, а компания — спокойную и вовлечённую команду"
+                  "Чем больше человек зарабатывает, тем больше у него обычно становится не только возможностей, но и финансовых решений."
+                )}
+              </p>
+              <ul className="flex flex-wrap gap-x-3 gap-y-2 pt-2">
+                {commitments.map((c) => (
+                  <li
+                    key={c}
+                    className="font-mono text-[11px] md:text-xs uppercase tracking-widest text-foreground/70 border border-foreground/15 px-3 py-2"
+                  >
+                    {c}
+                  </li>
+                ))}
+              </ul>
+              <p className="pt-2">
+                {nbsp(
+                  "Доход растёт, вместе с ним растёт стоимость жизни и количество решений, которые нужно принимать. А личной финансовой системы часто так и не появляется."
+                )}
+              </p>
+              <p>
+                {nbsp(
+                  "В результате человек может зарабатывать 200, 300 или 500 тысяч рублей и всё равно каждый месяц начинать почти заново."
                 )}
               </p>
             </div>
 
-            <div className="space-y-4 animate-fade-up" style={{ animationDelay: "0.15s" }}>
-              {skills.map((s, i) => (
-                <div
-                  key={i}
-                  className="flex items-start gap-4 bg-card border border-foreground/15 p-5 md:p-6 hard-shadow"
-                  style={{ animationDelay: `${0.1 + i * 0.06}s` }}
-                >
-                  <div className="w-6 h-6 rounded-full bg-accent text-accent-foreground flex items-center justify-center shrink-0 mt-0.5">
-                    <Check size={14} strokeWidth={2.5} />
-                  </div>
-                  <p className="font-body text-base md:text-lg text-foreground/85 leading-relaxed">
-                    {nbsp(s)}
-                  </p>
-                </div>
-              ))}
+            <div className="lg:col-span-5 animate-fade-up" style={{ animationDelay: "0.15s" }}>
+              <ol className="space-y-0">
+                {chain.map((c, i) => (
+                  <li key={c}>
+                    <div
+                      className={`font-serif-display leading-tight tracking-tight text-xl md:text-2xl py-5 ${
+                        i === chain.length - 1 ? "text-accent" : "text-foreground/85"
+                      }`}
+                    >
+                      {nbsp(c)}
+                    </div>
+                    {i !== chain.length - 1 && (
+                      <div className="text-foreground/25 font-mono text-sm" aria-hidden="true">
+                        ↓
+                      </div>
+                    )}
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Benefits for company */}
-      <section className="relative py-16 md:py-24 overflow-hidden">
+      {/* 3. Реальные запросы */}
+      <section id="requests" className="relative py-16 md:py-28 border-t border-foreground/10 scroll-mt-20">
         <div className="container-px max-w-7xl mx-auto">
-          <SectionLabel>{nbsp("Что получает компания")}</SectionLabel>
-          <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl animate-fade-up max-w-4xl">
-            {nbsp("Результат для бизнеса")}
-          </h2>
+          <SectionLabel>{nbsp("Реальные запросы")}</SectionLabel>
+          <H2>{nbsp("С какими задачами приходят люди с хорошим доходом")}</H2>
+          <p className="mt-6 font-body text-base md:text-lg text-foreground/70 max-w-2xl animate-fade-up">
+            {nbsp(
+              "Это реальные запросы участников моих программ. Доходы и профессии показаны обезличенно."
+            )}
+          </p>
 
-          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
-            {companyBenefits.map((b, i) => (
+          <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-3 gap-px bg-foreground/12 border border-foreground/12">
+            {bigCases.map((c, i) => (
               <div
-                key={b.title}
-                className="bg-card border border-foreground/15 p-7 md:p-8 hard-shadow animate-fade-up flex flex-col h-full"
-                style={{ animationDelay: `${0.1 + i * 0.08}s` }}
+                key={c.income}
+                className="bg-background p-7 md:p-9 flex flex-col animate-fade-up"
+                style={{ animationDelay: `${0.08 * i}s` }}
               >
-                <h3 className="font-serif-display font-semibold leading-[1.1] tracking-tight text-2xl md:text-3xl mb-4">
-                  {nbsp(b.title)}
+                <div className="font-serif-display font-semibold tracking-tight text-3xl md:text-4xl">
+                  {nbsp(c.income)}
+                </div>
+                <div className="mt-1 font-mono text-[11px] uppercase tracking-widest text-foreground/45">
+                  {nbsp("в месяц")}
+                </div>
+                <div className="mt-4 font-body text-sm text-foreground/60">{nbsp(c.who)}</div>
+                <p className="mt-8 font-serif-display italic text-xl md:text-2xl leading-snug text-foreground/90">
+                  {nbsp(`«${c.quote}»`)}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <ul className="mt-10 md:mt-14 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
+            {smallRequests.map((r) => (
+              <li
+                key={r}
+                className="font-body text-base text-foreground/70 border-b border-foreground/10 pb-4"
+              >
+                {nbsp(`«${r}»`)}
+              </li>
+            ))}
+          </ul>
+
+          <p className="mt-14 md:mt-20 font-serif-display font-semibold leading-[1.05] tracking-tight text-2xl md:text-4xl lg:text-5xl max-w-4xl animate-fade-up">
+            {nbsp("Проблема не всегда в размере зарплаты. Часто проблема в отсутствии системы.")}
+          </p>
+        </div>
+      </section>
+
+      {/* 4. Роль компании */}
+      <section className="relative py-20 md:py-36 border-t border-foreground/10">
+        <div className="container-px max-w-7xl mx-auto">
+          <p className="font-serif-display font-semibold leading-[1.05] tracking-tight text-3xl md:text-5xl lg:text-6xl max-w-5xl animate-fade-up">
+            {nbsp("Компания не может решить за сотрудника его финансовые проблемы.")}{" "}
+            <span className="italic font-normal text-accent">
+              {nbsp("Но может дать ему инструменты, чтобы он решил их сам.")}
+            </span>
+          </p>
+
+          <div className="mt-12 md:mt-20 max-w-2xl space-y-6 font-body text-base md:text-lg leading-relaxed text-foreground/75 animate-fade-up">
+            <p>
+              {nbsp(
+                "Именно поэтому я предлагаю компаниям не очередную лекцию по «финансовой грамотности», а практическую программу по личной финансовой устойчивости сотрудников."
+              )}
+            </p>
+            <p>
+              {nbsp(
+                "Сотрудник работает со своими реальными цифрами, решениями и целями и в итоге собирает собственную финансовую систему."
+              )}
+            </p>
+          </div>
+
+          <div className="mt-12 md:mt-16 border-t border-foreground/15 pt-8">
+            <div className="font-mono text-xs uppercase tracking-widest text-accent">
+              {nbsp("Программа")}
+            </div>
+            <div className="mt-3 font-serif-display font-semibold tracking-tight text-2xl md:text-4xl">
+              {nbsp("Личная финансовая устойчивость сотрудников")}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Что делает сотрудник */}
+      <section id="program" className="relative py-16 md:py-28 border-t border-foreground/10 scroll-mt-20">
+        <div className="container-px max-w-7xl mx-auto">
+          <SectionLabel>{nbsp("Что происходит внутри")}</SectionLabel>
+          <H2>
+            {nbsp("Не лекция про деньги.")}
+            <br />
+            <span className="italic font-normal">{nbsp("Сотрудник разбирает собственные финансы.")}</span>
+          </H2>
+
+          <div className="mt-12 md:mt-20">
+            {steps.map((s) => (
+              <div
+                key={s.n}
+                className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-10 border-t border-foreground/12 py-8 md:py-10 animate-fade-up"
+              >
+                <div className="md:col-span-1 font-mono text-xs uppercase tracking-widest text-accent pt-1">
+                  {s.n}
+                </div>
+                <h3 className="md:col-span-6 font-serif-display font-semibold leading-[1.1] tracking-tight text-xl md:text-3xl">
+                  {nbsp(s.title)}
                 </h3>
-                <p className="font-body text-base text-foreground/75 leading-relaxed">
+                <p className="md:col-span-5 font-body text-base text-foreground/70 leading-relaxed">
+                  {nbsp(s.text)}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <p className="mt-14 md:mt-20 font-serif-display font-semibold leading-[1.05] tracking-tight text-2xl md:text-4xl lg:text-5xl max-w-4xl animate-fade-up">
+            {nbsp("Цель программы не научить человека экономить.")}{" "}
+            <span className="italic font-normal text-accent">
+              {nbsp("Цель — помочь ему лучше использовать деньги, которые он уже зарабатывает.")}
+            </span>
+          </p>
+        </div>
+      </section>
+
+      {/* 6. Зачем компании */}
+      <section className="relative py-16 md:py-28 border-t border-foreground/10">
+        <div className="container-px max-w-7xl mx-auto">
+          <SectionLabel>{nbsp("Сторона компании")}</SectionLabel>
+          <H2>{nbsp("Зачем это компании")}</H2>
+          <p className="mt-6 font-body text-base md:text-lg text-foreground/75 max-w-2xl animate-fade-up">
+            {nbsp(
+              "Финансовая программа — это benefit, который сотрудник использует не только на работе, а в собственной жизни."
+            )}
+          </p>
+
+          <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10">
+            {companyValue.map((b, i) => (
+              <div
+                key={b.label}
+                className="border-t border-foreground/15 pt-6 animate-fade-up"
+                style={{ animationDelay: `${0.06 * i}s` }}
+              >
+                <div className="font-mono text-[11px] md:text-xs uppercase tracking-widest text-accent">
+                  {nbsp(b.label)}
+                </div>
+                <p className="mt-4 font-body text-base md:text-lg text-foreground/75 leading-relaxed">
                   {nbsp(b.text)}
                 </p>
               </div>
             ))}
           </div>
 
-          <figure className="mt-12 animate-fade-up">
-            <div className="flex gap-4 md:gap-6">
-              <div className="w-1 bg-accent shrink-0" aria-hidden="true" />
-              <div>
-                <p className="font-serif-display italic text-accent text-lg md:text-xl mb-2">
-                  {nbsp("Важно:")}
-                </p>
-                <p className="font-serif-display text-lg md:text-2xl leading-snug text-foreground/90">
+          <p className="mt-14 md:mt-20 font-serif-display italic text-xl md:text-3xl leading-snug text-foreground/90 max-w-3xl border-l-2 border-accent pl-6 md:pl-8 animate-fade-up">
+            {nbsp(
+              "Программа не заменяет конкурентную зарплату. Она помогает сотруднику получить больше пользы от дохода, который у него уже есть."
+            )}
+          </p>
+        </div>
+      </section>
+
+      {/* 7. Никаких продаж */}
+      <section className="relative py-16 md:py-28 bg-board text-primary-foreground">
+        <div className="container-px max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 items-start">
+            <div className="lg:col-span-5">
+              <div className="font-mono text-xs uppercase tracking-widest text-accent mb-6">
+                {nbsp("Границы работы")}
+              </div>
+              <h2 className="font-serif-display font-semibold leading-[1.02] tracking-tight text-3xl md:text-5xl">
+                {nbsp("Никаких продаж сотрудникам")}
+              </h2>
+            </div>
+
+            <div className="lg:col-span-7">
+              <p className="font-body text-base md:text-lg text-primary-foreground/75 leading-relaxed">
+                {nbsp("Внутри корпоративной программы я не продаю участникам:")}
+              </p>
+              <ul className="mt-6 divide-y divide-primary-foreground/15 border-y border-primary-foreground/15">
+                {noSell.map((n) => (
+                  <li
+                    key={n}
+                    className="py-4 font-serif-display text-lg md:text-2xl text-primary-foreground/90"
+                  >
+                    {nbsp(n)}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8 space-y-4 font-body text-base md:text-lg text-primary-foreground/75 leading-relaxed">
+                <p>
                   {nbsp(
-                    "инвестиция в финансовую грамотность сотрудников окупается через 3–6 месяцев за счёт снижения текучести кадров и роста производительности труда"
+                    "Я не получаю комиссию за выбор участниками конкретных финансовых инструментов."
                   )}
                 </p>
+                <p>
+                  {nbsp("Цель программы — научить человека самостоятельно принимать финансовые решения.")}
+                </p>
               </div>
             </div>
-          </figure>
-        </div>
-      </section>
-
-      {/* Formats */}
-      <section id="formats" className="relative py-16 md:py-24 overflow-hidden bg-grid scroll-mt-20">
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: "var(--grad-chalk)" }}
-        />
-        <div className="container-px max-w-7xl mx-auto relative">
-          <SectionLabel>{nbsp("Форматы работы")}</SectionLabel>
-          <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl animate-fade-up max-w-4xl">
-            {nbsp("Подберите формат под задачи")}
-          </h2>
-
-          <div className="mt-12 space-y-6 lg:space-y-8">
-            {formats.map((f, i) => (
-              <div
-                key={f.title}
-                className="bg-card border border-foreground/15 p-7 md:p-8 lg:p-10 hard-shadow animate-fade-up"
-                style={{ animationDelay: `${0.1 + i * 0.08}s` }}
-              >
-                <div className="flex items-start justify-between gap-6">
-                  <h3 className="font-serif-display font-semibold leading-[1.1] tracking-tight text-2xl md:text-3xl max-w-2xl">
-                    {nbsp(f.title)}
-                  </h3>
-                  <div className="font-mono text-xs uppercase tracking-widest text-accent shrink-0 pt-1 text-right">
-                    {nbsp(f.duration)}
-                  </div>
-                </div>
-
-                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-start">
-                  <p className="font-body text-base text-foreground/75 leading-relaxed">
-                    {nbsp(f.text)}
-                  </p>
-                  <ul className="space-y-2">
-                    {f.bullets.map((b, j) => (
-                      <li key={j} className="flex items-start gap-2 font-body text-sm text-foreground/75">
-                        <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" />
-                        <span>{nbsp(b)}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <RequestButton className="mt-8" />
-              </div>
-            ))}
           </div>
-
         </div>
       </section>
 
-      {/* Program intro-workshop — hidden */}
-      <section id="program" className="hidden relative py-16 md:py-24 overflow-hidden scroll-mt-20">
+      {/* 8. Кто ведёт */}
+      <section className="relative py-16 md:py-28 border-t border-foreground/10">
         <div className="container-px max-w-7xl mx-auto">
-          <SectionLabel>{nbsp("Программа интро-воркшопа")}</SectionLabel>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-            <div className="animate-fade-up">
-              <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl max-w-4xl">
-                {nbsp("Двухчасовая практическая сессия")}
-              </h2>
-              <p className="mt-8 font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-2xl">
-                {nbsp(
-                  "Каждый блок решает реальную проблему и приносит измеримый результат. Участники уходят с конкретными инструментами для немедленного применения"
-                )}
-              </p>
-            </div>
+          <SectionLabel>{nbsp("Кто ведёт программу")}</SectionLabel>
 
-            <div className="space-y-0 animate-fade-up" style={{ animationDelay: "0.15s" }}>
-              {program.map((p, i) => (
-                <div
-                  key={p.n}
-                  className={`relative pl-8 md:pl-10 pb-10 last:pb-0 ${
-                    i !== program.length - 1 ? "border-l-2 border-foreground/10" : ""
-                  }`}
-                  style={{ animationDelay: `${0.1 + i * 0.06}s` }}
-                >
-                  <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-accent border-2 border-background" />
-                  <div className="font-mono text-xs uppercase tracking-widest text-accent mb-2">
-                    {p.n}
-                  </div>
-                  <h3 className="font-serif-display font-semibold leading-[1.1] tracking-tight text-xl md:text-2xl mb-3">
-                    {nbsp(p.title)}
-                  </h3>
-                  <p className="font-body text-base text-foreground/75 leading-relaxed">
-                    {nbsp(p.text)}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-16 bg-accent/10 border border-accent/20 p-6 md:p-8 hard-shadow animate-fade-up">
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-full bg-accent text-accent-foreground flex items-center justify-center shrink-0">
-                <Clock size={20} strokeWidth={1.5} />
-              </div>
-              <p className="font-serif-display text-lg md:text-2xl leading-snug text-foreground/90">
-                {nbsp(
-                  "Практический результат: 90% участников недавнего тренинга нашли от +10 до +100 тыс руб в бюджете уже на следующей неделе"
-                )}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Trainer */}
-      <section className="relative py-16 md:py-24 overflow-hidden bg-grid">
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: "var(--grad-chalk)" }}
-        />
-        <div className="container-px max-w-7xl mx-auto relative">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
-            <div className="md:col-span-5 animate-fade-up">
-              <div className="relative overflow-hidden rounded-2xl border border-foreground/10 shadow-hard aspect-[4/5] max-w-md mx-auto md:mx-0">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+            <div className="lg:col-span-5 animate-fade-up">
+              <div className="relative overflow-hidden rounded-2xl aspect-[4/5] max-w-md">
                 <img
                   src={expertPhoto}
                   alt="Василий Мещеряков"
@@ -483,92 +588,181 @@ const Corporate = () => {
               </div>
             </div>
 
-            <div className="md:col-span-7 animate-fade-up" style={{ animationDelay: "0.15s" }}>
-              <SectionLabel>{nbsp("Автор тренинга")}</SectionLabel>
-              <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl mb-6">
+            <div className="lg:col-span-7 animate-fade-up" style={{ animationDelay: "0.12s" }}>
+              <h2 className="font-serif-display font-semibold leading-[1.02] tracking-tight text-3xl md:text-5xl">
                 {nbsp("Василий Мещеряков")}
               </h2>
-              <p className="font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 mb-8">
+              <p className="mt-3 font-body text-base text-foreground/60">
+                {nbsp("Автор проекта «Вася и финансы»")}
+              </p>
+
+              <ul className="mt-8 divide-y divide-foreground/12 border-y border-foreground/12">
+                {facts.map((f) => (
+                  <li key={f} className="py-4 font-body text-base md:text-lg text-foreground/80">
+                    {nbsp(f)}
+                  </li>
+                ))}
+              </ul>
+
+              <p className="mt-8 font-serif-display text-lg md:text-2xl leading-snug text-foreground/85">
                 {nbsp(
-                  "За 2,5 года корпоративных тренингов помог тысячам специалистов обрести контроль над личными финансами"
+                  "Мой подход вырос не из теории финансовой грамотности, а из работы с реальными финансовыми решениями людей: бюджетом, недвижимостью, кредитами, инвестициями, крупными покупками, карьерой и долгосрочными целями."
                 )}
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-                {credentials.map((c, i) => (
-                  <div
-                    key={i}
-                    className="flex items-start gap-3 bg-card border border-foreground/15 p-4 hard-shadow"
-                  >
-                    <div className="w-5 h-5 rounded-full bg-accent text-accent-foreground flex items-center justify-center shrink-0 mt-0.5">
-                      <Check size={12} strokeWidth={2.5} />
-                    </div>
-                    <p className="font-body text-sm text-foreground/80 leading-snug">{nbsp(c)}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="space-y-3 font-body text-base text-foreground/75">
-                <p>{nbsp("Без инфобизнеса и агрессивных продаж")}</p>
-                <p>{nbsp("Чистая экспертиза без навязывания дополнительных продуктов")}</p>
-                <p>{nbsp("Понятный язык для всех уровней — от рядовых специалистов до топ-менеджеров")}</p>
-                <p>{nbsp("Фокус на практическое применение: каждый инструмент можно внедрить сразу")}</p>
-              </div>
-
-              <div className="mt-10 flex flex-col sm:flex-row gap-3">
-                <a
-                  href="https://t.me/nivz2"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-foreground/20 hover:border-accent hover:text-accent transition-colors"
-                >
-                  <Send size={16} strokeWidth={1.5} />
-                  <span className="font-mono text-xs uppercase tracking-widest">Telegram @nivz2</span>
-                </a>
-                <a
-                  href="mailto:nivz@mail.ru"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-foreground/20 hover:border-accent hover:text-accent transition-colors"
-                >
-                  <Mail size={16} strokeWidth={1.5} />
-                  <span className="font-mono text-xs uppercase tracking-widest">nivz@mail.ru</span>
-                </a>
+              <div className="mt-8 space-y-3 font-body text-base text-foreground/70">
+                <p>{nbsp("Говорю понятным языком — от рядовых специалистов до топ-менеджеров.")}</p>
+                <p>{nbsp("Каждый инструмент программы можно применить сразу после занятия.")}</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section id="request" className="relative py-16 md:py-24 overflow-hidden scroll-mt-20">
+      {/* 9. Форматы */}
+      <section id="formats" className="relative py-16 md:py-28 border-t border-foreground/10 scroll-mt-20">
         <div className="container-px max-w-7xl mx-auto">
-          <div className="bg-board rounded-2xl p-8 md:p-14 lg:p-20 animate-fade-up">
-            <div className="max-w-3xl">
-              <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-3xl md:text-5xl lg:text-6xl text-primary-foreground mb-6">
-                {nbsp("Запросите программу для вашей компании")}
-              </h2>
-              <p className="font-serif-display text-lg md:text-2xl leading-snug text-primary-foreground/80 mb-10">
+          <SectionLabel>{nbsp("Форматы")}</SectionLabel>
+          <H2>{nbsp("Какую задачу компании решает каждый формат")}</H2>
+
+          <div className="mt-12 md:mt-16 space-y-px bg-foreground/12 border border-foreground/12">
+            {formats.map((f) => (
+              <div key={f.title} className="bg-background p-7 md:p-10 lg:p-12 animate-fade-up">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3">
+                  <div>
+                    <div className="font-mono text-[11px] md:text-xs uppercase tracking-widest text-accent">
+                      {nbsp(f.kicker)}
+                    </div>
+                    <h3 className="mt-3 font-serif-display font-semibold leading-[1.05] tracking-tight text-2xl md:text-4xl">
+                      {nbsp(f.title)}
+                    </h3>
+                  </div>
+                  <div className="font-mono text-xs uppercase tracking-widest text-foreground/50">
+                    {nbsp(f.duration)}
+                  </div>
+                </div>
+
+                <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
+                  <div>
+                    <div className="font-mono text-[11px] uppercase tracking-widest text-foreground/45">
+                      {nbsp(f.fitLabel)}
+                    </div>
+                    <ul className="mt-4 space-y-2">
+                      {f.fit.map((x) => (
+                        <li
+                          key={x}
+                          className="font-body text-base text-foreground/75 leading-relaxed"
+                        >
+                          {nbsp(x)}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <div className="font-mono text-[11px] uppercase tracking-widest text-foreground/45">
+                      {nbsp(f.insideLabel)}
+                    </div>
+                    <ul className="mt-4 space-y-2">
+                      {f.inside.map((x) => (
+                        <li
+                          key={x}
+                          className="font-body text-base text-foreground/75 leading-relaxed"
+                        >
+                          {nbsp(x)}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p className="mt-10 font-body text-sm md:text-base text-foreground/60 max-w-3xl">
+            {nbsp(
+              "Личные финансы участников остаются конфиденциальными: индивидуальные цифры, бюджеты и решения сотрудников компании не передаются. HR получает только агрегированную картину."
+            )}
+          </p>
+        </div>
+      </section>
+
+      {/* 10. Диагностика */}
+      <section
+        id="diagnostic"
+        className="relative py-16 md:py-28 border-t border-foreground/10 scroll-mt-20"
+      >
+        <div className="container-px max-w-7xl mx-auto">
+          <SectionLabel>{nbsp("Первый шаг")}</SectionLabel>
+          <H2>{nbsp("Не уверены, нужно ли это вашим сотрудникам?")}</H2>
+
+          <div className="mt-10 md:mt-16 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 items-start">
+            <div className="lg:col-span-6 space-y-6 font-body text-base md:text-lg leading-relaxed text-foreground/80 animate-fade-up">
+              <p>{nbsp("Начнём с анонимной диагностики финансовых запросов команды.")}</p>
+              <p>
                 {nbsp(
-                  "Расскажу, какой формат подойдёт под ваши задачи, сколько это стоит и как внедрить без лишней нагрузки на HR"
+                  "Сотрудники отвечают на короткий набор вопросов о своих финансовых задачах и сложностях."
                 )}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a
-                  href="https://t.me/Vasily_Mescheryakov"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-foreground text-primary font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-primary-foreground transition-colors"
-                >
-                  <span>Запросить в Telegram</span>
-                  <span className="text-base">→</span>
-                </a>
-                <a
-                  href="mailto:nivz@mail.ru"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-primary-foreground/30 text-primary-foreground font-mono text-xs uppercase tracking-widest hover:bg-primary-foreground/10 transition-colors"
-                >
-                  <span>Написать на e-mail</span>
-                </a>
-              </div>
+              <p>
+                {nbsp(
+                  "Персональные финансовые данные конкретных сотрудников компании не передаются. После диагностики я предложу программу именно под реальные запросы вашей команды."
+                )}
+              </p>
+              <Cta label="Обсудить диагностику" className="mt-2" />
             </div>
+
+            <div className="lg:col-span-6 animate-fade-up" style={{ animationDelay: "0.12s" }}>
+              <div className="font-mono text-[11px] uppercase tracking-widest text-foreground/45">
+                {nbsp("Компания получает агрегированную картину")}
+              </div>
+              <ul className="mt-6 divide-y divide-foreground/12 border-y border-foreground/12">
+                {diagnosticOutcomes.map((o) => (
+                  <li key={o} className="py-5 font-serif-display text-lg md:text-2xl text-foreground/85">
+                    {nbsp(o)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 11. Финальный CTA */}
+      <section className="relative py-20 md:py-36 border-t border-foreground/10">
+        <div className="container-px max-w-7xl mx-auto">
+          <h2 className="font-serif-display font-semibold leading-[1.03] tracking-tight text-3xl md:text-5xl lg:text-6xl max-w-5xl animate-fade-up">
+            {nbsp(
+              "Сначала выясним, какие финансовые вопросы действительно волнуют ваших сотрудников."
+            )}
+          </h2>
+          <p className="mt-8 font-body text-base md:text-lg text-foreground/70 max-w-2xl">
+            {nbsp("А уже потом решим, нужен ли воркшоп, интенсив или полноценная программа.")}
+          </p>
+
+          <div className="mt-10">
+            <Cta label="Обсудить диагностику" />
+          </div>
+
+          <div className="mt-12 pt-8 border-t border-foreground/12 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+            <div className="font-body text-base text-foreground/70">
+              {nbsp("Василий Мещеряков")}
+            </div>
+            <a
+              href="https://t.me/nivz2"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-foreground/70 hover:text-accent transition-colors"
+            >
+              <Send size={15} strokeWidth={1.5} />
+              <span>Telegram @nivz2</span>
+            </a>
+            <a
+              href="mailto:nivz@mail.ru"
+              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-foreground/70 hover:text-accent transition-colors"
+            >
+              <Mail size={15} strokeWidth={1.5} />
+              <span>nivz@mail.ru</span>
+            </a>
           </div>
         </div>
       </section>

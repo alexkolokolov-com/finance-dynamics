@@ -3,15 +3,14 @@ import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import {
   HeartPulse,
-  DoorOpen,
-  PiggyBank,
-  Users,
+  TrendingUp,
+  Compass,
   Clock,
-  ArrowRight,
   Send,
   Mail,
   Check,
 } from "lucide-react";
+
 import { nbsp } from "@/lib/nbsp";
 import expertPhoto from "@/assets/expert-vasily.jpg";
 
@@ -25,51 +24,64 @@ const problems = [
   {
     icon: HeartPulse,
     title: "Финансовый\nстресс",
-    text: "Сотрудники отвлекаются на личные деньги, снижается фокус и вовлечённость.",
+    text: "Даже сотрудники с хорошим доходом живут от зарплаты до зарплаты, имеют кредиты и тревожатся из-за денег.",
   },
   {
-    icon: DoorOpen,
-    title: "Уход лучших\nспециалистов",
-    text: "Ключевые люди уходят туда, где предлагают больше, а не туда, где им комфортнее.",
+    icon: TrendingUp,
+    title: "Доход растёт —\nрасходы тоже",
+    text: "Ипотека, дети, машина, путешествия, крупные покупки: вместе с доходом растёт количество финансовых решений.",
   },
   {
-    icon: PiggyBank,
-    title: "Нет возможности\nподнимать зарплату",
-    text: "Бюджет ограничен, но отток кадров и падение продуктивности обходятся дороже.",
+    icon: Compass,
+    title: "Нет личной\nфинансовой системы",
+    text: "Человек может хорошо зарабатывать, но не понимать, сколько ему реально нужно на жизнь, цели и будущее.",
   },
 ];
 
 const skills = [
-  "Эффективно управлять бюджетом без импульсивных трат",
-  "Формировать финансовую подушку",
-  "Находить доп. доход без подработки: кешбэки, налоговые вычеты и другие лайфхаки",
-  "Внедрять дисциплину работы с финансами",
+  {
+    title: "Понятный бюджет",
+    text: "Понимает реальную стоимость своей жизни и управляет деньгами без учёта каждой чашки кофе.",
+  },
+  {
+    title: "Финансовая подушка",
+    text: "Понимает, сколько денег нужно иметь в резерве и где их хранить.",
+  },
+  {
+    title: "Крупные цели",
+    text: "Планирует машину, ремонт, путешествия, образование детей и другие большие расходы заранее.",
+  },
+  {
+    title: "Личный финансовый план",
+    text: "Понимает, сколько денег понадобится через 1, 3, 10+ лет и как к этому прийти.",
+  },
 ];
 
 const companyBenefits = [
   {
-    title: "Удержание ключевых сотрудников",
-    text: "Без финансовых вложений в повышение зарплат.",
+    title: "Практичный corporate benefit",
+    text: "Польза, которую сотрудник получает не только на работе, но и в собственной жизни.",
   },
   {
-    title: "Повышение лояльности",
-    text: "Забота о финансовом благополучии укрепляет связь с компанией.",
+    title: "Финансовое wellbeing",
+    text: "Компания помогает сотрудникам разобраться с одним из постоянных источников бытового стресса.",
   },
   {
-    title: "Рост продуктивности команды",
-    text: "Сотрудники без финансового стресса продуктивнее на 25–30%.",
+    title: "Ценность компенсационного пакета",
+    text: "Не очередной образовательный курс, а инструмент для решения реальных личных задач.",
   },
   {
-    title: "Оптимизация расходов на персонал",
-    text: "Меньшее давление на ФОТ при сохранении мотивации.",
+    title: "Забота о сотрудниках",
+    text: "Компания не решает финансовые проблемы сотрудника за него — она даёт инструменты, чтобы он решил их сам.",
   },
 ];
 
+
 const formats = [
   {
-    title: "Интро-воркшоп",
+    title: "Вводный воркшоп",
     duration: "1,5–2 часа",
-    text: "Пилотный формат для знакомства команды с ключевыми инструментами. Идеален для тестирования программы или корпоративных мероприятий.",
+    text: "Проверить интерес сотрудников к теме и дать несколько решений, которые можно применить сразу.",
     bullets: [
       "Базовые принципы управления бюджетом",
       "Диагностика финансовых утечек",
@@ -79,7 +91,7 @@ const formats = [
   {
     title: "Корпоративный интенсив",
     duration: "1–2 дня",
-    text: "Глубокая проработка главных финансовых навыков с практическими заданиями. Участники создают собственную финансовую систему.",
+    text: "Разобрать собственные финансы и собрать базовую личную финансовую систему.",
     bullets: [
       "Понятная система личного бюджетирования",
       "Работа с финансовыми целями",
@@ -88,9 +100,9 @@ const formats = [
     ],
   },
   {
-    title: "Квартальная программа сопровождения",
+    title: "Программа сопровождения",
     duration: "3 месяца",
-    text: "Комплексная поддержка с регулярными встречами, индивидуальными консультациями и аналитикой для HR.",
+    text: "Последовательно внедрить финансовую систему: от бюджета и крупных расходов до долгосрочного финансового плана.",
     bullets: [
       "Ежемесячные групповые сессии",
       "Персональные разборы бюджетов",
@@ -99,6 +111,7 @@ const formats = [
     ],
   },
 ];
+
 
 const program = [
   {
@@ -153,7 +166,7 @@ const Corporate = () => {
     document.title = "Корпоративное обучение «Вася и финансы»";
     const desc = document.querySelector('meta[name="description"]');
     const content =
-      "Тренинги для сотрудников по личной финансовой устойчивости. Удержание команды, рост продуктивности и забота о финансовом благополучии без роста ФОТ.";
+      "Тренинги для сотрудников по личной финансовой устойчивости: бюджет, резерв, крупные цели и личный финансовый план. Практичный benefit для команды.";
     if (desc) desc.setAttribute("content", content);
     else {
       const m = document.createElement("meta");
@@ -188,7 +201,7 @@ const Corporate = () => {
                 style={{ animationDelay: "0.1s" }}
               >
                 {nbsp(
-                  "Помогаю сотрудникам обрести контроль над личными финансами, а компаниям — сохранить команду без роста ФОТ"
+                  "Помогаю сотрудникам лучше распоряжаться своим доходом: навести порядок в личных финансах, спланировать крупные цели и собрать собственный финансовый план. А компании — дать сотрудникам практичный benefit, которым они будут пользоваться в реальной жизни"
                 )}
               </p>
 
@@ -232,7 +245,7 @@ const Corporate = () => {
         <div className="container-px max-w-7xl mx-auto">
           <SectionLabel>{nbsp("Проблема")}</SectionLabel>
           <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl animate-fade-up max-w-4xl">
-            {nbsp("Как сохранить сотрудников, без роста ФОТ?")}
+            {nbsp("Почему рост зарплаты не всегда решает финансовые проблемы сотрудника?")}
           </h2>
 
           <figure className="mt-6 md:mt-8 animate-fade-up">
@@ -284,31 +297,33 @@ const Corporate = () => {
         <div className="container-px max-w-7xl mx-auto relative">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             <div className="animate-fade-up">
-              <SectionLabel>{nbsp("Решение")}</SectionLabel>
+              <SectionLabel>{nbsp("Что получает сотрудник")}</SectionLabel>
               <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl max-w-4xl">
-                {nbsp("Не повышать ЗП, а научить")}{" "}
-                <span className="italic text-accent">{nbsp("жить лучше за те же деньги")}</span>
+                {nbsp("Задача — не экономить.")}{" "}
+                <span className="italic text-accent">
+                  {nbsp("Задача — лучше использовать деньги, которые уже зарабатываешь")}
+                </span>
               </h2>
-              <p className="mt-8 font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-2xl">
-                {nbsp(
-                  "Ваши сотрудники получат навыки, которые остаются с ними на всю жизнь, а компания — спокойную и вовлечённую команду"
-                )}
-              </p>
             </div>
 
             <div className="space-y-4 animate-fade-up" style={{ animationDelay: "0.15s" }}>
               {skills.map((s, i) => (
                 <div
-                  key={i}
+                  key={s.title}
                   className="flex items-start gap-4 bg-card border border-foreground/15 p-5 md:p-6 hard-shadow"
                   style={{ animationDelay: `${0.1 + i * 0.06}s` }}
                 >
                   <div className="w-6 h-6 rounded-full bg-accent text-accent-foreground flex items-center justify-center shrink-0 mt-0.5">
                     <Check size={14} strokeWidth={2.5} />
                   </div>
-                  <p className="font-body text-base md:text-lg text-foreground/85 leading-relaxed">
-                    {nbsp(s)}
-                  </p>
+                  <div>
+                    <h3 className="font-serif-display font-semibold leading-tight tracking-tight text-xl md:text-2xl">
+                      {nbsp(s.title)}
+                    </h3>
+                    <p className="mt-1.5 font-body text-base text-foreground/75 leading-relaxed">
+                      {nbsp(s.text)}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -350,7 +365,7 @@ const Corporate = () => {
                 </p>
                 <p className="font-serif-display text-lg md:text-2xl leading-snug text-foreground/90">
                   {nbsp(
-                    "инвестиция в финансовую грамотность сотрудников окупается через 3–6 месяцев за счёт снижения текучести кадров и роста производительности труда"
+                    "программа не заменяет конкурентную зарплату. Она помогает сотруднику лучше использовать доход, который у него уже есть"
                   )}
                 </p>
               </div>
@@ -509,8 +524,8 @@ const Corporate = () => {
               </div>
 
               <div className="space-y-3 font-body text-base text-foreground/75">
-                <p>{nbsp("Без инфобизнеса и агрессивных продаж")}</p>
-                <p>{nbsp("Чистая экспертиза без навязывания дополнительных продуктов")}</p>
+                <p className="font-serif-display text-lg md:text-xl text-foreground">{nbsp("Никаких продаж сотрудникам")}</p>
+                <p>{nbsp("В рамках корпоративной программы не продаю участникам инвестиционные, страховые, банковские и другие финансовые продукты")}</p>
                 <p>{nbsp("Понятный язык для всех уровней — от рядовых специалистов до топ-менеджеров")}</p>
                 <p>{nbsp("Фокус на практическое применение: каждый инструмент можно внедрить сразу")}</p>
               </div>
@@ -544,11 +559,11 @@ const Corporate = () => {
           <div className="bg-board rounded-2xl p-8 md:p-14 lg:p-20 animate-fade-up">
             <div className="max-w-3xl">
               <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-3xl md:text-5xl lg:text-6xl text-primary-foreground mb-6">
-                {nbsp("Запросите программу для вашей компании")}
+                {nbsp("Узнайте, какие финансовые вопросы действительно волнуют ваших сотрудников")}
               </h2>
               <p className="font-serif-display text-lg md:text-2xl leading-snug text-primary-foreground/80 mb-10">
                 {nbsp(
-                  "Расскажу, какой формат подойдёт под ваши задачи, сколько это стоит и как внедрить без лишней нагрузки на HR"
+                  "Начнём с короткой анонимной диагностики команды. По её результатам покажу основные финансовые запросы сотрудников и предложу подходящий формат программы"
                 )}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
@@ -558,7 +573,7 @@ const Corporate = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-foreground text-primary font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-primary-foreground transition-colors"
                 >
-                  <span>Запросить в Telegram</span>
+                  <span>Обсудить диагностику</span>
                   <span className="text-base">→</span>
                 </a>
                 <a

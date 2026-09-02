@@ -166,7 +166,7 @@ const Corporate = () => {
     document.title = "Корпоративное обучение «Вася и финансы»";
     const desc = document.querySelector('meta[name="description"]');
     const content =
-      "Тренинги для сотрудников по личной финансовой устойчивости. Удержание команды, рост продуктивности и забота о финансовом благополучии без роста ФОТ.";
+      "Тренинги для сотрудников по личной финансовой устойчивости: бюджет, резерв, крупные цели и личный финансовый план. Практичный benefit для команды.";
     if (desc) desc.setAttribute("content", content);
     else {
       const m = document.createElement("meta");

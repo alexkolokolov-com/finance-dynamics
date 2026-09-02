@@ -559,11 +559,11 @@ const Corporate = () => {
           <div className="bg-board rounded-2xl p-8 md:p-14 lg:p-20 animate-fade-up">
             <div className="max-w-3xl">
               <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-3xl md:text-5xl lg:text-6xl text-primary-foreground mb-6">
-                {nbsp("Запросите программу для вашей компании")}
+                {nbsp("Узнайте, какие финансовые вопросы действительно волнуют ваших сотрудников")}
               </h2>
               <p className="font-serif-display text-lg md:text-2xl leading-snug text-primary-foreground/80 mb-10">
                 {nbsp(
-                  "Расскажу, какой формат подойдёт под ваши задачи, сколько это стоит и как внедрить без лишней нагрузки на HR"
+                  "Начнём с короткой анонимной диагностики команды. По её результатам покажу основные финансовые запросы сотрудников и предложу подходящий формат программы"
                 )}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
@@ -573,7 +573,7 @@ const Corporate = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-foreground text-primary font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-primary-foreground transition-colors"
                 >
-                  <span>Запросить в Telegram</span>
+                  <span>Обсудить диагностику</span>
                   <span className="text-base">→</span>
                 </a>
                 <a

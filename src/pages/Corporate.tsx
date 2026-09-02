@@ -296,31 +296,37 @@ const Corporate = () => {
         <div className="container-px max-w-7xl mx-auto relative">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             <div className="animate-fade-up">
-              <SectionLabel>{nbsp("Решение")}</SectionLabel>
+              <SectionLabel>{nbsp("Что получает сотрудник")}</SectionLabel>
               <h2 className="font-serif-display font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl max-w-4xl">
-                {nbsp("Не повышать ЗП, а научить")}{" "}
-                <span className="italic text-accent">{nbsp("жить лучше за те же деньги")}</span>
+                {nbsp("Задача — не экономить.")}{" "}
+                <span className="italic text-accent">
+                  {nbsp("Задача — лучше использовать деньги, которые уже зарабатываешь")}
+                </span>
               </h2>
-              <p className="mt-8 font-serif-display text-xl md:text-2xl leading-snug text-foreground/80 max-w-2xl">
-                {nbsp(
-                  "Ваши сотрудники получат навыки, которые остаются с ними на всю жизнь, а компания — спокойную и вовлечённую команду"
-                )}
-              </p>
             </div>
 
             <div className="space-y-4 animate-fade-up" style={{ animationDelay: "0.15s" }}>
               {skills.map((s, i) => (
                 <div
-                  key={i}
+                  key={s.title}
                   className="flex items-start gap-4 bg-card border border-foreground/15 p-5 md:p-6 hard-shadow"
                   style={{ animationDelay: `${0.1 + i * 0.06}s` }}
                 >
                   <div className="w-6 h-6 rounded-full bg-accent text-accent-foreground flex items-center justify-center shrink-0 mt-0.5">
                     <Check size={14} strokeWidth={2.5} />
                   </div>
-                  <p className="font-body text-base md:text-lg text-foreground/85 leading-relaxed">
-                    {nbsp(s)}
-                  </p>
+                  <div>
+                    <h3 className="font-serif-display font-semibold leading-tight tracking-tight text-xl md:text-2xl">
+                      {nbsp(s.title)}
+                    </h3>
+                    <p className="mt-1.5 font-body text-base text-foreground/75 leading-relaxed">
+                      {nbsp(s.text)}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
                 </div>
               ))}
             </div>

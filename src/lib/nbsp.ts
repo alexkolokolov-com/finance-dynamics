@@ -10,7 +10,7 @@ const SERVICE_WORDS = [
 ];
 
 const serviceRe = new RegExp(
-  `(?<=^|\\s)(${SERVICE_WORDS.join("|")})(?=\\s+[а-яёА-ЯЁ0-9])`,
+  `(?<=^|\\s)(${SERVICE_WORDS.join("|")})\\s+(?=[а-яёА-ЯЁ0-9])`,
   "gi"
 );
 const particlesRe = /(?<=[а-яёА-ЯЁ])\s+(?=же|бы|ли)(?=\s|$|[.,;:!?])/gi;

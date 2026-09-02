@@ -3,15 +3,14 @@ import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import {
   HeartPulse,
-  DoorOpen,
-  PiggyBank,
-  Users,
+  TrendingUp,
+  Compass,
   Clock,
-  ArrowRight,
   Send,
   Mail,
   Check,
 } from "lucide-react";
+
 import { nbsp } from "@/lib/nbsp";
 import expertPhoto from "@/assets/expert-vasily.jpg";
 

@@ -498,7 +498,7 @@ const CrisisDecisions = () => {
             какой вопрос вы&nbsp;закроете в&nbsp;этом месяце.
           </p>
           <a
-            href="https://nivz.getcourse.ru/diagnostic?utm_source=gc&utm_medium=2"
+            href="https://nivz.getcourse.ru/diagnostic_article"
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleDiagnosticClick}

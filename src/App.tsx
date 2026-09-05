@@ -13,6 +13,7 @@ import BudgetMethods from "./pages/BudgetMethods.tsx";
 import Blog from "./pages/Blog.tsx";
 import CrisisDecisions from "./pages/CrisisDecisions.tsx";
 import FinancialPlan from "./pages/FinancialPlan.tsx";
+import Gears from "./pages/Gears.tsx";
 import Landing from "./pages/Landing.tsx";
 import LandingDeck from "./pages/LandingDeck.tsx";
 import Support2026 from "./pages/Support2026.tsx";
@@ -48,6 +49,7 @@ const App = () => (
           <Route path="/blog" element={<Blog />} />
           <Route path="/crisis-decisions" element={<CrisisDecisions />} />
           <Route path="/financial-plan" element={<FinancialPlan />} />
+          <Route path="/gears" element={<Gears />} />
           <Route path="/landing" element={<Landing />} />
           <Route path="/landing-deck" element={<LandingDeck />} />
           <Route path="/support-2026" element={<Support2026 />} />

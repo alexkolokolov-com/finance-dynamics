@@ -1,4 +1,5 @@
 import krizisCover from "@/assets/krizis-hero.jpg";
+import gearsCover from "@/assets/gears-hero.jpg";
 import planCover from "@/assets/plan-hero.jpg";
 
 export type BlogPost = {
@@ -61,6 +62,17 @@ const planIllustration = (
   />
 );
 
+const gearsIllustration = (
+  <img
+    src={gearsCover}
+    alt="Человек прокручивает шестерёнки из календаря, монеты и блокнота"
+    loading="lazy"
+    width={1600}
+    height={912}
+    className="w-full h-auto rounded-lg"
+  />
+);
+
 const krizisIllustration = (
   <img
     src={krizisCover}
@@ -73,6 +85,14 @@ const krizisIllustration = (
 );
 
 export const blogPosts: BlogPost[] = [
+  {
+    tag: "лонгрид",
+    title: "Принцип шестерёнок: вечный двигатель ваших финансов",
+    text: "План – факт – новый план. Почему 80% времени стоит тратить на&nbsp;будущее, как система сама исправляет ошибки первых месяцев и&nbsp;что делать с&nbsp;каждым расхождением.",
+    cta: "Читать лонгрид",
+    href: "/gears",
+    illustration: gearsIllustration,
+  },
   {
     tag: "лонгрид",
     title: "Вы заработали деньги. Теперь главное — не потерять их",

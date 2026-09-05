@@ -821,7 +821,7 @@ const FinancialPlan = () => {
 
           <div className="mt-6 md:mt-8 flex flex-col sm:flex-row sm:items-center gap-5">
             <a
-              href="https://nivz.getcourse.ru/diagnostic"
+              href="https://nivz.getcourse.ru/diagnostic_article2"
               target="_blank"
               rel="noopener noreferrer"
               onClick={handleDiagnosticClick}

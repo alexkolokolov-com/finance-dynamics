@@ -279,7 +279,7 @@ export const HorizonQuiz = () => {
       <div className="bg-card border border-border rounded-2xl p-6 md:p-10">
         {!started ? (
           <>
-            <p className="font-body text-sm uppercase tracking-[0.12em] text-foreground/55">
+            <p className="font-body text-sm text-accent">
               {nbsp("Диагностика")}
             </p>
             <h3 className="mt-3 font-display font-semibold leading-[1.15] tracking-tight text-[clamp(1.4rem,3vw,2rem)]">
@@ -303,7 +303,7 @@ export const HorizonQuiz = () => {
           </>
         ) : !done ? (
           <>
-            <div className="flex items-center justify-between gap-4 font-body text-xs uppercase tracking-[0.1em] text-foreground/55">
+            <div className="flex items-center justify-between gap-4 font-body text-[13px] text-foreground/60">
               <span>{nbsp(`Вопрос ${index + 1} из ${questions.length}`)}</span>
               <span>{nbsp(q.time)}</span>
             </div>
@@ -357,7 +357,7 @@ export const HorizonQuiz = () => {
           </>
         ) : (
           <>
-            <p className="font-body text-sm uppercase tracking-[0.12em] text-foreground/55">
+            <p className="font-body text-sm text-accent">
               {nbsp("Результат")}
             </p>
             <h3 className="mt-3 font-display font-semibold leading-[1.12] tracking-tight text-[clamp(1.5rem,3.4vw,2.2rem)]">
@@ -387,7 +387,7 @@ export const HorizonQuiz = () => {
             </div>
 
             <div className="mt-7 border-t border-b border-border py-5">
-              <p className="font-body text-xs uppercase tracking-[0.1em] text-foreground/55">
+              <p className="font-body text-[13px] text-foreground/60">
                 {nbsp("Где система начинает слабеть")}
               </p>
               <h4 className="mt-2 font-display font-semibold text-xl leading-snug">

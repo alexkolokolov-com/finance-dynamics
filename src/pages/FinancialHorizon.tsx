@@ -15,19 +15,16 @@ import monthImg from "@/assets/horizon-month.jpg";
 import yearImg from "@/assets/horizon-year.jpg";
 import lifeImg from "@/assets/horizon-life.jpg";
 
-const scales: { label: string; title: string; text: string }[] = [
+const scales: { title: string; text: string }[] = [
   {
-    label: "30 дней вперёд",
     title: "Месяц",
     text: "Текущие доходы, расходы, остаток, кредиты, подушка, ближайшие траты и план роста дохода.",
   },
   {
-    label: "12 месяцев вперёд",
     title: "Год",
     text: "Крупные покупки, отпуск, ремонт, страховки, налоги, активы и другие события, которые можно предвидеть заранее.",
   },
   {
-    label: "10–20 лет вперёд",
     title: "Жизнь",
     text: "Капитал, пенсия, инвестиции, будущая стоимость жизни, инфляция и баланс между «сейчас» и «потом».",
   },
@@ -90,11 +87,7 @@ const FinancialHorizon = () => (
             key={scale.title}
             className="bg-card border border-border rounded-2xl p-5 md:p-6"
           >
-            <p className="font-body text-sm text-accent">
-              {nbsp(scale.label)}
-            </p>
-
-            <h3 className="mt-2 font-display font-semibold text-2xl leading-tight">
+            <h3 className="font-display font-semibold text-2xl leading-tight">
               {nbsp(scale.title)}
             </h3>
             <p className="mt-2 font-body text-[15px] leading-relaxed text-foreground/75">

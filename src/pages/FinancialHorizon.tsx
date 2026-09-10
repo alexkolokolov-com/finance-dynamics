@@ -78,7 +78,7 @@ const FinancialHorizon = () => (
       </ArticleFlow>
     </ArticleSection>
 
-    <ArticleSection id="veду-budzhet">
+    <ArticleSection id="vedu-budzhet">
       <ArticleFlow>
         <H2>{nbsp("Почему «я веду бюджет» ещё ничего не говорит")}</H2>
         <p>

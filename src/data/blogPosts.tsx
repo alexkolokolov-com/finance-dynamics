@@ -1,4 +1,5 @@
 import krizisCover from "@/assets/krizis-hero.jpg";
+import horizonCover from "@/assets/horizon-hero.jpg";
 import gearsCover from "@/assets/gears-hero.jpg";
 import planCover from "@/assets/plan-hero.jpg";
 
@@ -84,7 +85,26 @@ const krizisIllustration = (
   />
 );
 
+const horizonIllustration = (
+  <img
+    src={horizonCover}
+    alt="Человек стоит на дороге, которая уходит к горизонту через три отметки"
+    loading="lazy"
+    width={1600}
+    height={912}
+    className="w-full h-auto rounded-lg"
+  />
+);
+
 export const blogPosts: BlogPost[] = [
+  {
+    tag: "лонгрид + диагностика",
+    title: "На сколько лет вперёд вы умеете управлять своими деньгами",
+    text: "Три масштаба финансовой системы: месяц, год и&nbsp;жизнь. Плюс диагностика из&nbsp;12&nbsp;вопросов, которая показывает, где заканчивается ваш финансовый горизонт.",
+    cta: "Пройти диагностику",
+    href: "/financial-horizon",
+    illustration: horizonIllustration,
+  },
   {
     tag: "лонгрид",
     title: "Принцип шестерёнок: вечный двигатель ваших финансов",

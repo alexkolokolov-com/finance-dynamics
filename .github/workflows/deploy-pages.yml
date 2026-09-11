@@ -77,10 +77,10 @@ jobs:
           done
 
       - name: Install headless browser for prerender
-        run: npx --yes playwright@1.55.0 install --with-deps chromium
+        run: npx playwright install --with-deps chromium
 
       - name: Prerender pages to static HTML
-        run: npx --yes --package=playwright@1.55.0 node scripts/prerender.mjs
+        run: node scripts/prerender.mjs
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

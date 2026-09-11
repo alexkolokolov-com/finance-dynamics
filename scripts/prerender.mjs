@@ -9,6 +9,7 @@ import { extname, join, resolve } from "node:path";
 
 const DIST = resolve("dist");
 const PORT = 4321;
+const SITE_URL = process.env.SITE_URL || "https://vasyaifin.ru";
 
 const ROUTES = [
   "/",

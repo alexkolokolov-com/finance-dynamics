@@ -71,10 +71,16 @@ jobs:
       - name: Add SPA entry points for deep links
         run: |
           cp dist/index.html dist/404.html
-          for route in bigbudget checklist budget-methods blog landing landing-deck support-2026 traffic calculator cashback conference consultations corporate lectures decisions event negotiations oferta reviews old; do
+          for route in bigbudget checklist budget-methods blog landing landing-deck support-2026 traffic calculator cashback conference consultations corporate lectures decisions event negotiations oferta reviews old crisis-decisions financial-plan financial-horizon gears; do
             mkdir -p "dist/$route"
             cp dist/index.html "dist/$route/index.html"
           done
+
+      - name: Install headless browser for prerender
+        run: npx playwright install --with-deps chromium
+
+      - name: Prerender pages to static HTML
+        run: node scripts/prerender.mjs
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

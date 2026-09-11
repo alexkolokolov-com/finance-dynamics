@@ -82,11 +82,21 @@ const run = async () => {
     try {
       await page.goto(`http://localhost:${PORT}${route}`, { waitUntil: "networkidle", timeout: 45000 });
       await page.waitForTimeout(600);
-      const html = await page.evaluate(() => {
+      const html = await page.evaluate((canonical) => {
         // раскрываем ленивые картинки, чтобы в HTML остались настоящие src
         document.querySelectorAll("img[loading]").forEach((img) => img.removeAttribute("loading"));
+        // canonical и og:url под конкретный адрес страницы
+        let link = document.querySelector('link[rel="canonical"]');
+        if (!link) {
+          link = document.createElement("link");
+          link.setAttribute("rel", "canonical");
+          document.head.appendChild(link);
+        }
+        link.setAttribute("href", canonical);
+        const ogUrl = document.querySelector('meta[property="og:url"]');
+        if (ogUrl) ogUrl.setAttribute("content", canonical);
         return "<!doctype html>\n" + document.documentElement.outerHTML;
-      });
+      }, `${SITE_URL}${route === "/" ? "/" : route}`);
       const dir = route === "/" ? DIST : join(DIST, route);
       await mkdir(dir, { recursive: true });
       await writeFile(join(dir, "index.html"), html, "utf8");

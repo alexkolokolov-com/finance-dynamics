@@ -75,7 +75,7 @@ const startServer = () =>
 const run = async () => {
   const { chromium } = await import("playwright");
   const server = await startServer();
-  const browser = await chromium.launch({ channel: "chromium" });
+  const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1280, height: 1600 } });
 
   for (const route of ROUTES) {

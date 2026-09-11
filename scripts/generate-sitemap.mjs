@@ -1,18 +1,12 @@
-// Runs before `vite dev` and `vite build` (predev/prebuild hooks); writes public/sitemap.xml.
+// Запускается перед `vite dev` и `vite build` (predev/prebuild); пишет public/sitemap.xml.
+// Важно: только Node, без bun/tsx — иначе шаг падает в GitHub Actions.
 
-import { writeFileSync } from "fs"
-import { resolve } from "path"
+import { writeFileSync } from "node:fs";
+import { resolve } from "node:path";
 
-const BASE_URL = "https://vasyaifin.ru"
+const BASE_URL = "https://vasyaifin.ru";
 
-interface SitemapEntry {
-  path: string
-  lastmod?: string
-  changefreq?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"
-  priority?: string
-}
-
-const entries: SitemapEntry[] = [
+const entries = [
   { path: "/", changefreq: "weekly", priority: "1.0" },
   { path: "/blog", changefreq: "weekly", priority: "0.9" },
   { path: "/financial-horizon", changefreq: "monthly", priority: "0.8" },
@@ -33,29 +27,24 @@ const entries: SitemapEntry[] = [
   { path: "/bigbudget", changefreq: "monthly", priority: "0.6" },
   { path: "/reviews", changefreq: "monthly", priority: "0.6" },
   { path: "/oferta", changefreq: "yearly", priority: "0.3" },
-]
+];
 
-function generateSitemap(entries: SitemapEntry[]) {
-  const urls = entries.map((e) =>
+const xml = [
+  `<?xml version="1.0" encoding="UTF-8"?>`,
+  `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`,
+  ...entries.map((e) =>
     [
       `  <url>`,
       `    <loc>${BASE_URL}${e.path}</loc>`,
-      e.lastmod ? `    <lastmod>${e.lastmod}</lastmod>` : null,
       e.changefreq ? `    <changefreq>${e.changefreq}</changefreq>` : null,
       e.priority ? `    <priority>${e.priority}</priority>` : null,
       `  </url>`,
     ]
       .filter(Boolean)
       .join("\n"),
-  )
+  ),
+  `</urlset>`,
+].join("\n");
 
-  return [
-    `<?xml version="1.0" encoding="UTF-8"?>`,
-    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`,
-    ...urls,
-    `</urlset>`,
-  ].join("\n")
-}
-
-writeFileSync(resolve("public/sitemap.xml"), generateSitemap(entries))
-console.log(`sitemap.xml written (${entries.length} entries)`)
+writeFileSync(resolve("public/sitemap.xml"), xml);
+console.log(`sitemap.xml written (${entries.length} entries)`);

@@ -82,6 +82,23 @@ jobs:
       - name: Prerender pages to static HTML
         run: node scripts/prerender.mjs
 
+      - name: Verify prerendered HTML
+        run: |
+          node <<'NODE'
+          const fs = require("fs");
+          const routes = ["index.html", "financial-horizon/index.html", "consultations/index.html", "blog/index.html"];
+          let bad = 0;
+          for (const r of routes) {
+            const html = fs.readFileSync("dist/" + r, "utf8");
+            const empty = html.includes('<div id="root"></div>');
+            console.log(`${r}: ${html.length} bytes${empty ? " EMPTY SHELL" : ""}`);
+            if (empty || html.length < 20000) bad++;
+          }
+          if (bad) { console.error("Prerender output looks empty — failing deploy."); process.exit(1); }
+          NODE
+
+
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

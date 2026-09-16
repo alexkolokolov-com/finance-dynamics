@@ -121,7 +121,7 @@ const PersonPoint = ({
 
       <aside
         aria-live="polite"
-        className={`absolute left-1/2 z-50 w-[280px] -translate-x-1/2 border border-border bg-card p-4 text-left shadow-hard transition duration-150 sm:w-[310px] ${
+        className={`absolute left-1/2 z-50 hidden w-[310px] -translate-x-1/2 border border-border bg-card p-4 text-left shadow-hard transition duration-150 sm:block ${
           below ? "bottom-[calc(100%+14px)]" : "top-[calc(100%+14px)]"
         } ${
           active
@@ -166,10 +166,46 @@ const PersonPoint = ({
   );
 };
 
+const MobilePersonPopup = ({ person, onClose }: { person: LongevityPerson; onClose: () => void }) => (
+  <aside
+    aria-live="polite"
+    className="fixed inset-x-4 bottom-4 z-[70] border border-border bg-card p-4 text-left shadow-hard sm:hidden"
+  >
+    <Button
+      type="button"
+      variant="ghost"
+      size="icon"
+      aria-label="Закрыть историю"
+      onClick={onClose}
+      className="absolute right-2 top-2 h-8 w-8"
+    >
+      <X className="h-4 w-4" />
+    </Button>
+    <p className="pr-9 font-body text-xs text-muted-foreground">
+      {nbsp(`${person.age} ${yearsWord(person.age)} · ${person.profession}`)}
+    </p>
+    <h3 className="mt-1 pr-9 font-display text-xl font-semibold leading-tight">{nbsp(person.name)}</h3>
+    <p className="mt-3 font-body text-sm font-medium leading-snug">{nbsp(person.headline)}</p>
+    <p className="mt-3 border-t border-border pt-3 font-body text-xs leading-relaxed text-foreground/65">
+      {nbsp(person.facts[0])}
+    </p>
+    <a
+      href={person.source}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="mt-3 inline-flex items-center gap-1.5 font-body text-xs font-medium text-accent underline decoration-accent/35 underline-offset-4"
+    >
+      {nbsp("Источник")}
+      <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" />
+    </a>
+  </aside>
+);
+
 export const LifeTimeline = () => {
   const [filter, setFilter] = useState<Filter>("all");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
+  const selected = selectedId ? longevityPeople.find((person) => person.id === selectedId) : undefined;
 
   const laneById = useMemo(() => {
     const result = new Map<string, number>();
@@ -317,6 +353,7 @@ export const LifeTimeline = () => {
           </span>
         </div>
       </div>
+      {selected ? <MobilePersonPopup person={selected} onClose={() => setSelectedId(null)} /> : null}
     </section>
   );
 };

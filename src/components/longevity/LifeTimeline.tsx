@@ -214,31 +214,13 @@ export const LifeTimeline = () => {
           )}
         </div>
 
-        {/* Люди: подпись выбранного */}
+        {/* Подпись выбранного человека: планшет и десктоп */}
         {longevityPeople.length > 0 && (
-          <div className="mt-4 sm:mt-2">
-            <div className="sm:hidden flex flex-wrap gap-2">
-              {longevityPeople.map((p) => (
-                <button
-                  key={p.name}
-                  type="button"
-                  onClick={() => setPerson(p.name)}
-                  className={`rounded-full border px-3 py-1.5 font-body text-[13px] transition-colors ${
-                    person === p.name
-                      ? "border-accent text-accent"
-                      : "border-border text-foreground/70"
-                  }`}
-                >
-                  {nbsp(`${p.name}, ${p.age}`)}
-                </button>
-              ))}
-            </div>
-            <p className="mt-3 font-body text-[15px] leading-relaxed text-foreground/75 min-h-[3rem]">
-              {activePerson
-                ? nbsp(`${activePerson.name}, ${activePerson.age}: ${activePerson.note}`)
-                : nbsp("Выберите точку на нижней шкале: это люди, которые оставались в деле после 80.")}
-            </p>
-          </div>
+          <p className="hidden sm:block mt-2 font-body text-[15px] leading-relaxed text-foreground/75 min-h-[3rem]">
+            {activePerson
+              ? nbsp(`${activePerson.name}, ${activePerson.age}: ${activePerson.note}`)
+              : nbsp("Наведите на точку внизу шкалы: это люди, которые оставались в деле после 80.")}
+          </p>
         )}
 
         {/* Вертикальный выбор половины: телефон */}

@@ -1,4 +1,5 @@
 import krizisCover from "@/assets/krizis-hero.jpg";
+import longevityCover from "@/assets/longevity-hero.jpg";
 import horizonCover from "@/assets/horizon-hero.jpg";
 import gearsCover from "@/assets/gears-hero.jpg";
 import planCover from "@/assets/plan-hero.jpg";
@@ -97,6 +98,23 @@ const horizonIllustration = (
 );
 
 export const blogPosts: BlogPost[] = [
+  {
+    tag: "лонгрид + таймлайн",
+    title: "Финансовое долголетие: три половины одной жизни",
+    text: "0–40, 40–80 и&nbsp;80–120: интерактивный таймлайн, развилка 35–45&nbsp;лет и&nbsp;люди, которые остались в&nbsp;деле после&nbsp;80.",
+    cta: "Открыть таймлайн",
+    href: "/longevity",
+    illustration: (
+      <img
+        src={longevityCover}
+        alt="Дорога, уходящая через три участка к горизонту"
+        loading="lazy"
+        width={1600}
+        height={912}
+        className="w-full h-auto rounded-lg"
+      />
+    ),
+  },
   {
     tag: "лонгрид + диагностика",
     title: "На сколько лет вперёд вы умеете управлять своими деньгами",

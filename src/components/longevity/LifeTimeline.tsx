@@ -5,7 +5,6 @@ import { longevityPeople, type LongevityGroup, type LongevityPerson } from "@/da
 import { nbsp } from "@/lib/nbsp";
 
 const MAX_AGE = 120;
-const CANVAS_WIDTH = 1120;
 const pct = (age: number) => (age / MAX_AGE) * 100;
 
 const eras = [
@@ -263,7 +262,7 @@ export const LifeTimeline = () => {
             </div>
 
             <div ref={viewportRef} className="mt-4 overflow-x-auto pb-3 [scrollbar-width:thin] sm:mt-8">
-              <div className="relative h-[670px] sm:h-[700px]" style={{ minWidth: `${CANVAS_WIDTH}px` }}>
+              <div className="relative h-[670px] min-w-[1120px] sm:h-[700px] lg:min-w-full">
                 <div className="absolute inset-x-0 top-1/2 h-px bg-foreground/25" />
 
                 {eras.map((era, index) => (

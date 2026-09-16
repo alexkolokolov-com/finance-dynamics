@@ -9,6 +9,7 @@ const BASE_URL = "https://vasyaifin.ru";
 const entries = [
   { path: "/", changefreq: "weekly", priority: "1.0" },
   { path: "/blog", changefreq: "weekly", priority: "0.9" },
+  { path: "/longevity", changefreq: "monthly", priority: "0.8" },
   { path: "/financial-horizon", changefreq: "monthly", priority: "0.8" },
   { path: "/financial-plan", changefreq: "monthly", priority: "0.8" },
   { path: "/crisis-decisions", changefreq: "monthly", priority: "0.8" },

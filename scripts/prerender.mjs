@@ -14,6 +14,7 @@ const SITE_URL = process.env.SITE_URL || "https://vasyaifin.ru";
 const ROUTES = [
   "/",
   "/blog",
+  "/longevity",
   "/financial-horizon",
   "/financial-plan",
   "/crisis-decisions",

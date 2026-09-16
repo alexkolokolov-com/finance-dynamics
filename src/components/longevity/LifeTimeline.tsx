@@ -202,9 +202,9 @@ export const LifeTimeline = () => {
                   />
                   {nbsp(row.label)}
                 </p>
-                <div className="mt-2 space-y-1.5">
-                  {toLanes(row.people, 5).map((lane, li) => (
-                    <div key={li} className="relative h-11">
+                <div className="mt-2">
+                  {toLanes(row.people, 6).map((lane, li) => (
+                    <div key={li} className="relative h-[3.6rem]">
                       {lane.map((p) => {
                         const active = selectedId === p.id;
                         return (

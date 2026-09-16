@@ -205,9 +205,6 @@ export const LifeTimeline = () => {
                         : "bg-foreground/30 group-hover:bg-accent"
                     }`}
                   />
-                  <span className="font-body text-[11px] text-foreground/60 group-hover:text-accent">
-                    {p.age}
-                  </span>
                 </button>
               ))}
             </div>

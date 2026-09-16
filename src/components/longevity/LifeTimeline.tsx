@@ -108,7 +108,7 @@ const PersonPoint = ({
       ) : null}
       <span
         aria-hidden="true"
-        className={`absolute left-1/2 w-px -translate-x-1/2 bg-border ${
+        className={`pointer-events-none absolute left-1/2 w-px -translate-x-1/2 bg-border ${
           below ? "bottom-full h-10" : "top-full h-10"
         }`}
       />

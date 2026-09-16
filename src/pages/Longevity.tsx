@@ -23,13 +23,16 @@ const Longevity = () => {
     <main className="min-h-screen bg-background text-foreground">
       <SiteHeader />
 
-      <header className="px-5 pb-10 pt-28 text-center sm:px-8 sm:pb-14 sm:pt-36">
+      <header className="px-5 pb-12 pt-28 sm:px-8 sm:pb-16 sm:pt-36">
         <h1 className="mx-auto max-w-5xl font-display text-[clamp(3rem,8vw,7rem)] font-semibold leading-[0.88]">
           {nbsp("Финансовое долголетие")}
         </h1>
-        <p className="mx-auto mt-7 max-w-3xl font-body text-lg leading-relaxed text-foreground/70 sm:text-xl">
+        <p className="mx-auto mt-7 max-w-4xl text-center font-display text-2xl font-medium leading-snug sm:text-4xl">
+          {nbsp("Мы научились планировать деньги до пенсии. Но не научились планировать жизнь после неё.")}
+        </p>
+        <p className="mx-auto mt-6 max-w-3xl text-center font-body text-base leading-relaxed text-foreground/70 sm:text-lg">
           {nbsp(
-            "Мы привыкли считать жизнь до пенсии. Но у неё может быть три половины. Посмотрите на двадцать биографий и найдите своё место на шкале от нуля до 120 лет."
+            "Если активная жизнь длится до 100 или 120 лет, привычная модель распадается. Между молодостью и старостью появляется ещё один большой период, для которого нужны другие представления о работе, опыте и капитале."
           )}
         </p>
       </header>
@@ -40,11 +43,11 @@ const Longevity = () => {
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
           <div>
             <h2 className="max-w-2xl font-display text-3xl font-semibold leading-tight sm:text-5xl">
-              {nbsp("Пенсия не финал. Это только отметка внутри длинной жизни")}
+              {nbsp("После 45 человек редко начинает с нуля")}
             </h2>
             <p className="mt-6 max-w-2xl font-body text-lg leading-relaxed text-foreground/75">
               {nbsp(
-                "В первой части жизни доход растёт вместе с количеством часов и сил. Во второй начинает работать накопленное: опыт, репутация, связи и капитал. Третью часть почти никто не считает, хотя именно она может занять ещё сорок лет."
+                "Он начинает с накопленного: опыта, репутации, связей, профессионального языка и капитала. Поэтому линия после 40 не обязана идти вниз. Она может стать временем новых дел, которые раньше были невозможны."
               )}
             </p>
           </div>
@@ -52,7 +55,7 @@ const Longevity = () => {
           <div className="border-l-2 border-accent pl-6 sm:pl-8">
             <p className="font-display text-2xl font-medium leading-snug sm:text-3xl">
               {nbsp(
-                "После 45 человек редко начинает с нуля. Он начинает с накопленного."
+                "Третья половина – не обещание вечной молодости. Это сорок лет, которые нельзя автоматически вычёркивать из финансового плана."
               )}
             </p>
             <p className="mt-5 font-body text-sm leading-relaxed text-muted-foreground">

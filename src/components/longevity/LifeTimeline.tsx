@@ -116,7 +116,7 @@ const PersonPoint = ({
 };
 
 const PersonDetails = ({ person }: { person: LongevityPerson }) => (
-  <aside className="border-t border-border bg-card p-5 sm:p-7 lg:border-l lg:border-t-0 lg:p-8" aria-live="polite">
+  <aside className="border-t border-border bg-card p-5 sm:p-7 2xl:border-l 2xl:border-t-0 2xl:p-8" aria-live="polite">
     <div className="flex items-start gap-4">
       <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-accent font-display text-lg font-semibold text-accent-foreground">
         {initials(person.name)}
@@ -191,7 +191,7 @@ export const LifeTimeline = () => {
   return (
     <section id="atlas" className="border-y border-border bg-card">
       <div className="mx-auto max-w-[1440px]">
-        <div className="grid lg:grid-cols-[minmax(0,1fr)_390px]">
+        <div className="grid 2xl:grid-cols-[minmax(0,1fr)_390px]">
           <div className="min-w-0 p-4 sm:p-7 lg:p-10">
             <div className="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
               <div className="max-w-2xl">

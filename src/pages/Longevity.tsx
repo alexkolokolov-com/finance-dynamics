@@ -1,183 +1,91 @@
-import { ArticlePage } from "@/components/article/ArticlePage";
-import { ArticleHero } from "@/components/article/ArticleHero";
-import { ArticleSection } from "@/components/article/ArticleSection";
-import { ArticleFlow } from "@/components/article/ArticleFlow";
-import { ExpertQuote } from "@/components/article/ExpertQuote";
-import { H2 } from "@/components/article/H2";
-import { H3 } from "@/components/article/H3";
-import { Pull } from "@/components/article/Pull";
-import { Figure } from "@/components/article/Figure";
+import { useEffect } from "react";
+import { SiteHeader } from "@/components/SiteHeader";
+import { Footer } from "@/components/sections/Footer";
+import { Varioqub } from "@/components/Varioqub";
 import { LifeTimeline } from "@/components/longevity/LifeTimeline";
 import { nbsp } from "@/lib/nbsp";
-import heroImg from "@/assets/longevity-hero.jpg";
-import forkImg from "@/assets/longevity-fork.jpg";
 
-const Longevity = () => (
-  <ArticlePage
-    title="Финансовое долголетие: три половины одной жизни"
-    description="Интерактивная шкала 0–120 лет: двадцать биографий людей, чьё главное дело пришло после 45 и кто работал после 80, и что из этого следует для длины финансового плана."
-  >
-    <ArticleHero
-      title={<>Финансовое долголетие:</>}
-      accent={<>три половины одной жизни</>}
-      lead={nbsp(
-        "Мы привыкли делить жизнь на две части: пока растём и пока доживаем. Я собрал двадцать биографий на одной шкале, чтобы показать третью – ту, которой нет ни в одном пенсионном расчёте."
-      )}
-      image={heroImg}
-      imageAlt="Дорога, уходящая через три участка к горизонту"
-    />
+const Longevity = () => {
+  useEffect(() => {
+    document.title = "Финансовое долголетие · Вася и финансы";
+    const description =
+      "Интерактивная карта жизни 0–120 лет и двадцать биографий людей, которые начали главное дело после 45 или продолжали работать после 80.";
+    let meta = document.querySelector<HTMLMetaElement>('meta[name="description"]');
+    if (!meta) {
+      meta = document.createElement("meta");
+      meta.name = "description";
+      document.head.appendChild(meta);
+    }
+    meta.content = description;
+  }, []);
 
-    <ArticleSection>
-      <ArticleFlow>
-        <p>
+  return (
+    <main className="min-h-screen bg-background text-foreground">
+      <SiteHeader />
+
+      <header className="px-5 pb-10 pt-28 text-center sm:px-8 sm:pb-14 sm:pt-36">
+        <h1 className="mx-auto max-w-5xl font-display text-[clamp(3rem,8vw,7rem)] font-semibold leading-[0.88]">
+          {nbsp("Финансовое долголетие")}
+        </h1>
+        <p className="mx-auto mt-7 max-w-3xl font-body text-lg leading-relaxed text-foreground/70 sm:text-xl">
           {nbsp(
-            "Почти все финансовые расчёты в стране заканчиваются пенсией. Дальше в планах пустота: как будто после 65 лет остаётся только тратить остатки и надеяться, что их хватит."
+            "Мы привыкли считать жизнь до пенсии. Но у неё может быть три половины. Посмотрите на двадцать биографий и найдите своё место на шкале от нуля до 120 лет."
           )}
         </p>
-        <p>
-          {nbsp(
-            "А по факту жизнь стала длиннее. Медицина, профилактика, привычка следить за здоровьем отодвинули границу активного возраста далеко вперёд. И вместе с ней отодвинулся возраст, в котором человек ещё может начать что-то новое."
-          )}
-        </p>
-        <p>
-          <strong>
-            {nbsp(
-              "Проще всего это увидеть не в статистике, а в биографиях: кто и в каком возрасте делал своё главное дело."
-            )}
-          </strong>
-        </p>
-      </ArticleFlow>
-    </ArticleSection>
+      </header>
 
-    <ArticleSection>
-      <ArticleFlow>
-        <ExpertQuote>
-          {nbsp(
-            "Я собрал эту шкалу не для мотивации. Мне важна одна цифра: сколько лет человек остаётся тем, кто зарабатывает и принимает решения. От неё зависит длина плана, а не от возраста выхода на пенсию."
-          )}
-        </ExpertQuote>
-      </ArticleFlow>
-    </ArticleSection>
-
-    <ArticleSection id="timeline">
-      <ArticleFlow>
-        <H2>{nbsp("Двадцать биографий на одной шкале")}</H2>
-        <p>
-          {nbsp(
-            "Шкала идёт от нуля до 120 лет и делится на три участка. Терракотовые круги – люди, чьё главное дело пришло после 45. Тёмные – те, кто работал после 80. Круг открывает карточку: возраст, что именно произошло и что было до."
-          )}
-        </p>
-        <p>
-          {nbsp(
-            "Поставьте свой возраст ползунком, и шкала посчитает, сколько человек из этих двадцати сделали главное дело позже, чем вам сейчас."
-          )}
-        </p>
-      </ArticleFlow>
-    </ArticleSection>
-
-    <div className="mt-6 md:mt-8">
       <LifeTimeline />
-    </div>
 
-    <ArticleSection id="posle-45">
-      <ArticleFlow>
-        <H2>{nbsp("Вторая половина: возраст, в котором ещё всё начинается")}</H2>
-        <p>
-          {nbsp(
-            "В первой десятке нет ни одного человека, который добился всего рано и потом просто держался. Рэй Крок тридцать лет продавал миксеры и занялся McDonald's в 52. Харланд Сандерс открыл первый ресторан KFC в 62, когда его придорожная закусочная перестала кормить. Людмила Улицкая работала генетиком и получила первую крупную премию в 51."
-          )}
-        </p>
-        <p>
-          {nbsp(
-            "Общее у них не характер и не удача, а структура: к этому возрасту накопились опыт, репутация и связи, то есть ровно те активы, которые не изнашиваются, как физическая выносливость."
-          )}
-        </p>
-        <Pull>
-          {nbsp(
-            "После 45 человек редко начинает с нуля. Он начинает с накопленного – и именно поэтому у него получается быстрее, чем в двадцать."
-          )}
-        </Pull>
-      </ArticleFlow>
-    </ArticleSection>
+      <section className="px-5 py-16 sm:px-8 sm:py-24">
+        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
+          <div>
+            <h2 className="max-w-2xl font-display text-3xl font-semibold leading-tight sm:text-5xl">
+              {nbsp("Пенсия не финал. Это только отметка внутри длинной жизни")}
+            </h2>
+            <p className="mt-6 max-w-2xl font-body text-lg leading-relaxed text-foreground/75">
+              {nbsp(
+                "В первой части жизни доход растёт вместе с количеством часов и сил. Во второй начинает работать накопленное: опыт, репутация, связи и капитал. Третью часть почти никто не считает, хотя именно она может занять ещё сорок лет."
+              )}
+            </p>
+          </div>
 
-    <ArticleSection id="perelom">
-      <ArticleFlow>
-        <H2>{nbsp("Перелом: между 35 и 45")}</H2>
-        <p>
-          {nbsp(
-            "На шкале это заштрихованная полоса. То, что называют кризисом среднего возраста, в деньгах выглядит очень конкретно: доход перестаёт расти сам по себе, силы уже не безграничны, а обязательств больше, чем в тридцать. Из одной точки расходятся два сценария."
-          )}
-        </p>
-      </ArticleFlow>
-    </ArticleSection>
+          <div className="border-l-2 border-accent pl-6 sm:pl-8">
+            <p className="font-display text-2xl font-medium leading-snug sm:text-3xl">
+              {nbsp(
+                "После 45 человек редко начинает с нуля. Он начинает с накопленного."
+              )}
+            </p>
+            <p className="mt-5 font-body text-sm leading-relaxed text-muted-foreground">
+              {nbsp(
+                "Шкала не доказывает, что поздний успех гарантирован каждому. Она показывает другое: верхняя граница активного возраста намного дальше той, которую мы обычно закладываем в финансовый план."
+              )}
+            </p>
+          </div>
+        </div>
+      </section>
 
-    <Figure
-      src={forkImg}
-      alt="Развилка дороги: одна ветка уходит в серую низину, другая поднимается к рассвету"
-      caption={nbsp("Одна точка, два сценария следующих сорока лет")}
-    />
+      <section className="border-t border-border px-5 py-12 sm:px-8 sm:py-16">
+        <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-[1fr_2fr]">
+          <h2 className="font-display text-2xl font-semibold">{nbsp("Как читать данные")}</h2>
+          <div className="space-y-4 font-body text-[15px] leading-relaxed text-foreground/65">
+            <p>
+              {nbsp(
+                "В выборке десять людей, чьё главное дело или большое признание пришло после 45, и десять людей, которые продолжали активно работать после 80. Возраст в круге – конкретная точка биографии, описанная в карточке."
+              )}
+            </p>
+            <p>
+              {nbsp(
+                "Это набор проверяемых случаев, а не репрезентативная статистика. У каждой истории есть ссылка на источник."
+              )}
+            </p>
+          </div>
+        </div>
+      </section>
 
-    <ArticleSection>
-      <ArticleFlow>
-        <p>
-          {nbsp(
-            "В первом кажется, что возможности упущены: остаётся держаться за должность и дотянуть до пенсии. Во втором опыт и накопления начинают работать без постоянного участия человека, и появляется то, чего не было в тридцать, – выбор."
-          )}
-        </p>
-        <p>
-          {nbsp(
-            "Люди с этой шкалы почти все прошли развилку по второму сценарию, причём без больших денег на старте. У них было другое: время, которое они считали не до пенсии, а до конца жизни."
-          )}
-        </p>
-      </ArticleFlow>
-    </ArticleSection>
-
-    <ArticleSection id="tretya-polovina">
-      <ArticleFlow>
-        <H2>{nbsp("Третья половина, которую не считают")}</H2>
-        <p>
-          {nbsp(
-            "Участок 80–120 звучит как фантастика, пока не посмотришь на вторую десятку. Уоррен Баффет руководил Berkshire Hathaway до 95 лет. Дэвид Аттенборо в сто лет продолжает делать фильмы. Владимир Зельдин играл на сцене до 101 года, Норман Лир продюсировал сериалы до 101, Ирина Антонова работала в музее до 98."
-          )}
-        </p>
-        <p>
-          {nbsp(
-            "Заметно другое: почти у всех работа, которая не требует физической выносливости, и ресурсы, которые позволяют выбирать, чем заниматься. Долголетие в деле держится на двух опорах, и одна из них финансовая."
-          )}
-        </p>
-
-        <H3>{nbsp("Что это значит для арифметики")}</H3>
-        <p>
-          {nbsp(
-            "Если планировать до 65 лет, а прожить до 95, разрыв придётся закрывать самым дорогим способом: снижением уровня жизни. Тридцать лишних лет – это не мелочь в конце таблицы, а отдельная эпоха со своими расходами на здоровье, помощь и интересную жизнь."
-          )}
-        </p>
-        <p>
-          <strong>
-            {nbsp(
-              "Из этих биографий следует один вывод: считать нужно не до пенсии, а на всю длину жизни – включая ту часть, в которую пока трудно поверить."
-            )}
-          </strong>
-        </p>
-      </ArticleFlow>
-    </ArticleSection>
-
-    <ArticleSection id="dannye">
-      <ArticleFlow>
-        <H2>{nbsp("Как собраны данные")}</H2>
-        <p>
-          {nbsp(
-            "В выборке двадцать человек: десять с главным делом после 45 и десять, кто оставался в профессии после 80. Возраст-точка – это год события, а не год признания: премии часто приходят позже. У каждой карточки есть ссылка на источник, по которой можно проверить даты."
-          )}
-        </p>
-        <p>
-          {nbsp(
-            "Это не репрезентативная статистика, а набор проверяемых случаев. Он не доказывает, что так будет у каждого, но показывает, что верхняя граница активного возраста лежит намного дальше, чем в наших финансовых планах."
-          )}
-        </p>
-      </ArticleFlow>
-    </ArticleSection>
-  </ArticlePage>
-);
+      <Varioqub antiFlicker />
+      <Footer />
+    </main>
+  );
+};
 
 export default Longevity;

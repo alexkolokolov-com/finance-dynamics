@@ -1,365 +1,348 @@
-import { useMemo, useState } from "react";
-import { longevityPeople, type LongevityPerson } from "@/data/longevityPeople";
+import { useMemo, useRef, useState } from "react";
+import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { longevityPeople, type LongevityGroup, type LongevityPerson } from "@/data/longevityPeople";
 import { nbsp } from "@/lib/nbsp";
 
-const MIN_AGE = 0;
 const MAX_AGE = 120;
+const CANVAS_WIDTH = 1120;
+const pct = (age: number) => (age / MAX_AGE) * 100;
 
-const pct = (age: number) => ((age - MIN_AGE) / (MAX_AGE - MIN_AGE)) * 100;
-
-const BANDS = [
+const eras = [
   {
-    id: "first",
-    from: 0,
-    to: 40,
-    title: "0–40",
-    note: "Доход растёт за счёт времени и сил: учимся, работаем руками и часами",
+    range: "0–40 лет",
+    title: "Время и силы",
+    text: "Мы учимся, пробуем и в основном обмениваем своё время на доход.",
   },
   {
-    id: "second",
-    from: 40,
-    to: 80,
-    title: "40–80",
-    note: "Часов больше не станет. Растёт то, что работает без вашего присутствия",
+    range: "40–80 лет",
+    title: "Опыт начинает работать",
+    text: "Растёт ценность решений, репутации, связей и накопленного капитала.",
   },
   {
-    id: "third",
-    from: 80,
-    to: 120,
-    title: "80–120",
-    note: "Эпоха, которой нет ни в одном пенсионном расчёте, а прожить её придётся",
+    range: "80–120 лет",
+    title: "Непосчитанная жизнь",
+    text: "Отдельная эпоха, которой почти нет в финансовых планах.",
   },
 ] as const;
-
-const CRISIS = { from: 35, to: 45 };
-
-/** Раскладывает точки по дорожкам, чтобы близкие возрасты не наезжали друг на друга */
-const toLanes = (people: LongevityPerson[], minGap: number) => {
-  const lanes: LongevityPerson[][] = [];
-  [...people]
-    .sort((a, b) => a.age - b.age)
-    .forEach((p) => {
-      const lane = lanes.find((l) => p.age - l[l.length - 1].age >= minGap);
-      if (lane) lane.push(p);
-      else lanes.push([p]);
-    });
-  return lanes;
-};
 
 const initials = (name: string) =>
   name
     .split(" ")
     .slice(0, 2)
-    .map((w) => w[0])
+    .map((word) => word[0])
     .join("");
 
-const yearsWord = (n: number) => {
-  const t = n % 100;
-  if (t > 10 && t < 20) return "лет";
-  const o = n % 10;
-  if (o === 1) return "год";
-  if (o >= 2 && o <= 4) return "года";
+const yearsWord = (value: number) => {
+  const lastTwo = value % 100;
+  if (lastTwo > 10 && lastTwo < 20) return "лет";
+  const last = value % 10;
+  if (last === 1) return "год";
+  if (last >= 2 && last <= 4) return "года";
   return "лет";
 };
 
-export const LifeTimeline = () => {
-  const [age, setAge] = useState(38);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+type Filter = "all" | LongevityGroup;
 
-  const after45 = useMemo(
-    () => longevityPeople.filter((p) => p.group === "after45"),
-    []
-  );
-  const after80 = useMemo(
-    () => longevityPeople.filter((p) => p.group === "after80"),
-    []
-  );
-
-  const selected =
-    longevityPeople.find((p) => p.id === selectedId) ?? null;
-
-  const laterThanYou = longevityPeople.filter((p) => p.age > age).length;
+const PersonPoint = ({
+  person,
+  active,
+  muted,
+  lane,
+  onSelect,
+}: {
+  person: LongevityPerson;
+  active: boolean;
+  muted: boolean;
+  lane: number;
+  onSelect: () => void;
+}) => {
+  const below = person.group === "after80";
+  const offset = 42 + lane * 67;
 
   return (
-    <div className="w-full">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6">
-        {/* Ваш возраст */}
-        <div className="rounded-xl border border-border bg-card p-4 sm:p-6">
-          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-            <label
-              htmlFor="age"
-              className="font-body text-[15px] text-foreground/70"
-            >
-              {nbsp("Сколько вам лет")}
-            </label>
-            <p className="font-body text-[15px] text-foreground/70">
-              <span className="font-display font-semibold text-foreground">
-                {age}
-              </span>{" "}
-              {nbsp(`${yearsWord(age)} · впереди ещё`)}{" "}
-              <span className="font-display font-semibold text-accent">
-                {MAX_AGE - age}
-              </span>{" "}
-              {nbsp(`${yearsWord(MAX_AGE - age)} по этой шкале`)}
-            </p>
-          </div>
-          <input
-            id="age"
-            type="range"
-            min={18}
-            max={100}
-            value={age}
-            onChange={(e) => setAge(Number(e.target.value))}
-            className="mt-3 w-full accent-accent"
-          />
-          <p className="mt-3 font-body text-[15px] leading-relaxed text-foreground/75">
-            <span className="font-display font-semibold text-accent">
-              {laterThanYou}
-            </span>{" "}
-            {nbsp(
-              `из ${longevityPeople.length} людей на этой шкале сделали своё главное дело позже, чем вам сейчас.`
-            )}
-          </p>
-        </div>
+    <Button
+      type="button"
+      variant="ghost"
+      aria-pressed={active}
+      aria-label={`${person.name}, ${person.age} ${yearsWord(person.age)}`}
+      onClick={onSelect}
+      className={`group absolute z-20 h-auto w-[108px] -translate-x-1/2 flex-col gap-1.5 whitespace-normal rounded-none p-0 text-center hover:bg-transparent focus-visible:ring-offset-4 ${
+        muted ? "opacity-20" : "opacity-100"
+      } ${below ? "top-1/2" : "bottom-1/2"}`}
+      style={
+        below
+          ? { left: `${pct(person.age)}%`, marginTop: `${offset}px` }
+          : { left: `${pct(person.age)}%`, marginBottom: `${offset}px` }
+      }
+    >
+      {!below ? (
+        <span className="order-1 font-body text-[12px] font-medium leading-tight text-foreground/70 group-hover:text-foreground">
+          {nbsp(person.name)}
+        </span>
+      ) : null}
+      <span
+        className={`relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 font-display text-[13px] font-semibold transition duration-200 group-hover:scale-110 ${
+          active
+            ? "border-foreground bg-foreground text-primary-foreground shadow-hard"
+            : person.group === "after45"
+              ? "border-accent bg-background text-accent"
+              : "border-foreground/35 bg-background text-foreground"
+        }`}
+      >
+        {initials(person.name)}
+        <span
+          className={`absolute -right-2 -top-2 flex h-6 min-w-6 items-center justify-center rounded-full px-1 font-body text-[10px] font-semibold ${
+            person.group === "after45"
+              ? "bg-accent text-accent-foreground"
+              : "bg-foreground text-primary-foreground"
+          }`}
+        >
+          {person.age}
+        </span>
+      </span>
+      {below ? (
+        <span className="font-body text-[12px] font-medium leading-tight text-foreground/70 group-hover:text-foreground">
+          {nbsp(person.name)}
+        </span>
+      ) : null}
+      <span
+        aria-hidden="true"
+        className={`absolute left-1/2 w-px -translate-x-1/2 bg-border ${
+          below ? "bottom-full h-10" : "top-full h-10"
+        }`}
+      />
+    </Button>
+  );
+};
 
-        {/* Шкала: планшет и десктоп */}
-        <div className="hidden sm:block mt-8">
-          <div className="relative">
-            {/* полосы половин */}
-            <div className="relative h-11 rounded-md overflow-hidden border border-border">
-              {BANDS.map((b, i) => (
+const PersonDetails = ({ person }: { person: LongevityPerson }) => (
+  <aside className="border-t border-border bg-card p-5 sm:p-7 lg:border-l lg:border-t-0 lg:p-8" aria-live="polite">
+    <div className="flex items-start gap-4">
+      <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-accent font-display text-lg font-semibold text-accent-foreground">
+        {initials(person.name)}
+      </span>
+      <div className="min-w-0">
+        <p className="font-body text-sm text-muted-foreground">
+          {nbsp(`${person.age} ${yearsWord(person.age)} · ${person.profession}`)}
+        </p>
+        <h2 className="mt-1 font-display text-2xl font-semibold leading-tight sm:text-3xl">
+          {nbsp(person.name)}
+        </h2>
+        <p className="mt-1 font-body text-sm text-muted-foreground">
+          {nbsp(`${person.country} · ${person.years}`)}
+        </p>
+      </div>
+    </div>
+
+    <p className="mt-7 font-display text-xl font-medium leading-snug sm:text-2xl">
+      {nbsp(person.headline)}
+    </p>
+
+    <div className="mt-7 space-y-4 border-t border-border pt-5">
+      {person.facts.map((fact, index) => (
+        <div key={fact} className="grid grid-cols-[1.5rem_1fr] gap-2">
+          <span className="font-display text-sm font-semibold text-accent">{index + 1}</span>
+          <p className="font-body text-[15px] leading-relaxed text-foreground/75">{nbsp(fact)}</p>
+        </div>
+      ))}
+    </div>
+
+    <a
+      href={person.source}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="mt-7 inline-flex items-center gap-2 font-body text-sm font-medium text-accent underline decoration-accent/35 underline-offset-4 hover:decoration-accent"
+    >
+      {nbsp("Проверить источник")}
+      <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+    </a>
+  </aside>
+);
+
+export const LifeTimeline = () => {
+  const [age, setAge] = useState(38);
+  const [filter, setFilter] = useState<Filter>("all");
+  const [selectedId, setSelectedId] = useState("kroc");
+  const viewportRef = useRef<HTMLDivElement>(null);
+
+  const selected = longevityPeople.find((person) => person.id === selectedId) ?? longevityPeople[0];
+  const laterThanYou = longevityPeople.filter((person) => person.age > age).length;
+  const laneById = useMemo(() => {
+    const result = new Map<string, number>();
+    (["after45", "after80"] as const).forEach((group) => {
+      const laneEnds: number[] = [];
+      longevityPeople
+        .filter((person) => person.group === group)
+        .sort((a, b) => a.age - b.age)
+        .forEach((person) => {
+          const lane = laneEnds.findIndex((lastAge) => person.age - lastAge >= 9);
+          const nextLane = lane === -1 ? laneEnds.length : lane;
+          laneEnds[nextLane] = person.age;
+          result.set(person.id, nextLane);
+        });
+    });
+    return result;
+  }, []);
+
+  const scrollScene = (direction: -1 | 1) => {
+    viewportRef.current?.scrollBy({ left: direction * 340, behavior: "smooth" });
+  };
+
+  return (
+    <section id="atlas" className="border-y border-border bg-card">
+      <div className="mx-auto max-w-[1440px]">
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_390px]">
+          <div className="min-w-0 p-4 sm:p-7 lg:p-10">
+            <div className="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
+              <div className="max-w-2xl">
+                <h2 className="font-display text-2xl font-semibold leading-tight sm:text-3xl">
+                  {nbsp("Найдите себя на шкале 0–120")}
+                </h2>
+                <p className="mt-2 font-body text-[15px] leading-relaxed text-foreground/65">
+                  {nbsp("Возраст внутри круга – момент позднего старта или активной работы. Нажмите на человека, чтобы открыть его историю.")}
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-2" aria-label="Фильтр биографий">
+                {([
+                  ["all", "Все 20"],
+                  ["after45", "Главное после 45"],
+                  ["after80", "Работали после 80"],
+                ] as const).map(([value, label]) => (
+                  <Button
+                    key={value}
+                    type="button"
+                    variant={filter === value ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setFilter(value)}
+                    className="rounded-full"
+                  >
+                    {nbsp(label)}
+                  </Button>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-7 grid gap-4 border-y border-border py-5 sm:grid-cols-[1fr_auto] sm:items-center">
+              <div>
+                <div className="flex items-baseline justify-between gap-4">
+                  <label htmlFor="life-age" className="font-body text-sm text-foreground/65">
+                    {nbsp("Ваш возраст")}
+                  </label>
+                  <p className="font-display text-lg font-semibold">
+                    {age} {nbsp(yearsWord(age))}
+                  </p>
+                </div>
+                <input
+                  id="life-age"
+                  type="range"
+                  min={18}
+                  max={100}
+                  value={age}
+                  onChange={(event) => setAge(Number(event.target.value))}
+                  className="mt-3 w-full accent-accent"
+                />
+              </div>
+              <p className="max-w-xs font-body text-sm leading-relaxed text-foreground/65 sm:border-l sm:border-border sm:pl-5">
+                <strong className="font-display text-2xl text-accent">{laterThanYou}</strong>{" "}
+                {nbsp("человек сделал главное позже, чем вам сейчас")}
+              </p>
+            </div>
+
+            <div className="mt-5 flex items-center justify-between sm:hidden">
+              <p className="font-body text-xs text-muted-foreground">{nbsp("Листайте шкалу")}</p>
+              <div className="flex gap-2">
+                <Button type="button" size="icon" variant="outline" aria-label="Назад по шкале" onClick={() => scrollScene(-1)}>
+                  <ChevronLeft />
+                </Button>
+                <Button type="button" size="icon" variant="outline" aria-label="Вперёд по шкале" onClick={() => scrollScene(1)}>
+                  <ChevronRight />
+                </Button>
+              </div>
+            </div>
+
+            <div ref={viewportRef} className="mt-4 overflow-x-auto pb-3 [scrollbar-width:thin] sm:mt-8">
+              <div className="relative h-[670px] sm:h-[700px]" style={{ minWidth: `${CANVAS_WIDTH}px` }}>
+                <div className="absolute inset-x-0 top-1/2 h-px bg-foreground/25" />
+
+                {eras.map((era, index) => (
+                  <div
+                    key={era.range}
+                    className={`absolute inset-y-0 border-l border-border px-5 pt-4 ${
+                      index === 1 ? "bg-accent/[0.045]" : "bg-background/35"
+                    } ${index === 2 ? "border-r" : ""}`}
+                    style={{ left: `${index * 33.333}%`, width: "33.333%" }}
+                  >
+                    <p className="font-display text-[17px] font-semibold">{nbsp(era.range)}</p>
+                    <p className="mt-1 max-w-[270px] font-body text-[13px] leading-relaxed text-foreground/55">
+                      {nbsp(era.text)}
+                    </p>
+                    <p className="absolute bottom-4 left-5 font-display text-2xl font-semibold text-foreground/[0.12]">
+                      {nbsp(era.title)}
+                    </p>
+                  </div>
+                ))}
+
                 <div
-                  key={b.id}
-                  className={`absolute inset-y-0 flex items-center justify-center ${
-                    i === 1 ? "bg-accent/10" : "bg-foreground/[0.04]"
-                  } ${i > 0 ? "border-l border-border" : ""}`}
-                  style={{
-                    left: `${pct(b.from)}%`,
-                    width: `${pct(b.to) - pct(b.from)}%`,
-                  }}
+                  className="absolute inset-y-0 border-x border-dashed border-accent/45 bg-accent/[0.06]"
+                  style={{ left: `${pct(35)}%`, width: `${pct(10)}%` }}
                 >
-                  <span className="font-display font-semibold text-[13px] text-foreground/70">
-                    {nbsp(`${b.title} лет`)}
+                  <span className="absolute left-1/2 top-[118px] -translate-x-1/2 whitespace-nowrap font-body text-xs font-medium text-accent">
+                    {nbsp("перелом 35–45")}
                   </span>
                 </div>
-              ))}
-              {/* зона перелома */}
-              <div
-                className="absolute inset-y-0 border-x border-dashed border-accent/70 bg-accent/15"
-                style={{
-                  left: `${pct(CRISIS.from)}%`,
-                  width: `${pct(CRISIS.to) - pct(CRISIS.from)}%`,
-                }}
-              />
-            </div>
 
-            {/* деления */}
-            <div className="relative h-5 mt-1">
-              {[0, 20, 40, 60, 80, 100, 120].map((t) => (
-                <span
-                  key={t}
-                  className="absolute -translate-x-1/2 font-body text-[11px] text-foreground/45"
-                  style={{ left: `${pct(t)}%` }}
+                {[0, 20, 40, 60, 80, 100, 120].map((tick) => (
+                  <div
+                    key={tick}
+                    className="absolute top-1/2 z-10 -translate-x-1/2 -translate-y-1/2"
+                    style={{ left: `${pct(tick)}%` }}
+                  >
+                    <span className="block h-3 w-px bg-foreground/35" />
+                    <span className="absolute left-1/2 top-5 -translate-x-1/2 font-body text-[11px] text-muted-foreground">
+                      {tick}
+                    </span>
+                  </div>
+                ))}
+
+                <div
+                  className="pointer-events-none absolute inset-y-0 z-30 w-px bg-accent transition-[left] duration-200"
+                  style={{ left: `${pct(age)}%` }}
                 >
-                  {t}
-                </span>
-              ))}
+                  <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent px-3 py-1 font-body text-xs font-semibold text-accent-foreground shadow-hard">
+                    {nbsp("вы здесь")}
+                  </span>
+                </div>
+
+                {longevityPeople.map((person) => (
+                  <PersonPoint
+                    key={person.id}
+                    person={person}
+                    active={person.id === selected.id}
+                    muted={filter !== "all" && filter !== person.group}
+                    lane={laneById.get(person.id) ?? 0}
+                    onSelect={() => setSelectedId(person.id)}
+                  />
+                ))}
+              </div>
             </div>
 
-            {/* вы здесь */}
-            <div
-              className="absolute -top-6 bottom-6 w-px bg-foreground"
-              style={{ left: `${pct(age)}%` }}
-            >
-              <span className="absolute -top-5 left-1/2 -translate-x-1/2 whitespace-nowrap font-body text-[11px] text-foreground">
-                {nbsp("вы здесь")}
+            <div className="mt-1 flex flex-wrap gap-x-6 gap-y-2 border-t border-border pt-4 font-body text-xs text-muted-foreground">
+              <span className="inline-flex items-center gap-2">
+                <span className="h-3 w-3 rounded-full bg-accent" />
+                {nbsp("Главное дело после 45")}
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <span className="h-3 w-3 rounded-full bg-foreground" />
+                {nbsp("Активная работа после 80")}
               </span>
             </div>
           </div>
 
-          {/* точки людей */}
-          <div className="mt-6 space-y-6">
-            {[
-              {
-                key: "after45",
-                label: "Главное дело пришло после 45",
-                people: after45,
-                dark: false,
-              },
-              {
-                key: "after80",
-                label: "Работают и после 80",
-                people: after80,
-                dark: true,
-              },
-            ].map((row) => (
-              <div key={row.key}>
-                <p className="font-body text-[13px] text-foreground/55">
-                  <span
-                    className={`inline-block w-2.5 h-2.5 rounded-full mr-2 align-middle ${
-                      row.dark ? "bg-foreground/70" : "bg-accent"
-                    }`}
-                  />
-                  {nbsp(row.label)}
-                </p>
-                <div className="mt-2">
-                  {toLanes(row.people, 6).map((lane, li) => (
-                    <div key={li} className="relative h-[3.6rem]">
-                      {lane.map((p) => {
-                        const active = selectedId === p.id;
-                        return (
-                          <button
-                            key={p.id}
-                            type="button"
-                            onClick={() =>
-                              setSelectedId(active ? null : p.id)
-                            }
-                            aria-label={`${p.name}, ${p.age}`}
-                            className="absolute top-0 -translate-x-1/2 group"
-                            style={{ left: `${pct(p.age)}%` }}
-                          >
-                            <span
-                              className={`flex w-10 h-10 items-center justify-center rounded-full border font-display font-semibold text-[13px] transition-all ${
-                                active
-                                  ? "border-accent bg-accent text-background scale-110"
-                                  : row.dark
-                                    ? "border-border bg-card text-foreground/75 group-hover:border-accent group-hover:text-accent"
-                                    : "border-accent/40 bg-accent/10 text-accent group-hover:bg-accent group-hover:text-background"
-                              }`}
-                            >
-                              {initials(p.name)}
-                            </span>
-                            <span className="pointer-events-none absolute left-1/2 top-full mt-1 -translate-x-1/2 font-body text-[11px] text-foreground/50 group-hover:text-accent">
-                              {p.age}
-                            </span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Списки людей: телефон */}
-        <div className="sm:hidden mt-8 space-y-6">
-          {[
-            { key: "after45", label: "Главное дело пришло после 45", people: after45 },
-            { key: "after80", label: "Работают и после 80", people: after80 },
-          ].map((row) => (
-            <div key={row.key}>
-              <p className="font-body text-[13px] text-foreground/55">
-                {nbsp(row.label)}
-              </p>
-              <div className="mt-2 space-y-1.5">
-                {[...row.people]
-                  .sort((a, b) => a.age - b.age)
-                  .map((p) => {
-                    const active = selectedId === p.id;
-                    return (
-                      <button
-                        key={p.id}
-                        type="button"
-                        onClick={() => setSelectedId(active ? null : p.id)}
-                        className={`w-full flex items-center gap-3 rounded-lg border px-3 py-2 text-left transition-colors ${
-                          active ? "border-accent bg-accent/10" : "border-border"
-                        }`}
-                      >
-                        <span
-                          className={`flex w-9 h-9 shrink-0 items-center justify-center rounded-full border font-display font-semibold text-[13px] ${
-                            active
-                              ? "border-accent bg-accent text-background"
-                              : "border-border text-foreground/70"
-                          }`}
-                        >
-                          {initials(p.name)}
-                        </span>
-                        <span className="min-w-0">
-                          <span className="block font-display font-semibold text-[15px]">
-                            {nbsp(p.name)}
-                          </span>
-                          <span className="block font-body text-[13px] text-foreground/60">
-                            {nbsp(`${p.age} ${yearsWord(p.age)} · ${p.profession}`)}
-                          </span>
-                        </span>
-                      </button>
-                    );
-                  })}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Панель выбранного человека */}
-        <div className="mt-6 rounded-xl border border-border bg-card p-4 sm:p-6">
-          {selected ? (
-            <div>
-              <div className="flex items-start gap-3">
-                <span className="flex w-11 h-11 shrink-0 items-center justify-center rounded-full bg-accent font-display font-semibold text-[15px] text-background">
-                  {initials(selected.name)}
-                </span>
-                <div>
-                  <h3 className="font-display font-semibold text-xl md:text-2xl leading-tight">
-                    {nbsp(selected.name)}
-                  </h3>
-                  <p className="mt-1 font-body text-[14px] text-foreground/60">
-                    {nbsp(
-                      `${selected.profession} · ${selected.country} · ${selected.years}`
-                    )}
-                  </p>
-                </div>
-              </div>
-              <p className="mt-4 font-body text-[17px] leading-relaxed text-foreground/85">
-                <span className="font-display font-semibold text-accent">
-                  {nbsp(`${selected.age} ${yearsWord(selected.age)}`)}
-                </span>{" "}
-                {nbsp(`– ${selected.headline}`)}
-              </p>
-              <ul className="mt-3 space-y-1.5">
-                {selected.facts.map((f) => (
-                  <li
-                    key={f}
-                    className="font-body text-[15px] leading-relaxed text-foreground/75 pl-4 relative"
-                  >
-                    <span className="absolute left-0 top-[0.65em] w-1 h-1 rounded-full bg-accent" />
-                    {nbsp(f)}
-                  </li>
-                ))}
-              </ul>
-              <a
-                href={selected.source}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-4 inline-block font-body text-[13px] text-foreground/50 underline underline-offset-2 hover:text-accent"
-              >
-                {nbsp("источник")}
-              </a>
-            </div>
-          ) : (
-            <p className="font-body text-[15px] leading-relaxed text-foreground/60">
-              {nbsp(
-                "Нажмите на любой круг: внутри – возраст, в котором человек начал главное дело или продолжал работать, и что за этим стояло."
-              )}
-            </p>
-          )}
-        </div>
-
-        {/* Пояснение к половинам */}
-        <div className="mt-6 grid gap-3 sm:grid-cols-3">
-          {BANDS.map((b) => (
-            <div key={b.id} className="rounded-lg border border-border p-4">
-              <p className="font-display font-semibold text-[15px]">
-                {nbsp(`${b.title} лет`)}
-              </p>
-              <p className="mt-1.5 font-body text-[14px] leading-relaxed text-foreground/70">
-                {nbsp(b.note)}
-              </p>
-            </div>
-          ))}
+          <PersonDetails person={selected} />
         </div>
       </div>
-    </div>
+    </section>
   );
 };

@@ -145,8 +145,8 @@ const GroupTimeline = ({ range, title, people }: { range: string; title: string;
   });
 
   return (
-    <div className="rounded-lg border border-dashed border-border bg-card">
-      <div className="border-b border-dashed border-border px-5 py-5">
+    <div className={`rounded-lg border border-dashed ${start >= 80 ? "border-[hsl(var(--longevity-third)/0.9)] bg-[hsl(var(--longevity-third)/0.46)]" : "border-[hsl(var(--longevity-second)/0.8)] bg-[hsl(var(--longevity-second)/0.42)]"}`}>
+      <div className="border-b border-dashed border-border/60 px-5 py-5">
         <p className={`font-display text-4xl font-semibold leading-none ${start >= 80 ? "text-[hsl(var(--longevity-third-foreground))]" : "text-accent"}`}>{nbsp(range)}</p>
         <p className="mt-2 font-display text-xl font-semibold leading-none">{nbsp(title)}</p>
       </div>

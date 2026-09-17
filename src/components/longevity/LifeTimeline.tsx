@@ -102,7 +102,7 @@ const mapTop = (person: StoryPerson) => {
     .filter((candidate) => candidate.chapter === person.chapter)
     .sort((first, second) => first.age - second.age || first.id.localeCompare(second.id));
   const index = peers.findIndex((candidate) => candidate.id === person.id);
-  const rows = [52, 60, 68, 76, 84, 92] as const;
+  const rows = [58, 66, 74, 82, 90, 62] as const;
   return rows[index % rows.length];
 };
 

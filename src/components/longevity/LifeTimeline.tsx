@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowDown, ArrowUpRight, X } from "lucide-react";
+import { ArrowUpRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   longevityStoryPeople,
@@ -297,7 +297,7 @@ export const LifeTimeline = () => {
                 <h3 className="mt-2 font-display text-3xl font-semibold leading-none sm:text-4xl">{nbsp(item.title)}</h3>
                 <div className="mt-4 space-y-3">
                   {item.paragraphs.map((paragraph, paragraphIndex) => (
-                    <p key={paragraph} className={`font-body leading-relaxed ${item.quote && paragraphIndex === 1 ? "text-xl font-semibold" : "text-base"}`}>{nbsp(paragraph)}</p>
+                    <p key={paragraph} className={`font-body leading-relaxed ${"quote" in item && item.quote && paragraphIndex === 1 ? "text-xl font-semibold" : "text-base"}`}>{nbsp(paragraph)}</p>
                   ))}
                 </div>
               </div>

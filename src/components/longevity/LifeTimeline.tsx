@@ -203,7 +203,7 @@ const PersonButton = ({ person, onSelect, compact = false, delay = 0 }: { person
         style={{ animationDelay: compact ? undefined : `${delay}ms` }}
       >
         <span
-          className={`flex h-full w-full items-center justify-center rounded-full border-2 bg-card font-display text-[10px] font-semibold shadow-hard transition-transform duration-200 group-hover:scale-110 sm:text-[11px] ${categoryRing[person.cat]} motion-reduce:group-hover:scale-100`}
+          className={`flex h-6 w-6 items-center justify-center rounded-full border-2 bg-card font-display text-[10px] font-semibold shadow-hard transition-transform duration-200 group-hover:scale-110 sm:h-7 sm:w-7 sm:text-[11px] ${categoryRing[person.cat]} motion-reduce:group-hover:scale-100`}
         >
           {person.age}
         </span>

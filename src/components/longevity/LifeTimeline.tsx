@@ -396,8 +396,8 @@ export const LifeTimeline = () => {
           <div className="mt-10 hidden rounded-lg border border-border bg-card lg:block">
             <div className="relative h-[720px] w-full">
               <div className="absolute inset-x-0 bottom-[16%] top-[4%]">
-                <Zone className="h-full border-[hsl(var(--longevity-second)/0.7)]" start={5} end={mapX(80)} visible range="40-80" title="Второй акт" />
-                <Zone className="h-full border-[hsl(var(--longevity-third)/0.8)]" rangeClassName="text-[hsl(var(--longevity-third-foreground))]" start={mapX(80)} end={95} visible range="80-120" title="Третья половина" />
+                <Zone className="h-[70%] border-[hsl(var(--longevity-second)/0.8)] bg-[hsl(var(--longevity-second)/0.42)]" start={5} end={mapX(80)} visible range="40-80" title="Второй акт" />
+                <Zone className="h-full border-[hsl(var(--longevity-third)/0.9)] bg-[hsl(var(--longevity-third)/0.46)]" rangeClassName="text-[hsl(var(--longevity-third-foreground))]" start={mapX(80)} end={95} visible range="80-120" title="Третья половина" />
                 {longevityStoryPeople.map((person) => <PersonPin key={person.id} person={person} />)}
               </div>
               <div className="absolute left-[5%] right-[5%] top-[84%] h-px bg-muted-foreground/60" />

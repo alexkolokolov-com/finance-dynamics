@@ -413,7 +413,7 @@ export const LifeTimeline = () => {
                 </div>
               ))}
             </div>
-            <div className="pointer-events-none absolute inset-x-4 top-[14vh] z-20 grid grid-cols-1 sm:inset-x-[5vw] md:grid-cols-3">
+            <div className="pointer-events-none absolute inset-x-4 top-[9vh] z-20 grid grid-cols-1 sm:inset-x-[5vw] md:grid-cols-3">
               {chapters.map((item, index) => (
                 <div
                   key={item.id}

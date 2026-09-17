@@ -97,7 +97,7 @@ const personLine = (name: string) => {
 const MAP_MIN_AGE = 40;
 const mapX = (age: number) => 5 + ((Math.min(Math.max(age, MAP_MIN_AGE), MAX_AGE) - MAP_MIN_AGE) / (MAX_AGE - MAP_MIN_AGE)) * 90;
 
-const MAP_ROWS = [8, 20, 32, 44, 56, 68, 80, 92] as const;
+const MAP_ROWS = [24, 34, 44, 54, 64, 74, 84, 94] as const;
 const MAP_PILL_GAP = 11;
 
 const mapLayout = (() => {

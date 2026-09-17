@@ -15,6 +15,15 @@ import { nbsp } from "@/lib/nbsp";
 const MAX_AGE = 120;
 const xPct = (age: number) => 4 + (Math.min(age, MAX_AGE) / MAX_AGE) * 92;
 const yByLevel = { 1: 54, 2: 65, 3: 76 } as const;
+const TIMELINE_GEOMETRY = {
+  start: 4,
+  end: 96,
+  firstEnd: xPct(40),
+  secondEnd: xPct(80),
+  crisisStart: xPct(35),
+  crisisEnd: xPct(45),
+  crisisCenter: xPct(40),
+} as const;
 
 const chapters = [
   {
@@ -129,21 +138,47 @@ const axisWidth = (chapter: number) => {
   return chapter >= 7 ? 96 : 30;
 };
 
-const Zone = ({ className, visible, range, title, delay = 0 }: { className: string; visible: boolean; range: string; title: string; delay?: number }) => (
+const Zone = ({ className, visible, range, title, labelClassName = "", delay = 0 }: { className: string; visible: boolean; range: string; title: string; labelClassName?: string; delay?: number }) => (
   <div
-    className={`absolute bottom-[10%] origin-left rounded-lg border border-dashed border-border transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none ${className} ${
+    className={`absolute bottom-0 origin-left rounded-lg border border-dashed border-border transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none ${className} ${
       visible ? "scale-x-100 opacity-100" : "scale-x-[0.94] opacity-0"
     }`}
     style={{ transitionDelay: visible ? `${delay}ms` : "0ms" }}
   >
-    <div className="absolute inset-x-2 top-4 text-left sm:inset-x-4 sm:top-6">
-      <p className="whitespace-nowrap font-display text-[clamp(1.7rem,3.8vw,3.9rem)] font-semibold leading-none text-accent">{nbsp(range)}</p>
+    <div className={`absolute inset-x-2 top-4 text-left sm:inset-x-4 sm:top-6 ${labelClassName}`}>
+      <p className="whitespace-nowrap font-display text-[clamp(2rem,4.2vw,4rem)] font-semibold leading-none text-accent">{nbsp(range)}</p>
       <p className="mt-3 font-display text-[clamp(0.95rem,1.7vw,1.5rem)] font-semibold leading-[0.95] text-foreground">
         {title.split(" ").map((word) => <span key={word} className="block sm:inline">{nbsp(word)}<span className="hidden sm:inline"> </span></span>)}
       </p>
     </div>
   </div>
 );
+
+const CrisisMarker = ({ visible }: { visible: boolean }) => {
+  const left = TIMELINE_GEOMETRY.crisisStart;
+  const width = TIMELINE_GEOMETRY.crisisEnd - TIMELINE_GEOMETRY.crisisStart;
+
+  return (
+    <>
+      <div
+        aria-hidden="true"
+        className={`absolute bottom-0 z-[5] h-[70%] rounded-lg border border-dashed border-accent/25 bg-accent/[0.07] transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none ${visible ? "scale-x-100 opacity-100" : "scale-x-[0.94] opacity-0"}`}
+        style={{ left: `${left}%`, width: `${width}%` }}
+      />
+
+      <div
+        className={`absolute z-20 flex -translate-x-1/2 flex-col items-center transition-[opacity,transform] duration-500 motion-reduce:transition-none ${visible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
+        style={{ left: `${TIMELINE_GEOMETRY.crisisCenter}%` }}
+      >
+        <div className="rounded-md bg-accent px-3 py-2 text-center text-accent-foreground shadow-paper sm:px-4">
+          <p className="whitespace-nowrap font-display text-xl font-semibold leading-none sm:text-2xl">{nbsp("35-45")}</p>
+          <p className="mt-1 whitespace-nowrap font-display text-sm font-semibold leading-none">{nbsp("Кризис")}</p>
+        </div>
+        <span aria-hidden="true" className="h-4 w-px bg-accent sm:h-5" />
+      </div>
+    </>
+  );
+};
 
 const PersonButton = ({ person, onSelect, compact = false, delay = 0 }: { person: StoryPerson; onSelect: () => void; compact?: boolean; delay?: number }) => (
   <Button
@@ -283,19 +318,14 @@ export const LifeTimeline = () => {
     <>
       <div id="timeline" className="relative scroll-mt-16">
         <div data-timeline-scene className="pointer-events-none sticky top-16 z-10 flex h-[calc(100vh-4rem)] items-center justify-center px-2 sm:px-5">
-          <div className="relative h-[min(650px,80vh)] w-full max-w-[1420px] overflow-hidden rounded-lg border border-border bg-card shadow-paper">
-            <div className="absolute inset-x-3 bottom-5 top-8 sm:inset-x-8 sm:bottom-7 sm:top-10">
-              <Zone className="left-[4%] h-[30%] w-[30%] bg-accent/[0.045]" visible={zoneVisibility.first} range="0-40" title="Первая половина" />
-              <div className={`absolute bottom-[10%] left-[30%] h-[30%] w-[9%] origin-left rounded-lg border border-dashed border-border bg-accent/[0.08] transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none ${zoneVisibility.turn ? "scale-x-100 opacity-100" : "scale-x-[0.94] opacity-0"}`} style={{ transitionDelay: zoneVisibility.turn ? "80ms" : "0ms" }} />
-              <div className={`absolute bottom-[45%] left-[4%] z-10 flex items-center transition-[opacity,transform] duration-500 motion-reduce:transition-none sm:bottom-[73%] sm:left-[34.5%] sm:block sm:-translate-x-1/2 sm:text-center ${zoneVisibility.turn ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}>
-                <div className="rounded-md bg-accent px-3 py-2 text-accent-foreground shadow-paper sm:min-w-24 sm:px-4">
-                  <p className="whitespace-nowrap font-display text-xl font-semibold leading-none sm:text-2xl">{nbsp("35-45")}</p>
-                  <p className="mt-1 whitespace-nowrap font-display text-sm font-semibold leading-none">{nbsp("Кризис")}</p>
-                </div>
-                <span aria-hidden="true" className="block h-px w-[calc(26vw-0.75rem)] bg-accent sm:mx-auto sm:h-10 sm:w-px" />
+          <div className="relative h-[min(590px,76vh)] w-full max-w-[1420px] overflow-hidden rounded-lg border border-border bg-card shadow-paper">
+            <div className="absolute inset-x-3 bottom-5 top-5 sm:inset-x-8 sm:bottom-7 sm:top-7">
+              <div className="absolute inset-x-0 bottom-[10%] top-[16%] sm:top-[12%]">
+                <Zone className="h-[40%] bg-accent/[0.045]" visible={zoneVisibility.first} range="0-40" title="Первая половина" />
+                <Zone className="h-[70%] bg-foreground/[0.035]" labelClassName="pl-2 sm:pl-5" visible={zoneVisibility.second} range="40-80" title="Второй акт" delay={140} />
+                <Zone className="h-full bg-accent-soft/15" visible={zoneVisibility.third} range="80-120" title="Третья половина" delay={180} />
+                <CrisisMarker visible={zoneVisibility.turn} />
               </div>
-              <Zone className="left-[34%] h-[60%] w-[31%] bg-foreground/[0.035]" visible={zoneVisibility.second} range="40-80" title="Второй акт" delay={140} />
-              <Zone className="left-[65%] h-[90%] w-[31%] bg-accent-soft/15" visible={zoneVisibility.third} range="80-120" title="Третья половина" delay={180} />
               <div className="absolute left-[4%] right-[4%] top-[90%] h-px bg-border" />
               <div className="absolute left-[4%] top-[90%] h-0.5 bg-foreground transition-[width] duration-1000 ease-out motion-reduce:transition-none" style={{ width: `${axisWidth(chapter)}%` }} />
               {[0, 20, 40, 60, 80, 100, 120].map((tick) => (

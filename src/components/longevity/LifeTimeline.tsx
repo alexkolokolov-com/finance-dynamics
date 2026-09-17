@@ -374,12 +374,13 @@ export const LifeTimeline = () => {
           </div>
 
           <div className="mt-10 hidden grid-cols-2 items-stretch gap-4 md:grid">
-            {mapGroups.map((group) => <GroupTimeline key={group.range} {...group} levels={6} gap={17} areaClassName="min-h-[380px]" />)}
+            {mapGroups.map((group) => <GroupTimeline key={group.range} {...group} />)}
           </div>
 
           <div className="mt-10 space-y-5 md:hidden">
-            {mapGroups.map((group) => <GroupTimeline key={group.range} {...group} levels={9} gap={34} areaClassName="min-h-[420px]" />)}
+            {mapGroups.map((group) => <GroupTimeline key={`m-${group.range}`} {...group} />)}
           </div>
+
         </div>
       </section>
 

@@ -97,7 +97,7 @@ const personLine = (name: string) => {
 const MAP_MIN_AGE = 40;
 const mapX = (age: number) => 5 + ((Math.min(Math.max(age, MAP_MIN_AGE), MAX_AGE) - MAP_MIN_AGE) / (MAX_AGE - MAP_MIN_AGE)) * 90;
 
-const MAP_ROWS = [38, 48, 58, 68, 78, 88] as const;
+const MAP_ROWS = [52, 62, 72, 82, 92] as const;
 const MAP_PILL_GAP = 11;
 
 const mapLayout = (() => {
@@ -128,17 +128,17 @@ const mapGroups = [
   { range: "80-120", title: "Третья половина", people: sortedPeople.filter((person) => person.age >= 80) },
 ];
 
-const groupX = (age: number, start: number, end: number) => 7 + ((Math.min(Math.max(age, start), end) - start) / (end - start)) * 86;
+const groupX = (age: number, start: number, end: number) => 17 + ((Math.min(Math.max(age, start), end) - start) / (end - start)) * 66;
 
 const GroupTimeline = ({ range, title, people }: { range: string; title: string; people: StoryPerson[] }) => {
   const [start, end] = range.split("-").map(Number);
-  const rows = [12, 22, 32, 42, 52, 62, 72, 82] as const;
+  const rows = [9, 18, 27, 36, 45, 54, 63, 72, 81] as const;
   const rowByPerson = new Map<string, number>();
   const lastX = rows.map(() => Number.NEGATIVE_INFINITY);
 
   people.forEach((person) => {
     const x = groupX(person.age, start, end);
-    const available = rows.map((_, index) => index).filter((index) => x - lastX[index] >= 38);
+    const available = rows.map((_, index) => index).filter((index) => x - lastX[index] >= 34);
     const row = available[0] ?? lastX.indexOf(Math.min(...lastX));
     lastX[row] = x;
     rowByPerson.set(person.id, rows[row]);

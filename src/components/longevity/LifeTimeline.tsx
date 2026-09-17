@@ -97,14 +97,26 @@ const personLine = (name: string) => {
 const MAP_MIN_AGE = 40;
 const mapX = (age: number) => 5 + ((Math.min(Math.max(age, MAP_MIN_AGE), MAX_AGE) - MAP_MIN_AGE) / (MAX_AGE - MAP_MIN_AGE)) * 90;
 
-const mapTop = (person: StoryPerson) => {
-  const peers = longevityStoryPeople
-    .filter((candidate) => candidate.chapter === person.chapter)
-    .sort((first, second) => first.age - second.age || first.id.localeCompare(second.id));
-  const index = peers.findIndex((candidate) => candidate.id === person.id);
-  const rows = [58, 66, 74, 82, 90, 62] as const;
-  return rows[index % rows.length];
-};
+const MAP_ROWS = [62, 70, 78, 86, 94] as const;
+const MAP_PILL_GAP = 10;
+
+const mapLayout = (() => {
+  const positions = new Map<string, number>();
+  const lastX: number[] = MAP_ROWS.map(() => Number.NEGATIVE_INFINITY);
+  [...longevityStoryPeople]
+    .sort((first, second) => first.age - second.age || first.id.localeCompare(second.id))
+    .forEach((person) => {
+      const x = mapX(person.age);
+      let row = lastX.findIndex((value) => x - value >= MAP_PILL_GAP);
+      if (row === -1) row = lastX.indexOf(Math.min(...lastX));
+      lastX[row] = x;
+      positions.set(person.id, MAP_ROWS[row]);
+    });
+  return positions;
+})();
+
+const mapTop = (person: StoryPerson) => mapLayout.get(person.id) ?? MAP_ROWS[0];
+
 
 
 const chapterImage = (chapter: number) => {

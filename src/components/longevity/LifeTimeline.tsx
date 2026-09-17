@@ -294,7 +294,7 @@ export const LifeTimeline = () => {
   return (
     <>
       <div className="relative">
-        <div className="pointer-events-none sticky top-16 z-10 flex h-[calc(100vh-4rem)] items-center justify-center px-2 sm:px-5">
+        <div data-timeline-scene className="pointer-events-none sticky top-16 z-10 flex h-[calc(100vh-4rem)] items-center justify-center px-2 sm:px-5">
           <div className="relative h-[min(650px,80vh)] w-full max-w-[1420px] overflow-hidden rounded-lg border border-border bg-card shadow-paper">
             <div className="absolute left-4 right-4 top-5 z-10 flex items-start justify-between gap-6 sm:left-8 sm:right-8 sm:top-7">
               <h2 key={chapterTitle(chapter)} className="animate-fade-up font-display text-base font-semibold motion-reduce:animate-none sm:text-lg">{nbsp(chapterTitle(chapter))}</h2>
@@ -347,6 +347,7 @@ export const LifeTimeline = () => {
           {chapters.map((item, index) => (
             <section
               key={item.id}
+              data-story-step
               data-chapter={item.id}
               ref={(node) => { stepRefs.current[index] = node; }}
               className={`flex min-h-[88vh] items-center px-4 py-[10vh] sm:px-[5vw] ${index % 2 ? "justify-end" : "justify-start"}`}

@@ -97,7 +97,7 @@ const personLine = (name: string) => {
 const MAP_MIN_AGE = 40;
 const mapX = (age: number) => 5 + ((Math.min(Math.max(age, MAP_MIN_AGE), MAX_AGE) - MAP_MIN_AGE) / (MAX_AGE - MAP_MIN_AGE)) * 90;
 
-const MAP_ROWS = [62, 70, 78, 86, 94] as const;
+const MAP_ROWS = [56, 62, 68, 74, 80, 86, 92] as const;
 const MAP_PILL_GAP = 10;
 
 const mapLayout = (() => {
@@ -324,7 +324,7 @@ export const LifeTimeline = () => {
             <p className="mt-5 max-w-3xl font-body text-lg leading-relaxed text-foreground/75">{nbsp("Наведите на точку и вспомните истории людей, которые преодолели кризисы и после 40 реализовали себя. А также тех, кто и после 80 продолжает активную жизнь!")}</p>
           </div>
           <div className="mt-10 overflow-x-auto rounded-lg border border-border bg-background">
-            <div className="relative h-[520px] min-w-[940px]">
+            <div className="relative h-[640px] min-w-[940px]">
               <div className="absolute inset-x-0 bottom-[16%] top-[4%]">
                 <Zone className="h-[70%] border-[hsl(var(--longevity-second)/0.8)] bg-[hsl(var(--longevity-second)/0.42)]" start={5} end={mapX(80)} visible range="40-80" title="Второй акт" />
                 <Zone className="h-full border-[hsl(var(--longevity-third)/0.9)] bg-[hsl(var(--longevity-third)/0.46)]" rangeClassName="text-[hsl(var(--longevity-third-foreground))]" start={mapX(80)} end={95} visible range="80-120" title="Третья половина" />

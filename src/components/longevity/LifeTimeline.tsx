@@ -1,13 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowUpRight, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import firstHalfIllustration from "@/assets/longevity-first-half.jpg";
 import turnIllustration from "@/assets/longevity-turn.jpg";
 import secondActIllustration from "@/assets/longevity-second-act.jpg";
 import thirdHalfIllustration from "@/assets/longevity-third-half.jpg";
 import {
   longevityStoryPeople,
-  type StoryCategory,
   type StoryPerson,
 } from "@/data/longevityStoryPeople";
 import { nbsp } from "@/lib/nbsp";
@@ -92,41 +89,35 @@ const storySteps = chapters.flatMap((item) => [
   { key: `${item.id}-card`, item, phase: "card" as const },
 ]);
 
-const categoryLabels: Record<StoryCategory, string> = {
-  business: "бизнес / технологии",
-  culture: "культура / медиа",
-  sport: "спорт / физическая активность",
-  science: "образование / наука",
-};
-
-const categoryRing: Record<StoryCategory, string> = {
-  business: "border-accent",
-  culture: "border-foreground",
-  sport: "border-muted-foreground",
-  science: "border-accent/55",
-};
-
 const personLine = (name: string) => {
   const words = name.split(" ");
   return [words[0] ?? "", words.slice(1).join(" ")] as const;
 };
 
-const initials = (name: string) =>
-  name
-    .split(" ")
-    .slice(0, 2)
-    .map((word) => word[0])
-    .join("");
+const MAP_MIN_AGE = 40;
+const mapX = (age: number) => 5 + ((Math.min(Math.max(age, MAP_MIN_AGE), MAX_AGE) - MAP_MIN_AGE) / (MAX_AGE - MAP_MIN_AGE)) * 90;
 
-const pointTop = (person: StoryPerson, compact: boolean) => {
-  const base = compact ? 31 + (person.level - 1) * 22 : yByLevel[person.level];
-  const peers = longevityStoryPeople
-    .filter((candidate) => candidate.chapter === person.chapter && candidate.level === person.level)
-    .sort((first, second) => first.age - second.age);
-  const index = peers.findIndex((candidate) => candidate.id === person.id);
-  const offsets = [-6, 6, 0] as const;
-  return base + offsets[index % offsets.length];
-};
+const MAP_ROWS = [56, 62, 68, 74, 80, 86, 92] as const;
+const MAP_PILL_GAP = 10;
+
+const mapLayout = (() => {
+  const positions = new Map<string, number>();
+  const lastX: number[] = MAP_ROWS.map(() => Number.NEGATIVE_INFINITY);
+  [...longevityStoryPeople]
+    .sort((first, second) => first.age - second.age || first.id.localeCompare(second.id))
+    .forEach((person) => {
+      const x = mapX(person.age);
+      let row = lastX.findIndex((value) => x - value >= MAP_PILL_GAP);
+      if (row === -1) row = lastX.indexOf(Math.min(...lastX));
+      lastX[row] = x;
+      positions.set(person.id, MAP_ROWS[row]);
+    });
+  return positions;
+})();
+
+const mapTop = (person: StoryPerson) => mapLayout.get(person.id) ?? MAP_ROWS[0];
+
+
 
 const chapterImage = (chapter: number) => {
   if (chapter === 1) return firstHalfIllustration;
@@ -185,88 +176,44 @@ const CrisisMarker = ({ visible }: { visible: boolean }) => {
   );
 };
 
-const PersonButton = ({ person, onSelect, compact = false, delay = 0 }: { person: StoryPerson; onSelect: () => void; compact?: boolean; delay?: number }) => {
+const PersonPin = ({ person }: { person: StoryPerson }) => {
   const [firstName, lastName] = personLine(person.name);
-  const flip = xPct(person.age) > 76;
+  const flip = mapX(person.age) > 68;
 
   return (
-    <Button
-      type="button"
-      variant="ghost"
-      aria-label={`${person.name}, ${person.age}`}
-      onClick={onSelect}
-      className="pointer-events-auto group absolute z-20 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full p-0 hover:z-30 hover:bg-transparent sm:h-7 sm:w-7"
-      style={{ left: `${xPct(person.age)}%`, top: `${pointTop(person, compact)}%` }}
+    <div
+      className="group pointer-events-auto absolute z-20 -translate-x-4 -translate-y-1/2 hover:z-40 focus-within:z-40"
+      style={{ left: `${mapX(person.age)}%`, top: `${mapTop(person)}%` }}
     >
-      <span
-        className={`${compact ? "" : "animate-timeline-point-in"} relative flex items-center ${compact ? "opacity-100" : "opacity-0"}`}
-        style={{ animationDelay: compact ? undefined : `${delay}ms` }}
+      <div
+        tabIndex={0}
+        role="button"
+        aria-label={`${person.name}, ${person.age}`}
+        className="flex cursor-default items-center gap-2 rounded-full border-2 border-accent bg-card pr-3 shadow-paper transition-transform duration-200 group-hover:scale-[1.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent motion-reduce:group-hover:scale-100"
       >
-        <span
-          className={`flex h-6 w-6 items-center justify-center rounded-full border-2 bg-card font-display text-[10px] font-semibold shadow-hard transition-transform duration-200 group-hover:scale-110 sm:h-7 sm:w-7 sm:text-[11px] ${categoryRing[person.cat]} motion-reduce:group-hover:scale-100`}
-        >
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent font-display text-[11px] font-semibold text-accent-foreground">
           {person.age}
         </span>
-        <span
-          className={`absolute top-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-border bg-card px-2.5 py-1 shadow-paper ${flip ? "right-[calc(100%+6px)] text-right" : "left-[calc(100%+6px)]"}`}
-        >
-          <span className="block font-body text-[10px] font-semibold leading-[1.25] sm:text-[11px]">{nbsp(firstName)}</span>
-          {lastName ? <span className="block font-body text-[10px] leading-[1.25] sm:text-[11px]">{nbsp(lastName)}</span> : null}
+        <span className="whitespace-nowrap py-0.5 text-left">
+          <span className="block font-body text-[11px] font-semibold leading-[1.2]">{nbsp(firstName)}</span>
+          {lastName ? <span className="block font-body text-[11px] leading-[1.2] text-foreground/70">{nbsp(lastName)}</span> : null}
         </span>
-      </span>
-    </Button>
+      </div>
+
+      <div
+        aria-hidden="true"
+        className={`pointer-events-none absolute bottom-[calc(100%+10px)] w-64 rounded-lg border border-border bg-card p-4 opacity-0 shadow-hard transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none ${flip ? "right-0" : "left-0"}`}
+      >
+        <p className="font-body text-xs font-semibold text-accent">{nbsp(person.role)}</p>
+        <p className="mt-2 font-body text-sm leading-snug">{nbsp(person.turn)}</p>
+      </div>
+    </div>
   );
 };
 
-const PersonDrawer = ({ person, onClose }: { person?: StoryPerson; onClose: () => void }) => (
-  <>
-    <div
-      aria-hidden="true"
-      onClick={onClose}
-      className={`fixed inset-0 z-[90] bg-foreground/25 transition-opacity duration-300 ${person ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}
-    />
-    <aside
-      role="dialog"
-      aria-modal="true"
-      aria-label={person?.name ?? "История"}
-      className={`fixed inset-y-0 right-0 z-[100] w-[min(560px,94vw)] overflow-y-auto border-l border-border bg-card shadow-hard transition-transform duration-300 ${
-        person ? "translate-x-0" : "translate-x-full"
-      }`}
-    >
-      <Button type="button" size="icon" variant="outline" aria-label="Закрыть" onClick={onClose} className="absolute right-4 top-4 z-[110] rounded-full bg-card">
-        <X className="h-4 w-4" />
-      </Button>
-      {person ? (
-        <div className="px-6 pb-14 pt-12 sm:px-9">
-          <div className={`mb-8 flex h-28 w-28 items-center justify-center rounded-full border-[5px] bg-background font-display text-4xl font-semibold ${categoryRing[person.cat]}`}>
-            {initials(person.name)}
-          </div>
-          <p className="font-body text-sm font-semibold text-muted-foreground">{nbsp(`${person.age} лет · ${person.country}`)}</p>
-          <h3 className="mt-2 font-display text-4xl font-semibold leading-none sm:text-5xl">{nbsp(person.name)}</h3>
-          <p className="mt-3 font-body text-base text-foreground/70">{nbsp(person.role)}</p>
-          {[
-            ["До", person.before],
-            ["Перелом / точка на шкале", person.turn],
-            ["После", person.after],
-          ].map(([label, text]) => (
-            <div key={label} className="mt-7 border-t border-border pt-5">
-              <p className="font-body text-xs font-semibold text-muted-foreground">{nbsp(label)}</p>
-              <p className="mt-2 font-body text-base leading-relaxed">{nbsp(text)}</p>
-            </div>
-          ))}
-          <a href={person.source} target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex items-center gap-2 font-body text-sm font-semibold text-accent underline underline-offset-4">
-            {nbsp("Источник")} <ArrowUpRight className="h-4 w-4" />
-          </a>
-        </div>
-      ) : null}
-    </aside>
-  </>
-);
 
 export const LifeTimeline = () => {
   const [chapter, setChapter] = useState(1);
-  const [selected, setSelected] = useState<StoryPerson>();
-  const [filter, setFilter] = useState<"all" | StoryCategory>("all");
   const [phase, setPhase] = useState<"zone" | "card">("zone");
   const stepRefs = useRef<(HTMLElement | null)[]>([]);
 
@@ -308,12 +255,6 @@ export const LifeTimeline = () => {
       window.removeEventListener("pageshow", scheduleSync);
       if (frame) window.cancelAnimationFrame(frame);
     };
-  }, []);
-
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => event.key === "Escape" && setSelected(undefined);
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
   }, []);
 
   const zoneVisibility = useMemo(
@@ -381,17 +322,20 @@ export const LifeTimeline = () => {
           <div className="max-w-4xl">
             <h2 className="font-display text-4xl font-semibold leading-none sm:text-7xl">{nbsp("Посмотрите, у вас все еще впереди!")}</h2>
             <p className="mt-5 max-w-3xl font-body text-lg leading-relaxed text-foreground/75">{nbsp("Наведите на точку и вспомните истории людей, которые преодолели кризисы и после 40 реализовали себя. А также тех, кто и после 80 продолжает активную жизнь!")}</p>
-            <div className="mt-7 flex flex-wrap gap-2" aria-label="Фильтр">
-              {([['all', 'Все'], ...Object.entries(categoryLabels)] as ["all" | StoryCategory, string][]).map(([value, label]) => (
-                <Button key={value} type="button" size="sm" variant={filter === value ? "default" : "outline"} onClick={() => setFilter(value)} className="rounded-full">{nbsp(label === "бизнес / технологии" ? "Бизнес / tech" : label.charAt(0).toUpperCase() + label.slice(1))}</Button>
-              ))}
-            </div>
           </div>
           <div className="mt-10 overflow-x-auto rounded-lg border border-border bg-background">
-            <div className="relative h-[470px] min-w-[940px]">
-              <div className="absolute left-[4%] right-[4%] top-[53%] h-px bg-muted-foreground/60" />
-              {[0, 20, 40, 60, 80, 100, 120].map((tick) => <span key={tick} className="absolute top-[calc(53%+16px)] -translate-x-1/2 font-body text-[11px] text-muted-foreground" style={{ left: `${xPct(tick)}%` }}>{tick}</span>)}
-               {longevityStoryPeople.map((person) => filter === "all" || person.cat === filter ? <PersonButton key={person.id} person={person} onSelect={() => setSelected(person)} compact /> : null)}
+            <div className="relative h-[640px] min-w-[940px]">
+              <div className="absolute inset-x-0 bottom-[16%] top-[4%]">
+                <Zone className="h-[70%] border-[hsl(var(--longevity-second)/0.8)] bg-[hsl(var(--longevity-second)/0.42)]" start={5} end={mapX(80)} visible range="40-80" title="Второй акт" />
+                <Zone className="h-full border-[hsl(var(--longevity-third)/0.9)] bg-[hsl(var(--longevity-third)/0.46)]" rangeClassName="text-[hsl(var(--longevity-third-foreground))]" start={mapX(80)} end={95} visible range="80-120" title="Третья половина" />
+                {longevityStoryPeople.map((person) => <PersonPin key={person.id} person={person} />)}
+              </div>
+              <div className="absolute left-[5%] right-[5%] top-[84%] h-px bg-muted-foreground/60" />
+              {[40, 60, 80, 100, 120].map((tick) => (
+                <div key={tick} className="absolute top-[calc(84%+14px)] -translate-x-1/2 font-body text-[11px] text-muted-foreground" style={{ left: `${mapX(tick)}%` }}>
+                  <span className="absolute -top-[14px] left-1/2 h-2 w-px bg-muted-foreground" />{tick}
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -404,7 +348,7 @@ export const LifeTimeline = () => {
           <p className="mx-auto mt-9 max-w-3xl font-body text-xs leading-relaxed text-muted-foreground">{nbsp("120 лет на этой странице — не прогноз продолжительности жизни. Это предельный сценарий, который помогает увидеть цену слишком короткого финансового горизонта.")}</p>
         </div>
       </section>
-      <PersonDrawer person={selected} onClose={() => setSelected(undefined)} />
+
     </>
   );
 };

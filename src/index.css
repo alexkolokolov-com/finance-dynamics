@@ -35,8 +35,10 @@
 
     /* Таймлайн финансового долголетия */
     --longevity-first: 102 18% 82%;
+    --longevity-first-foreground: 108 20% 28%;
     --longevity-second: 14 60% 78%;
     --longevity-third: 30 5% 82%;
+    --longevity-third-foreground: 30 5% 34%;
     --longevity-crisis: 12 56% 50%;
 
     /* Совместимость со старыми классами — нейтрализованы */

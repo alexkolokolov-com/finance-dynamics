@@ -111,6 +111,13 @@ const personLine = (name: string) => {
   return [words[0] ?? "", words.slice(1).join(" ")] as const;
 };
 
+const initials = (name: string) =>
+  name
+    .split(" ")
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join("");
+
 const pointTop = (person: StoryPerson, compact: boolean) => {
   const base = compact ? 31 + (person.level - 1) * 22 : yByLevel[person.level];
   const peers = longevityStoryPeople

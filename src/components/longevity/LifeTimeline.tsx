@@ -321,17 +321,18 @@ export const LifeTimeline = () => {
         </div>
       </div>
 
-      <section className="relative z-40 border-t border-border bg-card px-4 py-20 sm:px-8 sm:py-28">
+      <section className="relative z-40 border-t border-border bg-background px-4 py-20 sm:px-8 sm:py-28">
         <div className="mx-auto max-w-[1400px]">
           <div className="max-w-4xl">
             <h2 className="font-display text-4xl font-semibold leading-none sm:text-7xl">{nbsp("Посмотрите, у вас все еще впереди!")}</h2>
             <p className="mt-5 max-w-3xl font-body text-lg leading-relaxed text-foreground/75">{nbsp("Наведите на точку и вспомните истории людей, которые преодолели кризисы и после 40 реализовали себя. А также тех, кто и после 80 продолжает активную жизнь!")}</p>
           </div>
-          <div className="mt-10 overflow-x-auto rounded-lg border border-border bg-background">
-            <div className="relative h-[640px] min-w-[940px]">
+
+          <div className="mt-10 hidden rounded-lg border border-border bg-card lg:block">
+            <div className="relative h-[720px] w-full">
               <div className="absolute inset-x-0 bottom-[16%] top-[4%]">
-                <Zone className="h-[70%] border-[hsl(var(--longevity-second)/0.8)] bg-[hsl(var(--longevity-second)/0.42)]" start={5} end={mapX(80)} visible range="40-80" title="Второй акт" />
-                <Zone className="h-full border-[hsl(var(--longevity-third)/0.9)] bg-[hsl(var(--longevity-third)/0.46)]" rangeClassName="text-[hsl(var(--longevity-third-foreground))]" start={mapX(80)} end={95} visible range="80-120" title="Третья половина" />
+                <Zone className="h-full border-[hsl(var(--longevity-second)/0.7)]" start={5} end={mapX(80)} visible range="40-80" title="Второй акт" />
+                <Zone className="h-full border-[hsl(var(--longevity-third)/0.8)]" rangeClassName="text-[hsl(var(--longevity-third-foreground))]" start={mapX(80)} end={95} visible range="80-120" title="Третья половина" />
                 {longevityStoryPeople.map((person) => <PersonPin key={person.id} person={person} />)}
               </div>
               <div className="absolute left-[5%] right-[5%] top-[84%] h-px bg-muted-foreground/60" />
@@ -341,6 +342,27 @@ export const LifeTimeline = () => {
                 </div>
               ))}
             </div>
+          </div>
+
+          <div className="mt-10 space-y-8 lg:hidden">
+            {mapGroups.map((group) => (
+              <div key={group.range} className="rounded-lg border border-dashed border-border bg-card p-5">
+                <p className="font-display text-3xl font-semibold leading-none text-accent">{nbsp(group.range)}</p>
+                <p className="mt-2 font-display text-lg font-semibold leading-none">{nbsp(group.title)}</p>
+                <ul className="mt-5 space-y-4">
+                  {group.people.map((person) => (
+                    <li key={person.id} className="rounded-lg border border-border bg-background p-3">
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent font-display text-xs font-semibold text-accent-foreground">{person.age}</span>
+                        <span className="font-body text-sm font-semibold leading-tight">{nbsp(person.name)}</span>
+                      </div>
+                      <p className="mt-2 font-body text-xs font-semibold text-accent">{nbsp(person.role)}</p>
+                      <p className="mt-1 font-body text-sm leading-snug text-foreground/80">{nbsp(person.turn)}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
       </section>

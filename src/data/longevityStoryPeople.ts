@@ -1,4 +1,4 @@
-export type StoryCategory = "business" | "culture" | "sport" | "science";
+export type StoryCategory = "business" | "culture" | "sport" | "science" | "state";
 
 export type StoryPerson = {
   id: string;
@@ -7,6 +7,7 @@ export type StoryPerson = {
   country: string;
   cat: StoryCategory;
   role: string;
+  field?: string;
   chapter: 4 | 6 | 7;
   level: 1 | 2 | 3;
   lang?: "ru";
@@ -17,6 +18,7 @@ export type StoryPerson = {
   source: string;
   events: number[];
 };
+
 
 export const longevityStoryPeople: StoryPerson[] = [
   // 45–80: новый большой этап

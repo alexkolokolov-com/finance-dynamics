@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import firstHalfIllustration from "@/assets/longevity-first-half.jpg";
+import turnIllustration from "@/assets/longevity-turn.jpg";
+import secondActIllustration from "@/assets/longevity-second-act.jpg";
+import thirdHalfIllustration from "@/assets/longevity-third-half.jpg";
 import {
   longevityStoryPeople,
   type StoryCategory,
@@ -10,7 +14,7 @@ import { nbsp } from "@/lib/nbsp";
 
 const MAX_AGE = 120;
 const xPct = (age: number) => 4 + (Math.min(age, MAX_AGE) / MAX_AGE) * 92;
-const yByLevel = { 1: 34, 2: 47, 3: 60 } as const;
+const yByLevel = { 1: 54, 2: 65, 3: 76 } as const;
 
 const chapters = [
   {
@@ -34,7 +38,7 @@ const chapters = [
   },
   {
     id: 3,
-    range: "данные вместо мотивации",
+    range: "45",
     title: "45 — не возраст «после успеха»",
     paragraphs: [
       "Исследование 2,7 млн основателей в США показало: у самых быстрорастущих новых компаний средний возраст основателя — около 45 лет.",
@@ -125,12 +129,11 @@ const visibleForChapter = (person: StoryPerson, chapter: number) => {
   return false;
 };
 
-const chapterTitle = (chapter: number) => {
-  if (chapter === 4) return "45–80 · новые большие главы";
-  if (chapter === 6) return "80–100 · разные модели профессионального долголетия";
-  if (chapter === 7) return "100+ · деятельность не обрывается автоматически";
-  if (chapter === 8) return "После 110 точек становится мало";
-  return "Жизнь как временная шкала";
+const chapterImage = (chapter: number) => {
+  if (chapter === 1) return firstHalfIllustration;
+  if (chapter === 2 || chapter === 3) return turnIllustration;
+  if (chapter === 4 || chapter === 5) return secondActIllustration;
+  return thirdHalfIllustration;
 };
 
 const axisWidth = (chapter: number) => {
@@ -148,16 +151,13 @@ const pathPeopleForChapter = (chapter: number) => {
     .filter((person): person is StoryPerson => Boolean(person) && (person?.events.length ?? 0) > 1);
 };
 
-const Zone = ({ className, label, visible, delay = 0 }: { className: string; label: string; visible: boolean; delay?: number }) => (
+const Zone = ({ className, visible, delay = 0 }: { className: string; visible: boolean; delay?: number }) => (
   <div
     className={`absolute bottom-[10%] top-[12%] origin-left rounded-lg border border-dashed border-border transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none ${className} ${
       visible ? "scale-x-100 opacity-100" : "scale-x-[0.94] opacity-0"
     }`}
     style={{ transitionDelay: visible ? `${delay}ms` : "0ms" }}
   >
-    <span className="absolute left-3 top-3 whitespace-nowrap font-body text-[10px] font-semibold text-foreground/65 sm:text-xs">
-      {nbsp(label)}
-    </span>
   </div>
 );
 
@@ -296,19 +296,26 @@ export const LifeTimeline = () => {
       <div className="relative">
         <div data-timeline-scene className="pointer-events-none sticky top-16 z-10 flex h-[calc(100vh-4rem)] items-center justify-center px-2 sm:px-5">
           <div className="relative h-[min(650px,80vh)] w-full max-w-[1420px] overflow-hidden rounded-lg border border-border bg-card shadow-paper">
-            <div className="absolute left-4 right-4 top-5 z-10 flex items-start justify-between gap-6 sm:left-8 sm:right-8 sm:top-7">
-              <h2 key={chapterTitle(chapter)} className="animate-fade-up font-display text-base font-semibold motion-reduce:animate-none sm:text-lg">{nbsp(chapterTitle(chapter))}</h2>
-              <p className="hidden max-w-lg text-right font-body text-xs leading-relaxed text-muted-foreground md:block">
-                {nbsp("Возраст здесь — не прогноз и не норматив. Это способ увидеть горизонт, который обычно остаётся за пределами наших решений.")}
-              </p>
+            <div className="absolute inset-x-3 top-3 h-[43%] overflow-hidden sm:inset-x-8 sm:top-5 sm:h-[46%]">
+              <img
+                key={chapterImage(chapter)}
+                src={chapterImage(chapter)}
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+                width={1536}
+                height={1024}
+                className="h-full w-full animate-fade-up object-cover object-center opacity-75 mix-blend-multiply motion-reduce:animate-none sm:object-[center_42%]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-card" />
             </div>
-            <div className="absolute inset-x-3 bottom-7 top-20 sm:inset-x-8 sm:bottom-8 sm:top-24">
-              <Zone className="left-[4%] w-[30%] bg-accent/[0.045]" label="0–40 · капитализация себя" visible={zoneVisibility.first} />
-              <Zone className="left-[30%] w-[9%] bg-accent/[0.08]" label="35–45" visible={zoneVisibility.turn} delay={80} />
-              <Zone className="left-[34%] w-[31%] bg-foreground/[0.035]" label="45–80 · второй акт" visible={zoneVisibility.second} delay={140} />
-              <Zone className="left-[65%] w-[31%] bg-accent-soft/15" label="80–120 · длинная жизнь" visible={zoneVisibility.third} delay={180} />
-              <div className="absolute left-[4%] right-[4%] top-[46%] h-px bg-border" />
-              <div className="absolute left-[4%] top-[46%] h-0.5 bg-foreground transition-[width] duration-1000 ease-out motion-reduce:transition-none" style={{ width: `${axisWidth(chapter)}%` }} />
+            <div className="absolute inset-x-3 bottom-5 top-8 sm:inset-x-8 sm:bottom-7 sm:top-10">
+              <Zone className="left-[4%] w-[30%] bg-accent/[0.045]" visible={zoneVisibility.first} />
+              <Zone className="left-[30%] w-[9%] bg-accent/[0.08]" visible={zoneVisibility.turn} delay={80} />
+              <Zone className="left-[34%] w-[31%] bg-foreground/[0.035]" visible={zoneVisibility.second} delay={140} />
+              <Zone className="left-[65%] w-[31%] bg-accent-soft/15" visible={zoneVisibility.third} delay={180} />
+              <div className="absolute left-[4%] right-[4%] top-[65%] h-px bg-border" />
+              <div className="absolute left-[4%] top-[65%] h-0.5 bg-foreground transition-[width] duration-1000 ease-out motion-reduce:transition-none" style={{ width: `${axisWidth(chapter)}%` }} />
               <svg aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full overflow-visible">
                 {pathPeopleForChapter(chapter).map((person) => {
                   const points = person.events.map((age, index) => `${xPct(age)},${yByLevel[person.level] + (index === 0 ? 0 : index % 2 ? -6 : 5)}`).join(" ");
@@ -323,22 +330,17 @@ export const LifeTimeline = () => {
                 })}
               </svg>
               {[0, 20, 40, 60, 80, 100, 120].map((tick) => (
-                <div key={tick} className="absolute top-[calc(46%+14px)] -translate-x-1/2 font-body text-[10px] text-muted-foreground sm:text-xs" style={{ left: `${xPct(tick)}%` }}>
+                <div key={tick} className="absolute top-[calc(65%+14px)] -translate-x-1/2 font-body text-[10px] text-muted-foreground sm:text-xs" style={{ left: `${xPct(tick)}%` }}>
                   <span className="absolute -top-[14px] left-1/2 h-2 w-px bg-muted-foreground" />{tick}
                 </div>
               ))}
-              <div className={`absolute left-[38%] top-[22%] w-44 -translate-x-1/2 text-center transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none sm:w-56 ${chapter === 3 ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}>
+              <div className={`absolute left-[38%] top-[42%] w-44 -translate-x-1/2 text-center transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none sm:w-56 ${chapter === 3 ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}>
                 <p className="font-display text-5xl font-semibold leading-none sm:text-6xl">45</p>
                 <p className="mt-2 font-body text-[10px] leading-snug text-foreground/65 sm:text-xs">{nbsp("Средний возраст основателя одной из 0,1% самых быстрорастущих новых компаний в исследовании NBER.")}</p>
               </div>
               {longevityStoryPeople.filter((person) => visibleForChapter(person, chapter)).map((person, index) => (
                 <PersonButton key={`${chapter}-${person.id}`} person={person} delay={Math.min(index * 65, 520)} onSelect={() => setSelected(person)} />
               ))}
-              <div className="absolute bottom-0 left-1 flex flex-wrap gap-x-4 gap-y-1 font-body text-[9px] text-muted-foreground sm:text-[11px]">
-                {(Object.entries(categoryLabels) as [StoryCategory, string][]).map(([category, label]) => (
-                  <span key={category} className="inline-flex items-center gap-1.5"><i className={`h-2 w-2 rounded-full border-2 ${categoryRing[category]}`} />{nbsp(label)}</span>
-                ))}
-              </div>
             </div>
           </div>
         </div>
@@ -353,8 +355,8 @@ export const LifeTimeline = () => {
               className={`flex min-h-[88vh] items-center px-4 py-[10vh] sm:px-[5vw] ${index % 2 ? "justify-end" : "justify-start"}`}
             >
               <div className="pointer-events-none w-[min(470px,92vw)] rounded-lg border border-border bg-card/95 p-5 shadow-hard backdrop-blur-md sm:p-7">
-                <p className="font-body text-xs font-semibold text-muted-foreground">{nbsp(item.range)}</p>
-                <h3 className="mt-2 font-display text-3xl font-semibold leading-none sm:text-4xl">{nbsp(item.title)}</h3>
+                <h3 className="font-display text-[clamp(3.4rem,8vw,6.8rem)] font-semibold leading-[0.82] text-accent">{nbsp(item.range)}</h3>
+                <p className="mt-5 font-display text-2xl font-semibold leading-tight sm:text-3xl">{nbsp(item.title)}</p>
                 <div className="mt-4 space-y-3">
                   {item.paragraphs.map((paragraph, paragraphIndex) => (
                     <p key={paragraph} className={`font-body leading-relaxed ${"quote" in item && item.quote && paragraphIndex === 1 ? "text-xl font-semibold" : "text-base"}`}>{nbsp(paragraph)}</p>
@@ -369,8 +371,7 @@ export const LifeTimeline = () => {
       <section className="relative z-40 border-t border-border bg-card px-4 py-20 sm:px-8 sm:py-28">
         <div className="mx-auto max-w-[1400px]">
           <div className="max-w-4xl">
-            <p className="font-body text-sm text-muted-foreground">{nbsp("Explore mode")}</p>
-            <h2 className="mt-3 font-display text-4xl font-semibold leading-none sm:text-7xl">{nbsp("Исследуйте шкалу самостоятельно")}</h2>
+            <h2 className="font-display text-4xl font-semibold leading-none sm:text-7xl">{nbsp("Исследуйте шкалу самостоятельно")}</h2>
             <p className="mt-5 max-w-3xl font-body text-lg leading-relaxed text-foreground/75">{nbsp("После истории таймлайн превращается в карту. Фильтруйте людей по сфере и открывайте карточки. Для нескольких героев показаны повторные точки — так видно, что «второй акт» сам может состоять из нескольких глав.")}</p>
             <div className="mt-7 flex flex-wrap gap-2" aria-label="Фильтр">
               {([['all', 'Все'], ...Object.entries(categoryLabels)] as ["all" | StoryCategory, string][]).map(([value, label]) => (

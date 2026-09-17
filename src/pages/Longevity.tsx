@@ -99,7 +99,7 @@ const Longevity = () => {
               </span>
               <span
                 aria-hidden="true"
-                className={`longevity-typewriter mt-1 block min-h-[0.93em] text-center text-muted-foreground sm:ml-[0.13em] sm:mt-0 sm:inline-block sm:min-w-[4.8em] sm:text-left ${headlineIsFinal ? "longevity-typewriter-final text-accent" : ""}`}
+                className={`longevity-typewriter mt-1 block min-h-[0.93em] text-center sm:ml-[0.13em] sm:mt-0 sm:inline-block sm:min-w-[4.8em] sm:text-left ${headlineIsFinal ? "longevity-typewriter-final text-accent" : "text-muted-foreground"}`}
               >
                 {headlineWord}
               </span>

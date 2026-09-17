@@ -121,6 +121,13 @@ const mapLayout = (() => {
 
 const mapTop = (person: StoryPerson) => mapLayout.get(person.id) ?? MAP_ROWS[0];
 
+const sortedPeople = [...longevityStoryPeople].sort((first, second) => first.age - second.age || first.id.localeCompare(second.id));
+
+const mapGroups = [
+  { range: "40-80", title: "Второй акт", people: sortedPeople.filter((person) => person.age < 80) },
+  { range: "80-120", title: "Третья половина", people: sortedPeople.filter((person) => person.age >= 80) },
+];
+
 
 
 const chapterImage = (chapter: number) => {

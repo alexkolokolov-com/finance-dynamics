@@ -161,11 +161,11 @@ const GroupTimeline = ({ range, title, people }: { range: string; title: string;
               className="group absolute z-10 -translate-x-1/2 -translate-y-1/2 hover:z-40 focus-within:z-40"
               style={{ left: `${x}%`, top: `${rowByPerson.get(person.id) ?? rows[0]}%` }}
             >
-              <div tabIndex={0} role="button" aria-label={`${person.name}, ${person.age}`} className="flex items-center rounded-full border-2 border-accent bg-card pr-2.5 shadow-paper transition-transform duration-200 group-hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent font-display text-[11px] font-semibold text-accent-foreground">{person.age}</span>
-                <span className="whitespace-nowrap px-2 py-1 text-left">
-                  <span className="block font-body text-[11px] font-semibold leading-none">{nbsp(firstName)}</span>
-                  {lastName ? <span className="mt-0.5 block font-body text-[11px] leading-none text-foreground/70">{nbsp(lastName)}</span> : null}
+              <div tabIndex={0} role="button" aria-label={`${person.name}, ${person.age}`} className="flex items-center rounded-full border-2 border-accent bg-card pr-2 shadow-paper transition-transform duration-200 group-hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent font-display text-[10px] font-semibold text-accent-foreground">{person.age}</span>
+                <span className="whitespace-nowrap px-1.5 py-1 text-left">
+                  <span className="block font-body text-[10px] font-semibold leading-none">{nbsp(firstName)}</span>
+                  {lastName ? <span className="mt-0.5 block font-body text-[10px] leading-none text-foreground/70">{nbsp(lastName)}</span> : null}
                 </span>
               </div>
               <div className={`pointer-events-none absolute bottom-[calc(100%+8px)] w-[min(15rem,72vw)] rounded-lg border border-border bg-card p-3 opacity-0 shadow-hard transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 ${flip ? "right-0" : "left-0"}`}>

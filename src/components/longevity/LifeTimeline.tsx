@@ -3,6 +3,7 @@ import firstHalfIllustration from "@/assets/longevity-first-half.jpg";
 import turnIllustration from "@/assets/longevity-turn.jpg";
 import secondActIllustration from "@/assets/longevity-second-act.jpg";
 import thirdHalfIllustration from "@/assets/longevity-third-half.jpg";
+import { Slider } from "@/components/ui/slider";
 import {
   longevityStoryPeople,
   type StoryPerson,
@@ -11,7 +12,6 @@ import { nbsp } from "@/lib/nbsp";
 
 const MAX_AGE = 120;
 const xPct = (age: number) => 4 + (Math.min(age, MAX_AGE) / MAX_AGE) * 92;
-const yByLevel = { 1: 54, 2: 65, 3: 76 } as const;
 const TIMELINE_GEOMETRY = {
   start: 4,
   end: 96,
@@ -232,9 +232,15 @@ const axisWidth = (chapter: number) => {
   return chapter >= 7 ? 96 : 30;
 };
 
+const storyColumnClass = (chapter: number) => {
+  if (chapter <= 2) return "md:col-start-1 md:justify-self-start";
+  if (chapter <= 5) return "md:col-start-2 md:justify-self-center";
+  return "md:col-start-3 md:justify-self-end";
+};
+
 const Zone = ({ className, visible, range, title, start, end, labelClassName = "", rangeClassName = "text-accent", delay = 0 }: { className: string; visible: boolean; range: string; title: string; start: number; end: number; labelClassName?: string; rangeClassName?: string; delay?: number }) => (
   <div
-    className={`absolute bottom-0 origin-left rounded-lg border border-dashed border-border transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none ${className} ${
+    className={`absolute bottom-0 origin-left rounded-lg border border-dashed border-border transition-[opacity,transform] duration-1000 ease-out motion-reduce:transition-none ${className} ${
       visible ? "scale-x-100 opacity-100" : "scale-x-[0.94] opacity-0"
     }`}
     style={{ left: `${start}%`, width: `${end - start}%`, transitionDelay: visible ? `${delay}ms` : "0ms" }}
@@ -256,12 +262,12 @@ const CrisisMarker = ({ visible }: { visible: boolean }) => {
     <>
       <div
         aria-hidden="true"
-        className={`absolute bottom-0 z-[5] h-[55%] rounded-lg border border-dashed border-[hsl(var(--longevity-crisis)/0.35)] bg-[hsl(var(--longevity-crisis)/0.08)] transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none ${visible ? "scale-x-100 opacity-100" : "scale-x-[0.94] opacity-0"}`}
+        className={`absolute bottom-0 z-[5] h-[55%] rounded-lg border border-dashed border-[hsl(var(--longevity-crisis)/0.35)] bg-[hsl(var(--longevity-crisis)/0.08)] transition-[opacity,transform] duration-1000 ease-out motion-reduce:transition-none ${visible ? "scale-x-100 opacity-100" : "scale-x-[0.94] opacity-0"}`}
         style={{ left: `${left}%`, width: `${width}%` }}
       />
 
       <div
-        className={`absolute bottom-[55%] z-20 flex -translate-x-full translate-y-1/2 items-center transition-[opacity,transform] duration-500 motion-reduce:transition-none ${visible ? "opacity-100" : "translate-y-[calc(50%+0.5rem)] opacity-0"}`}
+        className={`absolute bottom-[55%] z-20 flex -translate-x-full translate-y-1/2 items-center transition-[opacity,transform] duration-[900ms] motion-reduce:transition-none ${visible ? "opacity-100" : "translate-y-[calc(50%+0.5rem)] opacity-0"}`}
         style={{ left: `${TIMELINE_GEOMETRY.crisisStart}%` }}
       >
         <div className="rounded-md bg-accent px-3 py-2 text-left text-accent-foreground shadow-paper sm:px-4">
@@ -278,6 +284,21 @@ export const LifeTimeline = () => {
   const [chapter, setChapter] = useState(1);
   const [phase, setPhase] = useState<"zone" | "card">("zone");
   const stepRefs = useRef<(HTMLElement | null)[]>([]);
+
+  const moveToStep = (nextIndex: number, behavior: ScrollBehavior = "smooth") => {
+    const boundedIndex = Math.min(Math.max(Math.round(nextIndex), 0), storySteps.length - 1);
+    const target = storySteps[boundedIndex];
+    if (!target) return;
+
+    setChapter(target.item.id);
+    setPhase(target.phase);
+
+    const node = stepRefs.current[boundedIndex];
+    if (!node) return;
+
+    const top = node.getBoundingClientRect().top + window.scrollY + node.offsetHeight / 2 - window.innerHeight / 2;
+    window.scrollTo({ top, behavior });
+  };
 
   useEffect(() => {
     let frame = 0;
@@ -328,13 +349,39 @@ export const LifeTimeline = () => {
     }),
     [chapter],
   );
+  const activeStepIndex = Math.max(storySteps.findIndex((step) => step.item.id === chapter && step.phase === phase), 0);
+  const activeStep = storySteps[activeStepIndex];
 
   return (
     <>
       <div id="timeline" className="relative scroll-mt-16">
         <div data-timeline-scene className="pointer-events-none sticky top-16 z-10 flex h-[calc(100vh-4rem)] items-center justify-center px-2 sm:px-5">
           <div className="relative h-[min(590px,76vh)] w-full max-w-[1420px] overflow-hidden rounded-lg border border-border bg-card shadow-paper">
-            <div className="absolute inset-x-3 bottom-5 top-5 sm:inset-x-8 sm:bottom-7 sm:top-7">
+            <div className="pointer-events-auto absolute inset-x-4 top-4 z-30 flex items-center gap-4 sm:inset-x-8 sm:top-5">
+              <p className="hidden min-w-40 font-body text-sm text-muted-foreground sm:block">{activeStep ? nbsp(`${activeStep.item.range} · ${activeStep.item.title}`) : null}</p>
+              <Slider
+                aria-label={nbsp("Перемотка таймлайна")}
+                min={0}
+                max={storySteps.length - 1}
+                step={1}
+                value={[activeStepIndex]}
+                onValueChange={(value) => {
+                  const nextIndex = value[0];
+                  if (typeof nextIndex !== "number") return;
+                  const target = storySteps[nextIndex];
+                  if (!target) return;
+                  setChapter(target.item.id);
+                  setPhase(target.phase);
+                }}
+                onValueCommit={(value) => {
+                  const nextIndex = value[0];
+                  if (typeof nextIndex !== "number") return;
+                  moveToStep(nextIndex);
+                }}
+                className="min-w-0 flex-1"
+              />
+            </div>
+            <div className="absolute inset-x-3 bottom-5 top-16 sm:inset-x-8 sm:bottom-7 sm:top-20">
               <div className="absolute inset-x-0 bottom-[8%] top-[2%]">
                 <Zone className="h-[40%] border-[hsl(var(--longevity-first)/0.8)] bg-[hsl(var(--longevity-first)/0.5)]" rangeClassName="text-[hsl(var(--longevity-first-foreground))]" start={TIMELINE_GEOMETRY.start} end={TIMELINE_GEOMETRY.firstEnd} visible={zoneVisibility.first} range="0-40" title="Первая половина" />
                 <Zone className="h-[70%] border-[hsl(var(--longevity-second)/0.8)] bg-[hsl(var(--longevity-second)/0.42)]" start={TIMELINE_GEOMETRY.firstEnd} end={TIMELINE_GEOMETRY.secondEnd} labelClassName="pl-2 sm:pl-5" visible={zoneVisibility.second} range="40-80" title="Вторая половина" delay={140} />
@@ -342,7 +389,7 @@ export const LifeTimeline = () => {
                 <CrisisMarker visible={zoneVisibility.turn} />
               </div>
               <div className="absolute left-[4%] right-[4%] top-[92%] h-px bg-border" />
-              <div className="absolute left-[4%] top-[92%] h-0.5 bg-foreground transition-[width] duration-1000 ease-out motion-reduce:transition-none" style={{ width: `${axisWidth(chapter)}%` }} />
+              <div className="absolute left-[4%] top-[92%] h-0.5 bg-foreground transition-[width] duration-[1500ms] ease-out motion-reduce:transition-none" style={{ width: `${axisWidth(chapter)}%` }} />
               {[0, 20, 40, 60, 80, 100, 120].map((tick) => (
                  <div key={tick} className="absolute top-[calc(92%+14px)] -translate-x-1/2 font-body text-[10px] text-muted-foreground sm:text-xs" style={{ left: `${xPct(tick)}%` }}>
                   <span className="absolute -top-[14px] left-1/2 h-2 w-px bg-muted-foreground" />{tick}
@@ -360,17 +407,19 @@ export const LifeTimeline = () => {
               data-chapter={item.id}
               data-phase={stepPhase}
               ref={(node) => { stepRefs.current[index] = node; }}
-              className={`flex items-center px-4 sm:px-[5vw] ${stepPhase === "zone" ? "min-h-[62vh]" : "min-h-[92vh] py-[10vh]"} ${item.id % 2 ? "justify-start" : "justify-end"}`}
+              className={`flex justify-center px-4 sm:px-[5vw] ${stepPhase === "zone" ? "min-h-[86vh] items-center" : "min-h-[145vh] items-start py-[18vh]"}`}
             >
               {stepPhase === "card" ? (
-                <div className={`pointer-events-none w-[92vw] overflow-hidden rounded-lg border border-border bg-card/95 shadow-hard backdrop-blur-md transition-[opacity,transform] duration-500 motion-reduce:transition-none sm:w-[50vw] lg:w-[33vw] ${chapter === item.id && phase === "card" ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}>
-                  <div className="aspect-[4/3] w-full overflow-hidden sm:aspect-[16/10]">
-                    <img src={chapterImage(item.id)} alt="" aria-hidden="true" loading="lazy" width={1536} height={1024} className="h-full w-full scale-125 object-cover mix-blend-multiply" />
-                  </div>
-                  <div className="p-5 sm:p-7">
-                    {item.paragraphs.map((paragraph, paragraphIndex) => (
-                      <p key={paragraph} className={`font-body leading-snug ${"accent" in item && item.accent || "quote" in item && item.quote && paragraphIndex === 1 ? "text-[clamp(1.15rem,2.3vw,1.8rem)] font-semibold" : "text-base sm:text-lg"} ${paragraphIndex ? "mt-4" : ""}`}>{nbsp(paragraph)}</p>
-                    ))}
+                <div className="grid w-full max-w-[1180px] grid-cols-1 md:grid-cols-3">
+                  <div className={`sticky top-[calc(4rem+14vh)] w-[92vw] overflow-hidden rounded-lg border border-border bg-card/95 shadow-hard backdrop-blur-md transition-[opacity,transform] duration-[900ms] motion-reduce:transition-none sm:w-[28rem] md:w-[20rem] lg:w-[22rem] xl:w-[24rem] ${storyColumnClass(item.id)} ${chapter === item.id && phase === "card" ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
+                    <div className="aspect-[4/3] w-full overflow-hidden sm:aspect-[16/10]">
+                      <img src={chapterImage(item.id)} alt="" aria-hidden="true" loading="lazy" width={1536} height={1024} className="h-full w-full scale-125 object-cover mix-blend-multiply" />
+                    </div>
+                    <div className="p-5 sm:p-7">
+                      {item.paragraphs.map((paragraph, paragraphIndex) => (
+                        <p key={paragraph} className={`font-body leading-snug ${"accent" in item && item.accent || "quote" in item && item.quote && paragraphIndex === 1 ? "text-[clamp(1.15rem,2.3vw,1.8rem)] font-semibold" : "text-base sm:text-lg"} ${paragraphIndex ? "mt-4" : ""}`}>{nbsp(paragraph)}</p>
+                      ))}
+                    </div>
                   </div>
                 </div>
               ) : null}

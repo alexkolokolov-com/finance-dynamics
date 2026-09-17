@@ -79,6 +79,19 @@ export default {
           "0%": { opacity: "0", transform: "translateY(20px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        "timeline-point-in": {
+          "0%": { opacity: "0", transform: "translateY(12px) scale(0.72)" },
+          "70%": { opacity: "1", transform: "translateY(-2px) scale(1.04)" },
+          "100%": { opacity: "1", transform: "translateY(0) scale(1)" },
+        },
+        "timeline-path-draw": {
+          "0%": { strokeDashoffset: "1" },
+          "100%": { strokeDashoffset: "0" },
+        },
+        "timeline-event-in": {
+          "0%": { opacity: "0", transform: "scale(0.4)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
         "orbit-slow": {
           "0%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(360deg)" },
@@ -104,6 +117,9 @@ export default {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-up": "fade-up 0.7s ease-out both",
+        "timeline-point-in": "timeline-point-in 0.62s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "timeline-path-draw": "timeline-path-draw 1.15s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "timeline-event-in": "timeline-event-in 0.36s ease-out both",
         "orbit-slow": "orbit-slow 40s linear infinite",
         "orbit-reverse": "orbit-reverse 60s linear infinite",
         "particle-float": "particle-float 6s ease-in-out infinite",

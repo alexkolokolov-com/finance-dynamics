@@ -162,19 +162,19 @@ const CrisisMarker = ({ visible }: { visible: boolean }) => {
     <>
       <div
         aria-hidden="true"
-        className={`absolute bottom-0 z-[5] h-[70%] rounded-lg border border-dashed border-accent/25 bg-accent/[0.07] transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none ${visible ? "scale-x-100 opacity-100" : "scale-x-[0.94] opacity-0"}`}
+        className={`absolute bottom-0 z-[5] h-[55%] rounded-lg border border-dashed border-[hsl(var(--longevity-crisis)/0.35)] bg-[hsl(var(--longevity-crisis)/0.08)] transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none ${visible ? "scale-x-100 opacity-100" : "scale-x-[0.94] opacity-0"}`}
         style={{ left: `${left}%`, width: `${width}%` }}
       />
 
       <div
-        className={`absolute bottom-[70%] z-20 flex -translate-x-1/2 flex-col items-center transition-[opacity,transform] duration-500 motion-reduce:transition-none ${visible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
-        style={{ left: `${TIMELINE_GEOMETRY.crisisCenter}%` }}
+        className={`absolute bottom-[58%] z-20 flex -translate-x-full items-end transition-[opacity,transform] duration-500 motion-reduce:transition-none ${visible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
+        style={{ left: `${TIMELINE_GEOMETRY.crisisStart}%` }}
       >
-        <div className="rounded-md bg-accent px-3 py-2 text-center text-accent-foreground shadow-paper sm:px-4">
+        <div className="rounded-md bg-accent px-3 py-2 text-left text-accent-foreground shadow-paper sm:px-4">
           <p className="whitespace-nowrap font-display text-xl font-semibold leading-none sm:text-2xl">{nbsp("35-45")}</p>
           <p className="mt-1 whitespace-nowrap font-display text-sm font-semibold leading-none">{nbsp("Кризис")}</p>
         </div>
-        <span aria-hidden="true" className="h-4 w-px bg-accent sm:h-5" />
+        <span aria-hidden="true" className="mb-3 h-px w-3 bg-accent sm:w-5" />
       </div>
     </>
   );
@@ -321,9 +321,9 @@ export const LifeTimeline = () => {
           <div className="relative h-[min(590px,76vh)] w-full max-w-[1420px] overflow-hidden rounded-lg border border-border bg-card shadow-paper">
             <div className="absolute inset-x-3 bottom-5 top-5 sm:inset-x-8 sm:bottom-7 sm:top-7">
               <div className="absolute inset-x-0 bottom-[10%] top-[16%] sm:top-[12%]">
-                <Zone className="h-[40%] bg-accent/[0.045]" start={TIMELINE_GEOMETRY.start} end={TIMELINE_GEOMETRY.firstEnd} visible={zoneVisibility.first} range="0-40" title="Первая половина" />
-                <Zone className="h-[70%] bg-foreground/[0.035]" start={TIMELINE_GEOMETRY.firstEnd} end={TIMELINE_GEOMETRY.secondEnd} labelClassName="pl-2 sm:pl-5" visible={zoneVisibility.second} range="40-80" title="Второй акт" delay={140} />
-                <Zone className="h-full bg-accent-soft/15" start={TIMELINE_GEOMETRY.secondEnd} end={TIMELINE_GEOMETRY.end} visible={zoneVisibility.third} range="80-120" title="Третья половина" delay={180} />
+                <Zone className="h-[40%] border-[hsl(var(--longevity-first)/0.8)] bg-[hsl(var(--longevity-first)/0.5)]" start={TIMELINE_GEOMETRY.start} end={TIMELINE_GEOMETRY.firstEnd} visible={zoneVisibility.first} range="0-40" title="Первая половина" />
+                <Zone className="h-[70%] border-[hsl(var(--longevity-second)/0.8)] bg-[hsl(var(--longevity-second)/0.42)]" start={TIMELINE_GEOMETRY.firstEnd} end={TIMELINE_GEOMETRY.secondEnd} labelClassName="pl-2 sm:pl-5" visible={zoneVisibility.second} range="40-80" title="Второй акт" delay={140} />
+                <Zone className="h-full border-[hsl(var(--longevity-third)/0.9)] bg-[hsl(var(--longevity-third)/0.46)]" start={TIMELINE_GEOMETRY.secondEnd} end={TIMELINE_GEOMETRY.end} visible={zoneVisibility.third} range="80-120" title="Третья половина" delay={180} />
                 <CrisisMarker visible={zoneVisibility.turn} />
               </div>
               <div className="absolute left-[4%] right-[4%] top-[90%] h-px bg-border" />

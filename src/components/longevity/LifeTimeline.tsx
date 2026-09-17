@@ -128,6 +128,64 @@ const mapGroups = [
   { range: "80-120", title: "Третья половина", people: sortedPeople.filter((person) => person.age >= 80) },
 ];
 
+const groupX = (age: number, start: number, end: number) => 7 + ((Math.min(Math.max(age, start), end) - start) / (end - start)) * 86;
+
+const GroupTimeline = ({ range, title, people }: { range: string; title: string; people: StoryPerson[] }) => {
+  const [start, end] = range.split("-").map(Number);
+  const rows = [25, 35, 45, 55, 65, 75] as const;
+  const rowByPerson = new Map<string, number>();
+  const lastX = rows.map(() => Number.NEGATIVE_INFINITY);
+
+  people.forEach((person) => {
+    const x = groupX(person.age, start, end);
+    const available = rows.map((_, index) => index).filter((index) => x - lastX[index] >= 27);
+    const row = available[0] ?? lastX.indexOf(Math.min(...lastX));
+    lastX[row] = x;
+    rowByPerson.set(person.id, rows[row]);
+  });
+
+  return (
+    <div className="rounded-lg border border-dashed border-border bg-card">
+      <div className="border-b border-dashed border-border px-5 py-5">
+        <p className={`font-display text-4xl font-semibold leading-none ${start >= 80 ? "text-[hsl(var(--longevity-third-foreground))]" : "text-accent"}`}>{nbsp(range)}</p>
+        <p className="mt-2 font-display text-xl font-semibold leading-none">{nbsp(title)}</p>
+      </div>
+      <div className="relative h-[570px] sm:h-[520px]">
+        {people.map((person) => {
+          const [firstName, lastName] = personLine(person.name);
+          const x = groupX(person.age, start, end);
+          const flip = x > 62;
+          return (
+            <div
+              key={person.id}
+              className="group absolute z-10 -translate-x-1/2 -translate-y-1/2 hover:z-40 focus-within:z-40"
+              style={{ left: `${x}%`, top: `${rowByPerson.get(person.id) ?? rows[0]}%` }}
+            >
+              <div tabIndex={0} role="button" aria-label={`${person.name}, ${person.age}`} className="flex items-center rounded-full border-2 border-accent bg-card pr-2.5 shadow-paper transition-transform duration-200 group-hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent font-display text-[11px] font-semibold text-accent-foreground">{person.age}</span>
+                <span className="whitespace-nowrap px-2 py-1 text-left">
+                  <span className="block font-body text-[11px] font-semibold leading-none">{nbsp(firstName)}</span>
+                  {lastName ? <span className="mt-0.5 block font-body text-[11px] leading-none text-foreground/70">{nbsp(lastName)}</span> : null}
+                </span>
+              </div>
+              <div className={`pointer-events-none absolute bottom-[calc(100%+8px)] w-[min(15rem,72vw)] rounded-lg border border-border bg-card p-3 opacity-0 shadow-hard transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 ${flip ? "right-0" : "left-0"}`}>
+                <p className="font-body text-xs font-semibold text-accent">{nbsp(person.role)}</p>
+                <p className="mt-1.5 font-body text-sm leading-snug">{nbsp(person.turn)}</p>
+              </div>
+            </div>
+          );
+        })}
+        <div className="absolute inset-x-[7%] bottom-[12%] h-px bg-muted-foreground/60" />
+        {[start, start + 10, start + 20, start + 30, end].map((tick) => (
+          <div key={tick} className="absolute bottom-[calc(12%-24px)] -translate-x-1/2 font-body text-[10px] text-muted-foreground" style={{ left: `${groupX(tick, start, end)}%` }}>
+            <span className="absolute -top-3 left-1/2 h-2 w-px bg-muted-foreground" />{tick}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 
 
 const chapterImage = (chapter: number) => {
@@ -352,24 +410,7 @@ export const LifeTimeline = () => {
           </div>
 
           <div className="mt-10 space-y-8 lg:hidden">
-            {mapGroups.map((group) => (
-              <div key={group.range} className="rounded-lg border border-dashed border-border bg-card p-5">
-                <p className="font-display text-3xl font-semibold leading-none text-accent">{nbsp(group.range)}</p>
-                <p className="mt-2 font-display text-lg font-semibold leading-none">{nbsp(group.title)}</p>
-                <ul className="mt-5 space-y-4">
-                  {group.people.map((person) => (
-                    <li key={person.id} className="rounded-lg border border-border bg-background p-3">
-                      <div className="flex items-center gap-3">
-                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent font-display text-xs font-semibold text-accent-foreground">{person.age}</span>
-                        <span className="font-body text-sm font-semibold leading-tight">{nbsp(person.name)}</span>
-                      </div>
-                      <p className="mt-2 font-body text-xs font-semibold text-accent">{nbsp(person.role)}</p>
-                      <p className="mt-1 font-body text-sm leading-snug text-foreground/80">{nbsp(person.turn)}</p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            {mapGroups.map((group) => <GroupTimeline key={group.range} {...group} />)}
           </div>
         </div>
       </section>

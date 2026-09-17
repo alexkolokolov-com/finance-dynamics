@@ -182,83 +182,41 @@ const CrisisMarker = ({ visible }: { visible: boolean }) => {
   );
 };
 
-const PersonButton = ({ person, onSelect, compact = false, delay = 0 }: { person: StoryPerson; onSelect: () => void; compact?: boolean; delay?: number }) => {
+const PersonPin = ({ person }: { person: StoryPerson }) => {
   const [firstName, lastName] = personLine(person.name);
-  const flip = xPct(person.age) > 76;
+  const flip = mapX(person.age) > 68;
 
   return (
-    <Button
-      type="button"
-      variant="ghost"
-      aria-label={`${person.name}, ${person.age}`}
-      onClick={onSelect}
-      className="pointer-events-auto group absolute z-20 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full p-0 hover:z-30 hover:bg-transparent sm:h-7 sm:w-7"
-      style={{ left: `${xPct(person.age)}%`, top: `${pointTop(person, compact)}%` }}
+    <div
+      className="group pointer-events-auto absolute z-20 -translate-x-4 -translate-y-1/2 hover:z-40 focus-within:z-40"
+      style={{ left: `${mapX(person.age)}%`, top: `${mapTop(person)}%` }}
     >
-      <span
-        className={`${compact ? "" : "animate-timeline-point-in"} relative flex items-center ${compact ? "opacity-100" : "opacity-0"}`}
-        style={{ animationDelay: compact ? undefined : `${delay}ms` }}
+      <div
+        tabIndex={0}
+        role="button"
+        aria-label={`${person.name}, ${person.age}`}
+        className="flex cursor-default items-center gap-2 rounded-full border-2 border-accent bg-card pr-3 shadow-paper transition-transform duration-200 group-hover:scale-[1.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent motion-reduce:group-hover:scale-100"
       >
-        <span
-          className={`flex h-6 w-6 items-center justify-center rounded-full border-2 bg-card font-display text-[10px] font-semibold shadow-hard transition-transform duration-200 group-hover:scale-110 sm:h-7 sm:w-7 sm:text-[11px] ${categoryRing[person.cat]} motion-reduce:group-hover:scale-100`}
-        >
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent font-display text-[11px] font-semibold text-accent-foreground">
           {person.age}
         </span>
-        <span
-          className={`absolute top-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-border bg-card px-2.5 py-1 shadow-paper ${flip ? "right-[calc(100%+6px)] text-right" : "left-[calc(100%+6px)]"}`}
-        >
-          <span className="block font-body text-[10px] font-semibold leading-[1.25] sm:text-[11px]">{nbsp(firstName)}</span>
-          {lastName ? <span className="block font-body text-[10px] leading-[1.25] sm:text-[11px]">{nbsp(lastName)}</span> : null}
+        <span className="whitespace-nowrap py-0.5 text-left">
+          <span className="block font-body text-[11px] font-semibold leading-[1.2]">{nbsp(firstName)}</span>
+          {lastName ? <span className="block font-body text-[11px] leading-[1.2] text-foreground/70">{nbsp(lastName)}</span> : null}
         </span>
-      </span>
-    </Button>
+      </div>
+
+      <div
+        aria-hidden="true"
+        className={`pointer-events-none absolute bottom-[calc(100%+10px)] w-64 rounded-lg border border-border bg-card p-4 opacity-0 shadow-hard transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none ${flip ? "right-0" : "left-0"}`}
+      >
+        <p className="font-body text-xs font-semibold text-accent">{nbsp(person.role)}</p>
+        <p className="mt-2 font-body text-sm leading-snug">{nbsp(person.turn)}</p>
+      </div>
+    </div>
   );
 };
 
-const PersonDrawer = ({ person, onClose }: { person?: StoryPerson; onClose: () => void }) => (
-  <>
-    <div
-      aria-hidden="true"
-      onClick={onClose}
-      className={`fixed inset-0 z-[90] bg-foreground/25 transition-opacity duration-300 ${person ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}
-    />
-    <aside
-      role="dialog"
-      aria-modal="true"
-      aria-label={person?.name ?? "История"}
-      className={`fixed inset-y-0 right-0 z-[100] w-[min(560px,94vw)] overflow-y-auto border-l border-border bg-card shadow-hard transition-transform duration-300 ${
-        person ? "translate-x-0" : "translate-x-full"
-      }`}
-    >
-      <Button type="button" size="icon" variant="outline" aria-label="Закрыть" onClick={onClose} className="absolute right-4 top-4 z-[110] rounded-full bg-card">
-        <X className="h-4 w-4" />
-      </Button>
-      {person ? (
-        <div className="px-6 pb-14 pt-12 sm:px-9">
-          <div className={`mb-8 flex h-28 w-28 items-center justify-center rounded-full border-[5px] bg-background font-display text-4xl font-semibold ${categoryRing[person.cat]}`}>
-            {initials(person.name)}
-          </div>
-          <p className="font-body text-sm font-semibold text-muted-foreground">{nbsp(`${person.age} лет · ${person.country}`)}</p>
-          <h3 className="mt-2 font-display text-4xl font-semibold leading-none sm:text-5xl">{nbsp(person.name)}</h3>
-          <p className="mt-3 font-body text-base text-foreground/70">{nbsp(person.role)}</p>
-          {[
-            ["До", person.before],
-            ["Перелом / точка на шкале", person.turn],
-            ["После", person.after],
-          ].map(([label, text]) => (
-            <div key={label} className="mt-7 border-t border-border pt-5">
-              <p className="font-body text-xs font-semibold text-muted-foreground">{nbsp(label)}</p>
-              <p className="mt-2 font-body text-base leading-relaxed">{nbsp(text)}</p>
-            </div>
-          ))}
-          <a href={person.source} target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex items-center gap-2 font-body text-sm font-semibold text-accent underline underline-offset-4">
-            {nbsp("Источник")} <ArrowUpRight className="h-4 w-4" />
-          </a>
-        </div>
-      ) : null}
-    </aside>
-  </>
-);
 
 export const LifeTimeline = () => {
   const [chapter, setChapter] = useState(1);

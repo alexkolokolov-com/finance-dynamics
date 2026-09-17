@@ -114,14 +114,6 @@ const pointTop = (person: StoryPerson, compact: boolean) => {
   return base + offsets[index % offsets.length];
 };
 
-const visibleForChapter = (person: StoryPerson, chapter: number) => {
-  if (chapter === 4 || chapter === 5) return person.chapter === 4;
-  if (chapter === 6) return person.chapter === 6;
-  if (chapter === 7) return person.chapter === 7;
-  if (chapter === 8) return person.chapter === 7 && person.age >= 102;
-  return false;
-};
-
 const chapterImage = (chapter: number) => {
   if (chapter === 1) return firstHalfIllustration;
   if (chapter === 2) return turnIllustration;
@@ -137,16 +129,9 @@ const axisWidth = (chapter: number) => {
   return chapter >= 7 ? 96 : 30;
 };
 
-const pathPeopleForChapter = (chapter: number) => {
-  const ids = chapter === 4 ? ["duffield", "parsons", "huffington", "kroc"] : chapter === 7 ? ["hawkins", "kramer"] : [];
-  return ids
-    .map((id) => longevityStoryPeople.find((person) => person.id === id))
-    .filter((person): person is StoryPerson => Boolean(person) && (person?.events.length ?? 0) > 1);
-};
-
 const Zone = ({ className, labelClassName, visible, range, title, callout = false, delay = 0 }: { className: string; labelClassName?: string; visible: boolean; range: string; title: string; callout?: boolean; delay?: number }) => (
   <div
-    className={`absolute bottom-[10%] top-[12%] origin-left rounded-lg border border-dashed border-border transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none ${className} ${
+    className={`absolute bottom-[10%] origin-left rounded-lg border border-dashed border-border transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none ${className} ${
       visible ? "scale-x-100 opacity-100" : "scale-x-[0.94] opacity-0"
     }`}
     style={{ transitionDelay: visible ? `${delay}ms` : "0ms" }}
@@ -301,32 +286,16 @@ export const LifeTimeline = () => {
         <div data-timeline-scene className="pointer-events-none sticky top-16 z-10 flex h-[calc(100vh-4rem)] items-center justify-center px-2 sm:px-5">
           <div className="relative h-[min(650px,80vh)] w-full max-w-[1420px] overflow-hidden rounded-lg border border-border bg-card shadow-paper">
             <div className="absolute inset-x-3 bottom-5 top-8 sm:inset-x-8 sm:bottom-7 sm:top-10">
-              <Zone className="left-[4%] w-[30%] bg-accent/[0.045]" visible={zoneVisibility.first} range="0–40" title="Первая половина" />
-              <Zone className="left-[30%] w-[9%] bg-accent/[0.08]" labelClassName="!-top-16 z-10 sm:!-top-20" visible={zoneVisibility.turn} range="35–45" title="Точка перелома" callout delay={80} />
-              <Zone className="left-[34%] w-[31%] bg-foreground/[0.035]" labelClassName="!top-32 sm:!top-40" visible={zoneVisibility.second} range="40–80" title="Второй акт" delay={140} />
-              <Zone className="left-[65%] w-[31%] bg-accent-soft/15" labelClassName="!top-52 sm:!top-64" visible={zoneVisibility.third} range="80–120" title="Третья половина" delay={180} />
-              <div className="absolute left-[4%] right-[4%] top-[65%] h-px bg-border" />
-              <div className="absolute left-[4%] top-[65%] h-0.5 bg-foreground transition-[width] duration-1000 ease-out motion-reduce:transition-none" style={{ width: `${axisWidth(chapter)}%` }} />
-              <svg aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full overflow-visible">
-                {pathPeopleForChapter(chapter).map((person) => {
-                  const points = person.events.map((age, index) => `${xPct(age)},${yByLevel[person.level] + (index === 0 ? 0 : index % 2 ? -6 : 5)}`).join(" ");
-                  return (
-                    <g key={`${chapter}-${person.id}`}>
-                      <polyline pathLength="1" points={points} fill="none" stroke="currentColor" strokeWidth="0.35" strokeDasharray="1" strokeDashoffset="1" vectorEffect="non-scaling-stroke" className="animate-timeline-path-draw text-muted-foreground motion-reduce:animate-none motion-reduce:[stroke-dashoffset:0]" />
-                      {person.events.slice(1).map((age, index) => (
-                        <circle key={age} cx={xPct(age)} cy={yByLevel[person.level] + ((index + 1) % 2 ? -6 : 5)} r="0.8" fill="hsl(var(--card))" stroke="currentColor" strokeWidth="0.35" className="animate-timeline-event-in origin-center text-muted-foreground opacity-0 motion-reduce:animate-none motion-reduce:opacity-100" style={{ animationDelay: `${760 + index * 120}ms` }} />
-                      ))}
-                    </g>
-                  );
-                })}
-              </svg>
+              <Zone className="left-[4%] h-[26%] w-[30%] bg-accent/[0.045]" visible={zoneVisibility.first} range="0–40" title="Первая половина" />
+              <Zone className="left-[30%] h-[26%] w-[9%] bg-accent/[0.08]" labelClassName="!-top-24 z-10 sm:!-top-28" visible={zoneVisibility.turn} range="35–45" title="Точка перелома" callout delay={80} />
+              <Zone className="left-[34%] h-[52%] w-[31%] bg-foreground/[0.035]" visible={zoneVisibility.second} range="40–80" title="Второй акт" delay={140} />
+              <Zone className="left-[65%] h-[78%] w-[31%] bg-accent-soft/15" visible={zoneVisibility.third} range="80–120" title="Третья половина" delay={180} />
+              <div className="absolute left-[4%] right-[4%] top-[90%] h-px bg-border" />
+              <div className="absolute left-[4%] top-[90%] h-0.5 bg-foreground transition-[width] duration-1000 ease-out motion-reduce:transition-none" style={{ width: `${axisWidth(chapter)}%` }} />
               {[0, 20, 40, 60, 80, 100, 120].map((tick) => (
-                <div key={tick} className="absolute top-[calc(65%+14px)] -translate-x-1/2 font-body text-[10px] text-muted-foreground sm:text-xs" style={{ left: `${xPct(tick)}%` }}>
+                 <div key={tick} className="absolute top-[calc(90%+14px)] -translate-x-1/2 font-body text-[10px] text-muted-foreground sm:text-xs" style={{ left: `${xPct(tick)}%` }}>
                   <span className="absolute -top-[14px] left-1/2 h-2 w-px bg-muted-foreground" />{tick}
                 </div>
-              ))}
-              {longevityStoryPeople.filter((person) => visibleForChapter(person, chapter)).map((person, index) => (
-                <PersonButton key={`${chapter}-${person.id}`} person={person} delay={Math.min(index * 65, 520)} onSelect={() => setSelected(person)} />
               ))}
             </div>
           </div>

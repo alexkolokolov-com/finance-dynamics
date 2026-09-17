@@ -157,7 +157,7 @@ const PersonButton = ({ person, onSelect, compact = false, delay = 0 }: { person
     variant="ghost"
     aria-label={`${person.name}, ${person.age}`}
     onClick={onSelect}
-    className="group absolute z-20 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full p-0 hover:z-30 hover:bg-transparent sm:h-[58px] sm:w-[58px]"
+    className="pointer-events-auto group absolute z-20 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full p-0 hover:z-30 hover:bg-transparent sm:h-[58px] sm:w-[58px]"
     style={{ left: `${xPct(person.age)}%`, top: `${compact ? 31 + (person.level - 1) * 22 : yByLevel[person.level]}%` }}
   >
     <span

@@ -144,16 +144,19 @@ const pathPeopleForChapter = (chapter: number) => {
     .filter((person): person is StoryPerson => Boolean(person) && (person?.events.length ?? 0) > 1);
 };
 
-const Zone = ({ className, visible, range, title, delay = 0 }: { className: string; visible: boolean; range: string; title: string; delay?: number }) => (
+const Zone = ({ className, labelClassName, visible, range, title, callout = false, delay = 0 }: { className: string; labelClassName?: string; visible: boolean; range: string; title: string; callout?: boolean; delay?: number }) => (
   <div
     className={`absolute bottom-[10%] top-[12%] origin-left rounded-lg border border-dashed border-border transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none ${className} ${
       visible ? "scale-x-100 opacity-100" : "scale-x-[0.94] opacity-0"
     }`}
     style={{ transitionDelay: visible ? `${delay}ms` : "0ms" }}
   >
-    <div className="absolute inset-x-1.5 top-3 text-center sm:inset-x-3 sm:top-5">
-      <p className="font-display text-[clamp(1.55rem,4vw,4.5rem)] font-semibold leading-none text-accent">{nbsp(range)}</p>
-      <p className="mx-auto mt-2 max-w-48 font-body text-[9px] font-semibold leading-tight text-foreground/75 sm:text-sm">{nbsp(title)}</p>
+    <div className={`absolute inset-x-2 top-4 text-left sm:inset-x-4 sm:top-6 ${labelClassName ?? ""}`}>
+      {callout ? <span aria-hidden="true" className="absolute -bottom-4 left-0 h-3 w-px bg-accent" /> : null}
+      <p className="font-display text-[clamp(2rem,4.5vw,4.75rem)] font-semibold leading-[0.86] text-accent">{nbsp(range)}</p>
+      <p className={`mt-3 font-display text-[clamp(1rem,2vw,1.75rem)] font-semibold leading-[0.95] text-foreground ${callout ? "rounded-sm bg-card px-2 py-1 shadow-paper" : ""}`}>
+        {title.split(" ").map((word) => <span key={word} className="block sm:inline">{nbsp(word)}<span className="hidden sm:inline"> </span></span>)}
+      </p>
     </div>
   </div>
 );
@@ -299,9 +302,9 @@ export const LifeTimeline = () => {
           <div className="relative h-[min(650px,80vh)] w-full max-w-[1420px] overflow-hidden rounded-lg border border-border bg-card shadow-paper">
             <div className="absolute inset-x-3 bottom-5 top-8 sm:inset-x-8 sm:bottom-7 sm:top-10">
               <Zone className="left-[4%] w-[30%] bg-accent/[0.045]" visible={zoneVisibility.first} range="0–40" title="Первая половина" />
-              <Zone className="left-[30%] w-[9%] bg-accent/[0.08]" visible={zoneVisibility.turn} range="35–45" title="Точка перелома" delay={80} />
-              <Zone className="left-[34%] w-[31%] bg-foreground/[0.035]" visible={zoneVisibility.second} range="40–80" title="Второй акт" delay={140} />
-              <Zone className="left-[65%] w-[31%] bg-accent-soft/15" visible={zoneVisibility.third} range="80–120" title="Третья половина" delay={180} />
+              <Zone className="left-[30%] w-[9%] bg-accent/[0.08]" labelClassName="!-top-16 z-10 sm:!-top-20" visible={zoneVisibility.turn} range="35–45" title="Точка перелома" callout delay={80} />
+              <Zone className="left-[34%] w-[31%] bg-foreground/[0.035]" labelClassName="!top-32 sm:!top-40" visible={zoneVisibility.second} range="40–80" title="Второй акт" delay={140} />
+              <Zone className="left-[65%] w-[31%] bg-accent-soft/15" labelClassName="!top-52 sm:!top-64" visible={zoneVisibility.third} range="80–120" title="Третья половина" delay={180} />
               <div className="absolute left-[4%] right-[4%] top-[65%] h-px bg-border" />
               <div className="absolute left-[4%] top-[65%] h-0.5 bg-foreground transition-[width] duration-1000 ease-out motion-reduce:transition-none" style={{ width: `${axisWidth(chapter)}%` }} />
               <svg aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full overflow-visible">
@@ -340,11 +343,13 @@ export const LifeTimeline = () => {
               className={`flex items-center px-4 sm:px-[5vw] ${stepPhase === "zone" ? "min-h-[62vh]" : "min-h-[92vh] py-[10vh]"} ${item.id % 2 ? "justify-start" : "justify-end"}`}
             >
               {stepPhase === "card" ? (
-                <div className={`pointer-events-none w-[min(520px,92vw)] overflow-hidden rounded-lg border border-border bg-card/95 shadow-hard backdrop-blur-md transition-[opacity,transform] duration-500 motion-reduce:transition-none ${chapter === item.id && phase === "card" ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}>
-                  <img src={chapterImage(item.id)} alt="" aria-hidden="true" loading="lazy" width={1536} height={1024} className="aspect-[16/9] w-full object-cover mix-blend-multiply" />
+                <div className={`pointer-events-none w-[92vw] overflow-hidden rounded-lg border border-border bg-card/95 shadow-hard backdrop-blur-md transition-[opacity,transform] duration-500 motion-reduce:transition-none sm:w-[50vw] lg:w-[33vw] ${chapter === item.id && phase === "card" ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}>
+                  <div className="aspect-[4/3] w-full overflow-hidden sm:aspect-[16/10]">
+                    <img src={chapterImage(item.id)} alt="" aria-hidden="true" loading="lazy" width={1536} height={1024} className="h-full w-full scale-125 object-cover mix-blend-multiply" />
+                  </div>
                   <div className="p-5 sm:p-7">
                     {item.paragraphs.map((paragraph, paragraphIndex) => (
-                      <p key={paragraph} className={`font-body leading-snug ${"accent" in item && item.accent || "quote" in item && item.quote && paragraphIndex === 1 ? "text-[clamp(1.45rem,3vw,2.25rem)] font-semibold" : "text-lg"} ${paragraphIndex ? "mt-4" : ""}`}>{nbsp(paragraph)}</p>
+                      <p key={paragraph} className={`font-body leading-snug ${"accent" in item && item.accent || "quote" in item && item.quote && paragraphIndex === 1 ? "text-[clamp(1.15rem,2.3vw,1.8rem)] font-semibold" : "text-base sm:text-lg"} ${paragraphIndex ? "mt-4" : ""}`}>{nbsp(paragraph)}</p>
                     ))}
                   </div>
                 </div>

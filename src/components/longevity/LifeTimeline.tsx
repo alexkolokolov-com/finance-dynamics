@@ -287,9 +287,9 @@ export const LifeTimeline = () => {
 
   const zoneVisibility = useMemo(
     () => ({
-      first: chapter >= 1 && chapter <= 5,
-      turn: chapter >= 2 && chapter <= 5,
-      second: chapter >= 4 && chapter <= 6,
+      first: chapter >= 1,
+      turn: chapter >= 2,
+      second: chapter >= 4,
       third: chapter >= 6,
     }),
     [chapter],

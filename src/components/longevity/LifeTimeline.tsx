@@ -1,6 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowUpRight, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import firstHalfIllustration from "@/assets/longevity-first-half.jpg";
 import turnIllustration from "@/assets/longevity-turn.jpg";
 import secondActIllustration from "@/assets/longevity-second-act.jpg";
@@ -91,20 +89,6 @@ const storySteps = chapters.flatMap((item) => [
   { key: `${item.id}-zone`, item, phase: "zone" as const },
   { key: `${item.id}-card`, item, phase: "card" as const },
 ]);
-
-const categoryLabels: Record<StoryCategory, string> = {
-  business: "бизнес / технологии",
-  culture: "культура / медиа",
-  sport: "спорт / физическая активность",
-  science: "образование / наука",
-};
-
-const categoryRing: Record<StoryCategory, string> = {
-  business: "border-accent",
-  culture: "border-foreground",
-  sport: "border-muted-foreground",
-  science: "border-accent/55",
-};
 
 const personLine = (name: string) => {
   const words = name.split(" ");
@@ -220,8 +204,6 @@ const PersonPin = ({ person }: { person: StoryPerson }) => {
 
 export const LifeTimeline = () => {
   const [chapter, setChapter] = useState(1);
-  const [selected, setSelected] = useState<StoryPerson>();
-  const [filter, setFilter] = useState<"all" | StoryCategory>("all");
   const [phase, setPhase] = useState<"zone" | "card">("zone");
   const stepRefs = useRef<(HTMLElement | null)[]>([]);
 
@@ -263,12 +245,6 @@ export const LifeTimeline = () => {
       window.removeEventListener("pageshow", scheduleSync);
       if (frame) window.cancelAnimationFrame(frame);
     };
-  }, []);
-
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => event.key === "Escape" && setSelected(undefined);
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
   }, []);
 
   const zoneVisibility = useMemo(

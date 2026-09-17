@@ -331,22 +331,23 @@ export const LifeTimeline = () => {
         </div>
       </div>
 
-      <section className="relative z-40 border-t border-border bg-background px-4 py-20 sm:px-8 sm:py-28">
+      <section className="relative z-40 border-t border-border bg-card px-4 py-14 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-[1400px]">
           <div className="max-w-4xl">
             <h2 className="font-display text-4xl font-semibold leading-none sm:text-7xl">{nbsp("Посмотрите, у вас все еще впереди!")}</h2>
             <p className="mt-5 max-w-3xl font-body text-lg leading-relaxed text-foreground/75">{nbsp("Наведите на точку и вспомните истории людей, которые преодолели кризисы и после 40 реализовали себя. А также тех, кто и после 80 продолжает активную жизнь!")}</p>
           </div>
 
-          <div className="mt-10 hidden h-[520px] grid-cols-2 gap-3 md:grid">
-            {mapGroups.map((group) => <GroupTimeline key={group.range} {...group} />)}
+          <div className="mt-10 hidden grid-cols-2 items-stretch gap-4 md:grid">
+            {mapGroups.map((group) => <GroupTimeline key={group.range} {...group} levels={6} gap={17} areaClassName="min-h-[380px]" />)}
           </div>
 
           <div className="mt-10 space-y-5 md:hidden">
-            {mapGroups.map((group) => <GroupTimeline key={group.range} {...group} />)}
+            {mapGroups.map((group) => <GroupTimeline key={group.range} {...group} levels={9} gap={34} areaClassName="min-h-[420px]" />)}
           </div>
         </div>
       </section>
+
 
       <section className="relative z-40 grid min-h-[88vh] place-items-center bg-background px-5 py-24 text-center">
         <div className="max-w-5xl">

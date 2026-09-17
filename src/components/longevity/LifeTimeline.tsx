@@ -130,6 +130,13 @@ const axisWidth = (chapter: number) => {
   return chapter >= 6 ? 96 : 30;
 };
 
+const pathPeopleForChapter = (chapter: number) => {
+  const ids = chapter === 4 ? ["duffield", "parsons", "huffington", "kroc"] : chapter === 7 ? ["hawkins", "kramer"] : [];
+  return ids
+    .map((id) => longevityStoryPeople.find((person) => person.id === id))
+    .filter((person): person is StoryPerson => Boolean(person) && (person?.events.length ?? 0) > 1);
+};
+
 const Zone = ({ className, label, visible }: { className: string; label: string; visible: boolean }) => (
   <div
     className={`absolute bottom-[10%] top-[12%] rounded-lg border border-dashed border-border transition-all duration-700 ${className} ${
@@ -263,6 +270,19 @@ export const LifeTimeline = () => {
               <Zone className="left-[65%] w-[31%] bg-accent-soft/15" label="80–120 · длинная жизнь" visible={zoneVisibility.third} />
               <div className="absolute left-[4%] right-[4%] top-[46%] h-px bg-border" />
               <div className="absolute left-[4%] top-[46%] h-0.5 bg-foreground transition-all duration-700" style={{ width: `${axisWidth(chapter)}%` }} />
+              <svg aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full overflow-visible">
+                {pathPeopleForChapter(chapter).map((person) => {
+                  const points = person.events.map((age, index) => `${xPct(age)},${yByLevel[person.level] + (index === 0 ? 0 : index % 2 ? -6 : 5)}`).join(" ");
+                  return (
+                    <g key={person.id} className="animate-fade-in">
+                      <polyline points={points} fill="none" stroke="currentColor" strokeWidth="0.35" strokeDasharray="1.2 1.1" vectorEffect="non-scaling-stroke" className="text-muted-foreground" />
+                      {person.events.slice(1).map((age, index) => (
+                        <circle key={age} cx={xPct(age)} cy={yByLevel[person.level] + ((index + 1) % 2 ? -6 : 5)} r="0.8" fill="hsl(var(--card))" stroke="currentColor" strokeWidth="0.35" className="text-muted-foreground" />
+                      ))}
+                    </g>
+                  );
+                })}
+              </svg>
               {[0, 20, 40, 60, 80, 100, 120].map((tick) => (
                 <div key={tick} className="absolute top-[calc(46%+14px)] -translate-x-1/2 font-body text-[10px] text-muted-foreground sm:text-xs" style={{ left: `${xPct(tick)}%` }}>
                   <span className="absolute -top-[14px] left-1/2 h-2 w-px bg-muted-foreground" />{tick}

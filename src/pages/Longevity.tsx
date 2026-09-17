@@ -111,6 +111,14 @@ const Longevity = () => {
           </Button>
         </div>
       </header>
+      <section className="px-5 pb-16 sm:px-8 sm:pb-24">
+        <div className="mx-auto max-w-4xl text-center">
+          <h2 className="font-display text-[clamp(2.6rem,6vw,5.5rem)] font-semibold leading-[0.95]">
+            <span className="text-accent">{nbsp("Три")}</span> {nbsp("половины жизни")}
+          </h2>
+          <p className="mx-auto mt-7 max-w-3xl font-body text-[clamp(1.125rem,2vw,1.6rem)] leading-snug text-foreground/80">{nbsp("Вероятно, вы находитесь в переходном периоде 35–45 лет, который часто называют кризисом среднего возраста. Но я называю это периодом осознания, что прошлый подход к жизни не работает. Осознание, что ресурсы вашего организма ограничены, и просто работать ещё больше уже невозможно. И невозможно всё успеть.")}</p>
+        </div>
+      </section>
       <LifeTimeline />
       <Varioqub antiFlicker />
       <Footer />

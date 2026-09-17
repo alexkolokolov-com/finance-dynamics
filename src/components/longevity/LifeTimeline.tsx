@@ -137,7 +137,7 @@ const Zone = ({ className, visible, range, title, delay = 0 }: { className: stri
     style={{ transitionDelay: visible ? `${delay}ms` : "0ms" }}
   >
     <div className="absolute inset-x-2 top-4 text-left sm:inset-x-4 sm:top-6">
-      <p className="whitespace-nowrap font-display text-[clamp(1.45rem,3.4vw,3.5rem)] font-semibold leading-none text-accent">{nbsp(range)}</p>
+      <p className="whitespace-nowrap font-display text-[clamp(1.7rem,3.8vw,3.9rem)] font-semibold leading-none text-accent">{nbsp(range)}</p>
       <p className="mt-3 font-display text-[clamp(0.95rem,1.7vw,1.5rem)] font-semibold leading-[0.95] text-foreground">
         {title.split(" ").map((word) => <span key={word} className="block sm:inline">{nbsp(word)}<span className="hidden sm:inline"> </span></span>)}
       </p>
@@ -285,15 +285,17 @@ export const LifeTimeline = () => {
         <div data-timeline-scene className="pointer-events-none sticky top-16 z-10 flex h-[calc(100vh-4rem)] items-center justify-center px-2 sm:px-5">
           <div className="relative h-[min(650px,80vh)] w-full max-w-[1420px] overflow-hidden rounded-lg border border-border bg-card shadow-paper">
             <div className="absolute inset-x-3 bottom-5 top-8 sm:inset-x-8 sm:bottom-7 sm:top-10">
-              <Zone className="left-[4%] h-[30%] w-[30%] bg-accent/[0.045]" visible={zoneVisibility.first} range="0–40" title="Первая половина" />
+              <Zone className="left-[4%] h-[30%] w-[30%] bg-accent/[0.045]" visible={zoneVisibility.first} range="0-40" title="Первая половина" />
               <div className={`absolute bottom-[10%] left-[30%] h-[30%] w-[9%] origin-left rounded-lg border border-dashed border-border bg-accent/[0.08] transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none ${zoneVisibility.turn ? "scale-x-100 opacity-100" : "scale-x-[0.94] opacity-0"}`} style={{ transitionDelay: zoneVisibility.turn ? "80ms" : "0ms" }} />
-              <div className={`absolute bottom-[43%] left-[34.5%] z-10 -translate-x-1/2 text-center transition-[opacity,transform] duration-500 motion-reduce:transition-none ${zoneVisibility.turn ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}>
-                <p className="whitespace-nowrap font-display text-[clamp(1.15rem,2.3vw,2rem)] font-semibold leading-none text-accent">{nbsp("35–45")}</p>
-                <p className="mt-1 whitespace-nowrap font-display text-[clamp(0.85rem,1.4vw,1.15rem)] font-semibold leading-none text-foreground">{nbsp("Кризис")}</p>
-                <span aria-hidden="true" className="mx-auto mt-2 block h-4 w-px bg-accent" />
+              <div className={`absolute bottom-[45%] left-[4%] z-10 flex items-center transition-[opacity,transform] duration-500 motion-reduce:transition-none sm:bottom-[73%] sm:left-[34.5%] sm:block sm:-translate-x-1/2 sm:text-center ${zoneVisibility.turn ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}>
+                <div className="rounded-md bg-accent px-3 py-2 text-accent-foreground shadow-paper sm:min-w-24 sm:px-4">
+                  <p className="whitespace-nowrap font-display text-xl font-semibold leading-none sm:text-2xl">{nbsp("35-45")}</p>
+                  <p className="mt-1 whitespace-nowrap font-display text-sm font-semibold leading-none">{nbsp("Кризис")}</p>
+                </div>
+                <span aria-hidden="true" className="block h-px w-[calc(26vw-0.75rem)] bg-accent sm:mx-auto sm:h-10 sm:w-px" />
               </div>
-              <Zone className="left-[34%] h-[60%] w-[31%] bg-foreground/[0.035]" visible={zoneVisibility.second} range="40–80" title="Второй акт" delay={140} />
-              <Zone className="left-[65%] h-[90%] w-[31%] bg-accent-soft/15" visible={zoneVisibility.third} range="80–120" title="Третья половина" delay={180} />
+              <Zone className="left-[34%] h-[60%] w-[31%] bg-foreground/[0.035]" visible={zoneVisibility.second} range="40-80" title="Второй акт" delay={140} />
+              <Zone className="left-[65%] h-[90%] w-[31%] bg-accent-soft/15" visible={zoneVisibility.third} range="80-120" title="Третья половина" delay={180} />
               <div className="absolute left-[4%] right-[4%] top-[90%] h-px bg-border" />
               <div className="absolute left-[4%] top-[90%] h-0.5 bg-foreground transition-[width] duration-1000 ease-out motion-reduce:transition-none" style={{ width: `${axisWidth(chapter)}%` }} />
               {[0, 20, 40, 60, 80, 100, 120].map((tick) => (

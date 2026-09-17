@@ -1,4 +1,4 @@
-export type StoryCategory = "business" | "culture" | "sport" | "science";
+export type StoryCategory = "business" | "culture" | "sport" | "science" | "state";
 
 export type StoryPerson = {
   id: string;
@@ -7,6 +7,7 @@ export type StoryPerson = {
   country: string;
   cat: StoryCategory;
   role: string;
+  field?: string;
   chapter: 4 | 6 | 7;
   level: 1 | 2 | 3;
   lang?: "ru";
@@ -18,58 +19,46 @@ export type StoryPerson = {
   events: number[];
 };
 
+
 export const longevityStoryPeople: StoryPerson[] = [
-  // 45–80: новый большой этап
-  {id:"parsons",name:"Боб Парсонс",age:47,country:"США",cat:"business",role:"основатель GoDaddy",chapter:4,level:1,wiki:"Bob_Parsons",
-   before:"Создал Parsons Technology и продал её Intuit. После сделки фактически оказался между двумя карьерами.",
-   turn:"В 47 лет основал Jomax Technologies — компанию, которая позже стала GoDaddy.",
-   after:"GoDaddy выросла в глобального регистратора доменов. Уже после 60 Парсонс создал ещё один бизнес — PXG.",
-   source:"https://www.forbes.com/profile/bob-parsons/",events:[47,64]},
-  {id:"ando",name:"Момофуку Андо",age:48,country:"Япония",cat:"business",role:"основатель Nissin Foods",chapter:4,level:2,wiki:"Momofuku_Ando",
-   before:"Пережил несколько предпринимательских неудач и потерю бизнеса.",
-   turn:"В 48 лет разработал Chicken Ramen — первую коммерчески успешную лапшу быстрого приготовления.",
-   after:"В 61 год создал Cup Noodles и превратил новый формат еды в глобальную индустрию.",
-   source:"https://www.nissin.com/en_jp/about/founder/",events:[48,61]},
-  {id:"nayar",name:"Фалгуни Наяр",age:50,country:"Индия",cat:"business",role:"основательница Nykaa",chapter:4,level:3,wiki:"Falguni_Nayar",
-   before:"Почти два десятилетия работала инвестиционным банкиром и дошла до управляющего директора Kotak Mahindra Capital.",
-   turn:"Около 50 лет ушла из инвестиционного банкинга и в 2012 году основала Nykaa.",
-   after:"Nykaa стала одной из крупнейших beauty-tech платформ Индии и вышла на биржу.",
-   source:"https://www.ey.com/en_in/entrepreneur-of-the-year/winners-2019/falguni-nayar",events:[50]},
-  {id:"clark",name:"Джим Кларк",age:50,country:"США",cat:"business",role:"сооснователь Netscape",chapter:4,level:1,wiki:"James_H._Clark",
-   before:"Профессор и технологический предприниматель, уже создавший Silicon Graphics.",
-   turn:"В 50 лет стал сооснователем Mosaic Communications, вскоре переименованной в Netscape.",
-   after:"Netscape стала одним из символов раннего интернета и дала старт новому этапу его предпринимательской карьеры.",
-   source:"https://computerhistory.org/profile/james-clark/",events:[50]},
-  {id:"kroc",name:"Рэй Крок",age:52,country:"США",cat:"business",role:"создатель системы McDonald's",chapter:4,level:2,wiki:"Ray_Kroc",
+  // 40–80: вторая половина
+  {id:"dontsova",name:"Дарья Донцова",age:47,country:"Россия",cat:"culture",role:"писательница",field:"Литература",chapter:4,level:1,lang:"ru",wiki:"Дарья_Донцова",
+   before:"Журналистка и переводчица, книг не писала.",
+   turn:"Первый роман «Крутые наследнички» написала в больнице во время тяжёлой болезни, он вышел в 1999 году.",
+   after:"Дальше — более двухсот книг и первые места по тиражам в России.",
+   source:"https://ru.wikipedia.org/wiki/Дарья_Донцова",events:[47]},
+  {id:"trubnikov",name:"Андрей Трубников",age:49,country:"Россия",cat:"business",role:"основатель Natura Siberica",field:"Косметика",chapter:4,level:2,lang:"ru",wiki:"Трубников,_Андрей_Вадимович",
+   before:"Выпускник МГИМО, сменил несколько занятий, затем занялся недорогой косметикой.",
+   turn:"В 2008 году запустил Natura Siberica — марку органической косметики на сибирских травах.",
+   after:"Бренд вышел в Европу и Азию и стал крупнейшей российской маркой органической косметики.",
+   source:"https://ru.wikipedia.org/wiki/Трубников,_Андрей_Вадимович",events:[49]},
+  {id:"freeman",name:"Морган Фриман",age:50,country:"США",cat:"culture",role:"актёр",field:"Кино",chapter:4,level:3,wiki:"Morgan_Freeman",
+   before:"Сорок лет театра, эпизодов и детской телепрограммы почти без известности в кино.",
+   turn:"Роль в фильме «Уличный умник» принесла первую номинацию на «Оскар» и настоящий вход в большое кино.",
+   after:"Дальше — «Побег из Шоушенка», «Семь», «Малышка на миллион» и статус одного из самых востребованных актёров.",
+   source:"https://www.britannica.com/biography/Morgan-Freeman",events:[50]},
+  {id:"gapontsev",name:"Валентин Гапонцев",age:51,country:"Россия / США",cat:"business",role:"основатель IPG Photonics",field:"Лазерные технологии",chapter:4,level:1,lang:"ru",wiki:"Гапонцев,_Валентин_Павлович",
+   before:"Физик, десятилетиями занимался лазерной оптикой в академических институтах.",
+   turn:"Ушёл из науки в бизнес и создал компанию по производству волоконных лазеров.",
+   after:"IPG Photonics заняла около 80% мирового рынка мощных волоконных лазеров, состояние основателя измерялось миллиардами.",
+   source:"https://www.forbes.ru/rating/ekonomika/lyudi/67109-russkaya-hvatka",events:[51]},
+  {id:"kroc",name:"Рэй Крок",age:52,country:"США",cat:"business",role:"создатель системы McDonald's",field:"Общественное питание",chapter:4,level:2,wiki:"Ray_Kroc",
    before:"Десятилетиями работал продавцом, в том числе продавал миксеры для молочных коктейлей.",
-   turn:"В 52 года увидел ресторан братьев Макдональд и решил построить вокруг их модели масштабную франчайзинговую систему.",
+   turn:"Увидел ресторан братьев Макдональд и решил построить вокруг их модели масштабную франчайзинговую систему.",
    after:"Создал McDonald's System, Inc., а позднее выкупил права на компанию.",
    source:"https://corporate.mcdonalds.com/corpmcd/our-company/who-we-are/our-history.html",events:[52,58]},
-  {id:"galitsky",name:"Александр Галицкий",age:53,country:"Россия / Европа",cat:"business",role:"основатель Almaz Capital",chapter:4,level:3,lang:"ru",wiki:"Галицкий,_Александр_Владимирович",
-   before:"Инженер и технологический предприниматель, один из заметных участников постсоветской IT-индустрии.",
-   turn:"В 53 года создал Almaz Capital — венчурный фонд, ориентированный на технологические компании из Центральной и Восточной Европы.",
-   after:"Фонд стал международной платформой для инвестиций в технологические компании и новым профессиональным этапом Галицкого.",
-   source:"https://almazcapital.com/team/alexander-galitsky/",events:[53]},
-  {id:"huffington",name:"Арианна Хаффингтон",age:54,country:"Греция / США",cat:"business",role:"соосновательница Huffington Post",chapter:4,level:1,wiki:"Arianna_Huffington",
-   before:"Писательница, колумнист и политический комментатор.",
-   turn:"В 54 года стала соосновательницей Huffington Post.",
-   after:"После продажи медиа снова сменила траекторию: после 60 основала Thrive Global.",
-   source:"https://www.britannica.com/biography/Arianna-Huffington",events:[54,66]},
-  {id:"zimin",name:"Дмитрий Зимин",age:59,country:"Россия",cat:"business",role:"сооснователь «ВымпелКома»",chapter:4,level:2,lang:"ru",wiki:"Зимин,_Дмитрий_Борисович",
-   before:"Учёный и инженер, десятилетиями работал в радиотехнических институтах.",
-   turn:"В 59 лет вместе с партнёром основал «ВымпелКом» — будущего оператора «Билайн».",
-   after:"Компания стала первой российской компанией, разместившей акции на NYSE; позднее Зимин переключился на филантропию.",
-   source:"https://www.veon.com/fileadmin/user_upload/investors/reports/2015/2014-annual-report.pdf",events:[59,69]},
-  {id:"duffield",name:"Дэвид Даффилд",age:64,country:"США",cat:"business",role:"сооснователь Workday",chapter:4,level:3,wiki:"David_Duffield",
-   before:"К 40 годам уже был опытным разработчиком корпоративного ПО. В 47 основал PeopleSoft.",
-   turn:"В 64 года после продажи PeopleSoft Oracle стал сооснователем Workday — новой cloud-компании с чистого листа.",
-   after:"Workday вышла на биржу. Позже, уже после 75, Даффилд запустил ещё одну software-компанию — Ridgeline.",
-   source:"https://www.forbes.com/profile/david-duffield/",events:[47,64,77]},
-  {id:"sanders",name:"Харланд Сандерс",age:65,country:"США",cat:"business",role:"масштабирование KFC",chapter:4,level:1,wiki:"Colonel_Sanders",
-   before:"Работал на множестве работ и десятилетиями держал придорожный ресторан в Кентукки.",
-   turn:"После 65 полностью сосредоточился на распространении франшизы KFC по Северной Америке.",
-   after:"К 1960-м сеть насчитывала сотни ресторанов; Сандерс превратился в один из самых узнаваемых символов ресторанного бизнеса.",
-   source:"https://global.kfc.com/our-history",events:[65]},
+  {id:"alexandrov",name:"Борис Александров",age:48,country:"Россия",cat:"business",role:"основатель «Ростагроэкспорта»",field:"Пищевое производство",chapter:4,level:3,lang:"ru",wiki:"Александров,_Борис_Юрьевич",
+   before:"Врач по образованию, работал в медицине и торговле.",
+   turn:"Начал собственное молочное производство и сделал ставку на глазированные сырки.",
+   after:"За четверть века вырос в молочную империю: сырки его марки покупала каждая десятая российская семья.",
+   source:"https://www.rbc.ru/business/30/11/2020/5fc4e7ce9a79471866b3436c",events:[48]},
+  {id:"mandela",name:"Нельсон Мандела",age:75,country:"ЮАР",cat:"state",role:"первый президент ЮАР после апартеида",field:"Государство",chapter:4,level:1,wiki:"Nelson_Mandela",
+   before:"Двадцать семь лет в тюрьме, освобождение и годы переговоров о конце апартеида.",
+   turn:"Победил на первых всеобщих выборах и возглавил страну в 1994 году.",
+   after:"Провёл ЮАР через мирный переход власти и отказался от второго срока.",
+   source:"https://www.nelsonmandela.org/biography",events:[75]},
+
+
 
   // 80–100: активная деятельность
   {id:"murthy",name:"Нараяна Мурти",age:80,country:"Индия",cat:"business",role:"сооснователь Infosys",chapter:6,level:1,wiki:"N._R._Narayana_Murthy",

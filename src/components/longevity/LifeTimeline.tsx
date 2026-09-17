@@ -89,7 +89,16 @@ const storySteps = chapters.flatMap((item) => [
   { key: `${item.id}-card`, item, phase: "card" as const },
 ]);
 
+const catLabel: Record<string, string> = {
+  business: "Бизнес",
+  culture: "Культура",
+  sport: "Спорт",
+  science: "Наука",
+  state: "Государство",
+};
+
 const personLine = (name: string) => {
+
   const words = name.split(" ");
   return [words[0] ?? "", words.slice(1).join(" ")] as const;
 };
@@ -186,8 +195,10 @@ const GroupTimeline = ({ range, title, people }: { range: string; title: string;
               </div>
               <div className={`pointer-events-none absolute bottom-[calc(100%+8px)] w-[min(15rem,72vw)] rounded-lg border border-border bg-card p-3 opacity-0 shadow-hard transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 ${x > 60 ? "right-0" : "left-0"}`}>
                 <p className="font-body text-xs font-semibold text-accent">{nbsp(person.role)}</p>
+                <p className="mt-0.5 font-body text-[11px] text-muted-foreground">{nbsp(`${person.field ?? catLabel[person.cat]} · ${person.country}`)}</p>
                 <p className="mt-1.5 font-body text-sm leading-snug">{nbsp(person.turn)}</p>
               </div>
+
             </div>
           );
         }) : null}

@@ -98,13 +98,12 @@ const MAP_MIN_AGE = 40;
 const mapX = (age: number) => 5 + ((Math.min(Math.max(age, MAP_MIN_AGE), MAX_AGE) - MAP_MIN_AGE) / (MAX_AGE - MAP_MIN_AGE)) * 90;
 
 const mapTop = (person: StoryPerson) => {
-  const base = 44 + (person.level - 1) * 15;
   const peers = longevityStoryPeople
-    .filter((candidate) => candidate.chapter === person.chapter && candidate.level === person.level)
-    .sort((first, second) => first.age - second.age);
+    .filter((candidate) => candidate.chapter === person.chapter)
+    .sort((first, second) => first.age - second.age || first.id.localeCompare(second.id));
   const index = peers.findIndex((candidate) => candidate.id === person.id);
-  const offsets = [-6, 6, 0] as const;
-  return base + offsets[index % offsets.length];
+  const rows = [46, 58, 70, 82, 52, 64, 76, 88] as const;
+  return rows[index % rows.length];
 };
 
 

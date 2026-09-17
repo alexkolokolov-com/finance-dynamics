@@ -101,31 +101,56 @@ const mapGroups = [
   { range: "80-120", title: "Третья половина", people: sortedPeople.filter((person) => person.age >= 80) },
 ];
 
-const GroupTimeline = ({ range, title, people }: { range: string; title: string; people: StoryPerson[] }) => {
+const layoutPins = (people: StoryPerson[], start: number, end: number, levels: number, gap: number) => {
+  const lastX = Array.from({ length: levels }, () => Number.NEGATIVE_INFINITY);
+
+  return people.map((person, index) => {
+    const ratio = (Math.min(Math.max(person.age, start), end) - start) / (end - start);
+    const x = 8 + ratio * 84;
+
+    const seed = index % 2 === 0 ? 0 : 1;
+    const order: number[] = [];
+    for (let step = 0; step < levels; step += 1) order.push((seed + step * 2) % levels);
+    for (let level = 0; level < levels; level += 1) if (!order.includes(level)) order.push(level);
+
+    let level = order.find((candidate) => x - lastX[candidate] >= gap);
+    if (level === undefined) {
+      level = lastX.reduce((best, value, current) => (value < lastX[best] ? current : best), 0);
+    }
+    lastX[level] = x;
+
+    return { person, x, y: levels === 1 ? 50 : (level / (levels - 1)) * 100 };
+  });
+};
+
+const GroupTimeline = ({ range, title, people, levels, gap, areaClassName }: { range: string; title: string; people: StoryPerson[]; levels: number; gap: number; areaClassName: string }) => {
   const [start, end] = range.split("-").map(Number);
+  const pins = useMemo(() => layoutPins(people, start, end, levels, gap), [people, start, end, levels, gap]);
 
   return (
     <div className={`flex min-h-0 flex-col rounded-lg border border-dashed bg-transparent ${start >= 80 ? "border-[hsl(var(--longevity-third)/0.9)]" : "border-[hsl(var(--longevity-second)/0.8)]"}`}>
-      <div className="shrink-0 border-b border-dashed border-border/60 px-4 py-4 md:px-5">
+      <div className="shrink-0 px-4 py-4 md:px-5">
         <p className={`font-display text-4xl font-semibold leading-none ${start >= 80 ? "text-[hsl(var(--longevity-third-foreground))]" : "text-accent"}`}>{nbsp(range)}</p>
         <p className="mt-2 font-display text-lg font-semibold leading-none md:text-xl">{nbsp(title)}</p>
       </div>
-      <div className="grid flex-1 auto-rows-min grid-cols-2 content-evenly gap-x-2 gap-y-2 p-3 md:gap-x-3 md:px-4 md:py-3">
-        {people.map((person, index) => {
+
+      <div className={`relative flex-1 ${areaClassName}`}>
+        {pins.map(({ person, x, y }, index) => {
           const [firstName, lastName] = personLine(person.name);
           return (
             <div
               key={person.id}
-              className="group relative z-10 min-w-0 hover:z-40 focus-within:z-40"
+              className="group absolute z-10 -translate-x-1/2 -translate-y-1/2 hover:z-40 focus-within:z-40"
+              style={{ left: `${x}%`, top: `${y}%` }}
             >
-              <div tabIndex={0} role="button" aria-label={`${person.name}, ${person.age}`} className="flex min-w-0 items-center rounded-full border-2 border-accent bg-card pr-1.5 shadow-paper transition-transform duration-200 group-hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+              <div tabIndex={0} role="button" aria-label={`${person.name}, ${person.age}`} className="flex w-[104px] items-center rounded-full border-2 border-accent bg-card pr-1.5 shadow-paper transition-transform duration-200 group-hover:scale-[1.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent font-display text-[10px] font-semibold text-accent-foreground">{person.age}</span>
                 <span className="min-w-0 px-1.5 py-1 text-left">
                   <span className="block truncate font-body text-[10px] font-semibold leading-none">{nbsp(firstName)}</span>
                   {lastName ? <span className="mt-0.5 block truncate font-body text-[10px] leading-none text-foreground/70">{nbsp(lastName)}</span> : null}
                 </span>
               </div>
-              <div className={`pointer-events-none absolute bottom-[calc(100%+8px)] w-[min(15rem,72vw)] rounded-lg border border-border bg-card p-3 opacity-0 shadow-hard transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 ${index % 2 ? "right-0" : "left-0"}`}>
+              <div className={`pointer-events-none absolute bottom-[calc(100%+8px)] w-[min(15rem,72vw)] rounded-lg border border-border bg-card p-3 opacity-0 shadow-hard transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 ${x > 60 ? "right-0" : "left-0"}`}>
                 <p className="font-body text-xs font-semibold text-accent">{nbsp(person.role)}</p>
                 <p className="mt-1.5 font-body text-sm leading-snug">{nbsp(person.turn)}</p>
               </div>
@@ -133,12 +158,14 @@ const GroupTimeline = ({ range, title, people }: { range: string; title: string;
           );
         })}
       </div>
-      <div className="grid shrink-0 grid-cols-3 border-t border-border/60 px-4 py-2 font-body text-[10px] text-muted-foreground">
+
+      <div className="grid shrink-0 grid-cols-3 border-t border-dashed border-border/60 px-4 py-2 font-body text-[10px] text-muted-foreground">
         <span>{start}</span><span className="text-center">{start + 20}</span><span className="text-right">{end}</span>
       </div>
     </div>
   );
 };
+
 
 
 

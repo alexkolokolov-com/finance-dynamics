@@ -46,8 +46,8 @@ const Longevity = () => {
             <span className="block whitespace-nowrap">{nbsp("После 40 жизнь")}</span>
             <span className="mt-1 block whitespace-nowrap">
               {nbsp("может стать")}
-              <span aria-hidden="true" className="inline-flex w-[0.72em] justify-start text-accent">
-                {[0, 1, 2].map((dot) => <span key={dot} className="animate-fade-in opacity-0" style={{ animationDelay: `${300 + dot * 230}ms`, animationFillMode: "forwards" }}>.</span>)}
+              <span aria-hidden="true" className="ml-[0.04em] inline-flex w-[0.72em] justify-start text-accent">
+                {[0, 1, 2].map((dot) => <span key={dot} className="longevity-dot">.</span>)}
               </span>
             </span>
             <span key={headlineWord} aria-hidden="true" className="mt-1 block animate-fade-in text-accent">{headlineWord}</span>

@@ -162,6 +162,25 @@
   }
 }
 
+@keyframes longevity-dot-in {
+  from { opacity: 0; transform: translateY(0.12em); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.longevity-dot {
+  display: inline-block;
+  opacity: 0;
+  animation: longevity-dot-in 280ms ease-out forwards;
+}
+
+.longevity-dot:nth-child(1) { animation-delay: 300ms; }
+.longevity-dot:nth-child(2) { animation-delay: 530ms; }
+.longevity-dot:nth-child(3) { animation-delay: 760ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .longevity-dot { opacity: 1; animation: none; }
+}
+
 /* ===== /bigbudget — отдельная тема, оставлена как есть для второго лендинга ===== */
 .bigbudget-theme {
   --chalk: oklch(0.28 0.04 165);

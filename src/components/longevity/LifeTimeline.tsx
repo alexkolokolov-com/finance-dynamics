@@ -267,7 +267,7 @@ const CrisisMarker = ({ visible }: { visible: boolean }) => {
       />
 
       <div
-        className={`absolute bottom-[55%] z-20 flex -translate-x-full translate-y-1/2 items-center transition-[opacity,transform] duration-900 motion-reduce:transition-none ${visible ? "opacity-100" : "translate-y-[calc(50%+0.5rem)] opacity-0"}`}
+        className={`absolute bottom-[55%] z-20 flex -translate-x-full translate-y-1/2 items-center transition-[opacity,transform] duration-[900ms] motion-reduce:transition-none ${visible ? "opacity-100" : "translate-y-[calc(50%+0.5rem)] opacity-0"}`}
         style={{ left: `${TIMELINE_GEOMETRY.crisisStart}%` }}
       >
         <div className="rounded-md bg-accent px-3 py-2 text-left text-accent-foreground shadow-paper sm:px-4">
@@ -389,7 +389,7 @@ export const LifeTimeline = () => {
                 <CrisisMarker visible={zoneVisibility.turn} />
               </div>
               <div className="absolute left-[4%] right-[4%] top-[92%] h-px bg-border" />
-              <div className="absolute left-[4%] top-[92%] h-0.5 bg-foreground transition-[width] duration-1500 ease-out motion-reduce:transition-none" style={{ width: `${axisWidth(chapter)}%` }} />
+              <div className="absolute left-[4%] top-[92%] h-0.5 bg-foreground transition-[width] duration-[1500ms] ease-out motion-reduce:transition-none" style={{ width: `${axisWidth(chapter)}%` }} />
               {[0, 20, 40, 60, 80, 100, 120].map((tick) => (
                  <div key={tick} className="absolute top-[calc(92%+14px)] -translate-x-1/2 font-body text-[10px] text-muted-foreground sm:text-xs" style={{ left: `${xPct(tick)}%` }}>
                   <span className="absolute -top-[14px] left-1/2 h-2 w-px bg-muted-foreground" />{tick}
@@ -411,7 +411,7 @@ export const LifeTimeline = () => {
             >
               {stepPhase === "card" ? (
                 <div className="grid w-full max-w-[1180px] grid-cols-1 md:grid-cols-3">
-                  <div className={`sticky top-[calc(4rem+14vh)] w-[92vw] overflow-hidden rounded-lg border border-border bg-card/95 shadow-hard backdrop-blur-md transition-[opacity,transform] duration-900 motion-reduce:transition-none sm:w-[28rem] md:w-[20rem] lg:w-[22rem] xl:w-[24rem] ${storyColumnClass(item.id)} ${chapter === item.id && phase === "card" ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
+                  <div className={`sticky top-[calc(4rem+14vh)] w-[92vw] overflow-hidden rounded-lg border border-border bg-card/95 shadow-hard backdrop-blur-md transition-[opacity,transform] duration-[900ms] motion-reduce:transition-none sm:w-[28rem] md:w-[20rem] lg:w-[22rem] xl:w-[24rem] ${storyColumnClass(item.id)} ${chapter === item.id && phase === "card" ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
                     <div className="aspect-[4/3] w-full overflow-hidden sm:aspect-[16/10]">
                       <img src={chapterImage(item.id)} alt="" aria-hidden="true" loading="lazy" width={1536} height={1024} className="h-full w-full scale-125 object-cover mix-blend-multiply" />
                     </div>

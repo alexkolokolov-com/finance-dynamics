@@ -97,19 +97,23 @@ const personLine = (name: string) => {
 const MAP_MIN_AGE = 40;
 const mapX = (age: number) => 5 + ((Math.min(Math.max(age, MAP_MIN_AGE), MAX_AGE) - MAP_MIN_AGE) / (MAX_AGE - MAP_MIN_AGE)) * 90;
 
-const MAP_ROWS = [56, 62, 68, 74, 80, 86, 92] as const;
-const MAP_PILL_GAP = 10;
+const MAP_ROWS = [8, 20, 32, 44, 56, 68, 80, 92] as const;
+const MAP_PILL_GAP = 11;
 
 const mapLayout = (() => {
   const positions = new Map<string, number>();
   const lastX: number[] = MAP_ROWS.map(() => Number.NEGATIVE_INFINITY);
+  const usage: number[] = MAP_ROWS.map(() => 0);
   [...longevityStoryPeople]
     .sort((first, second) => first.age - second.age || first.id.localeCompare(second.id))
     .forEach((person) => {
       const x = mapX(person.age);
-      let row = lastX.findIndex((value) => x - value >= MAP_PILL_GAP);
-      if (row === -1) row = lastX.indexOf(Math.min(...lastX));
+      const free = MAP_ROWS.map((_, index) => index).filter((index) => x - lastX[index] >= MAP_PILL_GAP);
+      const row = free.length
+        ? free.reduce((best, index) => (usage[index] < usage[best] ? index : best), free[0])
+        : lastX.indexOf(Math.min(...lastX));
       lastX[row] = x;
+      usage[row] += 1;
       positions.set(person.id, MAP_ROWS[row]);
     });
   return positions;

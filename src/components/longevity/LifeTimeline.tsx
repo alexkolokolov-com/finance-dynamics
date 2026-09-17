@@ -336,17 +336,20 @@ export const LifeTimeline = () => {
           <div className="max-w-4xl">
             <h2 className="font-display text-4xl font-semibold leading-none sm:text-7xl">{nbsp("Посмотрите, у вас все еще впереди!")}</h2>
             <p className="mt-5 max-w-3xl font-body text-lg leading-relaxed text-foreground/75">{nbsp("Наведите на точку и вспомните истории людей, которые преодолели кризисы и после 40 реализовали себя. А также тех, кто и после 80 продолжает активную жизнь!")}</p>
-            <div className="mt-7 flex flex-wrap gap-2" aria-label="Фильтр">
-              {([['all', 'Все'], ...Object.entries(categoryLabels)] as ["all" | StoryCategory, string][]).map(([value, label]) => (
-                <Button key={value} type="button" size="sm" variant={filter === value ? "default" : "outline"} onClick={() => setFilter(value)} className="rounded-full">{nbsp(label === "бизнес / технологии" ? "Бизнес / tech" : label.charAt(0).toUpperCase() + label.slice(1))}</Button>
-              ))}
-            </div>
           </div>
           <div className="mt-10 overflow-x-auto rounded-lg border border-border bg-background">
-            <div className="relative h-[470px] min-w-[940px]">
-              <div className="absolute left-[4%] right-[4%] top-[53%] h-px bg-muted-foreground/60" />
-              {[0, 20, 40, 60, 80, 100, 120].map((tick) => <span key={tick} className="absolute top-[calc(53%+16px)] -translate-x-1/2 font-body text-[11px] text-muted-foreground" style={{ left: `${xPct(tick)}%` }}>{tick}</span>)}
-               {longevityStoryPeople.map((person) => filter === "all" || person.cat === filter ? <PersonButton key={person.id} person={person} onSelect={() => setSelected(person)} compact /> : null)}
+            <div className="relative h-[520px] min-w-[940px]">
+              <div className="absolute inset-x-0 bottom-[16%] top-[4%]">
+                <Zone className="h-[70%] border-[hsl(var(--longevity-second)/0.8)] bg-[hsl(var(--longevity-second)/0.42)]" start={5} end={mapX(80)} visible range="40-80" title="Второй акт" />
+                <Zone className="h-full border-[hsl(var(--longevity-third)/0.9)] bg-[hsl(var(--longevity-third)/0.46)]" rangeClassName="text-[hsl(var(--longevity-third-foreground))]" start={mapX(80)} end={95} visible range="80-120" title="Третья половина" />
+                {longevityStoryPeople.map((person) => <PersonPin key={person.id} person={person} />)}
+              </div>
+              <div className="absolute left-[5%] right-[5%] top-[84%] h-px bg-muted-foreground/60" />
+              {[40, 60, 80, 100, 120].map((tick) => (
+                <div key={tick} className="absolute top-[calc(84%+14px)] -translate-x-1/2 font-body text-[11px] text-muted-foreground" style={{ left: `${mapX(tick)}%` }}>
+                  <span className="absolute -top-[14px] left-1/2 h-2 w-px bg-muted-foreground" />{tick}
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -359,7 +362,7 @@ export const LifeTimeline = () => {
           <p className="mx-auto mt-9 max-w-3xl font-body text-xs leading-relaxed text-muted-foreground">{nbsp("120 лет на этой странице — не прогноз продолжительности жизни. Это предельный сценарий, который помогает увидеть цену слишком короткого финансового горизонта.")}</p>
         </div>
       </section>
-      <PersonDrawer person={selected} onClose={() => setSelected(undefined)} />
+
     </>
   );
 };

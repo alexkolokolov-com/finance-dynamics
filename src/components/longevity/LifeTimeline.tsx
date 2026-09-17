@@ -84,11 +84,6 @@ const chapters = [
   },
 ] as const;
 
-const storySteps = chapters.flatMap((item) => [
-  { key: `${item.id}-zone`, item, phase: "zone" as const },
-  { key: `${item.id}-card`, item, phase: "card" as const },
-]);
-
 const catLabel: Record<string, string> = {
   business: "Бизнес",
   culture: "Культура",
@@ -282,47 +277,53 @@ const CrisisMarker = ({ visible }: { visible: boolean }) => {
 
 export const LifeTimeline = () => {
   const [chapter, setChapter] = useState(1);
-  const [phase, setPhase] = useState<"zone" | "card">("zone");
-  const stepRefs = useRef<(HTMLElement | null)[]>([]);
+  const [trackProgress, setTrackProgress] = useState(0);
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const chapterRefs = useRef<(HTMLElement | null)[]>([]);
 
-  const moveToStep = (nextIndex: number, behavior: ScrollBehavior = "smooth") => {
-    const boundedIndex = Math.min(Math.max(Math.round(nextIndex), 0), storySteps.length - 1);
-    const target = storySteps[boundedIndex];
+  const moveToChapter = (nextIndex: number, behavior: ScrollBehavior = "smooth") => {
+    const boundedIndex = Math.min(Math.max(Math.round(nextIndex), 0), chapters.length - 1);
+    const target = chapters[boundedIndex];
     if (!target) return;
 
-    setChapter(target.item.id);
-    setPhase(target.phase);
+    setChapter(target.id);
+    setTrackProgress(0.5);
 
-    const node = stepRefs.current[boundedIndex];
+    const node = chapterRefs.current[boundedIndex];
     if (!node) return;
 
-    const top = node.getBoundingClientRect().top + window.scrollY + node.offsetHeight / 2 - window.innerHeight / 2;
+    const top = node.getBoundingClientRect().top + window.scrollY + node.offsetHeight * 0.5 - window.innerHeight * 0.5;
     window.scrollTo({ top, behavior });
   };
+
+  useEffect(() => {
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const syncMotion = () => setReducedMotion(motionQuery.matches);
+    syncMotion();
+    motionQuery.addEventListener("change", syncMotion);
+    return () => motionQuery.removeEventListener("change", syncMotion);
+  }, []);
 
   useEffect(() => {
     let frame = 0;
     const syncChapter = () => {
       frame = 0;
       const viewportAnchor = window.innerHeight * 0.5;
-      let nearestChapter = 1;
-      let nearestPhase: "zone" | "card" = "zone";
-      let nearestDistance = Number.POSITIVE_INFINITY;
+      let nextIndex = 0;
+      let nextProgress = 0;
 
-      stepRefs.current.forEach((node) => {
-        if (!node) return;
+      chapterRefs.current.forEach((node, index) => {
+        if (!node || node.offsetHeight <= 0) return;
         const rect = node.getBoundingClientRect();
-        const center = rect.top + rect.height / 2;
-        const distance = Math.abs(center - viewportAnchor);
-        if (distance < nearestDistance) {
-          nearestDistance = distance;
-          nearestChapter = Number(node.dataset.chapter);
-          nearestPhase = node.dataset.phase === "card" ? "card" : "zone";
+        if (viewportAnchor >= rect.top) {
+          nextIndex = index;
+          nextProgress = Math.min(Math.max((viewportAnchor - rect.top) / rect.height, 0), 1);
         }
       });
 
-      setChapter((current) => current === nearestChapter ? current : nearestChapter);
-      setPhase((current) => current === nearestPhase ? current : nearestPhase);
+      const nextChapter = chapters[nextIndex]?.id ?? chapters[0].id;
+      setChapter((current) => current === nextChapter ? current : nextChapter);
+      setTrackProgress((current) => Math.abs(current - nextProgress) < 0.001 ? current : nextProgress);
     };
     const scheduleSync = () => {
       if (!frame) frame = window.requestAnimationFrame(syncChapter);
@@ -349,8 +350,24 @@ export const LifeTimeline = () => {
     }),
     [chapter],
   );
-  const activeStepIndex = Math.max(storySteps.findIndex((step) => step.item.id === chapter && step.phase === phase), 0);
-  const activeStep = storySteps[activeStepIndex];
+  const activeChapterIndex = Math.max(chapters.findIndex((item) => item.id === chapter), 0);
+  const activeChapter = chapters[activeChapterIndex];
+
+  const cardMotion = (index: number) => {
+    if (index !== activeChapterIndex) {
+      return { opacity: 0, transform: `translateY(${index < activeChapterIndex ? -72 : 72}px)` };
+    }
+    if (reducedMotion) {
+      return { opacity: trackProgress > 0.01 && trackProgress < 0.99 ? 1 : 0, transform: "translateY(0px)" };
+    }
+    if (trackProgress < 0.15) {
+      const progress = trackProgress / 0.15;
+      return { opacity: progress, transform: `translateY(${(1 - progress) * 72}px)` };
+    }
+    if (trackProgress <= 0.8) return { opacity: 1, transform: "translateY(0px)" };
+    const progress = (trackProgress - 0.8) / 0.2;
+    return { opacity: 1 - progress, transform: `translateY(${-progress * 72}px)` };
+  };
 
   return (
     <>
@@ -358,25 +375,25 @@ export const LifeTimeline = () => {
         <div data-timeline-scene className="pointer-events-none sticky top-16 z-10 flex h-[calc(100vh-4rem)] items-center justify-center px-2 sm:px-5">
           <div className="relative h-[min(590px,76vh)] w-full max-w-[1420px] overflow-hidden rounded-lg border border-border bg-card shadow-paper">
             <div className="pointer-events-auto absolute inset-x-4 top-4 z-30 flex items-center gap-4 sm:inset-x-8 sm:top-5">
-              <p className="hidden min-w-40 font-body text-sm text-muted-foreground sm:block">{activeStep ? nbsp(`${activeStep.item.range} · ${activeStep.item.title}`) : null}</p>
+              <p className="hidden min-w-40 font-body text-sm text-muted-foreground sm:block">{activeChapter ? nbsp(`${activeChapter.range} · ${activeChapter.title}`) : null}</p>
               <Slider
                 aria-label={nbsp("Перемотка таймлайна")}
                 min={0}
-                max={storySteps.length - 1}
+                max={chapters.length - 1}
                 step={1}
-                value={[activeStepIndex]}
+                value={[activeChapterIndex]}
                 onValueChange={(value) => {
                   const nextIndex = value[0];
                   if (typeof nextIndex !== "number") return;
-                  const target = storySteps[nextIndex];
+                  const target = chapters[nextIndex];
                   if (!target) return;
-                  setChapter(target.item.id);
-                  setPhase(target.phase);
+                  setChapter(target.id);
+                  setTrackProgress(0.5);
                 }}
                 onValueCommit={(value) => {
                   const nextIndex = value[0];
                   if (typeof nextIndex !== "number") return;
-                  moveToStep(nextIndex);
+                  moveToChapter(nextIndex);
                 }}
                 className="min-w-0 flex-1"
               />
@@ -396,34 +413,37 @@ export const LifeTimeline = () => {
                 </div>
               ))}
             </div>
+            <div className="pointer-events-none absolute inset-x-4 top-[14vh] z-20 grid grid-cols-1 sm:inset-x-[5vw] md:grid-cols-3">
+              {chapters.map((item, index) => (
+                <div
+                  key={item.id}
+                  aria-hidden={index !== activeChapterIndex}
+                  className={`col-start-1 row-start-1 w-[92vw] overflow-hidden rounded-lg border border-border bg-card/95 shadow-hard backdrop-blur-md will-change-transform sm:w-[28rem] md:w-[20rem] lg:w-[22rem] xl:w-[24rem] ${storyColumnClass(item.id)}`}
+                  style={cardMotion(index)}
+                >
+                  <div className="aspect-[4/3] w-full overflow-hidden sm:aspect-[16/10]">
+                    <img src={chapterImage(item.id)} alt="" aria-hidden="true" loading="lazy" width={1536} height={1024} className="h-full w-full scale-125 object-cover mix-blend-multiply" />
+                  </div>
+                  <div className="p-5 sm:p-7">
+                    {item.paragraphs.map((paragraph, paragraphIndex) => (
+                      <p key={paragraph} className={`font-body leading-snug ${"accent" in item && item.accent || "quote" in item && item.quote && paragraphIndex === 1 ? "text-[clamp(1.15rem,2.3vw,1.8rem)] font-semibold" : "text-base sm:text-lg"} ${paragraphIndex ? "mt-4" : ""}`}>{nbsp(paragraph)}</p>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
         <div className="relative z-30 -mt-[calc(100vh-4rem)] pointer-events-none">
-          {storySteps.map(({ key, item, phase: stepPhase }, index) => (
+          {chapters.map((item, index) => (
             <section
-              key={key}
-              data-story-step
+              key={item.id}
+              data-story-chapter
               data-chapter={item.id}
-              data-phase={stepPhase}
-              ref={(node) => { stepRefs.current[index] = node; }}
-              className={`flex justify-center px-4 sm:px-[5vw] ${stepPhase === "zone" ? "min-h-[86vh] items-center" : "min-h-[145vh] items-start py-[18vh]"}`}
-            >
-              {stepPhase === "card" ? (
-                <div className="grid w-full max-w-[1180px] grid-cols-1 md:grid-cols-3">
-                  <div className={`sticky top-[calc(4rem+14vh)] w-[92vw] overflow-hidden rounded-lg border border-border bg-card/95 shadow-hard backdrop-blur-md transition-[opacity,transform] duration-[900ms] motion-reduce:transition-none sm:w-[28rem] md:w-[20rem] lg:w-[22rem] xl:w-[24rem] ${storyColumnClass(item.id)} ${chapter === item.id && phase === "card" ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
-                    <div className="aspect-[4/3] w-full overflow-hidden sm:aspect-[16/10]">
-                      <img src={chapterImage(item.id)} alt="" aria-hidden="true" loading="lazy" width={1536} height={1024} className="h-full w-full scale-125 object-cover mix-blend-multiply" />
-                    </div>
-                    <div className="p-5 sm:p-7">
-                      {item.paragraphs.map((paragraph, paragraphIndex) => (
-                        <p key={paragraph} className={`font-body leading-snug ${"accent" in item && item.accent || "quote" in item && item.quote && paragraphIndex === 1 ? "text-[clamp(1.15rem,2.3vw,1.8rem)] font-semibold" : "text-base sm:text-lg"} ${paragraphIndex ? "mt-4" : ""}`}>{nbsp(paragraph)}</p>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ) : null}
-            </section>
+              ref={(node) => { chapterRefs.current[index] = node; }}
+              className="h-[190vh]"
+            />
           ))}
         </div>
       </div>

@@ -101,31 +101,64 @@ const mapGroups = [
   { range: "80-120", title: "Третья половина", people: sortedPeople.filter((person) => person.age >= 80) },
 ];
 
-const layoutPins = (people: StoryPerson[], start: number, end: number, levels: number, gap: number) => {
-  const lastX = Array.from({ length: levels }, () => Number.NEGATIVE_INFINITY);
+const PIN_WIDTH = 104;
+const PIN_GAP = 12;
+const PIN_ROW = 54;
 
-  return people.map((person, index) => {
+type Pin = { person: StoryPerson; x: number; level: number };
+
+const tryLayout = (people: StoryPerson[], start: number, end: number, levels: number, gap: number) => {
+  const lastX = Array.from({ length: levels }, () => Number.NEGATIVE_INFINITY);
+  const pins: Pin[] = [];
+
+  for (let index = 0; index < people.length; index += 1) {
+    const person = people[index];
     const ratio = (Math.min(Math.max(person.age, start), end) - start) / (end - start);
     const x = 8 + ratio * 84;
 
-    const seed = index % 2 === 0 ? 0 : 1;
     const order: number[] = [];
+    const seed = index % 2 === 0 ? 0 : 1;
     for (let step = 0; step < levels; step += 1) order.push((seed + step * 2) % levels);
     for (let level = 0; level < levels; level += 1) if (!order.includes(level)) order.push(level);
 
-    let level = order.find((candidate) => x - lastX[candidate] >= gap);
-    if (level === undefined) {
-      level = lastX.reduce((best, value, current) => (value < lastX[best] ? current : best), 0);
-    }
-    lastX[level] = x;
+    const level = order.find((candidate) => x - lastX[candidate] >= gap);
+    if (level === undefined) return null;
 
-    return { person, x, y: levels === 1 ? 50 : (level / (levels - 1)) * 100 };
-  });
+    lastX[level] = x;
+    pins.push({ person, x, level });
+  }
+
+  return pins;
 };
 
-const GroupTimeline = ({ range, title, people, levels, gap, areaClassName }: { range: string; title: string; people: StoryPerson[]; levels: number; gap: number; areaClassName: string }) => {
+const layoutPins = (people: StoryPerson[], start: number, end: number, width: number) => {
+  const gap = ((PIN_WIDTH + PIN_GAP) / Math.max(width, 240)) * 100;
+
+  for (let levels = 5; levels <= 16; levels += 1) {
+    const pins = tryLayout(people, start, end, levels, gap);
+    if (pins) return { pins, levels };
+  }
+
+  return { pins: tryLayout(people, start, end, 16, 0) ?? [], levels: 16 };
+};
+
+const GroupTimeline = ({ range, title, people }: { range: string; title: string; people: StoryPerson[] }) => {
   const [start, end] = range.split("-").map(Number);
-  const pins = useMemo(() => layoutPins(people, start, end, levels, gap), [people, start, end, levels, gap]);
+  const areaRef = useRef<HTMLDivElement | null>(null);
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    const node = areaRef.current;
+    if (!node) return;
+    const observer = new ResizeObserver((entries) => {
+      const next = entries[0]?.contentRect.width ?? 0;
+      setWidth((current) => (Math.abs(current - next) < 1 ? current : next));
+    });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  const { pins, levels } = useMemo(() => layoutPins(people, start, end, width), [people, start, end, width]);
 
   return (
     <div className={`flex min-h-0 flex-col rounded-lg border border-dashed bg-transparent ${start >= 80 ? "border-[hsl(var(--longevity-third)/0.9)]" : "border-[hsl(var(--longevity-second)/0.8)]"}`}>
@@ -134,9 +167,10 @@ const GroupTimeline = ({ range, title, people, levels, gap, areaClassName }: { r
         <p className="mt-2 font-display text-lg font-semibold leading-none md:text-xl">{nbsp(title)}</p>
       </div>
 
-      <div className={`relative flex-1 ${areaClassName}`}>
-        {pins.map(({ person, x, y }, index) => {
+      <div ref={areaRef} className="relative flex-1 px-3 py-2" style={{ minHeight: `${levels * PIN_ROW}px` }}>
+        {width > 0 ? pins.map(({ person, x, level }) => {
           const [firstName, lastName] = personLine(person.name);
+          const y = levels === 1 ? 50 : 6 + (level / (levels - 1)) * 88;
           return (
             <div
               key={person.id}
@@ -156,7 +190,7 @@ const GroupTimeline = ({ range, title, people, levels, gap, areaClassName }: { r
               </div>
             </div>
           );
-        })}
+        }) : null}
       </div>
 
       <div className="grid shrink-0 grid-cols-3 border-t border-dashed border-border/60 px-4 py-2 font-body text-[10px] text-muted-foreground">
@@ -165,6 +199,7 @@ const GroupTimeline = ({ range, title, people, levels, gap, areaClassName }: { r
     </div>
   );
 };
+
 
 
 

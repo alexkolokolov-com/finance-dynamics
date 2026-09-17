@@ -22,9 +22,9 @@ const chapters = [
     range: "0–40",
     title: "Первая половина",
     paragraphs: [
-      "Учимся. Получаем профессию. Ошибаемся. Строим карьеру или бизнес. Создаём семью. Растим доход.",
-      "Главный экономический актив в этот период — мы сами: время, здоровье, знания, связи и способность много работать.",
+      "Примерно с 20 вы работаете — это ваш активный доход. Достигаете базовых целей — семья, жильё и т. д. Ставите новые цели.",
     ],
+    accent: true,
   },
   {
     id: 2,
@@ -37,17 +37,8 @@ const chapters = [
     quote: true,
   },
   {
-    id: 3,
-    range: "45",
-    title: "45 — не возраст «после успеха»",
-    paragraphs: [
-      "Исследование 2,7 млн основателей в США показало: у самых быстрорастущих новых компаний средний возраст основателя — около 45 лет.",
-      "Поэтому дальше на шкале будут не «звёзды, которые хорошо сохранились», а люди, у которых после 45 началась новая крупная глава.",
-    ],
-  },
-  {
     id: 4,
-    range: "45–80",
+    range: "40–80",
     title: "Второй акт",
     paragraphs: [
       "Новый бизнес. Новая профессия. Новый масштаб. Иногда — после провала первой карьеры.",
@@ -90,6 +81,11 @@ const chapters = [
   },
 ] as const;
 
+const storySteps = chapters.flatMap((item) => [
+  { key: `${item.id}-zone`, item, phase: "zone" as const },
+  { key: `${item.id}-card`, item, phase: "card" as const },
+]);
+
 const categoryLabels: Record<StoryCategory, string> = {
   business: "бизнес / технологии",
   culture: "культура / медиа",
@@ -131,14 +127,14 @@ const visibleForChapter = (person: StoryPerson, chapter: number) => {
 
 const chapterImage = (chapter: number) => {
   if (chapter === 1) return firstHalfIllustration;
-  if (chapter === 2 || chapter === 3) return turnIllustration;
+  if (chapter === 2) return turnIllustration;
   if (chapter === 4 || chapter === 5) return secondActIllustration;
   return thirdHalfIllustration;
 };
 
 const axisWidth = (chapter: number) => {
   if (chapter === 1) return 30;
-  if (chapter === 2 || chapter === 3) return 34;
+  if (chapter === 2) return 34;
   if (chapter === 4 || chapter === 5) return 61;
   if (chapter === 6) return 88;
   return chapter >= 7 ? 96 : 30;
@@ -151,13 +147,17 @@ const pathPeopleForChapter = (chapter: number) => {
     .filter((person): person is StoryPerson => Boolean(person) && (person?.events.length ?? 0) > 1);
 };
 
-const Zone = ({ className, visible, delay = 0 }: { className: string; visible: boolean; delay?: number }) => (
+const Zone = ({ className, visible, range, title, delay = 0 }: { className: string; visible: boolean; range: string; title: string; delay?: number }) => (
   <div
     className={`absolute bottom-[10%] top-[12%] origin-left rounded-lg border border-dashed border-border transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none ${className} ${
       visible ? "scale-x-100 opacity-100" : "scale-x-[0.94] opacity-0"
     }`}
     style={{ transitionDelay: visible ? `${delay}ms` : "0ms" }}
   >
+    <div className="absolute inset-x-1.5 top-3 text-center sm:inset-x-3 sm:top-5">
+      <p className="font-display text-[clamp(1.55rem,4vw,4.5rem)] font-semibold leading-none text-accent">{nbsp(range)}</p>
+      <p className="mx-auto mt-2 max-w-48 font-body text-[9px] font-semibold leading-tight text-foreground/75 sm:text-sm">{nbsp(title)}</p>
+    </div>
   </div>
 );
 
@@ -236,6 +236,7 @@ export const LifeTimeline = () => {
   const [chapter, setChapter] = useState(1);
   const [selected, setSelected] = useState<StoryPerson>();
   const [filter, setFilter] = useState<"all" | StoryCategory>("all");
+  const [phase, setPhase] = useState<"zone" | "card">("zone");
   const stepRefs = useRef<(HTMLElement | null)[]>([]);
 
   useEffect(() => {
@@ -244,6 +245,7 @@ export const LifeTimeline = () => {
       frame = 0;
       const viewportAnchor = window.innerHeight * 0.5;
       let nearestChapter = 1;
+      let nearestPhase: "zone" | "card" = "zone";
       let nearestDistance = Number.POSITIVE_INFINITY;
 
       stepRefs.current.forEach((node) => {
@@ -254,10 +256,12 @@ export const LifeTimeline = () => {
         if (distance < nearestDistance) {
           nearestDistance = distance;
           nearestChapter = Number(node.dataset.chapter);
+          nearestPhase = node.dataset.phase === "card" ? "card" : "zone";
         }
       });
 
       setChapter((current) => current === nearestChapter ? current : nearestChapter);
+      setPhase((current) => current === nearestPhase ? current : nearestPhase);
     };
     const scheduleSync = () => {
       if (!frame) frame = window.requestAnimationFrame(syncChapter);
@@ -284,8 +288,8 @@ export const LifeTimeline = () => {
   const zoneVisibility = useMemo(
     () => ({
       first: chapter >= 1 && chapter <= 5,
-      turn: chapter === 2 || chapter === 3,
-      second: chapter >= 3 && chapter <= 6,
+      turn: chapter >= 2 && chapter <= 5,
+      second: chapter >= 4 && chapter <= 6,
       third: chapter >= 6,
     }),
     [chapter],
@@ -296,24 +300,11 @@ export const LifeTimeline = () => {
       <div id="timeline" className="relative scroll-mt-16">
         <div data-timeline-scene className="pointer-events-none sticky top-16 z-10 flex h-[calc(100vh-4rem)] items-center justify-center px-2 sm:px-5">
           <div className="relative h-[min(650px,80vh)] w-full max-w-[1420px] overflow-hidden rounded-lg border border-border bg-card shadow-paper">
-            <div className="absolute inset-x-3 top-3 h-[43%] overflow-hidden sm:inset-x-8 sm:top-5 sm:h-[46%]">
-              <img
-                key={chapterImage(chapter)}
-                src={chapterImage(chapter)}
-                alt=""
-                aria-hidden="true"
-                loading="lazy"
-                width={1536}
-                height={1024}
-                className="h-full w-full animate-fade-up object-cover object-center opacity-75 mix-blend-multiply motion-reduce:animate-none sm:object-[center_42%]"
-              />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-card" />
-            </div>
             <div className="absolute inset-x-3 bottom-5 top-8 sm:inset-x-8 sm:bottom-7 sm:top-10">
-              <Zone className="left-[4%] w-[30%] bg-accent/[0.045]" visible={zoneVisibility.first} />
-              <Zone className="left-[30%] w-[9%] bg-accent/[0.08]" visible={zoneVisibility.turn} delay={80} />
-              <Zone className="left-[34%] w-[31%] bg-foreground/[0.035]" visible={zoneVisibility.second} delay={140} />
-              <Zone className="left-[65%] w-[31%] bg-accent-soft/15" visible={zoneVisibility.third} delay={180} />
+              <Zone className="left-[4%] w-[30%] bg-accent/[0.045]" visible={zoneVisibility.first} range="0–40" title="Первая половина" />
+              <Zone className="left-[30%] w-[9%] bg-accent/[0.08]" visible={zoneVisibility.turn} range="35–45" title="Точка перелома" delay={80} />
+              <Zone className="left-[34%] w-[31%] bg-foreground/[0.035]" visible={zoneVisibility.second} range="40–80" title="Второй акт" delay={140} />
+              <Zone className="left-[65%] w-[31%] bg-accent-soft/15" visible={zoneVisibility.third} range="80–120" title="Третья половина" delay={180} />
               <div className="absolute left-[4%] right-[4%] top-[65%] h-px bg-border" />
               <div className="absolute left-[4%] top-[65%] h-0.5 bg-foreground transition-[width] duration-1000 ease-out motion-reduce:transition-none" style={{ width: `${axisWidth(chapter)}%` }} />
               <svg aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full overflow-visible">
@@ -334,10 +325,6 @@ export const LifeTimeline = () => {
                   <span className="absolute -top-[14px] left-1/2 h-2 w-px bg-muted-foreground" />{tick}
                 </div>
               ))}
-              <div className={`absolute left-[38%] top-[42%] w-44 -translate-x-1/2 text-center transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none sm:w-56 ${chapter === 3 ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}>
-                <p className="font-display text-5xl font-semibold leading-none sm:text-6xl">45</p>
-                <p className="mt-2 font-body text-[10px] leading-snug text-foreground/65 sm:text-xs">{nbsp("Средний возраст основателя одной из 0,1% самых быстрорастущих новых компаний в исследовании NBER.")}</p>
-              </div>
               {longevityStoryPeople.filter((person) => visibleForChapter(person, chapter)).map((person, index) => (
                 <PersonButton key={`${chapter}-${person.id}`} person={person} delay={Math.min(index * 65, 520)} onSelect={() => setSelected(person)} />
               ))}
@@ -346,23 +333,25 @@ export const LifeTimeline = () => {
         </div>
 
         <div className="relative z-30 -mt-[calc(100vh-4rem)] pointer-events-none">
-          {chapters.map((item, index) => (
+          {storySteps.map(({ key, item, phase: stepPhase }, index) => (
             <section
-              key={item.id}
+              key={key}
               data-story-step
               data-chapter={item.id}
+              data-phase={stepPhase}
               ref={(node) => { stepRefs.current[index] = node; }}
-              className={`flex min-h-[88vh] items-center px-4 py-[10vh] sm:px-[5vw] ${index % 2 ? "justify-end" : "justify-start"}`}
+              className={`flex items-center px-4 sm:px-[5vw] ${stepPhase === "zone" ? "min-h-[62vh]" : "min-h-[92vh] py-[10vh]"} ${item.id % 2 ? "justify-start" : "justify-end"}`}
             >
-              <div className="pointer-events-none w-[min(470px,92vw)] rounded-lg border border-border bg-card/95 p-5 shadow-hard backdrop-blur-md sm:p-7">
-                <h3 className="font-display text-[clamp(3.4rem,8vw,6.8rem)] font-semibold leading-[0.82] text-accent">{nbsp(item.range)}</h3>
-                <p className="mt-5 font-display text-2xl font-semibold leading-tight sm:text-3xl">{nbsp(item.title)}</p>
-                <div className="mt-4 space-y-3">
-                  {item.paragraphs.map((paragraph, paragraphIndex) => (
-                    <p key={paragraph} className={`font-body leading-relaxed ${"quote" in item && item.quote && paragraphIndex === 1 ? "text-xl font-semibold" : "text-base"}`}>{nbsp(paragraph)}</p>
-                  ))}
+              {stepPhase === "card" ? (
+                <div className={`pointer-events-none w-[min(520px,92vw)] overflow-hidden rounded-lg border border-border bg-card/95 shadow-hard backdrop-blur-md transition-[opacity,transform] duration-500 motion-reduce:transition-none ${chapter === item.id && phase === "card" ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}>
+                  <img src={chapterImage(item.id)} alt="" aria-hidden="true" loading="lazy" width={1536} height={1024} className="aspect-[16/9] w-full object-cover mix-blend-multiply" />
+                  <div className="p-5 sm:p-7">
+                    {item.paragraphs.map((paragraph, paragraphIndex) => (
+                      <p key={paragraph} className={`font-body leading-snug ${"accent" in item && item.accent || "quote" in item && item.quote && paragraphIndex === 1 ? "text-[clamp(1.45rem,3vw,2.25rem)] font-semibold" : "text-lg"} ${paragraphIndex ? "mt-4" : ""}`}>{nbsp(paragraph)}</p>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              ) : null}
             </section>
           ))}
         </div>

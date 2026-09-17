@@ -379,8 +379,8 @@ export const LifeTimeline = () => {
       <section className="relative z-40 border-t border-border bg-card px-4 py-20 sm:px-8 sm:py-28">
         <div className="mx-auto max-w-[1400px]">
           <div className="max-w-4xl">
-            <h2 className="font-display text-4xl font-semibold leading-none sm:text-7xl">{nbsp("Исследуйте шкалу самостоятельно")}</h2>
-            <p className="mt-5 max-w-3xl font-body text-lg leading-relaxed text-foreground/75">{nbsp("После истории таймлайн превращается в карту. Фильтруйте людей по сфере и открывайте карточки. Для нескольких героев показаны повторные точки — так видно, что «второй акт» сам может состоять из нескольких глав.")}</p>
+            <h2 className="font-display text-4xl font-semibold leading-none sm:text-7xl">{nbsp("Посмотрите, у вас все еще впереди!")}</h2>
+            <p className="mt-5 max-w-3xl font-body text-lg leading-relaxed text-foreground/75">{nbsp("Наведите на точку и вспомните истории людей, которые преодолели кризисы и после 40 реализовали себя. А также тех, кто и после 80 продолжает активную жизнь!")}</p>
             <div className="mt-7 flex flex-wrap gap-2" aria-label="Фильтр">
               {([['all', 'Все'], ...Object.entries(categoryLabels)] as ["all" | StoryCategory, string][]).map(([value, label]) => (
                 <Button key={value} type="button" size="sm" variant={filter === value ? "default" : "outline"} onClick={() => setFilter(value)} className="rounded-full">{nbsp(label === "бизнес / технологии" ? "Бизнес / tech" : label.charAt(0).toUpperCase() + label.slice(1))}</Button>

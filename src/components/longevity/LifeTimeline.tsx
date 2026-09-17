@@ -187,7 +187,7 @@ const PersonDrawer = ({ person, onClose }: { person?: StoryPerson; onClose: () =
         person ? "translate-x-0" : "translate-x-full"
       }`}
     >
-      <Button type="button" size="icon" variant="outline" aria-label="Закрыть" onClick={onClose} className="fixed right-4 top-4 z-[110] rounded-full bg-card">
+      <Button type="button" size="icon" variant="outline" aria-label="Закрыть" onClick={onClose} className="absolute right-4 top-4 z-[110] rounded-full bg-card">
         <X className="h-4 w-4" />
       </Button>
       {person ? (

@@ -45,7 +45,7 @@ const chapters = [
   {
     id: 4,
     range: "40–80",
-    title: "Второй акт",
+    title: "Вторая половина",
     paragraphs: [
       "Новый бизнес. Новая профессия. Новый масштаб. Иногда — после провала первой карьеры.",
     ],
@@ -94,93 +94,47 @@ const personLine = (name: string) => {
   return [words[0] ?? "", words.slice(1).join(" ")] as const;
 };
 
-const MAP_MIN_AGE = 40;
-const mapX = (age: number) => 5 + ((Math.min(Math.max(age, MAP_MIN_AGE), MAX_AGE) - MAP_MIN_AGE) / (MAX_AGE - MAP_MIN_AGE)) * 90;
-
-const MAP_ROWS = [52, 62, 72, 82, 92] as const;
-const MAP_PILL_GAP = 11;
-
-const mapLayout = (() => {
-  const positions = new Map<string, number>();
-  const lastX: number[] = MAP_ROWS.map(() => Number.NEGATIVE_INFINITY);
-  const usage: number[] = MAP_ROWS.map(() => 0);
-  [...longevityStoryPeople]
-    .sort((first, second) => first.age - second.age || first.id.localeCompare(second.id))
-    .forEach((person) => {
-      const x = mapX(person.age);
-      const free = MAP_ROWS.map((_, index) => index).filter((index) => x - lastX[index] >= MAP_PILL_GAP);
-      const row = free.length
-        ? free.reduce((best, index) => (usage[index] < usage[best] ? index : best), free[0])
-        : lastX.indexOf(Math.min(...lastX));
-      lastX[row] = x;
-      usage[row] += 1;
-      positions.set(person.id, MAP_ROWS[row]);
-    });
-  return positions;
-})();
-
-const mapTop = (person: StoryPerson) => mapLayout.get(person.id) ?? MAP_ROWS[0];
-
 const sortedPeople = [...longevityStoryPeople].sort((first, second) => first.age - second.age || first.id.localeCompare(second.id));
 
 const mapGroups = [
-  { range: "40-80", title: "Второй акт", people: sortedPeople.filter((person) => person.age < 80) },
+  { range: "40-80", title: "Вторая половина", people: sortedPeople.filter((person) => person.age < 80) },
   { range: "80-120", title: "Третья половина", people: sortedPeople.filter((person) => person.age >= 80) },
 ];
 
-const groupX = (age: number, start: number, end: number) => 17 + ((Math.min(Math.max(age, start), end) - start) / (end - start)) * 66;
-
 const GroupTimeline = ({ range, title, people }: { range: string; title: string; people: StoryPerson[] }) => {
   const [start, end] = range.split("-").map(Number);
-  const rows = [9, 18, 27, 36, 45, 54, 63, 72, 81] as const;
-  const rowByPerson = new Map<string, number>();
-  const lastX = rows.map(() => Number.NEGATIVE_INFINITY);
-
-  people.forEach((person) => {
-    const x = groupX(person.age, start, end);
-    const available = rows.map((_, index) => index).filter((index) => x - lastX[index] >= 34);
-    const row = available[0] ?? lastX.indexOf(Math.min(...lastX));
-    lastX[row] = x;
-    rowByPerson.set(person.id, rows[row]);
-  });
 
   return (
-    <div className={`rounded-lg border border-dashed ${start >= 80 ? "border-[hsl(var(--longevity-third)/0.9)] bg-[hsl(var(--longevity-third)/0.46)]" : "border-[hsl(var(--longevity-second)/0.8)] bg-[hsl(var(--longevity-second)/0.42)]"}`}>
-      <div className="border-b border-dashed border-border/60 px-5 py-5">
+    <div className={`flex min-h-0 flex-col rounded-lg border border-dashed bg-transparent ${start >= 80 ? "border-[hsl(var(--longevity-third)/0.9)]" : "border-[hsl(var(--longevity-second)/0.8)]"}`}>
+      <div className="shrink-0 border-b border-dashed border-border/60 px-4 py-4 md:px-5">
         <p className={`font-display text-4xl font-semibold leading-none ${start >= 80 ? "text-[hsl(var(--longevity-third-foreground))]" : "text-accent"}`}>{nbsp(range)}</p>
-        <p className="mt-2 font-display text-xl font-semibold leading-none">{nbsp(title)}</p>
+        <p className="mt-2 font-display text-lg font-semibold leading-none md:text-xl">{nbsp(title)}</p>
       </div>
-      <div className="relative h-[640px]">
-        {people.map((person) => {
+      <div className="grid flex-1 auto-rows-min grid-cols-2 content-evenly gap-x-2 gap-y-2 p-3 md:gap-x-3 md:px-4 md:py-3">
+        {people.map((person, index) => {
           const [firstName, lastName] = personLine(person.name);
-          const x = groupX(person.age, start, end);
-          const flip = x > 62;
           return (
             <div
               key={person.id}
-              className="group absolute z-10 -translate-x-1/2 -translate-y-1/2 hover:z-40 focus-within:z-40"
-              style={{ left: `${x}%`, top: `${rowByPerson.get(person.id) ?? rows[0]}%` }}
+              className="group relative z-10 min-w-0 hover:z-40 focus-within:z-40"
             >
-              <div tabIndex={0} role="button" aria-label={`${person.name}, ${person.age}`} className="flex items-center rounded-full border-2 border-accent bg-card pr-2 shadow-paper transition-transform duration-200 group-hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+              <div tabIndex={0} role="button" aria-label={`${person.name}, ${person.age}`} className="flex min-w-0 items-center rounded-full border-2 border-accent bg-card pr-1.5 shadow-paper transition-transform duration-200 group-hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent font-display text-[10px] font-semibold text-accent-foreground">{person.age}</span>
-                <span className="whitespace-nowrap px-1.5 py-1 text-left">
-                  <span className="block font-body text-[10px] font-semibold leading-none">{nbsp(firstName)}</span>
-                  {lastName ? <span className="mt-0.5 block font-body text-[10px] leading-none text-foreground/70">{nbsp(lastName)}</span> : null}
+                <span className="min-w-0 px-1.5 py-1 text-left">
+                  <span className="block truncate font-body text-[10px] font-semibold leading-none">{nbsp(firstName)}</span>
+                  {lastName ? <span className="mt-0.5 block truncate font-body text-[10px] leading-none text-foreground/70">{nbsp(lastName)}</span> : null}
                 </span>
               </div>
-              <div className={`pointer-events-none absolute bottom-[calc(100%+8px)] w-[min(15rem,72vw)] rounded-lg border border-border bg-card p-3 opacity-0 shadow-hard transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 ${flip ? "right-0" : "left-0"}`}>
+              <div className={`pointer-events-none absolute bottom-[calc(100%+8px)] w-[min(15rem,72vw)] rounded-lg border border-border bg-card p-3 opacity-0 shadow-hard transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 ${index % 2 ? "right-0" : "left-0"}`}>
                 <p className="font-body text-xs font-semibold text-accent">{nbsp(person.role)}</p>
                 <p className="mt-1.5 font-body text-sm leading-snug">{nbsp(person.turn)}</p>
               </div>
             </div>
           );
         })}
-        <div className="absolute inset-x-[7%] bottom-[12%] h-px bg-muted-foreground/60" />
-        {[start, start + 10, start + 20, start + 30, end].map((tick) => (
-          <div key={tick} className="absolute bottom-[calc(12%-24px)] -translate-x-1/2 font-body text-[10px] text-muted-foreground" style={{ left: `${groupX(tick, start, end)}%` }}>
-            <span className="absolute -top-3 left-1/2 h-2 w-px bg-muted-foreground" />{tick}
-          </div>
-        ))}
+      </div>
+      <div className="grid shrink-0 grid-cols-3 border-t border-border/60 px-4 py-2 font-body text-[10px] text-muted-foreground">
+        <span>{start}</span><span className="text-center">{start + 20}</span><span className="text-right">{end}</span>
       </div>
     </div>
   );
@@ -245,42 +199,6 @@ const CrisisMarker = ({ visible }: { visible: boolean }) => {
   );
 };
 
-const PersonPin = ({ person }: { person: StoryPerson }) => {
-  const [firstName, lastName] = personLine(person.name);
-  const flip = mapX(person.age) > 68;
-
-  return (
-    <div
-      className="group pointer-events-auto absolute z-20 -translate-x-4 -translate-y-1/2 hover:z-40 focus-within:z-40"
-      style={{ left: `${mapX(person.age)}%`, top: `${mapTop(person)}%` }}
-    >
-      <div
-        tabIndex={0}
-        role="button"
-        aria-label={`${person.name}, ${person.age}`}
-        className="flex cursor-default items-center gap-2 rounded-full border-2 border-accent bg-card pr-3 shadow-paper transition-transform duration-200 group-hover:scale-[1.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent motion-reduce:group-hover:scale-100"
-      >
-        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent font-display text-[11px] font-semibold text-accent-foreground">
-          {person.age}
-        </span>
-        <span className="whitespace-nowrap py-0.5 text-left">
-          <span className="block font-body text-[11px] font-semibold leading-[1.2]">{nbsp(firstName)}</span>
-          {lastName ? <span className="block font-body text-[11px] leading-[1.2] text-foreground/70">{nbsp(lastName)}</span> : null}
-        </span>
-      </div>
-
-      <div
-        aria-hidden="true"
-        className={`pointer-events-none absolute bottom-[calc(100%+10px)] w-64 rounded-lg border border-border bg-card p-4 opacity-0 shadow-hard transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none ${flip ? "right-0" : "left-0"}`}
-      >
-        <p className="font-body text-xs font-semibold text-accent">{nbsp(person.role)}</p>
-        <p className="mt-2 font-body text-sm leading-snug">{nbsp(person.turn)}</p>
-      </div>
-    </div>
-  );
-};
-
-
 export const LifeTimeline = () => {
   const [chapter, setChapter] = useState(1);
   const [phase, setPhase] = useState<"zone" | "card">("zone");
@@ -344,7 +262,7 @@ export const LifeTimeline = () => {
             <div className="absolute inset-x-3 bottom-5 top-5 sm:inset-x-8 sm:bottom-7 sm:top-7">
               <div className="absolute inset-x-0 bottom-[8%] top-[2%]">
                 <Zone className="h-[40%] border-[hsl(var(--longevity-first)/0.8)] bg-[hsl(var(--longevity-first)/0.5)]" rangeClassName="text-[hsl(var(--longevity-first-foreground))]" start={TIMELINE_GEOMETRY.start} end={TIMELINE_GEOMETRY.firstEnd} visible={zoneVisibility.first} range="0-40" title="Первая половина" />
-                <Zone className="h-[70%] border-[hsl(var(--longevity-second)/0.8)] bg-[hsl(var(--longevity-second)/0.42)]" start={TIMELINE_GEOMETRY.firstEnd} end={TIMELINE_GEOMETRY.secondEnd} labelClassName="pl-2 sm:pl-5" visible={zoneVisibility.second} range="40-80" title="Второй акт" delay={140} />
+                <Zone className="h-[70%] border-[hsl(var(--longevity-second)/0.8)] bg-[hsl(var(--longevity-second)/0.42)]" start={TIMELINE_GEOMETRY.firstEnd} end={TIMELINE_GEOMETRY.secondEnd} labelClassName="pl-2 sm:pl-5" visible={zoneVisibility.second} range="40-80" title="Вторая половина" delay={140} />
                 <Zone className="h-full border-[hsl(var(--longevity-third)/0.9)] bg-[hsl(var(--longevity-third)/0.46)]" rangeClassName="text-[hsl(var(--longevity-third-foreground))]" start={TIMELINE_GEOMETRY.secondEnd} end={TIMELINE_GEOMETRY.end} visible={zoneVisibility.third} range="80-120" title="Третья половина" delay={180} />
                 <CrisisMarker visible={zoneVisibility.turn} />
               </div>
@@ -393,23 +311,11 @@ export const LifeTimeline = () => {
             <p className="mt-5 max-w-3xl font-body text-lg leading-relaxed text-foreground/75">{nbsp("Наведите на точку и вспомните истории людей, которые преодолели кризисы и после 40 реализовали себя. А также тех, кто и после 80 продолжает активную жизнь!")}</p>
           </div>
 
-          <div className="mt-10 hidden rounded-lg border border-border bg-card lg:block">
-            <div className="relative h-[720px] w-full">
-              <div className="absolute inset-x-0 bottom-[16%] top-[4%]">
-                <Zone className="h-[70%] border-[hsl(var(--longevity-second)/0.8)] bg-[hsl(var(--longevity-second)/0.42)]" start={5} end={mapX(80)} visible range="40-80" title="Второй акт" />
-                <Zone className="h-full border-[hsl(var(--longevity-third)/0.9)] bg-[hsl(var(--longevity-third)/0.46)]" rangeClassName="text-[hsl(var(--longevity-third-foreground))]" start={mapX(80)} end={95} visible range="80-120" title="Третья половина" />
-                {longevityStoryPeople.map((person) => <PersonPin key={person.id} person={person} />)}
-              </div>
-              <div className="absolute left-[5%] right-[5%] top-[84%] h-px bg-muted-foreground/60" />
-              {[40, 60, 80, 100, 120].map((tick) => (
-                <div key={tick} className="absolute top-[calc(84%+14px)] -translate-x-1/2 font-body text-[11px] text-muted-foreground" style={{ left: `${mapX(tick)}%` }}>
-                  <span className="absolute -top-[14px] left-1/2 h-2 w-px bg-muted-foreground" />{tick}
-                </div>
-              ))}
-            </div>
+          <div className="mt-10 hidden h-[520px] grid-cols-2 gap-3 md:grid">
+            {mapGroups.map((group) => <GroupTimeline key={group.range} {...group} />)}
           </div>
 
-          <div className="mt-10 space-y-8 lg:hidden">
+          <div className="mt-10 space-y-5 md:hidden">
             {mapGroups.map((group) => <GroupTimeline key={group.range} {...group} />)}
           </div>
         </div>

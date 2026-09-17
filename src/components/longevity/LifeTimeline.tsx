@@ -89,7 +89,16 @@ const storySteps = chapters.flatMap((item) => [
   { key: `${item.id}-card`, item, phase: "card" as const },
 ]);
 
+const catLabel: Record<string, string> = {
+  business: "Бизнес",
+  culture: "Культура",
+  sport: "Спорт",
+  science: "Наука",
+  state: "Государство",
+};
+
 const personLine = (name: string) => {
+
   const words = name.split(" ");
   return [words[0] ?? "", words.slice(1).join(" ")] as const;
 };

@@ -51,35 +51,11 @@ const chapters = [
     ],
   },
   {
-    id: 5,
-    range: "80",
-    title: "Обычно карта заканчивается здесь",
-    paragraphs: [
-      "Финансовые планы редко представляют человека после восьмидесяти кем-то кроме пенсионера. Но линия жизни на этом не заканчивается.",
-    ],
-  },
-  {
     id: 6,
-    range: "80–100",
-    title: "Роль меняется. Субъектность остаётся.",
+    range: "80–120",
+    title: "Третья половина",
     paragraphs: [
-      "Можно передать операционную роль, но продолжать создавать, консультировать, инвестировать и влиять.",
-    ],
-  },
-  {
-    id: 7,
-    range: "100+",
-    title: "После ста меняется сам тип доказательства",
-    paragraphs: [
-      "Способность учиться, создавать, работать и ставить новые задачи не обрывается в день столетия.",
-    ],
-  },
-  {
-    id: 8,
-    range: "110–122",
-    title: "Дальше точек мало — и это важно",
-    paragraphs: [
-      "После 110 лет активная деятельность становится исключительной редкостью. Край шкалы — документально подтверждённые 122 года Жанны Кальман.",
+      "Роль может измениться, но способность создавать, консультировать, инвестировать и влиять остаётся.",
     ],
   },
 ] as const;
@@ -215,21 +191,20 @@ const GroupTimeline = ({ range, title, people }: { range: string; title: string;
 const chapterImage = (chapter: number) => {
   if (chapter === 1) return firstHalfIllustration;
   if (chapter === 2) return turnIllustration;
-  if (chapter === 4 || chapter === 5) return secondActIllustration;
+  if (chapter === 4) return secondActIllustration;
   return thirdHalfIllustration;
 };
 
 const axisWidth = (chapter: number) => {
   if (chapter === 1) return 30;
   if (chapter === 2) return 34;
-  if (chapter === 4 || chapter === 5) return 61;
-  if (chapter === 6) return 88;
-  return chapter >= 7 ? 96 : 30;
+  if (chapter === 4) return 61;
+  return chapter === 6 ? 96 : 30;
 };
 
 const storyColumnClass = (chapter: number) => {
   if (chapter <= 2) return "md:col-start-1 md:justify-self-start";
-  if (chapter <= 5) return "md:col-start-2 md:justify-self-center";
+  if (chapter === 4) return "md:col-start-2 md:justify-self-center";
   return "md:col-start-3 md:justify-self-end";
 };
 

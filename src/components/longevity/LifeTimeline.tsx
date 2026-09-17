@@ -293,7 +293,7 @@ export const LifeTimeline = () => {
 
   return (
     <>
-      <div className="relative">
+      <div id="timeline" className="relative scroll-mt-16">
         <div data-timeline-scene className="pointer-events-none sticky top-16 z-10 flex h-[calc(100vh-4rem)] items-center justify-center px-2 sm:px-5">
           <div className="relative h-[min(650px,80vh)] w-full max-w-[1420px] overflow-hidden rounded-lg border border-border bg-card shadow-paper">
             <div className="absolute inset-x-3 top-3 h-[43%] overflow-hidden sm:inset-x-8 sm:top-5 sm:h-[46%]">

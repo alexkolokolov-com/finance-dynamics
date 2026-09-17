@@ -102,45 +102,45 @@ const mapGroups = [
 ];
 
 const PIN_WIDTH = 104;
-const PIN_GAP = 12;
-const PIN_ROW = 54;
+const PIN_GAP = 10;
+const PIN_ROW = 52;
+const PIN_LEVELS = 6;
+const PIN_LEVELS_NARROW = 8;
 
 type Pin = { person: StoryPerson; x: number; level: number };
 
-const tryLayout = (people: StoryPerson[], start: number, end: number, levels: number, gap: number) => {
+const layoutPins = (people: StoryPerson[], start: number, end: number, width: number) => {
+  const safeWidth = Math.max(width, 240);
+  const levels = safeWidth < 520 ? PIN_LEVELS_NARROW : PIN_LEVELS;
+  const gap = ((PIN_WIDTH + PIN_GAP) / safeWidth) * 100;
+  const half = (PIN_WIDTH / 2 / safeWidth) * 100;
+  const minX = half + 1;
+  const maxX = 100 - half - 1;
+  const span = Math.max(maxX - minX, 1);
+
   const lastX = Array.from({ length: levels }, () => Number.NEGATIVE_INFINITY);
   const pins: Pin[] = [];
 
-  for (let index = 0; index < people.length; index += 1) {
-    const person = people[index];
+  people.forEach((person, index) => {
     const ratio = (Math.min(Math.max(person.age, start), end) - start) / (end - start);
-    const x = 8 + ratio * 84;
+    const idealX = minX + ratio * span;
 
     const order: number[] = [];
-    const seed = index % 2 === 0 ? 0 : 1;
+    const seed = index % 2 === 0 ? 0 : Math.ceil(levels / 2);
     for (let step = 0; step < levels; step += 1) order.push((seed + step * 2) % levels);
     for (let level = 0; level < levels; level += 1) if (!order.includes(level)) order.push(level);
 
-    const level = order.find((candidate) => x - lastX[candidate] >= gap);
-    if (level === undefined) return null;
+    const free = order.find((candidate) => idealX - lastX[candidate] >= gap);
+    const level = free ?? lastX.reduce((best, value, current) => (value < lastX[best] ? current : best), 0);
+    const x = free !== undefined ? idealX : Math.min(Math.max(idealX, lastX[level] + gap), maxX);
 
     lastX[level] = x;
     pins.push({ person, x, level });
-  }
+  });
 
-  return pins;
+  return { pins, levels };
 };
 
-const layoutPins = (people: StoryPerson[], start: number, end: number, width: number) => {
-  const gap = ((PIN_WIDTH + PIN_GAP) / Math.max(width, 240)) * 100;
-
-  for (let levels = 5; levels <= 16; levels += 1) {
-    const pins = tryLayout(people, start, end, levels, gap);
-    if (pins) return { pins, levels };
-  }
-
-  return { pins: tryLayout(people, start, end, 16, 0) ?? [], levels: 16 };
-};
 
 const GroupTimeline = ({ range, title, people }: { range: string; title: string; people: StoryPerson[] }) => {
   const [start, end] = range.split("-").map(Number);

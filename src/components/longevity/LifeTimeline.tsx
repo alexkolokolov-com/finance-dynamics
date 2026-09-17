@@ -107,6 +107,16 @@ const initials = (name: string) =>
     .map((word) => word[0])
     .join("");
 
+const pointTop = (person: StoryPerson, compact: boolean) => {
+  const base = compact ? 31 + (person.level - 1) * 22 : yByLevel[person.level];
+  const peers = longevityStoryPeople
+    .filter((candidate) => candidate.chapter === person.chapter && candidate.level === person.level)
+    .sort((first, second) => first.age - second.age);
+  const index = peers.findIndex((candidate) => candidate.id === person.id);
+  const offsets = [-6, 6, 0] as const;
+  return base + offsets[index % offsets.length];
+};
+
 const visibleForChapter = (person: StoryPerson, chapter: number) => {
   if (chapter === 4 || chapter === 5) return person.chapter === 4;
   if (chapter === 6) return person.chapter === 6;
@@ -158,7 +168,7 @@ const PersonButton = ({ person, onSelect, compact = false, delay = 0 }: { person
     aria-label={`${person.name}, ${person.age}`}
     onClick={onSelect}
     className="pointer-events-auto group absolute z-20 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full p-0 hover:z-30 hover:bg-transparent sm:h-[58px] sm:w-[58px]"
-    style={{ left: `${xPct(person.age)}%`, top: `${compact ? 31 + (person.level - 1) * 22 : yByLevel[person.level]}%` }}
+    style={{ left: `${xPct(person.age)}%`, top: `${pointTop(person, compact)}%` }}
   >
     <span
       className={`${compact ? "" : "animate-timeline-point-in"} relative flex h-full w-full transition-transform duration-200 group-hover:scale-110 motion-reduce:animate-none ${compact ? "opacity-100" : "opacity-0"}`}

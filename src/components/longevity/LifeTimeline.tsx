@@ -5,7 +5,6 @@ import secondActIllustration from "@/assets/longevity-second-act.jpg";
 import thirdHalfIllustration from "@/assets/longevity-third-half.jpg";
 import {
   longevityStoryPeople,
-  type StoryCategory,
   type StoryPerson,
 } from "@/data/longevityStoryPeople";
 import { nbsp } from "@/lib/nbsp";

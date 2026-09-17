@@ -97,7 +97,7 @@ const personLine = (name: string) => {
 const MAP_MIN_AGE = 40;
 const mapX = (age: number) => 5 + ((Math.min(Math.max(age, MAP_MIN_AGE), MAX_AGE) - MAP_MIN_AGE) / (MAX_AGE - MAP_MIN_AGE)) * 90;
 
-const MAP_ROWS = [24, 34, 44, 54, 64, 74, 84, 94] as const;
+const MAP_ROWS = [38, 48, 58, 68, 78, 88] as const;
 const MAP_PILL_GAP = 11;
 
 const mapLayout = (() => {
@@ -132,13 +132,13 @@ const groupX = (age: number, start: number, end: number) => 7 + ((Math.min(Math.
 
 const GroupTimeline = ({ range, title, people }: { range: string; title: string; people: StoryPerson[] }) => {
   const [start, end] = range.split("-").map(Number);
-  const rows = [25, 35, 45, 55, 65, 75] as const;
+  const rows = [12, 22, 32, 42, 52, 62, 72, 82] as const;
   const rowByPerson = new Map<string, number>();
   const lastX = rows.map(() => Number.NEGATIVE_INFINITY);
 
   people.forEach((person) => {
     const x = groupX(person.age, start, end);
-    const available = rows.map((_, index) => index).filter((index) => x - lastX[index] >= 27);
+    const available = rows.map((_, index) => index).filter((index) => x - lastX[index] >= 38);
     const row = available[0] ?? lastX.indexOf(Math.min(...lastX));
     lastX[row] = x;
     rowByPerson.set(person.id, rows[row]);
@@ -150,7 +150,7 @@ const GroupTimeline = ({ range, title, people }: { range: string; title: string;
         <p className={`font-display text-4xl font-semibold leading-none ${start >= 80 ? "text-[hsl(var(--longevity-third-foreground))]" : "text-accent"}`}>{nbsp(range)}</p>
         <p className="mt-2 font-display text-xl font-semibold leading-none">{nbsp(title)}</p>
       </div>
-      <div className="relative h-[570px] sm:h-[520px]">
+      <div className="relative h-[640px]">
         {people.map((person) => {
           const [firstName, lastName] = personLine(person.name);
           const x = groupX(person.age, start, end);

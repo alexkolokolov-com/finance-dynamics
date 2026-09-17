@@ -185,31 +185,38 @@ const CrisisMarker = ({ visible }: { visible: boolean }) => {
   );
 };
 
-const PersonButton = ({ person, onSelect, compact = false, delay = 0 }: { person: StoryPerson; onSelect: () => void; compact?: boolean; delay?: number }) => (
-  <Button
-    type="button"
-    variant="ghost"
-    aria-label={`${person.name}, ${person.age}`}
-    onClick={onSelect}
-    className="pointer-events-auto group absolute z-20 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full p-0 hover:z-30 hover:bg-transparent sm:h-[58px] sm:w-[58px]"
-    style={{ left: `${xPct(person.age)}%`, top: `${pointTop(person, compact)}%` }}
-  >
-    <span
-      className={`${compact ? "" : "animate-timeline-point-in"} relative flex h-full w-full transition-transform duration-200 group-hover:scale-110 motion-reduce:animate-none ${compact ? "opacity-100" : "opacity-0"}`}
-      style={{ animationDelay: compact ? undefined : `${delay}ms` }}
+const PersonButton = ({ person, onSelect, compact = false, delay = 0 }: { person: StoryPerson; onSelect: () => void; compact?: boolean; delay?: number }) => {
+  const [firstName, lastName] = personLine(person.name);
+  const flip = xPct(person.age) > 76;
+
+  return (
+    <Button
+      type="button"
+      variant="ghost"
+      aria-label={`${person.name}, ${person.age}`}
+      onClick={onSelect}
+      className="pointer-events-auto group absolute z-20 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full p-0 hover:z-30 hover:bg-transparent sm:h-7 sm:w-7"
+      style={{ left: `${xPct(person.age)}%`, top: `${pointTop(person, compact)}%` }}
     >
-      <span className={`flex h-full w-full items-center justify-center rounded-full border-[3px] bg-card font-display text-xs font-semibold shadow-hard sm:text-base ${categoryRing[person.cat]}`}>
-        {initials(person.name)}
+      <span
+        className={`${compact ? "" : "animate-timeline-point-in"} relative flex items-center ${compact ? "opacity-100" : "opacity-0"}`}
+        style={{ animationDelay: compact ? undefined : `${delay}ms` }}
+      >
+        <span
+          className={`flex h-full w-full items-center justify-center rounded-full border-2 bg-card font-display text-[10px] font-semibold shadow-hard transition-transform duration-200 group-hover:scale-110 sm:text-[11px] ${categoryRing[person.cat]} motion-reduce:group-hover:scale-100`}
+        >
+          {person.age}
+        </span>
+        <span
+          className={`absolute top-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-border bg-card px-2.5 py-1 shadow-paper ${flip ? "right-[calc(100%+6px)] text-right" : "left-[calc(100%+6px)]"}`}
+        >
+          <span className="block font-body text-[10px] font-semibold leading-[1.25] sm:text-[11px]">{nbsp(firstName)}</span>
+          {lastName ? <span className="block font-body text-[10px] leading-[1.25] sm:text-[11px]">{nbsp(lastName)}</span> : null}
+        </span>
       </span>
-      <span className="absolute -top-5 left-1/2 -translate-x-1/2 rounded-full border border-border bg-card px-1.5 py-0.5 font-body text-[9px] text-foreground sm:text-[11px]">
-        {person.age}
-      </span>
-      <span className="absolute left-1/2 top-[calc(100%+7px)] w-24 -translate-x-1/2 text-center font-body text-[9px] font-semibold leading-tight text-foreground sm:w-32 sm:text-[11px]">
-        {nbsp(person.name)}
-      </span>
-    </span>
-  </Button>
-);
+    </Button>
+  );
+};
 
 const PersonDrawer = ({ person, onClose }: { person?: StoryPerson; onClose: () => void }) => (
   <>

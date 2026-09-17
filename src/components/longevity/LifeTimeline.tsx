@@ -106,12 +106,10 @@ const categoryRing: Record<StoryCategory, string> = {
   science: "border-accent/55",
 };
 
-const initials = (name: string) =>
-  name
-    .split(" ")
-    .slice(0, 2)
-    .map((word) => word[0])
-    .join("");
+const personLine = (name: string) => {
+  const words = name.split(" ");
+  return [words[0] ?? "", words.slice(1).join(" ")] as const;
+};
 
 const pointTop = (person: StoryPerson, compact: boolean) => {
   const base = compact ? 31 + (person.level - 1) * 22 : yByLevel[person.level];

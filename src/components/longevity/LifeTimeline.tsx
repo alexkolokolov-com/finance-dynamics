@@ -94,9 +94,6 @@ const personLine = (name: string) => {
   return [words[0] ?? "", words.slice(1).join(" ")] as const;
 };
 
-const MAP_MIN_AGE = 40;
-const mapX = (age: number) => 5 + ((Math.min(Math.max(age, MAP_MIN_AGE), MAX_AGE) - MAP_MIN_AGE) / (MAX_AGE - MAP_MIN_AGE)) * 90;
-
 const sortedPeople = [...longevityStoryPeople].sort((first, second) => first.age - second.age || first.id.localeCompare(second.id));
 
 const mapGroups = [
@@ -114,7 +111,7 @@ const GroupTimeline = ({ range, title, people }: { range: string; title: string;
         <p className="mt-2 font-display text-lg font-semibold leading-none md:text-xl">{nbsp(title)}</p>
       </div>
       <div className="grid flex-1 auto-rows-min grid-cols-2 content-evenly gap-x-2 gap-y-2 p-3 md:gap-x-3 md:px-4 md:py-3">
-        {people.map((person) => {
+        {people.map((person, index) => {
           const [firstName, lastName] = personLine(person.name);
           return (
             <div
@@ -128,7 +125,7 @@ const GroupTimeline = ({ range, title, people }: { range: string; title: string;
                   {lastName ? <span className="mt-0.5 block truncate font-body text-[10px] leading-none text-foreground/70">{nbsp(lastName)}</span> : null}
                 </span>
               </div>
-              <div className="pointer-events-none absolute bottom-[calc(100%+8px)] left-0 w-[min(15rem,72vw)] rounded-lg border border-border bg-card p-3 opacity-0 shadow-hard transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 group-even:left-auto group-even:right-0">
+              <div className={`pointer-events-none absolute bottom-[calc(100%+8px)] w-[min(15rem,72vw)] rounded-lg border border-border bg-card p-3 opacity-0 shadow-hard transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 ${index % 2 ? "right-0" : "left-0"}`}>
                 <p className="font-body text-xs font-semibold text-accent">{nbsp(person.role)}</p>
                 <p className="mt-1.5 font-body text-sm leading-snug">{nbsp(person.turn)}</p>
               </div>

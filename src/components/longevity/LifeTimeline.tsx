@@ -193,8 +193,10 @@ const GroupTimeline = ({ range, title, people }: { range: string; title: string;
         }) : null}
       </div>
 
-      <div className="grid shrink-0 grid-cols-3 border-t border-dashed border-border/60 px-4 py-2 font-body text-[10px] text-muted-foreground">
-        <span>{start}</span><span className="text-center">{start + 20}</span><span className="text-right">{end}</span>
+      <div className="relative mx-4 mb-3 mt-2 grid shrink-0 grid-cols-3 border-t-[3px] border-foreground pt-2 font-body text-[10px] text-muted-foreground md:hidden">
+        <span className="before:absolute before:left-0 before:top-0 before:h-2 before:w-px before:-translate-y-1/2 before:bg-foreground">{start}</span>
+        <span className="relative text-center before:absolute before:left-1/2 before:top-[-8px] before:h-2 before:w-px before:-translate-x-1/2 before:bg-foreground">{start + 20}</span>
+        <span className="relative text-right before:absolute before:right-0 before:top-[-8px] before:h-2 before:w-px before:bg-foreground">{end}</span>
       </div>
     </div>
   );
@@ -373,8 +375,21 @@ export const LifeTimeline = () => {
             <p className="mt-5 max-w-3xl font-body text-lg leading-relaxed text-foreground/75">{nbsp("Наведите на точку и вспомните истории людей, которые преодолели кризисы и после 40 реализовали себя. А также тех, кто и после 80 продолжает активную жизнь!")}</p>
           </div>
 
-          <div className="mt-10 hidden grid-cols-2 items-stretch gap-4 md:grid">
-            {mapGroups.map((group) => <GroupTimeline key={group.range} {...group} />)}
+          <div className="mt-10 hidden md:block">
+            <div className="grid grid-cols-2 items-stretch gap-4">
+              {mapGroups.map((group) => <GroupTimeline key={group.range} {...group} />)}
+            </div>
+            <div className="relative mx-4 mt-4 border-t-[3px] border-foreground pt-3">
+              {[40, 60, 80, 100, 120].map((tick) => (
+                <span
+                  key={tick}
+                  className="absolute top-3 -translate-x-1/2 font-body text-xs text-muted-foreground before:absolute before:left-1/2 before:top-[-14px] before:h-2.5 before:w-px before:-translate-x-1/2 before:bg-foreground"
+                  style={{ left: `${((tick - 40) / 80) * 100}%` }}
+                >
+                  {tick}
+                </span>
+              ))}
+            </div>
           </div>
 
           <div className="mt-10 space-y-5 md:hidden">

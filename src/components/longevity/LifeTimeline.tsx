@@ -111,15 +111,11 @@ const personLine = (name: string) => {
   return [words[0] ?? "", words.slice(1).join(" ")] as const;
 };
 
-const initials = (name: string) =>
-  name
-    .split(" ")
-    .slice(0, 2)
-    .map((word) => word[0])
-    .join("");
+const MAP_MIN_AGE = 40;
+const mapX = (age: number) => 5 + ((Math.min(Math.max(age, MAP_MIN_AGE), MAX_AGE) - MAP_MIN_AGE) / (MAX_AGE - MAP_MIN_AGE)) * 90;
 
-const pointTop = (person: StoryPerson, compact: boolean) => {
-  const base = compact ? 31 + (person.level - 1) * 22 : yByLevel[person.level];
+const mapTop = (person: StoryPerson) => {
+  const base = 44 + (person.level - 1) * 15;
   const peers = longevityStoryPeople
     .filter((candidate) => candidate.chapter === person.chapter && candidate.level === person.level)
     .sort((first, second) => first.age - second.age);
@@ -127,6 +123,7 @@ const pointTop = (person: StoryPerson, compact: boolean) => {
   const offsets = [-6, 6, 0] as const;
   return base + offsets[index % offsets.length];
 };
+
 
 const chapterImage = (chapter: number) => {
   if (chapter === 1) return firstHalfIllustration;

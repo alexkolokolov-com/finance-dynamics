@@ -33,6 +33,12 @@
     --accent-foreground: 36 38% 97%;
     --accent-soft: 14 60% 78%;       /* #E8B8A4 peach */
 
+    /* Таймлайн финансового долголетия */
+    --longevity-first: 102 18% 82%;
+    --longevity-second: 14 60% 78%;
+    --longevity-third: 30 5% 82%;
+    --longevity-crisis: 12 56% 50%;
+
     /* Совместимость со старыми классами — нейтрализованы */
     --chalk: 32 9% 40%;
     --chalk-blue: 32 9% 40%;

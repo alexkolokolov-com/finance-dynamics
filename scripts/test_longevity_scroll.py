@@ -83,8 +83,10 @@ async def check_inputs(page):
     await slider.focus(); await page.keyboard.press("End"); await wait_idle(page)
     assert (await card_state(page))["chapter"] == "6", "Ползунок не использовал общий переход"
     await page.evaluate("""() => {
-      window.dispatchEvent(new TouchEvent('touchstart',{bubbles:true,touches:[{clientY:500}]}));
-      window.dispatchEvent(new TouchEvent('touchmove',{bubbles:true,cancelable:true,touches:[{clientY:560}]}));
+      const startTouch = new Touch({identifier:1,target:document.body,clientY:500});
+      const moveTouch = new Touch({identifier:1,target:document.body,clientY:560});
+      window.dispatchEvent(new TouchEvent('touchstart',{bubbles:true,touches:[startTouch]}));
+      window.dispatchEvent(new TouchEvent('touchmove',{bubbles:true,cancelable:true,touches:[moveTouch]}));
       window.dispatchEvent(new TouchEvent('touchend',{bubbles:true}));
     }""")
     await wait_idle(page)

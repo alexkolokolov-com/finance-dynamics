@@ -82,13 +82,12 @@ const PIN_LEVELS_NARROW = 7;
 
 type Pin = { person: StoryPerson; x: number; level: number; ageOnRight: boolean };
 
-const layoutPins = (people: StoryPerson[], start: number, end: number, width: number) => {
+const layoutPins = (people: StoryPerson[], start: number, end: number, width: number, levelCount: number) => {
   const safeWidth = Math.max(width, 240);
-  const baseLevels = safeWidth < 520 ? PIN_LEVELS_NARROW : PIN_LEVELS;
   const pillWidth = (PIN_WIDTH / safeWidth) * 100;
   const gap = (PIN_GAP / safeWidth) * 100;
 
-  const lastRight = Array.from({ length: baseLevels }, () => Number.NEGATIVE_INFINITY);
+  const lastRight = Array.from({ length: levelCount }, () => Number.NEGATIVE_INFINITY);
   const pins: Pin[] = [];
 
   people.forEach((person, index) => {
@@ -99,39 +98,24 @@ const layoutPins = (people: StoryPerson[], start: number, end: number, width: nu
     const pillRight = ageOnRight ? x : x + pillWidth;
 
     const order: number[] = [];
-    const seed = index % 2 === 0 ? 0 : Math.ceil(baseLevels / 2);
-    for (let step = 0; step < baseLevels; step += 1) order.push((seed + step * 2) % baseLevels);
-    for (let level = 0; level < baseLevels; level += 1) if (!order.includes(level)) order.push(level);
+    const seed = index % 2 === 0 ? 0 : Math.ceil(levelCount / 2);
+    for (let step = 0; step < levelCount; step += 1) order.push((seed + step * 2) % levelCount);
+    for (let level = 0; level < levelCount; level += 1) if (!order.includes(level)) order.push(level);
 
     const free = order.find((candidate) => pillLeft - lastRight[candidate] >= gap);
-    const level = free ?? lastRight.length;
-    if (free === undefined) lastRight.push(Number.NEGATIVE_INFINITY);
+    const level = free ?? order.reduce((best, candidate) => lastRight[candidate] < lastRight[best] ? candidate : best, order[0] ?? 0);
 
     lastRight[level] = pillRight;
     pins.push({ person, x, level, ageOnRight });
   });
 
-  return { pins, levels: lastRight.length };
+  return pins;
 };
 
 
-const GroupTimeline = ({ range, title, people }: { range: string; title: string; people: StoryPerson[] }) => {
+const GroupTimeline = ({ range, title, people, width, levels }: { range: string; title: string; people: StoryPerson[]; width: number; levels: number }) => {
   const [start, end] = range.split("-").map(Number);
-  const areaRef = useRef<HTMLDivElement | null>(null);
-  const [width, setWidth] = useState(0);
-
-  useEffect(() => {
-    const node = areaRef.current;
-    if (!node) return;
-    const observer = new ResizeObserver((entries) => {
-      const next = entries[0]?.contentRect.width ?? 0;
-      setWidth((current) => (Math.abs(current - next) < 1 ? current : next));
-    });
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
-
-  const { pins, levels } = useMemo(() => layoutPins(people, start, end, width), [people, start, end, width]);
+  const pins = useMemo(() => layoutPins(people, start, end, width, levels), [people, start, end, width, levels]);
 
   return (
     <div className={`flex min-h-0 flex-col rounded-lg border border-dashed bg-transparent ${start >= 80 ? "border-[hsl(var(--longevity-third)/0.9)]" : "border-[hsl(var(--longevity-second)/0.8)]"}`}>
@@ -140,15 +124,15 @@ const GroupTimeline = ({ range, title, people }: { range: string; title: string;
         <p className="mt-2 font-display text-lg font-semibold leading-none md:text-xl">{nbsp(title)}</p>
       </div>
 
-      <div ref={areaRef} className="relative flex-1 px-3 py-2" style={{ minHeight: `${levels * PIN_ROW}px` }}>
+      <div className="relative shrink-0 px-3" style={{ height: `${levels * PIN_ROW}px` }}>
         {width > 0 ? pins.map(({ person, x, level, ageOnRight }) => {
           const [firstName, lastName] = personLine(person.name);
-          const y = levels === 1 ? 50 : 6 + (level / (levels - 1)) * 88;
+          const y = PIN_ROW / 2 + level * PIN_ROW;
           return (
             <div
               key={person.id}
               className="group absolute z-10 -translate-y-1/2 hover:z-40 focus-within:z-40"
-              style={{ left: `${x}%`, top: `${y}%`, transform: `translate(${ageOnRight ? "calc(-100% + 20px)" : "-20px"}, -50%)` }}
+              style={{ left: `${x}%`, top: `${y}px`, transform: `translate(${ageOnRight ? "calc(-100% + 20px)" : "-20px"}, -50%)` }}
             >
               <div tabIndex={0} role="button" aria-label={`${person.name}, ${person.age}`} className={`flex w-[136px] items-center gap-1.5 rounded-full border border-accent/60 bg-card py-1 shadow-paper transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-accent group-hover:shadow-hard focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${ageOnRight ? "flex-row-reverse pl-2.5 pr-1" : "pl-1 pr-2.5"}`}>
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent font-display text-xs font-bold text-accent-foreground">{person.age}</span>
@@ -172,6 +156,51 @@ const GroupTimeline = ({ range, title, people }: { range: string; title: string;
         <span className="relative text-center before:absolute before:left-1/2 before:top-[-8px] before:h-2 before:w-px before:-translate-x-1/2 before:bg-foreground">{start + 20}</span>
         <span className="relative text-right before:absolute before:right-0 before:top-[-8px] before:h-2 before:w-px before:bg-foreground">{end}</span>
       </div>
+    </div>
+  );
+};
+
+const DesktopPeopleTimelines = () => {
+  const gridRef = useRef<HTMLDivElement | null>(null);
+  const [columnWidth, setColumnWidth] = useState(0);
+
+  useEffect(() => {
+    const node = gridRef.current;
+    if (!node) return;
+    const observer = new ResizeObserver(([entry]) => {
+      const gridWidth = entry?.contentRect.width ?? 0;
+      const next = Math.max((gridWidth - 16) / 2, 0);
+      setColumnWidth((current) => Math.abs(current - next) < 1 ? current : next);
+    });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={gridRef} className="grid grid-cols-2 items-stretch gap-4">
+      {mapGroups.map((group) => <GroupTimeline key={group.range} {...group} width={columnWidth} levels={PIN_LEVELS} />)}
+    </div>
+  );
+};
+
+const MobileGroupTimeline = ({ group }: { group: (typeof mapGroups)[number] }) => {
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    const node = wrapperRef.current;
+    if (!node) return;
+    const observer = new ResizeObserver(([entry]) => {
+      const next = entry?.contentRect.width ?? 0;
+      setWidth((current) => Math.abs(current - next) < 1 ? current : next);
+    });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={wrapperRef}>
+      <GroupTimeline {...group} width={width} levels={PIN_LEVELS_NARROW} />
     </div>
   );
 };

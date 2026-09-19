@@ -203,10 +203,12 @@ const axisWidth = (chapter: number) => {
 };
 
 const storyColumnClass = (chapter: number) => {
-  if (chapter <= 2) return "md:col-start-1 md:justify-self-start";
+  if (chapter === 1) return "md:col-start-1 md:justify-self-start";
+  if (chapter === 2) return "md:col-start-2 md:justify-self-start";
   if (chapter === 4) return "md:col-start-2 md:justify-self-center";
   return "md:col-start-3 md:justify-self-end";
 };
+
 
 const Zone = ({ className, visible, range, title, start, end, labelClassName = "", rangeClassName = "text-accent", delay = 0 }: { className: string; visible: boolean; range: string; title: string; start: number; end: number; labelClassName?: string; rangeClassName?: string; delay?: number }) => (
   <div

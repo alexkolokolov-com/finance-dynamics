@@ -29,10 +29,17 @@ async def wheel(page, delta=120):
 
 async def check_animation(page):
     before = await card_state(page)
-    started = await page.evaluate("performance.now()")
-    await wheel(page)
-    await page.wait_for_timeout(150)
-    leaving = await card_state(page)
+    sample = await page.evaluate("""async () => {
+      const started = performance.now();
+      window.dispatchEvent(new WheelEvent('wheel', { deltaY: 120, bubbles: true, cancelable: true }));
+      await new Promise(resolve => setTimeout(resolve, 150));
+      const card = document.querySelector('[data-story-card]');
+      return { started, leaving: { chapter: card?.dataset.chapter, phase: card?.dataset.storyPhase,
+        opacity: parseFloat(getComputedStyle(card).opacity), transform: getComputedStyle(card).transform,
+        count: document.querySelectorAll('[data-story-card]').length, scrollY } };
+    }""")
+    started = sample["started"]
+    leaving = sample["leaving"]
     assert leaving["chapter"] == before["chapter"], "Содержимое сменилось до завершения выхода"
     assert leaving["phase"] == "exit", "Через 150 ms должна идти фаза выхода"
     assert 0.05 < leaving["opacity"] < 0.95, "Старая карточка должна оставаться видимой через 150 ms"

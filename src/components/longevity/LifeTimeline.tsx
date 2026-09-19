@@ -507,9 +507,7 @@ export const LifeTimeline = () => {
           </div>
 
           <div className="mt-10 hidden md:block">
-            <div className="grid grid-cols-2 items-stretch gap-4">
-              {mapGroups.map((group) => <GroupTimeline key={group.range} {...group} />)}
-            </div>
+            <DesktopPeopleTimelines />
             <div className="relative mx-4 mt-4 border-t-[3px] border-foreground pt-3">
               {[40, 60, 80, 100, 120].map((tick) => (
                 <span
@@ -524,7 +522,7 @@ export const LifeTimeline = () => {
           </div>
 
           <div className="mt-10 space-y-5 md:hidden">
-            {mapGroups.map((group) => <GroupTimeline key={`m-${group.range}`} {...group} />)}
+            {mapGroups.map((group) => <MobileGroupTimeline key={`m-${group.range}`} group={group} />)}
           </div>
 
         </div>

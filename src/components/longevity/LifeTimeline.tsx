@@ -84,11 +84,11 @@ type Pin = { person: StoryPerson; x: number; level: number; ageOnRight: boolean 
 
 const layoutPins = (people: StoryPerson[], start: number, end: number, width: number) => {
   const safeWidth = Math.max(width, 240);
-  const levels = safeWidth < 520 ? PIN_LEVELS_NARROW : PIN_LEVELS;
+  const baseLevels = safeWidth < 520 ? PIN_LEVELS_NARROW : PIN_LEVELS;
   const pillWidth = (PIN_WIDTH / safeWidth) * 100;
   const gap = (PIN_GAP / safeWidth) * 100;
 
-  const lastRight = Array.from({ length: levels }, () => Number.NEGATIVE_INFINITY);
+  const lastRight = Array.from({ length: baseLevels }, () => Number.NEGATIVE_INFINITY);
   const pins: Pin[] = [];
 
   people.forEach((person, index) => {
@@ -99,18 +99,19 @@ const layoutPins = (people: StoryPerson[], start: number, end: number, width: nu
     const pillRight = ageOnRight ? x : x + pillWidth;
 
     const order: number[] = [];
-    const seed = index % 2 === 0 ? 0 : Math.ceil(levels / 2);
-    for (let step = 0; step < levels; step += 1) order.push((seed + step * 2) % levels);
-    for (let level = 0; level < levels; level += 1) if (!order.includes(level)) order.push(level);
+    const seed = index % 2 === 0 ? 0 : Math.ceil(baseLevels / 2);
+    for (let step = 0; step < baseLevels; step += 1) order.push((seed + step * 2) % baseLevels);
+    for (let level = 0; level < baseLevels; level += 1) if (!order.includes(level)) order.push(level);
 
     const free = order.find((candidate) => pillLeft - lastRight[candidate] >= gap);
-    const level = free ?? lastRight.reduce((best, value, current) => (value < lastRight[best] ? current : best), 0);
+    const level = free ?? lastRight.length;
+    if (free === undefined) lastRight.push(Number.NEGATIVE_INFINITY);
 
     lastRight[level] = pillRight;
     pins.push({ person, x, level, ageOnRight });
   });
 
-  return { pins, levels };
+  return { pins, levels: lastRight.length };
 };
 
 

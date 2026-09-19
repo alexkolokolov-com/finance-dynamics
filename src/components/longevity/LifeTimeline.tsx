@@ -80,38 +80,38 @@ const PIN_ROW = 66;
 const PIN_LEVELS = 5;
 const PIN_LEVELS_NARROW = 7;
 
-type Pin = { person: StoryPerson; x: number; level: number };
+type Pin = { person: StoryPerson; x: number; level: number; ageOnRight: boolean };
 
 const layoutPins = (people: StoryPerson[], start: number, end: number, width: number) => {
   const safeWidth = Math.max(width, 240);
-  const levels = safeWidth < 520 ? PIN_LEVELS_NARROW : PIN_LEVELS;
-  const gap = ((PIN_WIDTH + PIN_GAP) / safeWidth) * 100;
-  const half = (PIN_WIDTH / 2 / safeWidth) * 100;
-  const minX = half + 1;
-  const maxX = 100 - half - 1;
-  const span = Math.max(maxX - minX, 1);
+  const baseLevels = safeWidth < 520 ? PIN_LEVELS_NARROW : PIN_LEVELS;
+  const pillWidth = (PIN_WIDTH / safeWidth) * 100;
+  const gap = (PIN_GAP / safeWidth) * 100;
 
-  const lastX = Array.from({ length: levels }, () => Number.NEGATIVE_INFINITY);
+  const lastRight = Array.from({ length: baseLevels }, () => Number.NEGATIVE_INFINITY);
   const pins: Pin[] = [];
 
   people.forEach((person, index) => {
     const ratio = (Math.min(Math.max(person.age, start), end) - start) / (end - start);
-    const idealX = minX + ratio * span;
+    const x = ratio * 100;
+    const ageOnRight = ratio > 0.5;
+    const pillLeft = ageOnRight ? x - pillWidth : x;
+    const pillRight = ageOnRight ? x : x + pillWidth;
 
     const order: number[] = [];
-    const seed = index % 2 === 0 ? 0 : Math.ceil(levels / 2);
-    for (let step = 0; step < levels; step += 1) order.push((seed + step * 2) % levels);
-    for (let level = 0; level < levels; level += 1) if (!order.includes(level)) order.push(level);
+    const seed = index % 2 === 0 ? 0 : Math.ceil(baseLevels / 2);
+    for (let step = 0; step < baseLevels; step += 1) order.push((seed + step * 2) % baseLevels);
+    for (let level = 0; level < baseLevels; level += 1) if (!order.includes(level)) order.push(level);
 
-    const free = order.find((candidate) => idealX - lastX[candidate] >= gap);
-    const level = free ?? lastX.reduce((best, value, current) => (value < lastX[best] ? current : best), 0);
-    const x = free !== undefined ? idealX : Math.min(Math.max(idealX, lastX[level] + gap), maxX);
+    const free = order.find((candidate) => pillLeft - lastRight[candidate] >= gap);
+    const level = free ?? lastRight.length;
+    if (free === undefined) lastRight.push(Number.NEGATIVE_INFINITY);
 
-    lastX[level] = x;
-    pins.push({ person, x, level });
+    lastRight[level] = pillRight;
+    pins.push({ person, x, level, ageOnRight });
   });
 
-  return { pins, levels };
+  return { pins, levels: lastRight.length };
 };
 
 
@@ -141,23 +141,23 @@ const GroupTimeline = ({ range, title, people }: { range: string; title: string;
       </div>
 
       <div ref={areaRef} className="relative flex-1 px-3 py-2" style={{ minHeight: `${levels * PIN_ROW}px` }}>
-        {width > 0 ? pins.map(({ person, x, level }) => {
+        {width > 0 ? pins.map(({ person, x, level, ageOnRight }) => {
           const [firstName, lastName] = personLine(person.name);
           const y = levels === 1 ? 50 : 6 + (level / (levels - 1)) * 88;
           return (
             <div
               key={person.id}
-              className="group absolute z-10 -translate-x-1/2 -translate-y-1/2 hover:z-40 focus-within:z-40"
-              style={{ left: `${x}%`, top: `${y}%` }}
+              className="group absolute z-10 -translate-y-1/2 hover:z-40 focus-within:z-40"
+              style={{ left: `${x}%`, top: `${y}%`, transform: `translate(${ageOnRight ? "calc(-100% + 20px)" : "-20px"}, -50%)` }}
             >
-              <div tabIndex={0} role="button" aria-label={`${person.name}, ${person.age}`} className="flex w-[136px] items-center gap-1.5 rounded-full border border-accent/60 bg-card py-1 pl-1 pr-2.5 shadow-paper transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-accent group-hover:shadow-hard focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+              <div tabIndex={0} role="button" aria-label={`${person.name}, ${person.age}`} className={`flex w-[136px] items-center gap-1.5 rounded-full border border-accent/60 bg-card py-1 shadow-paper transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-accent group-hover:shadow-hard focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${ageOnRight ? "flex-row-reverse pl-2.5 pr-1" : "pl-1 pr-2.5"}`}>
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent font-display text-xs font-bold text-accent-foreground">{person.age}</span>
-                <span className="min-w-0 text-left">
+                <span className={`min-w-0 flex-1 ${ageOnRight ? "text-right" : "text-left"}`}>
                   <span className="block truncate font-body text-[13px] font-semibold leading-tight">{nbsp(firstName)}</span>
                   {lastName ? <span className="block truncate font-body text-[13px] leading-tight text-foreground">{nbsp(lastName)}</span> : null}
                 </span>
               </div>
-              <div className={`pointer-events-none absolute z-50 w-[min(17rem,78vw)] rounded-xl border border-foreground bg-foreground p-4 text-background opacity-0 shadow-hard transition-all duration-200 group-hover:opacity-100 group-focus-within:opacity-100 ${level < levels / 2 ? "top-[calc(100%+10px)]" : "bottom-[calc(100%+10px)]"} ${x > 60 ? "right-0" : "left-0"}`}>
+              <div className={`pointer-events-none absolute z-50 w-[min(17rem,78vw)] rounded-xl border border-foreground bg-foreground p-4 text-background opacity-0 shadow-hard transition-all duration-200 group-hover:opacity-100 group-focus-within:opacity-100 ${level < levels / 2 ? "top-[calc(100%+10px)]" : "bottom-[calc(100%+10px)]"} ${ageOnRight ? "right-0" : "left-0"}`}>
                 <p className="font-body text-sm font-semibold leading-snug">{nbsp(person.role.charAt(0).toUpperCase() + person.role.slice(1))}</p>
                 <p className="mt-1.5 font-body text-[13px] leading-relaxed text-background/80">{nbsp(person.turn)}</p>
               </div>

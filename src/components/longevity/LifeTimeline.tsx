@@ -402,7 +402,7 @@ export const LifeTimeline = () => {
     <>
       <div id="timeline" ref={trackRef} className="relative scroll-mt-16" style={{ height: `${TRACK_VH}vh` }}>
         <div data-timeline-scene className="pointer-events-none sticky top-16 z-10 flex h-[calc(100vh-4rem)] items-center justify-center px-2 sm:px-5">
-          <div ref={sceneWindowRef} className="relative h-[min(590px,76vh)] w-full max-w-[1420px] overflow-hidden rounded-lg border border-border bg-card shadow-paper">
+          <div ref={sceneWindowRef} data-story-window className="relative h-[min(590px,76vh)] w-full max-w-[1420px] overflow-hidden rounded-lg border border-border bg-card shadow-paper">
             <div className="pointer-events-auto absolute inset-x-4 top-4 z-30 flex items-center gap-4 sm:inset-x-8 sm:top-5">
               <p className="hidden min-w-40 font-body text-sm text-muted-foreground sm:block">{nbsp(`${activeChapter.range} · ${activeChapter.title}`)}</p>
               <Slider

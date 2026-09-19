@@ -14,11 +14,21 @@ URL = "http://localhost:8080/longevity"
 SIZES = [(390, 844), (768, 1024), (974, 738), (1440, 900)]
 EXPECTED = ["1", "2", "4", "6"]
 SPEEDS = [(300, 100), (200, 400), (120, 1200)]
+CHAPTER_VH = 110
+LEAD_VH = 25
 
 STATE = """() => {
   const card = document.querySelector('[data-story-card]');
   const cards = document.querySelectorAll('[data-story-card]').length;
   const style = card ? getComputedStyle(card) : null;
+  const cardRect = card?.getBoundingClientRect() ?? null;
+  const windowRect = document.querySelector('[data-story-window]')?.getBoundingClientRect() ?? null;
+  const zones = Object.fromEntries(
+    [...document.querySelectorAll('[data-story-zone]')].map((zone) => [
+      zone.getAttribute('data-story-zone'),
+      Number(zone.getAttribute('data-zone-progress') ?? 0),
+    ]),
+  );
   return {
     y: window.scrollY,
     cards,
@@ -26,10 +36,76 @@ STATE = """() => {
     phase: card ? card.getAttribute('data-story-phase') : null,
     opacity: style ? parseFloat(style.opacity) : null,
     transform: style ? style.transform : null,
+    translate: card ? Number(card.getAttribute('data-card-translate')) : null,
+    cardHeight: cardRect?.height ?? null,
+    cardTop: cardRect?.top ?? null,
+    cardBottom: cardRect?.bottom ?? null,
+    windowTop: windowRect?.top ?? null,
+    windowBottom: windowRect?.bottom ?? null,
+    zones,
     label: document.querySelector('[data-timeline-scene] p')?.textContent ?? '',
     overflowX: document.documentElement.scrollWidth - document.documentElement.clientWidth,
   };
 }"""
+
+
+async def seek_phase(page, chapter_index, local_t):
+    metrics = await page.evaluate("""() => {
+      const track = document.querySelector('#timeline');
+      if (!track) return null;
+      return { top: track.getBoundingClientRect().top + scrollY, viewport: innerHeight };
+    }""")
+    if not metrics:
+        raise RuntimeError("Не найден трек таймлайна")
+    target = (
+        metrics["top"]
+        + (LEAD_VH / 100) * metrics["viewport"]
+        + (chapter_index + local_t) * (CHAPTER_VH / 100) * metrics["viewport"]
+    )
+    await page.evaluate("(top) => scrollTo(0, top)", target)
+    await page.wait_for_timeout(100)
+    return await page.evaluate(STATE)
+
+
+async def check_physical_motion(page, width, height, failures):
+    tag = f"{width}x{height} фазы"
+    zone_names = ["first", "crisis", "second", "third"]
+    expected_phases = [
+        (0.06, "update-graph"),
+        (0.22, "enter"),
+        (0.55, "hold"),
+        (0.90, "exit"),
+    ]
+
+    for index, chapter in enumerate(EXPECTED):
+        states = []
+        for local_t, expected_phase in expected_phases:
+            state = await seek_phase(page, index, local_t)
+            states.append(state)
+            if state["chapter"] != chapter or state["phase"] != expected_phase:
+                failures.append(
+                    f"{tag} глава {chapter}: при t={local_t} получены "
+                    f"{state['chapter']}/{state['phase']}, ожидалось {chapter}/{expected_phase}"
+                )
+
+        graph, enter, hold, exit_state = states
+        zone = zone_names[index]
+        if not 0.35 <= graph["zones"].get(zone, 0) <= 0.65:
+            failures.append(f"{tag} глава {chapter}: зона не строится отдельно до входа карточки")
+        if graph["translate"] is None or graph["cardHeight"] is None or graph["translate"] < graph["cardHeight"]:
+            failures.append(f"{tag} глава {chapter}: карточка видна во время построения графика")
+        if enter["zones"].get(zone, 0) < 0.999:
+            failures.append(f"{tag} глава {chapter}: карточка входит до завершения зоны")
+        if enter["translate"] is None or enter["translate"] <= 0:
+            failures.append(f"{tag} глава {chapter}: нет физического входа снизу")
+        if hold["translate"] is None or abs(hold["translate"]) > 0.5:
+            failures.append(f"{tag} глава {chapter}: карточка не остановилась в hold")
+        if exit_state["translate"] is None or exit_state["translate"] >= 0:
+            failures.append(f"{tag} глава {chapter}: нет физического выхода вверх")
+        for phase_state in states:
+            if phase_state["opacity"] is not None and phase_state["opacity"] < 0.999:
+                failures.append(f"{tag} глава {chapter}: движение подменено opacity={phase_state['opacity']}")
+                break
 
 
 def dedupe(values):
@@ -64,6 +140,8 @@ async def check_size(page, width, height, errors, failures):
     tag = f"{width}x{height}"
     await page.goto(URL, wait_until="domcontentloaded")
     await page.wait_for_timeout(1200)
+
+    await check_physical_motion(page, width, height, failures)
 
     for delta, gap in SPEEDS:
         await page.evaluate("window.scrollTo(0, 0)")

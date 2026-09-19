@@ -17,7 +17,10 @@ async def card_state(page):
 async def open_scene(page):
     await page.goto(URL, wait_until="domcontentloaded")
     await page.evaluate("window.scrollTo(0, document.querySelector('#timeline').offsetTop)")
-    await page.wait_for_function("document.querySelector('[data-story-card]')?.dataset.storyPhase === 'idle'")
+    await page.wait_for_function("""() => {
+      const card=document.querySelector('[data-story-card]');
+      return card?.dataset.storyStarted === 'true' && card?.dataset.storyPhase === 'idle';
+    }""")
 
 async def wait_idle(page):
     await page.wait_for_function("document.querySelector('[data-story-card]')?.dataset.storyPhase === 'idle'", timeout=4000)

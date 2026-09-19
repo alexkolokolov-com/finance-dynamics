@@ -502,6 +502,7 @@ export const LifeTimeline = () => {
                 data-story-card
                 data-chapter={activeChapter.id}
                  data-story-phase={machine.phase}
+                 data-story-started={machine.started ? "true" : "false"}
                 className={`col-start-1 row-start-1 w-[92vw] overflow-hidden rounded-lg border border-border bg-card/95 shadow-hard backdrop-blur-md transition-[opacity,transform] ease-out will-change-transform sm:w-[28rem] md:w-[20rem] lg:w-[22rem] xl:w-[24rem] ${storyColumnClass(activeChapter.id)}`}
                 style={cardStyle()}
               >

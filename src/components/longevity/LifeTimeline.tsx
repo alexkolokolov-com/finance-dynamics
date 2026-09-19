@@ -203,10 +203,12 @@ const axisWidth = (chapter: number) => {
 };
 
 const storyColumnClass = (chapter: number) => {
-  if (chapter <= 2) return "md:col-start-1 md:justify-self-start";
+  if (chapter === 1) return "md:col-start-1 md:justify-self-start";
+  if (chapter === 2) return "md:col-start-2 md:justify-self-start";
   if (chapter === 4) return "md:col-start-2 md:justify-self-center";
   return "md:col-start-3 md:justify-self-end";
 };
+
 
 const Zone = ({ className, visible, range, title, start, end, labelClassName = "", rangeClassName = "text-accent", delay = 0 }: { className: string; visible: boolean; range: string; title: string; start: number; end: number; labelClassName?: string; rangeClassName?: string; delay?: number }) => (
   <div
@@ -250,26 +252,35 @@ const CrisisMarker = ({ visible }: { visible: boolean }) => {
   );
 };
 
+const OUT_MS = 180;
+const IN_MS = 220;
+const LOCK_MS = 520;
+const GESTURE_GAP_MS = 90;
+const WHEEL_THRESHOLD = 12;
+const SWIPE_THRESHOLD = 40;
+
 export const LifeTimeline = () => {
-  const [chapter, setChapter] = useState(1);
-  const [trackProgress, setTrackProgress] = useState(0);
+  const [index, setIndex] = useState(0);
+  const [phase, setPhase] = useState<"idle" | "out" | "in">("idle");
   const [reducedMotion, setReducedMotion] = useState(false);
-  const chapterRefs = useRef<(HTMLElement | null)[]>([]);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const indexRef = useRef(0);
+  const phaseRef = useRef<"idle" | "out" | "in">("idle");
+  const lockUntilRef = useRef(0);
+  const lastWheelRef = useRef(0);
+  const timersRef = useRef<number[]>([]);
+  const touchStartRef = useRef<number | null>(null);
+  const maxIndex = chapters.length - 1;
 
-  const moveToChapter = (nextIndex: number, behavior: ScrollBehavior = "smooth") => {
-    const boundedIndex = Math.min(Math.max(Math.round(nextIndex), 0), chapters.length - 1);
-    const target = chapters[boundedIndex];
-    if (!target) return;
+  useEffect(() => {
+    indexRef.current = index;
+  }, [index]);
 
-    setChapter(target.id);
-    setTrackProgress(0.5);
+  useEffect(() => {
+    phaseRef.current = phase;
+  }, [phase]);
 
-    const node = chapterRefs.current[boundedIndex];
-    if (!node) return;
-
-    const top = node.getBoundingClientRect().top + window.scrollY + node.offsetHeight * 0.5 - window.innerHeight * 0.5;
-    window.scrollTo({ top, behavior });
-  };
+  useEffect(() => () => timersRef.current.forEach((timer) => window.clearTimeout(timer)), []);
 
   useEffect(() => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -279,42 +290,113 @@ export const LifeTimeline = () => {
     return () => motionQuery.removeEventListener("change", syncMotion);
   }, []);
 
+  const goTo = (nextIndex: number) => {
+    const bounded = Math.min(Math.max(nextIndex, 0), maxIndex);
+    if (bounded === indexRef.current || phaseRef.current !== "idle") return;
+
+    const outMs = reducedMotion ? 120 : OUT_MS;
+    const inMs = reducedMotion ? 120 : IN_MS;
+
+    phaseRef.current = "out";
+    setPhase("out");
+    lockUntilRef.current = performance.now() + outMs + inMs + 120;
+
+    timersRef.current.push(window.setTimeout(() => {
+      indexRef.current = bounded;
+      setIndex(bounded);
+      phaseRef.current = "in";
+      setPhase("in");
+
+      timersRef.current.push(window.setTimeout(() => {
+        phaseRef.current = "idle";
+        setPhase("idle");
+      }, inMs));
+    }, outMs));
+  };
+
+  const canStep = (direction: number) => {
+    const next = indexRef.current + direction;
+    return next >= 0 && next <= maxIndex;
+  };
+
+  const isPinned = () => {
+    const node = trackRef.current;
+    if (!node) return false;
+    const rect = node.getBoundingClientRect();
+    return rect.top <= 64 && rect.bottom >= window.innerHeight;
+  };
+
+  const step = (direction: number) => {
+    const now = performance.now();
+    if (phaseRef.current !== "idle" || now < lockUntilRef.current) return;
+    goTo(indexRef.current + direction);
+    lockUntilRef.current = performance.now() + LOCK_MS;
+  };
+
   useEffect(() => {
-    let frame = 0;
-    const syncChapter = () => {
-      frame = 0;
-      const viewportAnchor = window.innerHeight * 0.5;
-      let nextIndex = 0;
-      let nextProgress = 0;
+    const onWheel = (event: WheelEvent) => {
+      const delta = event.deltaMode === 1 ? event.deltaY * 16 : event.deltaMode === 2 ? event.deltaY * window.innerHeight : event.deltaY;
+      if (Math.abs(delta) < WHEEL_THRESHOLD) return;
+      const direction = delta > 0 ? 1 : -1;
+      if (!isPinned() || !canStep(direction)) return;
 
-      chapterRefs.current.forEach((node, index) => {
-        if (!node || node.offsetHeight <= 0) return;
-        const rect = node.getBoundingClientRect();
-        if (viewportAnchor >= rect.top) {
-          nextIndex = index;
-          nextProgress = Math.min(Math.max((viewportAnchor - rect.top) / rect.height, 0), 1);
-        }
-      });
-
-      const nextChapter = chapters[nextIndex]?.id ?? chapters[0].id;
-      setChapter((current) => current === nextChapter ? current : nextChapter);
-      setTrackProgress((current) => Math.abs(current - nextProgress) < 0.001 ? current : nextProgress);
-    };
-    const scheduleSync = () => {
-      if (!frame) frame = window.requestAnimationFrame(syncChapter);
+      event.preventDefault();
+      const now = performance.now();
+      const continuation = now - lastWheelRef.current < GESTURE_GAP_MS;
+      lastWheelRef.current = now;
+      if (continuation) return;
+      step(direction);
     };
 
-    syncChapter();
-    window.addEventListener("scroll", scheduleSync, { passive: true });
-    window.addEventListener("resize", scheduleSync);
-    window.addEventListener("pageshow", scheduleSync);
+    const onTouchStart = (event: TouchEvent) => {
+      touchStartRef.current = event.touches[0]?.clientY ?? null;
+    };
+
+    const onTouchMove = (event: TouchEvent) => {
+      const start = touchStartRef.current;
+      const current = event.touches[0]?.clientY;
+      if (start === null || current === undefined) return;
+      const delta = start - current;
+      if (Math.abs(delta) < SWIPE_THRESHOLD) return;
+      const direction = delta > 0 ? 1 : -1;
+      if (!isPinned() || !canStep(direction)) return;
+      event.preventDefault();
+      touchStartRef.current = current;
+      step(direction);
+    };
+
+    const onTouchEnd = () => {
+      touchStartRef.current = null;
+    };
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      const keys: Record<string, number> = { ArrowDown: 1, PageDown: 1, " ": 1, ArrowUp: -1, PageUp: -1 };
+      const direction = keys[event.key];
+      if (!direction) return;
+      const target = event.target as HTMLElement | null;
+      if (target && (target.tagName === "INPUT" || target.getAttribute("role") === "slider")) return;
+      if (!isPinned() || !canStep(direction)) return;
+      event.preventDefault();
+      step(direction);
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("keydown", onKeyDown);
     return () => {
-      window.removeEventListener("scroll", scheduleSync);
-      window.removeEventListener("resize", scheduleSync);
-      window.removeEventListener("pageshow", scheduleSync);
-      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("keydown", onKeyDown);
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reducedMotion, maxIndex]);
+
+  const activeChapter = chapters[index];
+  const chapter = activeChapter.id;
 
   const zoneVisibility = useMemo(
     () => ({
@@ -325,50 +407,35 @@ export const LifeTimeline = () => {
     }),
     [chapter],
   );
-  const activeChapterIndex = Math.max(chapters.findIndex((item) => item.id === chapter), 0);
-  const activeChapter = chapters[activeChapterIndex];
 
-  const cardMotion = (index: number) => {
-    if (index !== activeChapterIndex) {
-      return { opacity: 0, transform: `translateY(${index < activeChapterIndex ? -72 : 72}px)` };
+  const cardStyle = () => {
+    const duration = phase === "out" ? (reducedMotion ? 120 : OUT_MS) : reducedMotion ? 120 : IN_MS;
+    if (phase === "out") {
+      return { opacity: 0, transform: reducedMotion ? "none" : "translateY(-28px)", transitionDuration: `${duration}ms` };
     }
-    if (reducedMotion) {
-      return { opacity: trackProgress > 0.01 && trackProgress < 0.99 ? 1 : 0, transform: "translateY(0px)" };
+    if (phase === "in") {
+      return { opacity: 1, transform: "translateY(0px)", transitionDuration: `${duration}ms` };
     }
-    if (trackProgress < 0.15) {
-      const progress = trackProgress / 0.15;
-      return { opacity: progress, transform: `translateY(${(1 - progress) * 72}px)` };
-    }
-    if (trackProgress <= 0.8) return { opacity: 1, transform: "translateY(0px)" };
-    const progress = (trackProgress - 0.8) / 0.2;
-    return { opacity: 1 - progress, transform: `translateY(${-progress * 72}px)` };
+    return { opacity: 1, transform: "translateY(0px)", transitionDuration: `${duration}ms` };
   };
 
   return (
     <>
-      <div id="timeline" className="relative scroll-mt-16">
+      <div id="timeline" ref={trackRef} className="relative h-[180vh] scroll-mt-16">
         <div data-timeline-scene className="pointer-events-none sticky top-16 z-10 flex h-[calc(100vh-4rem)] items-center justify-center px-2 sm:px-5">
           <div className="relative h-[min(590px,76vh)] w-full max-w-[1420px] overflow-hidden rounded-lg border border-border bg-card shadow-paper">
             <div className="pointer-events-auto absolute inset-x-4 top-4 z-30 flex items-center gap-4 sm:inset-x-8 sm:top-5">
-              <p className="hidden min-w-40 font-body text-sm text-muted-foreground sm:block">{activeChapter ? nbsp(`${activeChapter.range} · ${activeChapter.title}`) : null}</p>
+              <p className="hidden min-w-40 font-body text-sm text-muted-foreground sm:block">{nbsp(`${activeChapter.range} · ${activeChapter.title}`)}</p>
               <Slider
                 aria-label={nbsp("Перемотка таймлайна")}
                 min={0}
-                max={chapters.length - 1}
+                max={maxIndex}
                 step={1}
-                value={[activeChapterIndex]}
+                value={[index]}
                 onValueChange={(value) => {
                   const nextIndex = value[0];
                   if (typeof nextIndex !== "number") return;
-                  const target = chapters[nextIndex];
-                  if (!target) return;
-                  setChapter(target.id);
-                  setTrackProgress(0.5);
-                }}
-                onValueCommit={(value) => {
-                  const nextIndex = value[0];
-                  if (typeof nextIndex !== "number") return;
-                  moveToChapter(nextIndex);
+                  goTo(nextIndex);
                 }}
                 className="min-w-0 flex-1"
               />
@@ -376,12 +443,12 @@ export const LifeTimeline = () => {
             <div className="absolute inset-x-3 bottom-5 top-16 sm:inset-x-8 sm:bottom-7 sm:top-20">
               <div className="absolute inset-x-0 bottom-[8%] top-[2%]">
                 <Zone className="h-[40%] border-[hsl(var(--longevity-first)/0.8)] bg-[hsl(var(--longevity-first)/0.5)]" rangeClassName="text-[hsl(var(--longevity-first-foreground))]" start={TIMELINE_GEOMETRY.start} end={TIMELINE_GEOMETRY.firstEnd} visible={zoneVisibility.first} range="0-40" title="Первая половина" />
-                <Zone className="h-[70%] border-[hsl(var(--longevity-second)/0.8)] bg-[hsl(var(--longevity-second)/0.42)]" start={TIMELINE_GEOMETRY.firstEnd} end={TIMELINE_GEOMETRY.secondEnd} labelClassName="pl-2 sm:pl-5" visible={zoneVisibility.second} range="40-80" title="Вторая половина" delay={140} />
-                <Zone className="h-full border-[hsl(var(--longevity-third)/0.9)] bg-[hsl(var(--longevity-third)/0.46)]" rangeClassName="text-[hsl(var(--longevity-third-foreground))]" start={TIMELINE_GEOMETRY.secondEnd} end={TIMELINE_GEOMETRY.end} visible={zoneVisibility.third} range="80-120" title="Третья половина" delay={180} />
+                <Zone className="h-[70%] border-[hsl(var(--longevity-second)/0.8)] bg-[hsl(var(--longevity-second)/0.42)]" start={TIMELINE_GEOMETRY.firstEnd} end={TIMELINE_GEOMETRY.secondEnd} labelClassName="pl-2 sm:pl-5" visible={zoneVisibility.second} range="40-80" title="Вторая половина" delay={80} />
+                <Zone className="h-full border-[hsl(var(--longevity-third)/0.9)] bg-[hsl(var(--longevity-third)/0.46)]" rangeClassName="text-[hsl(var(--longevity-third-foreground))]" start={TIMELINE_GEOMETRY.secondEnd} end={TIMELINE_GEOMETRY.end} visible={zoneVisibility.third} range="80-120" title="Третья половина" delay={100} />
                 <CrisisMarker visible={zoneVisibility.turn} />
               </div>
               <div className="absolute left-[4%] right-[4%] top-[92%] h-px bg-border" />
-              <div className="absolute left-[4%] top-[92%] h-0.5 bg-foreground transition-[width] duration-[1500ms] ease-out motion-reduce:transition-none" style={{ width: `${axisWidth(chapter)}%` }} />
+              <div className="absolute left-[4%] top-[92%] h-0.5 bg-foreground transition-[width] duration-[320ms] ease-out motion-reduce:transition-none" style={{ width: `${axisWidth(chapter)}%` }} />
               {[0, 20, 40, 60, 80, 100, 120].map((tick) => (
                  <div key={tick} className="absolute top-[calc(92%+14px)] -translate-x-1/2 font-body text-[10px] text-muted-foreground sm:text-xs" style={{ left: `${xPct(tick)}%` }}>
                   <span className="absolute -top-[14px] left-1/2 h-2 w-px bg-muted-foreground" />{tick}
@@ -389,39 +456,27 @@ export const LifeTimeline = () => {
               ))}
             </div>
             <div className="pointer-events-none absolute inset-x-4 top-[9vh] z-20 grid grid-cols-1 sm:inset-x-[5vw] md:grid-cols-3">
-              {chapters.map((item, index) => (
-                <div
-                  key={item.id}
-                  aria-hidden={index !== activeChapterIndex}
-                  className={`col-start-1 row-start-1 w-[92vw] overflow-hidden rounded-lg border border-border bg-card/95 shadow-hard backdrop-blur-md will-change-transform sm:w-[28rem] md:w-[20rem] lg:w-[22rem] xl:w-[24rem] ${storyColumnClass(item.id)}`}
-                  style={cardMotion(index)}
-                >
-                  <div className="aspect-[4/3] w-full overflow-hidden sm:aspect-[16/10]">
-                    <img src={chapterImage(item.id)} alt="" aria-hidden="true" loading="lazy" width={1536} height={1024} className="h-full w-full scale-125 object-cover mix-blend-multiply" />
-                  </div>
-                  <div className="p-5 sm:p-7">
-                    {item.paragraphs.map((paragraph, paragraphIndex) => (
-                      <p key={paragraph} className={`font-body leading-snug ${"accent" in item && item.accent || "quote" in item && item.quote && paragraphIndex === 1 ? "text-[clamp(1.15rem,2.3vw,1.8rem)] font-semibold" : "text-base sm:text-lg"} ${paragraphIndex ? "mt-4" : ""}`}>{nbsp(paragraph)}</p>
-                    ))}
-                  </div>
+              <div
+                data-story-node
+                data-story-card
+                data-chapter={activeChapter.id}
+                className={`col-start-1 row-start-1 w-[92vw] overflow-hidden rounded-lg border border-border bg-card/95 shadow-hard backdrop-blur-md transition-[opacity,transform] ease-out will-change-transform sm:w-[28rem] md:w-[20rem] lg:w-[22rem] xl:w-[24rem] ${storyColumnClass(activeChapter.id)}`}
+                style={cardStyle()}
+              >
+                <div className="aspect-[4/3] w-full overflow-hidden sm:aspect-[16/10]">
+                  <img src={chapterImage(activeChapter.id)} alt="" aria-hidden="true" width={1536} height={1024} className="h-full w-full scale-125 object-cover mix-blend-multiply" />
                 </div>
-              ))}
+                <div className="p-5 sm:p-7">
+                  {activeChapter.paragraphs.map((paragraph, paragraphIndex) => (
+                    <p key={paragraph} className={`font-body leading-snug ${("accent" in activeChapter && activeChapter.accent) || ("quote" in activeChapter && activeChapter.quote && paragraphIndex === 1) ? "text-[clamp(1.15rem,2.3vw,1.8rem)] font-semibold" : "text-base sm:text-lg"} ${paragraphIndex ? "mt-4" : ""}`}>{nbsp(paragraph)}</p>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        <div className="relative z-30 -mt-[calc(100vh-4rem)] pointer-events-none">
-          {chapters.map((item, index) => (
-            <section
-              key={item.id}
-              data-story-chapter
-              data-chapter={item.id}
-              ref={(node) => { chapterRefs.current[index] = node; }}
-              className="h-[190vh]"
-            />
-          ))}
-        </div>
       </div>
+
 
       <section className="relative z-40 border-t border-border bg-card px-4 py-14 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-[1400px]">

@@ -164,10 +164,9 @@ const GroupTimeline = ({ range, title, people }: { range: string; title: string;
                   {lastName ? <span className="block truncate font-body text-[13px] leading-tight text-foreground">{nbsp(lastName)}</span> : null}
                 </span>
               </div>
-              <div className={`pointer-events-none absolute z-50 w-[min(17rem,78vw)] rounded-xl border border-border bg-card p-4 opacity-0 shadow-hard transition-all duration-200 group-hover:opacity-100 group-focus-within:opacity-100 ${level < levels / 2 ? "top-[calc(100%+10px)]" : "bottom-[calc(100%+10px)]"} ${x > 60 ? "right-0" : "left-0"}`}>
-                <p className="font-body text-sm font-semibold leading-snug">{nbsp(person.name)}</p>
-                <p className="mt-0.5 font-body text-xs font-medium text-accent">{nbsp(`${person.role} · ${person.field ?? catLabel[person.cat]}`)}</p>
-                <p className="mt-2 font-body text-[13px] leading-relaxed text-foreground/80">{nbsp(person.turn)}</p>
+              <div className={`pointer-events-none absolute z-50 w-[min(17rem,78vw)] rounded-xl border border-foreground bg-foreground p-4 text-background opacity-0 shadow-hard transition-all duration-200 group-hover:opacity-100 group-focus-within:opacity-100 ${level < levels / 2 ? "top-[calc(100%+10px)]" : "bottom-[calc(100%+10px)]"} ${x > 60 ? "right-0" : "left-0"}`}>
+                <p className="font-body text-sm font-semibold leading-snug">{nbsp(person.role)}</p>
+                <p className="mt-1.5 font-body text-[13px] leading-relaxed text-background/80">{nbsp(person.turn)}</p>
               </div>
 
             </div>

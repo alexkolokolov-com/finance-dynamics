@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useReducer, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import firstHalfIllustration from "@/assets/longevity-first-half.jpg";
 import turnIllustration from "@/assets/longevity-turn.jpg";
 import secondActIllustration from "@/assets/longevity-second-act.jpg";
@@ -9,7 +9,6 @@ import {
   type StoryPerson,
 } from "@/data/longevityStoryPeople";
 import { nbsp } from "@/lib/nbsp";
-import { initialStoryState, storyReducer } from "./storyMachine";
 
 const MAX_AGE = 120;
 const xPct = (age: number) => 4 + (Math.min(age, MAX_AGE) / MAX_AGE) * 92;
@@ -274,28 +273,20 @@ const CrisisMarker = ({ visible }: { visible: boolean }) => {
   );
 };
 
-const EXIT_MS = 260;
-const ENTER_MS = 480;
-const ENTER_SETTLE_MS = 50;
-const HOLD_MS = 900;
-const REDUCED_FADE_MS = 120;
-const GESTURE_GAP_MS = 140;
-const WHEEL_THRESHOLD = 12;
-const SWIPE_THRESHOLD = 40;
+const CHAPTER_VH = 85;
+const LEAD_VH = 25;
+const TAIL_VH = 25;
+const TRACK_VH = LEAD_VH + chapters.length * CHAPTER_VH + TAIL_VH;
+const ENTER_END = 0.14;
+const EXIT_START = 0.86;
+const SHIFT_PX = 16;
+const easeOut = (t: number) => 1 - (1 - t) * (1 - t);
 
 export const LifeTimeline = () => {
-  const [machine, dispatch] = useReducer(storyReducer, initialStoryState);
+  const [scene, setScene] = useState({ index: 0, localT: 0 });
   const [reducedMotion, setReducedMotion] = useState(false);
   const trackRef = useRef<HTMLDivElement | null>(null);
-  const sceneRef = useRef<HTMLDivElement | null>(null);
-  const machineRef = useRef(machine);
-  const lastWheelRef = useRef(0);
-  const touchStartRef = useRef<number | null>(null);
   const maxIndex = chapters.length - 1;
-
-  useEffect(() => {
-    machineRef.current = machine;
-  }, [machine]);
 
   useEffect(() => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -306,138 +297,49 @@ export const LifeTimeline = () => {
   }, []);
 
   useEffect(() => {
-    const node = sceneRef.current;
-    if (!node) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      if (!entry?.isIntersecting || entry.intersectionRatio < 0.5) return;
-      dispatch({ type: "BEGIN_INITIAL" });
-      observer.disconnect();
-    }, { threshold: 0.5 });
-    observer.observe(node);
-    return () => observer.disconnect();
+    let frame = 0;
+
+    const compute = () => {
+      frame = 0;
+      const node = trackRef.current;
+      if (!node) return;
+      const rect = node.getBoundingClientRect();
+      const viewport = window.innerHeight;
+      const chapterPx = (CHAPTER_VH / 100) * viewport;
+      const leadPx = (LEAD_VH / 100) * viewport;
+      const raw = (-rect.top - leadPx) / chapterPx;
+      const clamped = Math.min(Math.max(raw, 0), chapters.length - 0.0001);
+      const index = Math.floor(clamped);
+      const localT = clamped - index;
+      setScene((current) => (current.index === index && Math.abs(current.localT - localT) < 0.002 ? current : { index, localT }));
+    };
+
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(compute);
+    };
+
+    compute();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
-  useEffect(() => {
-    if (machine.phase === "idle") return;
-    if (machine.phase === "swap-hidden") {
-      let secondFrame = 0;
-      const firstFrame = window.requestAnimationFrame(() => {
-        secondFrame = window.requestAnimationFrame(() => dispatch({ type: "FRAME_READY" }));
-      });
-      return () => {
-        window.cancelAnimationFrame(firstFrame);
-        window.cancelAnimationFrame(secondFrame);
-      };
-    }
-    const duration = machine.phase === "exit"
-      ? (reducedMotion ? REDUCED_FADE_MS : EXIT_MS)
-      : machine.phase === "enter"
-        ? (reducedMotion ? REDUCED_FADE_MS : ENTER_MS + ENTER_SETTLE_MS)
-        : HOLD_MS;
-    const action = machine.phase === "exit"
-      ? { type: "EXIT_DONE" as const }
-      : machine.phase === "enter"
-        ? { type: "ENTER_DONE" as const }
-        : { type: "HOLD_DONE" as const };
-    const timer = window.setTimeout(() => dispatch(action), duration);
-    return () => window.clearTimeout(timer);
-  }, [machine.phase, machine.targetIndex, reducedMotion]);
-
   const goTo = (nextIndex: number) => {
-    dispatch({ type: "GO_TO", index: nextIndex, maxIndex });
-  };
-
-  const canStep = (direction: number) => {
-    const next = machineRef.current.index + direction;
-    return next >= 0 && next <= maxIndex;
-  };
-
-  const isPinned = () => {
     const node = trackRef.current;
-    if (!node) return false;
-    const rect = node.getBoundingClientRect();
-    return rect.top <= 64 && rect.bottom >= window.innerHeight;
+    if (!node) return;
+    const target = Math.min(Math.max(nextIndex, 0), maxIndex);
+    const viewport = window.innerHeight;
+    const trackTop = node.getBoundingClientRect().top + window.scrollY;
+    const top = trackTop + (LEAD_VH / 100) * viewport + (target + 0.5) * (CHAPTER_VH / 100) * viewport;
+    window.scrollTo({ top, behavior: reducedMotion ? "auto" : "smooth" });
   };
 
-  const step = (direction: number) => {
-    if (machineRef.current.phase !== "idle") return;
-    goTo(machineRef.current.index + direction);
-  };
-
-  useEffect(() => {
-    const onWheel = (event: WheelEvent) => {
-      const delta = event.deltaMode === 1 ? event.deltaY * 16 : event.deltaMode === 2 ? event.deltaY * window.innerHeight : event.deltaY;
-      if (Math.abs(delta) < WHEEL_THRESHOLD) return;
-      const direction = delta > 0 ? 1 : -1;
-      if (!isPinned()) return;
-      if (machineRef.current.phase !== "idle") {
-        event.preventDefault();
-        lastWheelRef.current = performance.now();
-        return;
-      }
-      if (!canStep(direction)) return;
-
-      event.preventDefault();
-      const now = performance.now();
-      const continuation = now - lastWheelRef.current < GESTURE_GAP_MS;
-      lastWheelRef.current = now;
-      if (continuation) return;
-      step(direction);
-    };
-
-    const onTouchStart = (event: TouchEvent) => {
-      touchStartRef.current = event.touches[0]?.clientY ?? null;
-    };
-
-    const onTouchMove = (event: TouchEvent) => {
-      const start = touchStartRef.current;
-      const current = event.touches[0]?.clientY;
-      if (start === null || current === undefined) return;
-      const delta = start - current;
-      if (Math.abs(delta) < SWIPE_THRESHOLD) return;
-      const direction = delta > 0 ? 1 : -1;
-      if (!isPinned()) return;
-      if (machineRef.current.phase !== "idle") {
-        event.preventDefault();
-        return;
-      }
-      if (!canStep(direction)) return;
-      event.preventDefault();
-      touchStartRef.current = current;
-      step(direction);
-    };
-
-    const onTouchEnd = () => {
-      touchStartRef.current = null;
-    };
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      const keys: Record<string, number> = { ArrowDown: 1, PageDown: 1, " ": 1, ArrowUp: -1, PageUp: -1 };
-      const direction = keys[event.key];
-      if (!direction) return;
-      const target = event.target as HTMLElement | null;
-      if (target && (target.tagName === "INPUT" || target.getAttribute("role") === "slider")) return;
-      if (!isPinned() || !canStep(direction)) return;
-      event.preventDefault();
-      step(direction);
-    };
-
-    window.addEventListener("wheel", onWheel, { passive: false });
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: false });
-    window.addEventListener("touchend", onTouchEnd, { passive: true });
-    window.addEventListener("keydown", onKeyDown);
-    return () => {
-      window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchmove", onTouchMove);
-      window.removeEventListener("touchend", onTouchEnd);
-      window.removeEventListener("keydown", onKeyDown);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reducedMotion, maxIndex]);
-
-  const activeChapter = chapters[machine.index];
+  const activeChapter = chapters[scene.index];
   const chapter = activeChapter.id;
 
   const zoneVisibility = useMemo(
@@ -451,20 +353,27 @@ export const LifeTimeline = () => {
   );
 
   const cardStyle = () => {
-    const distance = machine.direction > 0 ? 16 : -16;
-    if (!machine.started || machine.phase === "swap-hidden") {
-      return { opacity: 0, transform: reducedMotion ? "none" : `translateY(${distance}px)`, transitionDuration: "0ms" };
+    const { localT } = scene;
+    let opacity = 1;
+    let shift = 0;
+    if (localT < ENTER_END) {
+      const t = easeOut(localT / ENTER_END);
+      opacity = t;
+      shift = SHIFT_PX * (1 - t);
+    } else if (localT > EXIT_START) {
+      const t = (localT - EXIT_START) / (1 - EXIT_START);
+      opacity = 1 - t;
+      shift = -SHIFT_PX * t;
     }
-    if (machine.phase === "exit") {
-      return { opacity: 0, transform: reducedMotion ? "none" : `translateY(${-distance}px)`, transitionDuration: `${reducedMotion ? REDUCED_FADE_MS : EXIT_MS}ms` };
-    }
-    return { opacity: 1, transform: "translateY(0px)", transitionDuration: `${reducedMotion ? REDUCED_FADE_MS : ENTER_MS}ms` };
+    return { opacity, transform: reducedMotion ? "none" : `translateY(${shift}px)` };
   };
+
+  const cardPhase = scene.localT < ENTER_END ? "enter" : scene.localT > EXIT_START ? "exit" : "hold";
 
   return (
     <>
-      <div id="timeline" ref={trackRef} className="relative h-[180vh] scroll-mt-16">
-        <div ref={sceneRef} data-timeline-scene className="pointer-events-none sticky top-16 z-10 flex h-[calc(100vh-4rem)] items-center justify-center px-2 sm:px-5">
+      <div id="timeline" ref={trackRef} className="relative scroll-mt-16" style={{ height: `${TRACK_VH}vh` }}>
+        <div data-timeline-scene className="pointer-events-none sticky top-16 z-10 flex h-[calc(100vh-4rem)] items-center justify-center px-2 sm:px-5">
           <div className="relative h-[min(590px,76vh)] w-full max-w-[1420px] overflow-hidden rounded-lg border border-border bg-card shadow-paper">
             <div className="pointer-events-auto absolute inset-x-4 top-4 z-30 flex items-center gap-4 sm:inset-x-8 sm:top-5">
               <p className="hidden min-w-40 font-body text-sm text-muted-foreground sm:block">{nbsp(`${activeChapter.range} · ${activeChapter.title}`)}</p>
@@ -473,7 +382,7 @@ export const LifeTimeline = () => {
                 min={0}
                 max={maxIndex}
                 step={1}
-                 value={[machine.index]}
+                 value={[scene.index]}
                 onValueChange={(value) => {
                   const nextIndex = value[0];
                   if (typeof nextIndex !== "number") return;
@@ -502,9 +411,8 @@ export const LifeTimeline = () => {
                 data-story-node
                 data-story-card
                 data-chapter={activeChapter.id}
-                 data-story-phase={machine.phase}
-                 data-story-started={machine.started ? "true" : "false"}
-                className={`col-start-1 row-start-1 w-[92vw] overflow-hidden rounded-lg border border-border bg-card/95 shadow-hard backdrop-blur-md transition-[opacity,transform] ease-out will-change-transform sm:w-[28rem] md:w-[20rem] lg:w-[22rem] xl:w-[24rem] ${storyColumnClass(activeChapter.id)}`}
+                 data-story-phase={cardPhase}
+                className={`col-start-1 row-start-1 w-[92vw] overflow-hidden rounded-lg border border-border bg-card/95 shadow-hard backdrop-blur-md will-change-transform sm:w-[28rem] md:w-[20rem] lg:w-[22rem] xl:w-[24rem] ${storyColumnClass(activeChapter.id)}`}
                 style={cardStyle()}
               >
                 <div className="aspect-[4/3] w-full overflow-hidden sm:aspect-[16/10]">

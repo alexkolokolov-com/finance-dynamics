@@ -1,133 +1,129 @@
+"""Комплексная проверка скролл-сцены /longevity.
+
+Запуск: python3 scripts/test_longevity_scroll.py
+Сцена привязана к позиции прокрутки: главы 1 -> 2 -> 4 -> 6 не могут быть
+пропущены ни на какой скорости, прокрутка страницы не перехватывается.
+"""
+
 import asyncio
+import sys
+
 from playwright.async_api import async_playwright
 
 URL = "http://localhost:8080/longevity"
-VIEWPORTS = [(390, 844), (768, 1024), (974, 738), (1440, 900)]
-ORDER = ["1", "2", "4", "6"]
+SIZES = [(390, 844), (768, 1024), (974, 738), (1440, 900)]
+EXPECTED = ["1", "2", "4", "6"]
+SPEEDS = [(300, 100), (200, 400), (120, 1200)]
 
-async def card_state(page):
-    return await page.locator("[data-story-card]").evaluate("""card => ({
-      chapter: card.dataset.chapter, phase: card.dataset.storyPhase,
-      opacity: parseFloat(getComputedStyle(card).opacity),
-      transform: getComputedStyle(card).transform,
-      count: document.querySelectorAll('[data-story-card]').length,
-      scrollY
-    })""")
+STATE = """() => {
+  const card = document.querySelector('[data-story-card]');
+  const cards = document.querySelectorAll('[data-story-card]').length;
+  const style = card ? getComputedStyle(card) : null;
+  return {
+    y: window.scrollY,
+    cards,
+    chapter: card ? card.getAttribute('data-chapter') : null,
+    phase: card ? card.getAttribute('data-story-phase') : null,
+    opacity: style ? parseFloat(style.opacity) : null,
+    transform: style ? style.transform : null,
+    label: document.querySelector('[data-timeline-scene] p')?.textContent ?? '',
+    overflowX: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+  };
+}"""
 
-async def open_scene(page):
-    await page.goto(URL, wait_until="domcontentloaded")
-    await page.evaluate("window.scrollTo(0, document.querySelector('#timeline').offsetTop)")
-    await page.wait_for_function("""() => {
-      const card=document.querySelector('[data-story-card]');
-      return card?.dataset.storyStarted === 'true' && card?.dataset.storyPhase === 'idle';
-    }""")
 
-async def wait_idle(page):
-    await page.wait_for_function("document.querySelector('[data-story-card]')?.dataset.storyPhase === 'idle'", timeout=4000)
+def dedupe(values):
+    out = []
+    for value in values:
+        if not out or out[-1] != value:
+            out.append(value)
+    return out
 
-async def wheel(page, delta=120):
-    size = page.viewport_size or {"width": 800, "height": 800}
-    await page.mouse.move(size["width"] / 2, size["height"] / 2)
-    await page.mouse.wheel(0, delta)
 
-async def check_animation(page):
-    before = await card_state(page)
-    sample = await page.evaluate("""async () => {
-      const started = performance.now();
-      window.dispatchEvent(new WheelEvent('wheel', { deltaY: 120, bubbles: true, cancelable: true }));
-      await new Promise(resolve => setTimeout(resolve, 150));
-      const card = document.querySelector('[data-story-card]');
-      return { started, leaving: { chapter: card?.dataset.chapter, phase: card?.dataset.storyPhase,
-        opacity: parseFloat(getComputedStyle(card).opacity), transform: getComputedStyle(card).transform,
-        count: document.querySelectorAll('[data-story-card]').length, scrollY } };
-    }""")
-    started = sample["started"]
-    leaving = sample["leaving"]
-    assert leaving["chapter"] == before["chapter"], "Содержимое сменилось до завершения выхода"
-    assert leaving["phase"] == "exit", f"Через 150 ms должна идти фаза выхода: {leaving}"
-    assert 0.05 < leaving["opacity"] < 0.95, "Старая карточка должна оставаться видимой через 150 ms"
-    await page.wait_for_function("""chapter => {
-      const card=document.querySelector('[data-story-card]');
-      return card?.dataset.chapter !== chapter && parseFloat(getComputedStyle(card).opacity) <= .05;
-    }""", arg=before["chapter"])
-    swapped = await card_state(page)
-    assert swapped["count"] == 1, "В сцене должна быть ровно одна карточка"
-    await page.wait_for_function("document.querySelector('[data-story-card]')?.dataset.storyPhase === 'hold'")
-    elapsed = await page.evaluate("started => performance.now() - started", started)
-    assert 650 <= elapsed <= 900, f"Вход завершился за {elapsed:.0f} ms вместо 650–900 ms"
-    held = await card_state(page)
-    await page.wait_for_timeout(850)
-    later = await card_state(page)
-    assert (later["chapter"], later["opacity"], later["transform"]) == (held["chapter"], held["opacity"], held["transform"]), "Карточка двигалась во время паузы чтения"
-    await wait_idle(page)
-
-async def check_sequence(page):
-    for expected in ORDER[1:]:
-        await wheel(page); await wait_idle(page)
-        assert (await card_state(page))["chapter"] == expected
-    for expected in reversed(ORDER[:-1]):
-        await wheel(page, -120); await wait_idle(page)
-        assert (await card_state(page))["chapter"] == expected
-
-async def check_inertia(page):
-    for delta in [14, 24, 36, 28, 20, 14, 12]:
+async def scroll_pass(page, delta, gap, steps, failures, label):
+    states = []
+    blocked = 0
+    previous_y = await page.evaluate("window.scrollY")
+    for _ in range(steps):
         await page.mouse.wheel(0, delta)
-        await page.wait_for_timeout(70)
-    await wait_idle(page)
-    assert (await card_state(page))["chapter"] == "2", "Инерционный импульс перескочил больше одной главы"
+        await page.wait_for_timeout(gap)
+        state = await page.evaluate(STATE)
+        states.append(state)
+        at_bottom = await page.evaluate("window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2")
+        if delta > 0 and state["y"] == previous_y and state["y"] > 0 and not at_bottom:
+            blocked += 1
+        previous_y = state["y"]
+        if state["cards"] != 1:
+            failures.append(f"{label}: карточек в DOM {state['cards']}")
+    sequence = dedupe([state["chapter"] for state in states if state["chapter"]])
+    return states, sequence, blocked
 
-async def check_inputs(page):
-    await page.keyboard.press("ArrowDown"); await wait_idle(page)
-    assert (await card_state(page))["chapter"] == "4", "Клавиатура переключила неверное число глав"
-    slider = page.locator("[role=slider]")
-    await slider.focus(); await page.keyboard.press("End"); await wait_idle(page)
-    assert (await card_state(page))["chapter"] == "6", "Ползунок не использовал общий переход"
-    await page.evaluate("""() => {
-      const startTouch = new Touch({identifier:1,target:document.body,clientY:500});
-      const moveTouch = new Touch({identifier:1,target:document.body,clientY:560});
-      window.dispatchEvent(new TouchEvent('touchstart',{bubbles:true,touches:[startTouch]}));
-      window.dispatchEvent(new TouchEvent('touchmove',{bubbles:true,cancelable:true,touches:[moveTouch]}));
-      window.dispatchEvent(new TouchEvent('touchend',{bubbles:true}));
-    }""")
-    await wait_idle(page)
-    assert (await card_state(page))["chapter"] == "4", "Свайп переключил неверное число глав"
 
-async def check_boundaries(page):
-    y = await page.evaluate("scrollY"); await wheel(page, -120); await page.wait_for_timeout(250)
-    assert await page.evaluate("scrollY") < y, "На первой главе прокрутка вверх не отдана странице"
-    await page.evaluate("window.scrollTo(0, document.querySelector('#timeline').offsetTop)")
-    for _ in ORDER[1:]: await wheel(page); await wait_idle(page)
-    y = await page.evaluate("scrollY"); await wheel(page); await page.wait_for_timeout(250)
-    assert await page.evaluate("scrollY") > y, "На последней главе прокрутка вниз не отдана странице"
+async def check_size(page, width, height, errors, failures):
+    await page.set_viewport_size({"width": width, "height": height})
+    tag = f"{width}x{height}"
+    await page.goto(URL, wait_until="domcontentloaded")
+    await page.wait_for_timeout(1200)
 
-async def check_viewport(browser, width, height, comprehensive):
-    context = await browser.new_context(viewport={"width": width, "height": height})
-    page = await context.new_page(); errors = []
-    page.on("pageerror", lambda error: errors.append(str(error)))
-    await open_scene(page)
-    y = await page.evaluate("scrollY")
-    await check_animation(page)
-    assert abs(await page.evaluate("scrollY") - y) <= 2, "Внутренний шаг прокрутил страницу"
-    card = await page.locator("[data-story-card]").bounding_box()
-    scene = await page.locator("[data-timeline-scene]").bounding_box()
-    assert card and scene
-    assert card["x"] >= scene["x"] - 1 and card["x"] + card["width"] <= scene["x"] + scene["width"] + 1
-    assert card["y"] >= scene["y"] - 1 and card["y"] + card["height"] <= scene["y"] + scene["height"] + 1
-    assert await page.evaluate("document.documentElement.scrollWidth-document.documentElement.clientWidth") == 0
-    assert not errors, "; ".join(errors)
-    if comprehensive:
-        await open_scene(page); await check_sequence(page)
-        await open_scene(page); await check_inertia(page); await check_inputs(page)
-        await open_scene(page); await check_boundaries(page)
-    await context.close()
-    print(f"PASS {width}×{height}")
+    for delta, gap in SPEEDS:
+        await page.evaluate("window.scrollTo(0, 0)")
+        await page.wait_for_timeout(600)
+        steps = max(int((6.0 * height) / delta) + 6, 12)
+        label = f"{tag} вниз d={delta}/{gap}ms"
+        states, sequence, blocked = await scroll_pass(page, delta, gap, steps, failures, label)
+        if sequence != EXPECTED:
+            failures.append(f"{label}: главы {sequence}, ожидалось {EXPECTED}")
+        if blocked:
+            failures.append(f"{label}: прокрутка заблокирована {blocked} раз")
+        hold_by_chapter = {}
+        for state in states:
+            if state["phase"] == "hold" and state["chapter"]:
+                hold_by_chapter[state["chapter"]] = hold_by_chapter.get(state["chapter"], 0) + 1
+                if state["opacity"] is not None and state["opacity"] < 0.999:
+                    failures.append(f"{label}: во время hold opacity {state['opacity']}")
+        for chapter in EXPECTED:
+            if chapter not in hold_by_chapter:
+                failures.append(f"{label}: у главы {chapter} нет фазы удержания")
+        for state in states:
+            if state["overflowX"] != 0:
+                failures.append(f"{label}: горизонтальный overflow {state['overflowX']}")
+                break
+        for state in states:
+            if state["chapter"] and state["label"] and state["label"].strip():
+                expected_range = {"1": "0", "2": "35", "4": "40", "6": "80"}[state["chapter"]]
+                if width >= 640 and not state["label"].strip().startswith(expected_range):
+                    failures.append(f"{label}: подпись «{state['label']}» не совпадает с главой {state['chapter']}")
+                    break
+
+    label = f"{tag} вверх"
+    _, sequence, _ = await scroll_pass(page, -200, 400, max(int((6.0 * height) / 200) + 6, 12), failures, label)
+    if sequence != list(reversed(EXPECTED)):
+        failures.append(f"{label}: главы {sequence}, ожидалось {list(reversed(EXPECTED))}")
+
+    if errors:
+        failures.append(f"{tag}: ошибки страницы {errors[:3]}")
+
 
 async def main():
+    failures = []
     async with async_playwright() as playwright:
         browser = await playwright.chromium.launch(headless=True)
-        for width, height in VIEWPORTS:
-            await check_viewport(browser, width, height, width == 974)
+        context = await browser.new_context(viewport={"width": 1440, "height": 900})
+        page = await context.new_page()
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        for width, height in SIZES:
+            errors.clear()
+            await check_size(page, width, height, errors, failures)
+            print(f"проверено {width}x{height}")
         await browser.close()
-    print("PASS: все критерии скролл-сцены выполнены")
+
+    if failures:
+        print("\nПРОВАЛЫ:")
+        for failure in failures:
+            print(" -", failure)
+        sys.exit(1)
+    print("\nвсе проверки пройдены")
+
 
 asyncio.run(main())

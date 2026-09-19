@@ -276,6 +276,7 @@ const CrisisMarker = ({ visible }: { visible: boolean }) => {
 
 const EXIT_MS = 260;
 const ENTER_MS = 480;
+const ENTER_SETTLE_MS = 50;
 const HOLD_MS = 900;
 const REDUCED_FADE_MS = 120;
 const GESTURE_GAP_MS = 140;
@@ -331,7 +332,7 @@ export const LifeTimeline = () => {
     const duration = machine.phase === "exit"
       ? (reducedMotion ? REDUCED_FADE_MS : EXIT_MS)
       : machine.phase === "enter"
-        ? (reducedMotion ? REDUCED_FADE_MS : ENTER_MS)
+        ? (reducedMotion ? REDUCED_FADE_MS : ENTER_MS + ENTER_SETTLE_MS)
         : HOLD_MS;
     const action = machine.phase === "exit"
       ? { type: "EXIT_DONE" as const }

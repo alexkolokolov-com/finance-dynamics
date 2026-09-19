@@ -14,7 +14,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:longevity-scroll": "node scripts/test-longevity-scroll.mjs"
+    "test:longevity-scroll": "python3 scripts/test_longevity_scroll.py"
   },
   "dependencies": {
     "@fontsource/figtree": "^5.2.10",

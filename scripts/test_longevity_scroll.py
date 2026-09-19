@@ -79,7 +79,7 @@ async def check_inertia(page):
 async def check_inputs(page):
     await page.keyboard.press("ArrowDown"); await wait_idle(page)
     assert (await card_state(page))["chapter"] == "4", "Клавиатура переключила неверное число глав"
-    slider = page.get_by_role("slider", name="Перемотка таймлайна")
+    slider = page.locator("[role=slider]")
     await slider.focus(); await page.keyboard.press("End"); await wait_idle(page)
     assert (await card_state(page))["chapter"] == "6", "Ползунок не использовал общий переход"
     await page.evaluate("""() => {

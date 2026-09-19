@@ -457,7 +457,7 @@ export const LifeTimeline = () => {
             </div>
             <div className="pointer-events-none absolute inset-x-4 top-[9vh] z-20 grid grid-cols-1 sm:inset-x-[5vw] md:grid-cols-3">
               <div
-                key={activeChapter.id}
+                data-story-node
                 data-story-card
                 data-chapter={activeChapter.id}
                 className={`col-start-1 row-start-1 w-[92vw] overflow-hidden rounded-lg border border-border bg-card/95 shadow-hard backdrop-blur-md transition-[opacity,transform] ease-out will-change-transform sm:w-[28rem] md:w-[20rem] lg:w-[22rem] xl:w-[24rem] ${storyColumnClass(activeChapter.id)}`}

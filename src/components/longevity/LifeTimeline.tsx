@@ -231,12 +231,12 @@ const storyColumnClass = (chapter: number) => {
 };
 
 
-const Zone = ({ className, visible, range, title, start, end, labelClassName = "", rangeClassName = "text-accent", delay = 0 }: { className: string; visible: boolean; range: string; title: string; start: number; end: number; labelClassName?: string; rangeClassName?: string; delay?: number }) => (
+const Zone = ({ id, className, progress, range, title, start, end, labelClassName = "", rangeClassName = "text-accent" }: { id: string; className: string; progress: number; range: string; title: string; start: number; end: number; labelClassName?: string; rangeClassName?: string }) => (
   <div
-    className={`absolute bottom-0 origin-left rounded-lg border border-dashed border-border transition-[opacity,transform] duration-1000 ease-out motion-reduce:transition-none ${className} ${
-      visible ? "scale-x-100 opacity-100" : "scale-x-[0.94] opacity-0"
-    }`}
-    style={{ left: `${start}%`, width: `${end - start}%`, transitionDelay: visible ? `${delay}ms` : "0ms" }}
+    data-story-zone={id}
+    data-zone-progress={progress.toFixed(3)}
+    className={`absolute bottom-0 origin-left rounded-lg border border-dashed border-border ${className}`}
+    style={{ left: `${start}%`, width: `${end - start}%`, opacity: progress, transform: `scaleX(${progress})` }}
   >
     <div className={`absolute inset-x-2 top-4 text-left sm:inset-x-4 sm:top-6 ${labelClassName}`}>
       <p className={`whitespace-nowrap font-display text-[clamp(2rem,4.2vw,4rem)] font-semibold leading-none ${rangeClassName}`}>{nbsp(range)}</p>
@@ -247,7 +247,7 @@ const Zone = ({ className, visible, range, title, start, end, labelClassName = "
   </div>
 );
 
-const CrisisMarker = ({ visible }: { visible: boolean }) => {
+const CrisisMarker = ({ progress }: { progress: number }) => {
   const left = TIMELINE_GEOMETRY.crisisStart;
   const width = TIMELINE_GEOMETRY.crisisEnd - TIMELINE_GEOMETRY.crisisStart;
 
@@ -255,13 +255,15 @@ const CrisisMarker = ({ visible }: { visible: boolean }) => {
     <>
       <div
         aria-hidden="true"
-        className={`absolute bottom-0 z-[5] h-[55%] rounded-lg border border-dashed border-[hsl(var(--longevity-crisis)/0.35)] bg-[hsl(var(--longevity-crisis)/0.08)] transition-[opacity,transform] duration-1000 ease-out motion-reduce:transition-none ${visible ? "scale-x-100 opacity-100" : "scale-x-[0.94] opacity-0"}`}
-        style={{ left: `${left}%`, width: `${width}%` }}
+        data-story-zone="crisis"
+        data-zone-progress={progress.toFixed(3)}
+        className="absolute bottom-0 z-[5] h-[55%] origin-left rounded-lg border border-dashed border-[hsl(var(--longevity-crisis)/0.35)] bg-[hsl(var(--longevity-crisis)/0.08)]"
+        style={{ left: `${left}%`, width: `${width}%`, opacity: progress, transform: `scaleX(${progress})` }}
       />
 
       <div
-        className={`absolute bottom-[55%] z-20 flex -translate-x-full translate-y-1/2 items-center transition-[opacity,transform] duration-[900ms] motion-reduce:transition-none ${visible ? "opacity-100" : "translate-y-[calc(50%+0.5rem)] opacity-0"}`}
-        style={{ left: `${TIMELINE_GEOMETRY.crisisStart}%` }}
+        className="absolute bottom-[55%] z-20 flex -translate-x-full translate-y-1/2 items-center"
+        style={{ left: `${TIMELINE_GEOMETRY.crisisStart}%`, opacity: progress }}
       >
         <div className="rounded-md bg-accent px-3 py-2 text-left text-accent-foreground shadow-paper sm:px-4">
           <p className="whitespace-nowrap font-display text-xl font-semibold leading-none sm:text-2xl">{nbsp("35-45")}</p>
@@ -273,19 +275,30 @@ const CrisisMarker = ({ visible }: { visible: boolean }) => {
   );
 };
 
-const CHAPTER_VH = 85;
+const CHAPTER_VH = 110;
 const LEAD_VH = 25;
 const TAIL_VH = 25;
 const TRACK_VH = LEAD_VH + chapters.length * CHAPTER_VH + TAIL_VH;
-const ENTER_END = 0.14;
-const EXIT_START = 0.86;
-const SHIFT_PX = 16;
+const GRAPH_END = 0.12;
+const ENTER_END = 0.32;
+const EXIT_START = 0.78;
 const easeOut = (t: number) => 1 - (1 - t) * (1 - t);
+
+type ScenePhase = "update-graph" | "enter" | "hold" | "exit";
+
+const progressForStep = (activeIndex: number, localT: number, stepIndex: number) => {
+  if (activeIndex > stepIndex) return 1;
+  if (activeIndex < stepIndex) return 0;
+  return Math.min(localT / GRAPH_END, 1);
+};
 
 export const LifeTimeline = () => {
   const [scene, setScene] = useState({ index: 0, localT: 0 });
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [cardTravel, setCardTravel] = useState(900);
   const trackRef = useRef<HTMLDivElement | null>(null);
+  const sceneWindowRef = useRef<HTMLDivElement | null>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
   const maxIndex = chapters.length - 1;
 
   useEffect(() => {
@@ -295,6 +308,18 @@ export const LifeTimeline = () => {
     motionQuery.addEventListener("change", syncMotion);
     return () => motionQuery.removeEventListener("change", syncMotion);
   }, []);
+
+  useEffect(() => {
+    const sceneNode = sceneWindowRef.current;
+    const cardNode = cardRef.current;
+    if (!sceneNode || !cardNode) return;
+    const measure = () => setCardTravel(sceneNode.clientHeight + cardNode.clientHeight + 32);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(sceneNode);
+    observer.observe(cardNode);
+    return () => observer.disconnect();
+  }, [scene.index]);
 
   useEffect(() => {
     let frame = 0;
@@ -335,46 +360,49 @@ export const LifeTimeline = () => {
     const target = Math.min(Math.max(nextIndex, 0), maxIndex);
     const viewport = window.innerHeight;
     const trackTop = node.getBoundingClientRect().top + window.scrollY;
-    const top = trackTop + (LEAD_VH / 100) * viewport + (target + 0.5) * (CHAPTER_VH / 100) * viewport;
+    const top = trackTop + (LEAD_VH / 100) * viewport + (target + 0.55) * (CHAPTER_VH / 100) * viewport;
     window.scrollTo({ top, behavior: reducedMotion ? "auto" : "smooth" });
   };
 
   const activeChapter = chapters[scene.index];
   const chapter = activeChapter.id;
 
-  const zoneVisibility = useMemo(
-    () => ({
-      first: chapter >= 1,
-      turn: chapter >= 2,
-      second: chapter >= 4,
-      third: chapter >= 6,
-    }),
-    [chapter],
-  );
-
-  const cardStyle = () => {
-    const { localT } = scene;
-    let opacity = 1;
-    let shift = 0;
-    if (localT < ENTER_END) {
-      const t = easeOut(localT / ENTER_END);
-      opacity = t;
-      shift = SHIFT_PX * (1 - t);
-    } else if (localT > EXIT_START) {
-      const t = (localT - EXIT_START) / (1 - EXIT_START);
-      opacity = 1 - t;
-      shift = -SHIFT_PX * t;
-    }
-    return { opacity, transform: reducedMotion ? "none" : `translateY(${shift}px)` };
+  const phase: ScenePhase = scene.localT < GRAPH_END
+    ? "update-graph"
+    : scene.localT < ENTER_END
+      ? "enter"
+      : scene.localT < EXIT_START
+        ? "hold"
+        : "exit";
+  const graphProgress = Math.min(scene.localT / GRAPH_END, 1);
+  const zoneProgress = {
+    first: progressForStep(scene.index, scene.localT, 0),
+    turn: progressForStep(scene.index, scene.localT, 1),
+    second: progressForStep(scene.index, scene.localT, 2),
+    third: progressForStep(scene.index, scene.localT, 3),
   };
-
-  const cardPhase = scene.localT < ENTER_END ? "enter" : scene.localT > EXIT_START ? "exit" : "hold";
+  const previousAxisWidth = scene.index === 0 ? 0 : axisWidth(chapters[scene.index - 1].id);
+  const currentAxisWidth = axisWidth(chapter);
+  const animatedAxisWidth = previousAxisWidth + (currentAxisWidth - previousAxisWidth) * graphProgress;
+  let cardTranslateY = cardTravel;
+  if (phase === "enter") {
+    const progress = easeOut((scene.localT - GRAPH_END) / (ENTER_END - GRAPH_END));
+    cardTranslateY = cardTravel * (1 - progress);
+  } else if (phase === "hold") {
+    cardTranslateY = 0;
+  } else if (phase === "exit") {
+    const progress = (scene.localT - EXIT_START) / (1 - EXIT_START);
+    cardTranslateY = -cardTravel * progress;
+  }
+  const cardStyle = reducedMotion
+    ? { opacity: phase === "enter" || phase === "hold" ? 1 : 0, transform: "none" }
+    : { opacity: 1, transform: `translateY(${cardTranslateY}px)` };
 
   return (
     <>
       <div id="timeline" ref={trackRef} className="relative scroll-mt-16" style={{ height: `${TRACK_VH}vh` }}>
         <div data-timeline-scene className="pointer-events-none sticky top-16 z-10 flex h-[calc(100vh-4rem)] items-center justify-center px-2 sm:px-5">
-          <div className="relative h-[min(590px,76vh)] w-full max-w-[1420px] overflow-hidden rounded-lg border border-border bg-card shadow-paper">
+          <div ref={sceneWindowRef} className="relative h-[min(590px,76vh)] w-full max-w-[1420px] overflow-hidden rounded-lg border border-border bg-card shadow-paper">
             <div className="pointer-events-auto absolute inset-x-4 top-4 z-30 flex items-center gap-4 sm:inset-x-8 sm:top-5">
               <p className="hidden min-w-40 font-body text-sm text-muted-foreground sm:block">{nbsp(`${activeChapter.range} · ${activeChapter.title}`)}</p>
               <Slider
@@ -393,13 +421,13 @@ export const LifeTimeline = () => {
             </div>
             <div className="absolute inset-x-3 bottom-5 top-16 sm:inset-x-8 sm:bottom-7 sm:top-20">
               <div className="absolute inset-x-0 bottom-[8%] top-[2%]">
-                <Zone className="h-[40%] border-[hsl(var(--longevity-first)/0.8)] bg-[hsl(var(--longevity-first)/0.5)]" rangeClassName="text-[hsl(var(--longevity-first-foreground))]" start={TIMELINE_GEOMETRY.start} end={TIMELINE_GEOMETRY.firstEnd} visible={zoneVisibility.first} range="0-40" title="Первая половина" />
-                <Zone className="h-[70%] border-[hsl(var(--longevity-second)/0.8)] bg-[hsl(var(--longevity-second)/0.42)]" start={TIMELINE_GEOMETRY.firstEnd} end={TIMELINE_GEOMETRY.secondEnd} labelClassName="pl-2 sm:pl-5" visible={zoneVisibility.second} range="40-80" title="Вторая половина" delay={80} />
-                <Zone className="h-full border-[hsl(var(--longevity-third)/0.9)] bg-[hsl(var(--longevity-third)/0.46)]" rangeClassName="text-[hsl(var(--longevity-third-foreground))]" start={TIMELINE_GEOMETRY.secondEnd} end={TIMELINE_GEOMETRY.end} visible={zoneVisibility.third} range="80-120" title="Третья половина" delay={100} />
-                <CrisisMarker visible={zoneVisibility.turn} />
+                <Zone id="first" className="h-[40%] border-[hsl(var(--longevity-first)/0.8)] bg-[hsl(var(--longevity-first)/0.5)]" rangeClassName="text-[hsl(var(--longevity-first-foreground))]" start={TIMELINE_GEOMETRY.start} end={TIMELINE_GEOMETRY.firstEnd} progress={zoneProgress.first} range="0-40" title="Первая половина" />
+                <Zone id="second" className="h-[70%] border-[hsl(var(--longevity-second)/0.8)] bg-[hsl(var(--longevity-second)/0.42)]" start={TIMELINE_GEOMETRY.firstEnd} end={TIMELINE_GEOMETRY.secondEnd} labelClassName="pl-2 sm:pl-5" progress={zoneProgress.second} range="40-80" title="Вторая половина" />
+                <Zone id="third" className="h-full border-[hsl(var(--longevity-third)/0.9)] bg-[hsl(var(--longevity-third)/0.46)]" rangeClassName="text-[hsl(var(--longevity-third-foreground))]" start={TIMELINE_GEOMETRY.secondEnd} end={TIMELINE_GEOMETRY.end} progress={zoneProgress.third} range="80-120" title="Третья половина" />
+                <CrisisMarker progress={zoneProgress.turn} />
               </div>
               <div className="absolute left-[4%] right-[4%] top-[92%] h-px bg-border" />
-              <div className="absolute left-[4%] top-[92%] h-0.5 bg-foreground transition-[width] duration-[320ms] ease-out motion-reduce:transition-none" style={{ width: `${axisWidth(chapter)}%` }} />
+              <div data-story-axis className="absolute left-[4%] top-[92%] h-0.5 bg-foreground" style={{ width: `${animatedAxisWidth}%` }} />
               {[0, 20, 40, 60, 80, 100, 120].map((tick) => (
                  <div key={tick} className="absolute top-[calc(92%+14px)] -translate-x-1/2 font-body text-[10px] text-muted-foreground sm:text-xs" style={{ left: `${xPct(tick)}%` }}>
                   <span className="absolute -top-[14px] left-1/2 h-2 w-px bg-muted-foreground" />{tick}
@@ -408,12 +436,14 @@ export const LifeTimeline = () => {
             </div>
             <div className="pointer-events-none absolute inset-x-4 top-[9vh] z-20 grid grid-cols-1 sm:inset-x-[5vw] md:grid-cols-3">
               <div
+                ref={cardRef}
                 data-story-node
                 data-story-card
                 data-chapter={activeChapter.id}
-                 data-story-phase={cardPhase}
+                data-story-phase={phase}
+                data-card-translate={cardTranslateY.toFixed(1)}
                 className={`col-start-1 row-start-1 w-[92vw] overflow-hidden rounded-lg border border-border bg-card/95 shadow-hard backdrop-blur-md will-change-transform sm:w-[28rem] md:w-[20rem] lg:w-[22rem] xl:w-[24rem] ${storyColumnClass(activeChapter.id)}`}
-                style={cardStyle()}
+                style={cardStyle}
               >
                 <div className="aspect-[4/3] w-full overflow-hidden sm:aspect-[16/10]">
                   <img src={chapterImage(activeChapter.id)} alt="" aria-hidden="true" width={1536} height={1024} className="h-full w-full scale-125 object-cover mix-blend-multiply" />

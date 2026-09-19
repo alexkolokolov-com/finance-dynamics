@@ -39,7 +39,7 @@ async def check_animation(page):
     await page.wait_for_function("""chapter => {
       const card=document.querySelector('[data-story-card]');
       return card?.dataset.chapter !== chapter && parseFloat(getComputedStyle(card).opacity) <= .05;
-    }""", before["chapter"])
+    }""", arg=before["chapter"])
     swapped = await card_state(page)
     assert swapped["count"] == 1, "В сцене должна быть ровно одна карточка"
     await page.wait_for_function("document.querySelector('[data-story-card]')?.dataset.storyPhase === 'hold'")

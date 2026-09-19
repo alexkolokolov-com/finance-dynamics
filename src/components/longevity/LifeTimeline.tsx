@@ -81,11 +81,11 @@ const mapGroups = [
   { range: "80-120", title: "Третья половина", people: sortedPeople.filter((person) => person.age >= 80) },
 ];
 
-const PIN_WIDTH = 104;
-const PIN_GAP = 10;
-const PIN_ROW = 52;
-const PIN_LEVELS = 6;
-const PIN_LEVELS_NARROW = 8;
+const PIN_WIDTH = 136;
+const PIN_GAP = 12;
+const PIN_ROW = 66;
+const PIN_LEVELS = 5;
+const PIN_LEVELS_NARROW = 7;
 
 type Pin = { person: StoryPerson; x: number; level: number };
 
@@ -157,17 +157,17 @@ const GroupTimeline = ({ range, title, people }: { range: string; title: string;
               className="group absolute z-10 -translate-x-1/2 -translate-y-1/2 hover:z-40 focus-within:z-40"
               style={{ left: `${x}%`, top: `${y}%` }}
             >
-              <div tabIndex={0} role="button" aria-label={`${person.name}, ${person.age}`} className="flex w-[104px] items-center rounded-full border-2 border-accent bg-card pr-1.5 shadow-paper transition-transform duration-200 group-hover:scale-[1.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent font-display text-[10px] font-semibold text-accent-foreground">{person.age}</span>
-                <span className="min-w-0 px-1.5 py-1 text-left">
-                  <span className="block truncate font-body text-[10px] font-semibold leading-none">{nbsp(firstName)}</span>
-                  {lastName ? <span className="mt-0.5 block truncate font-body text-[10px] leading-none text-foreground/70">{nbsp(lastName)}</span> : null}
+              <div tabIndex={0} role="button" aria-label={`${person.name}, ${person.age}`} className="flex w-[136px] items-center gap-1.5 rounded-full border border-accent/60 bg-card py-1 pl-1 pr-2.5 shadow-paper transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-accent group-hover:shadow-hard focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent font-display text-xs font-bold text-accent-foreground">{person.age}</span>
+                <span className="min-w-0 text-left">
+                  <span className="block truncate font-body text-[13px] font-semibold leading-tight">{nbsp(firstName)}</span>
+                  {lastName ? <span className="block truncate font-body text-[13px] leading-tight text-foreground">{nbsp(lastName)}</span> : null}
                 </span>
               </div>
-              <div className={`pointer-events-none absolute bottom-[calc(100%+8px)] w-[min(15rem,72vw)] rounded-lg border border-border bg-card p-3 opacity-0 shadow-hard transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 ${x > 60 ? "right-0" : "left-0"}`}>
-                <p className="font-body text-xs font-semibold text-accent">{nbsp(person.role)}</p>
-                <p className="mt-0.5 font-body text-[11px] text-muted-foreground">{nbsp(`${person.field ?? catLabel[person.cat]} · ${person.country}`)}</p>
-                <p className="mt-1.5 font-body text-sm leading-snug">{nbsp(person.turn)}</p>
+              <div className={`pointer-events-none absolute z-50 w-[min(17rem,78vw)] rounded-xl border border-border bg-card p-4 opacity-0 shadow-hard transition-all duration-200 group-hover:opacity-100 group-focus-within:opacity-100 ${level < levels / 2 ? "top-[calc(100%+10px)]" : "bottom-[calc(100%+10px)]"} ${x > 60 ? "right-0" : "left-0"}`}>
+                <p className="font-body text-sm font-semibold leading-snug">{nbsp(person.name)}</p>
+                <p className="mt-0.5 font-body text-xs font-medium text-accent">{nbsp(`${person.role} · ${person.field ?? catLabel[person.cat]}`)}</p>
+                <p className="mt-2 font-body text-[13px] leading-relaxed text-foreground/80">{nbsp(person.turn)}</p>
               </div>
 
             </div>

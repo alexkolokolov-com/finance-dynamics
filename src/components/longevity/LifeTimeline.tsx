@@ -147,7 +147,7 @@ const GroupTimeline = ({ range, title, people }: { range: string; title: string;
             <div
               key={person.id}
               className="group absolute z-10 -translate-y-1/2 hover:z-40 focus-within:z-40"
-              style={{ left: `${x}%`, top: `${y}%`, transform: `translate(${ageOnRight ? "calc(-100% + 16px)" : "-16px"}, -50%)` }}
+              style={{ left: `${x}%`, top: `${y}%`, transform: `translate(${ageOnRight ? "calc(-100% + 20px)" : "-20px"}, -50%)` }}
             >
               <div tabIndex={0} role="button" aria-label={`${person.name}, ${person.age}`} className={`flex w-[136px] items-center gap-1.5 rounded-full border border-accent/60 bg-card py-1 shadow-paper transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-accent group-hover:shadow-hard focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${ageOnRight ? "flex-row-reverse pl-2.5 pr-1" : "pl-1 pr-2.5"}`}>
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent font-display text-xs font-bold text-accent-foreground">{person.age}</span>

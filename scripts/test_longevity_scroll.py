@@ -41,7 +41,7 @@ async def check_animation(page):
     started = sample["started"]
     leaving = sample["leaving"]
     assert leaving["chapter"] == before["chapter"], "Содержимое сменилось до завершения выхода"
-    assert leaving["phase"] == "exit", "Через 150 ms должна идти фаза выхода"
+    assert leaving["phase"] == "exit", f"Через 150 ms должна идти фаза выхода: {leaving}"
     assert 0.05 < leaving["opacity"] < 0.95, "Старая карточка должна оставаться видимой через 150 ms"
     await page.wait_for_function("""chapter => {
       const card=document.querySelector('[data-story-card]');

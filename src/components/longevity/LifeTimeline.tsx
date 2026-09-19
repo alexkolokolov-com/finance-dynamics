@@ -60,13 +60,6 @@ const chapters = [
   },
 ] as const;
 
-const catLabel: Record<string, string> = {
-  business: "Бизнес",
-  culture: "Культура",
-  sport: "Спорт",
-  science: "Наука",
-  state: "Государство",
-};
 
 const personLine = (name: string) => {
 

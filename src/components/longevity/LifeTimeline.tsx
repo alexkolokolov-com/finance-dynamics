@@ -158,7 +158,7 @@ const GroupTimeline = ({ range, title, people }: { range: string; title: string;
                 </span>
               </div>
               <div className={`pointer-events-none absolute z-50 w-[min(17rem,78vw)] rounded-xl border border-foreground bg-foreground p-4 text-background opacity-0 shadow-hard transition-all duration-200 group-hover:opacity-100 group-focus-within:opacity-100 ${level < levels / 2 ? "top-[calc(100%+10px)]" : "bottom-[calc(100%+10px)]"} ${x > 60 ? "right-0" : "left-0"}`}>
-                <p className="font-body text-sm font-semibold leading-snug">{nbsp(person.role)}</p>
+                <p className="font-body text-sm font-semibold leading-snug">{nbsp(person.role.charAt(0).toUpperCase() + person.role.slice(1))}</p>
                 <p className="mt-1.5 font-body text-[13px] leading-relaxed text-background/80">{nbsp(person.turn)}</p>
               </div>
 

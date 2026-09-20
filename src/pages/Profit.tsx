@@ -54,10 +54,15 @@ const Profit = () => {
                 {nbsp("Разные финансовые задачи требуют разных инструментов")}
               </p>
             </div>
-            <div className="col-span-12 mt-6 flex items-end justify-between gap-8 lg:col-span-9 lg:col-start-4 lg:mt-12">
-              <p className="max-w-2xl font-body text-lg leading-relaxed text-foreground/75 md:text-xl">
-                {nbsp("Не один бюджет на все случаи жизни. Выберите ступень под то, что болит сейчас, или пройдите весь путь целиком.")}
-              </p>
+            <div className="col-span-12 mt-8 flex items-end justify-between gap-8 lg:col-span-9 lg:mt-14">
+              <div>
+                <p className="max-w-3xl font-body text-xl leading-relaxed text-foreground/80 md:text-2xl">
+                  {nbsp("Курс подойдет тем, кто хочет: собрать понятную финансовую систему, перестать жить в ноль, разобраться, куда инвестировать, начать вести бюджет без мучений, увеличить доход, накопить на пенсию, избавиться от долгов, перестать тревожиться из-за денег.")}
+                </p>
+                <p className="mt-8 font-display text-3xl font-semibold leading-tight md:text-5xl">
+                  {nbsp("Три ступени курса. Каждую можно пройти отдельно")}
+                </p>
+              </div>
               <Button asChild variant="outline" size="icon" className="hidden h-14 w-14 shrink-0 rounded-full md:inline-flex">
                 <a href="#tasks" aria-label={nbsp("Перейти к задачам")}><ArrowDown /></a>
               </Button>

@@ -144,13 +144,12 @@ const Profit = () => {
 
       <section id="tasks" className="scroll-mt-24 py-20 md:py-28">
         <div className="container-px mx-auto max-w-7xl">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
-            <div>
-              <h2 className="font-display text-5xl font-semibold leading-[0.95] md:text-7xl">{nbsp("У каждого своё «болит»")}</h2>
-              <p className="mt-7 max-w-xl font-body text-xl leading-relaxed text-foreground/75">{nbsp("Разная точка старта, разные цели и разный темп. Финансовых сложностей гораздо больше, чем один универсальный шаблон способен решить.")}</p>
-              <p className="mt-12 font-display text-3xl font-semibold leading-tight md:text-4xl">{nbsp("Курс подойдет тем, кто хочет:")}</p>
-            </div>
-            <ul className="grid gap-x-12 sm:grid-cols-2">
+          <h2 className="max-w-3xl font-display text-5xl font-semibold leading-[0.95] md:text-7xl">{nbsp("У каждого своё «болит»")}</h2>
+          <p className="mt-7 max-w-xl font-body text-xl leading-relaxed text-foreground/75">{nbsp("Разная точка старта, разные цели и разный темп. Финансовых сложностей гораздо больше, чем один универсальный шаблон способен решить.")}</p>
+
+          <div className="mt-16 md:mt-24">
+            <p className="font-display text-3xl font-semibold leading-tight md:text-4xl">{nbsp("Курс подойдет тем, кто хочет:")}</p>
+            <ul className="mt-8 grid gap-x-12 sm:grid-cols-2">
               {tasks.map(({ Icon, text }) => (
                 <li key={text} className="flex items-center gap-4 border-t border-foreground/15 py-5">
                   <Icon aria-hidden="true" className="h-6 w-6 shrink-0 text-accent" strokeWidth={1.6} />

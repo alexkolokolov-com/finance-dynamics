@@ -106,7 +106,7 @@ export const ProfitLevels = () => (
 
       <article className="mt-4 grid gap-8 bg-board p-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:p-12">
         <div>
-          <p className="font-body text-sm font-semibold text-accent">{nbsp("Все 3 ступени")}</p>
+          <p className="font-display text-3xl font-semibold leading-none text-accent md:text-5xl">{nbsp("Все 3 ступени")}</p>
           <h3 className="mt-3 max-w-4xl font-display text-4xl font-semibold leading-none text-background md:text-6xl">{nbsp("От шаблона бюджета до инвестиций и долгосрочного плана")}</h3>
           <p className="mt-6 font-body text-xl text-background/75">{nbsp("11 недель + личная консультация Василия")}</p>
         </div>

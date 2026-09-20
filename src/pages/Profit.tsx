@@ -134,15 +134,10 @@ const Profit = () => {
             {nbsp("Разные финансовые задачи требуют разных инструментов")}
           </p>
 
-          <div className="mt-10 md:mt-14">
-            <Button asChild variant="outline" size="icon" className="hidden h-14 w-14 rounded-full md:inline-flex">
-              <a href="#tasks" aria-label={nbsp("Перейти к задачам")}><ArrowDown /></a>
-            </Button>
-          </div>
         </div>
       </header>
 
-      <section id="tasks" className="scroll-mt-24 py-20 md:py-28">
+      <section id="tasks" className="scroll-mt-24 pb-20 pt-8 md:pb-28 md:pt-10">
         <div className="container-px mx-auto max-w-7xl">
           <h2 className="max-w-3xl font-display text-5xl font-semibold leading-[0.95] md:text-7xl">{nbsp("У каждого своё «болит»")}</h2>
           <p className="mt-7 max-w-xl font-body text-xl leading-relaxed text-foreground/75">{nbsp("Разная точка старта, разные цели и разный темп. Финансовых сложностей гораздо больше, чем один универсальный шаблон способен решить.")}</p>

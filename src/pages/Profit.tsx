@@ -97,20 +97,47 @@ const Profit = () => {
     <main className="min-h-screen bg-background text-foreground">
       <SiteHeader pageNav={profitNav} />
 
-      <header className="relative overflow-hidden border-b border-foreground/10 pb-20 pt-28 md:pb-28 md:pt-36">
+      <header className="relative overflow-hidden bg-background pb-16 pt-28 md:pb-20 md:pt-32">
+        {/* Меловой радиальный фон — как на /landing */}
+        <div className="pointer-events-none absolute inset-0" style={{ background: "var(--grad-chalk)" }} />
+        {/* Динамическая биржевая линия — единый фоновый слой за всем первым экраном */}
+        <HeroChartLine className="absolute inset-x-0 top-1/2 h-[60%] -translate-y-1/2 md:h-[55%]" />
+
         <div className="container-px relative mx-auto max-w-7xl">
-          <div className="grid grid-cols-12 gap-6 lg:gap-10">
-            <div className="col-span-12 lg:col-span-9">
-              <h1 className="font-display text-7xl font-semibold leading-[0.75] text-accent sm:text-9xl lg:text-[13rem]">ПРОФИТ</h1>
-              <p className="mt-10 max-w-5xl font-display text-4xl font-semibold leading-[0.98] md:text-6xl lg:text-7xl">
-                {nbsp("Разные финансовые задачи требуют разных инструментов")}
+          {/* Лого + имя автора над названием */}
+          <div className="mb-8 flex items-center gap-3 md:mb-10">
+            <LogoMark size="md" />
+            <span className="font-mono text-sm uppercase tracking-widest text-accent md:text-base">Василий&nbsp;Мещеряков</span>
+          </div>
+
+          {/* Три акцентных подзаголовка — как на /landing */}
+          <div className="mb-8 space-y-1 md:mb-12 md:space-y-2">
+            {["Планирование\u00A0Роста", "Оптимизация\u00A0Финансов", "и\u00A0Трат"].map((t) => (
+              <p key={t} className="font-serif-display text-2xl leading-[1.05] tracking-tight text-foreground sm:text-3xl md:text-5xl lg:text-6xl">
+                {t}
               </p>
-            </div>
-            <div className="col-span-12 mt-8 lg:col-span-9 lg:mt-14">
-              <Button asChild variant="outline" size="icon" className="hidden h-14 w-14 rounded-full md:inline-flex">
-                <a href="#tasks" aria-label={nbsp("Перейти к задачам")}><ArrowDown /></a>
-              </Button>
-            </div>
+            ))}
+          </div>
+
+          {/* ===== DESKTOP / TABLET: одна строка ===== */}
+          <h1 className="relative hidden text-left sm:block" style={{ ...heroOutlineStyle, fontSize: "clamp(5rem, 19vw, 17rem)" }}>
+            П<RubleLetter />ОФИТ
+          </h1>
+
+          {/* ===== MOBILE: две строки П₽О / ФИТ ===== */}
+          <h1 className="relative leading-[0.85] sm:hidden" style={{ ...heroOutlineStyle, fontSize: "clamp(5rem, 30vw, 9rem)" }}>
+            <span className="block">П<RubleLetter />О</span>
+            <span className="block">ФИТ</span>
+          </h1>
+
+          <p className="mt-8 max-w-4xl font-display text-3xl font-semibold leading-tight md:mt-10 md:text-5xl">
+            {nbsp("Разные финансовые задачи требуют разных инструментов")}
+          </p>
+
+          <div className="mt-10 md:mt-14">
+            <Button asChild variant="outline" size="icon" className="hidden h-14 w-14 rounded-full md:inline-flex">
+              <a href="#tasks" aria-label={nbsp("Перейти к задачам")}><ArrowDown /></a>
+            </Button>
           </div>
         </div>
       </header>

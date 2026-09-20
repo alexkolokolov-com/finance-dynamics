@@ -96,7 +96,7 @@ export const ProfitLevels = () => (
   <section id="levels" className="scroll-mt-24 border-t border-foreground/10 py-20 md:py-28">
     <div className="container-px mx-auto max-w-7xl">
       <div className="max-w-4xl">
-        <h2 className="font-display text-5xl font-semibold leading-[0.95] md:text-7xl">{nbsp("Три ступени курса.")}</h2>
+        <h2 className="font-display text-5xl font-semibold leading-[0.95] md:text-7xl">{nbsp("Три ступени курса")}</h2>
         <p className="mt-6 max-w-2xl font-body text-xl leading-relaxed text-foreground/75">{nbsp("Начните со своей задачи или пройдите весь путь от ведения бюджета до инвестиций.")}</p>
       </div>
 

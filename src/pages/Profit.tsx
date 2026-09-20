@@ -49,8 +49,8 @@ const Profit = () => {
         <div className="container-px relative mx-auto max-w-7xl">
           <div className="grid grid-cols-12 gap-6 lg:gap-10">
             <div className="col-span-12 lg:col-span-9">
-              <h1 className="font-display text-[clamp(5rem,17vw,13rem)] font-semibold leading-[0.75] text-accent">ПРОФИТ</h1>
-              <p className="mt-10 max-w-5xl font-display text-[clamp(2rem,5vw,4.7rem)] font-semibold leading-[0.98]">
+              <h1 className="font-display text-7xl font-semibold leading-[0.75] text-accent sm:text-9xl lg:text-[13rem]">ПРОФИТ</h1>
+              <p className="mt-10 max-w-5xl font-display text-4xl font-semibold leading-[0.98] md:text-6xl lg:text-7xl">
                 {nbsp("Разные финансовые задачи требуют разных инструментов")}
               </p>
             </div>
@@ -106,8 +106,8 @@ const Profit = () => {
       </section>
 
       <CardAbout
-        eyebrow="Автор программы"
         heading="Василий Мещеряков"
+        hideEducation
         quote={(
           <>
             <p>{nbsp("Я не подгоняю людей под один правильный способ обращаться с деньгами.")}</p>

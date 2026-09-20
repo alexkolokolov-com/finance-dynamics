@@ -71,6 +71,7 @@ type CardAboutProps = {
     href: string;
     onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   };
+  hideEducation?: boolean;
 };
 
 const defaultHeading = (
@@ -100,8 +101,10 @@ export const CardAbout = ({
   quote,
   scale = "hero",
   cta,
+  hideEducation = false,
 }: CardAboutProps = {}) => {
   const isArticle = scale === "article";
+  const visibleFacts = hideEducation ? facts.slice(1) : facts;
   return (
     <section
       id="about"
@@ -220,12 +223,12 @@ export const CardAbout = ({
           }`}
           style={{ animationDelay: "0.45s" }}
         >
-          {facts.map((f, i) => {
+          {visibleFacts.map((f, i) => {
             // разделитель между парами:
             // lg (6 колонок в ряд): жирная левая граница на 3-й и 5-й (i=2,4)
             // md (3 колонки = 1 пара в ряд): жирная верхняя граница на 3-й и 5-й
             // mobile (2 колонки = 1 пара в ряд): то же — верхняя граница на 3-й и 5-й
-            const isPairStart = i === 2 || i === 4;
+            const isPairStart = hideEducation ? i === 1 || i === 3 : i === 2 || i === 4;
             const dividerCls = isPairStart
               ? "border-t-2 border-t-foreground/40 md:border-t-2 md:border-t-foreground/40 lg:border-t-0 lg:border-l-2 lg:border-l-foreground/40"
               : "";

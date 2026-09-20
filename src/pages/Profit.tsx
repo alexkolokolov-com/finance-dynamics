@@ -54,16 +54,8 @@ const Profit = () => {
                 {nbsp("Разные финансовые задачи требуют разных инструментов")}
               </p>
             </div>
-            <div className="col-span-12 mt-8 flex items-end justify-between gap-8 lg:col-span-9 lg:mt-14">
-              <div>
-                <p className="max-w-3xl font-body text-xl leading-relaxed text-foreground/80 md:text-2xl">
-                  {nbsp("Курс подойдет тем, кто хочет: собрать понятную финансовую систему, перестать жить в ноль, разобраться, куда инвестировать, начать вести бюджет без мучений, увеличить доход, накопить на пенсию, избавиться от долгов, перестать тревожиться из-за денег.")}
-                </p>
-                <p className="mt-8 font-display text-3xl font-semibold leading-tight md:text-5xl">
-                  {nbsp("Три ступени курса. Каждую можно пройти отдельно")}
-                </p>
-              </div>
-              <Button asChild variant="outline" size="icon" className="hidden h-14 w-14 shrink-0 rounded-full md:inline-flex">
+            <div className="col-span-12 mt-8 lg:col-span-9 lg:mt-14">
+              <Button asChild variant="outline" size="icon" className="hidden h-14 w-14 rounded-full md:inline-flex">
                 <a href="#tasks" aria-label={nbsp("Перейти к задачам")}><ArrowDown /></a>
               </Button>
             </div>
@@ -77,15 +69,16 @@ const Profit = () => {
             <div>
               <h2 className="font-display text-5xl font-semibold leading-[0.95] md:text-7xl">{nbsp("У каждого своё «болит»")}</h2>
               <p className="mt-7 max-w-xl font-body text-xl leading-relaxed text-foreground/75">{nbsp("Разная точка старта, разные цели и разный темп. Финансовых сложностей гораздо больше, чем один универсальный шаблон способен решить.")}</p>
+              <p className="mt-12 font-display text-3xl font-semibold leading-tight md:text-4xl">{nbsp("Курс подойдет тем, кто хочет:")}</p>
             </div>
-            <div className="grid gap-px overflow-hidden border border-foreground/15 bg-foreground/15 sm:grid-cols-2">
+            <ul className="grid gap-x-12 sm:grid-cols-2">
               {tasks.map(({ Icon, text }) => (
-                <article key={text} className="min-h-40 bg-card p-6 md:p-8">
-                  <Icon aria-hidden="true" className="h-7 w-7 text-accent" strokeWidth={1.6} />
-                  <p className="mt-8 font-display text-2xl font-semibold leading-tight">{nbsp(text)}</p>
-                </article>
+                <li key={text} className="flex items-center gap-4 border-t border-foreground/15 py-5">
+                  <Icon aria-hidden="true" className="h-6 w-6 shrink-0 text-accent" strokeWidth={1.6} />
+                  <p className="font-display text-xl font-semibold leading-tight md:text-2xl">{nbsp(text)}</p>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
 
           <div className="mt-16 border-l-4 border-accent py-2 pl-6 md:mt-24 md:pl-10">

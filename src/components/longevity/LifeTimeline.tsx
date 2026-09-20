@@ -113,26 +113,32 @@ const layoutPins = (people: StoryPerson[], start: number, end: number, width: nu
 };
 
 
-const GroupTimeline = ({ range, title, people, width, levels }: { range: string; title: string; people: StoryPerson[]; width: number; levels: number }) => {
+const GroupTimeline = ({ range, title, people, width, levels, revealProgress = 1 }: { range: string; title: string; people: StoryPerson[]; width: number; levels: number; revealProgress?: number }) => {
   const [start, end] = range.split("-").map(Number);
   const pins = useMemo(() => layoutPins(people, start, end, width, levels), [people, start, end, width, levels]);
 
   return (
-    <div className={`flex min-h-0 flex-col rounded-lg border border-dashed bg-transparent ${start >= 80 ? "border-[hsl(var(--longevity-third)/0.9)]" : "border-[hsl(var(--longevity-second)/0.8)]"}`}>
+    <div data-person-group={start >= 80 ? "third" : "second"} data-group-progress={revealProgress.toFixed(3)} className={`flex min-h-0 flex-col rounded-lg border border-dashed bg-transparent ${start >= 80 ? "border-[hsl(var(--longevity-third)/0.9)]" : "border-[hsl(var(--longevity-second)/0.8)]"}`}>
       <div className="shrink-0 px-4 py-4 md:px-5">
         <p className={`font-display text-4xl font-semibold leading-none ${start >= 80 ? "text-[hsl(var(--longevity-third-foreground))]" : "text-accent"}`}>{nbsp(range)}</p>
         <p className="mt-2 font-display text-lg font-semibold leading-none md:text-xl">{nbsp(title)}</p>
       </div>
 
       <div className="relative shrink-0 px-3" style={{ height: `${levels * PIN_ROW}px` }}>
-        {width > 0 ? pins.map(({ person, x, level, ageOnRight }) => {
+        {width > 0 ? pins.map(({ person, x, level, ageOnRight }, index) => {
           const [firstName, lastName] = personLine(person.name);
           const y = PIN_ROW / 2 + level * PIN_ROW;
+          const stagger = pins.length > 1 ? (index / (pins.length - 1)) * 0.32 : 0;
+          const personProgress = Math.min(Math.max((revealProgress - stagger) / 0.68, 0), 1);
+          const easedProgress = easeOut(personProgress);
+          const travel = levels * PIN_ROW + 84 - y;
           return (
             <div
               key={person.id}
+              data-person-pill={person.id}
+              data-person-progress={personProgress.toFixed(3)}
               className="group absolute z-10 -translate-y-1/2 hover:z-40 focus-within:z-40"
-              style={{ left: `${x}%`, top: `${y}px`, transform: `translate(${ageOnRight ? "calc(-100% + 20px)" : "-20px"}, -50%)` }}
+              style={{ left: `${x}%`, top: `${y}px`, transform: `translate(${ageOnRight ? "calc(-100% + 20px)" : "-20px"}, calc(-50% + ${travel * (1 - easedProgress)}px))`, visibility: personProgress <= 0 ? "hidden" : "visible" }}
             >
               <div tabIndex={0} role="button" aria-label={`${person.name}, ${person.age}`} className={`flex w-[136px] items-center gap-1.5 rounded-full border border-accent/60 bg-card py-1 shadow-paper transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-accent group-hover:shadow-hard focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${ageOnRight ? "flex-row-reverse pl-2.5 pr-1" : "pl-1 pr-2.5"}`}>
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent font-display text-xs font-bold text-accent-foreground">{person.age}</span>
@@ -160,7 +166,7 @@ const GroupTimeline = ({ range, title, people, width, levels }: { range: string;
   );
 };
 
-const DesktopPeopleTimelines = () => {
+const DesktopPeopleTimelines = ({ secondProgress, thirdProgress }: { secondProgress: number; thirdProgress: number }) => {
   const gridRef = useRef<HTMLDivElement | null>(null);
   const [columnWidth, setColumnWidth] = useState(0);
 
@@ -178,12 +184,12 @@ const DesktopPeopleTimelines = () => {
 
   return (
     <div ref={gridRef} className="grid grid-cols-2 items-stretch gap-4">
-      {mapGroups.map((group) => <GroupTimeline key={group.range} {...group} width={columnWidth} levels={PIN_LEVELS} />)}
+      {mapGroups.map((group, index) => <GroupTimeline key={group.range} {...group} width={columnWidth} levels={PIN_LEVELS} revealProgress={index === 0 ? secondProgress : thirdProgress} />)}
     </div>
   );
 };
 
-const MobileGroupTimeline = ({ group }: { group: (typeof mapGroups)[number] }) => {
+const MobileGroupTimeline = ({ group, revealProgress }: { group: (typeof mapGroups)[number]; revealProgress: number }) => {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const [width, setWidth] = useState(0);
 
@@ -200,7 +206,7 @@ const MobileGroupTimeline = ({ group }: { group: (typeof mapGroups)[number] }) =
 
   return (
     <div ref={wrapperRef}>
-      <GroupTimeline {...group} width={width} levels={PIN_LEVELS_NARROW} />
+      <GroupTimeline {...group} width={width} levels={PIN_LEVELS_NARROW} revealProgress={revealProgress} />
     </div>
   );
 };
@@ -283,6 +289,8 @@ const GRAPH_END = 0.12;
 const ENTER_END = 0.32;
 const EXIT_START = 0.78;
 const easeOut = (t: number) => 1 - (1 - t) * (1 - t);
+const PEOPLE_TRACK_VH = 300;
+const clampProgress = (value: number) => Math.min(Math.max(value, 0), 1);
 
 type ScenePhase = "update-graph" | "enter" | "hold" | "exit";
 
@@ -297,8 +305,10 @@ export const LifeTimeline = () => {
   const [reducedMotion, setReducedMotion] = useState(false);
   const [cardTravel, setCardTravel] = useState(900);
   const trackRef = useRef<HTMLDivElement | null>(null);
+  const peopleTrackRef = useRef<HTMLDivElement | null>(null);
   const sceneWindowRef = useRef<HTMLDivElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
+  const [peopleProgress, setPeopleProgress] = useState(0);
   const maxIndex = chapters.length - 1;
 
   useEffect(() => {
@@ -307,6 +317,33 @@ export const LifeTimeline = () => {
     syncMotion();
     motionQuery.addEventListener("change", syncMotion);
     return () => motionQuery.removeEventListener("change", syncMotion);
+  }, []);
+
+  useEffect(() => {
+    let frame = 0;
+    const compute = () => {
+      frame = 0;
+      const node = peopleTrackRef.current;
+      if (!node) return;
+      const rect = node.getBoundingClientRect();
+      const viewport = window.innerHeight;
+      const stickyTop = 64;
+      const distance = Math.max(rect.height - viewport + stickyTop, 1);
+      const next = clampProgress((stickyTop - rect.top) / distance);
+      setPeopleProgress((current) => Math.abs(current - next) < 0.002 ? current : next);
+    };
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(compute);
+    };
+    compute();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -397,6 +434,12 @@ export const LifeTimeline = () => {
   const cardStyle = reducedMotion
     ? { opacity: phase === "enter" || phase === "hold" ? 1 : 0, transform: "none" }
     : { opacity: 1, transform: `translateY(${cardTranslateY}px)` };
+  const secondPeopleProgress = reducedMotion
+    ? (peopleProgress >= 0.48 ? 1 : 0)
+    : clampProgress((peopleProgress - 0.2) / 0.28);
+  const thirdPeopleProgress = reducedMotion
+    ? (peopleProgress >= 0.86 ? 1 : 0)
+    : clampProgress((peopleProgress - 0.68) / 0.18);
 
   return (
     <>
@@ -460,15 +503,16 @@ export const LifeTimeline = () => {
       </div>
 
 
-      <section className="relative z-40 border-t border-border bg-card px-4 py-14 sm:px-8 sm:py-20">
-        <div className="mx-auto max-w-[1400px]">
+      <section ref={peopleTrackRef} data-people-track className="relative z-40 border-t border-border bg-card" style={{ height: `${PEOPLE_TRACK_VH}vh` }}>
+        <div data-people-scene className="sticky top-16 flex h-[calc(100vh-4rem)] items-center overflow-hidden px-4 py-5 sm:px-8">
+        <div className="mx-auto w-full max-w-[1400px]">
           <div className="max-w-4xl">
-            <h2 className="font-display text-4xl font-semibold leading-none sm:text-7xl">{nbsp("Посмотрите, у вас все еще впереди!")}</h2>
-            <p className="mt-5 max-w-3xl font-body text-lg leading-relaxed text-foreground/75">{nbsp("Наведите на точку и вспомните истории людей, которые преодолели кризисы и после 40 реализовали себя. А также тех, кто и после 80 продолжает активную жизнь!")}</p>
+            <h2 className="font-display text-3xl font-semibold leading-none sm:text-5xl lg:text-6xl">{nbsp("Посмотрите, у вас все еще впереди!")}</h2>
+            <p className="mt-3 max-w-3xl font-body text-base leading-relaxed text-foreground/75 sm:text-lg">{nbsp("Наведите на точку и вспомните истории людей, которые преодолели кризисы и после 40 реализовали себя. А также тех, кто и после 80 продолжает активную жизнь!")}</p>
           </div>
 
-          <div className="mt-10 hidden md:block">
-            <DesktopPeopleTimelines />
+          <div className="mt-6 hidden md:block" data-people-desktop>
+            <DesktopPeopleTimelines secondProgress={secondPeopleProgress} thirdProgress={thirdPeopleProgress} />
             <div className="relative mx-4 mt-4 border-t-[3px] border-foreground pt-3">
               {[40, 60, 80, 100, 120].map((tick) => (
                 <span
@@ -482,10 +526,11 @@ export const LifeTimeline = () => {
             </div>
           </div>
 
-          <div className="mt-10 space-y-5 md:hidden">
-            {mapGroups.map((group) => <MobileGroupTimeline key={`m-${group.range}`} group={group} />)}
+          <div className="mt-5 space-y-3 md:hidden" data-people-mobile>
+            {mapGroups.map((group, index) => <MobileGroupTimeline key={`m-${group.range}`} group={group} revealProgress={index === 0 ? secondPeopleProgress : thirdPeopleProgress} />)}
           </div>
 
+        </div>
         </div>
       </section>
 

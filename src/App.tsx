@@ -17,6 +17,7 @@ import FinancialHorizon from "./pages/FinancialHorizon.tsx";
 import Gears from "./pages/Gears.tsx";
 import Longevity from "./pages/Longevity.tsx";
 import Landing from "./pages/Landing.tsx";
+import Profit from "./pages/Profit.tsx";
 import LandingDeck from "./pages/LandingDeck.tsx";
 import Support2026 from "./pages/Support2026.tsx";
 import Traffic from "./pages/Traffic.tsx";
@@ -55,6 +56,7 @@ const App = () => (
           <Route path="/gears" element={<Gears />} />
           <Route path="/longevity" element={<Longevity />} />
           <Route path="/landing" element={<Landing />} />
+          <Route path="/profit" element={<Profit />} />
           <Route path="/landing-deck" element={<LandingDeck />} />
           <Route path="/support-2026" element={<Support2026 />} />
           <Route path="/traffic" element={<Traffic />} />

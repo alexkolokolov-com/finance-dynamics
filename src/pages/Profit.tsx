@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { ArrowDown, Check, CircleDollarSign, HandCoins, Landmark, LineChart, NotebookTabs, ShieldCheck, TrendingUp, WalletCards } from "lucide-react";
+import { LogoMark } from "@/components/LogoMark";
 import { SiteHeader } from "@/components/SiteHeader";
 import { ProfitLevels } from "@/components/landing/ProfitLevels";
 import { InlineReviewGrid, InlineReviewPair } from "@/components/landing/InlineReviews";
@@ -7,6 +8,57 @@ import { CardAbout } from "@/components/sections/CardAbout";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { nbsp } from "@/lib/nbsp";
+
+// ===== Визуал первого экрана как на /landing: контурное П₽ОФИТ, биржевая линия фоном =====
+
+// Буква Р как настоящий символ рубля ₽ — тот же контурный стиль, что и остальные буквы.
+const RubleLetter = () => <span className="inline-block">₽</span>;
+
+// Биржевая линия: один период длиной 1000, start Y == end Y (бесшовный цикл).
+const PERIOD_PATH =
+  "M0 160 L60 150 L120 165 L180 130 L240 145 L300 100 L360 120 L420 85 L480 110 L540 70 L600 95 L660 55 L720 90 L780 120 L840 95 L900 140 L960 115 L1000 160";
+
+const PERIOD_FILL =
+  PERIOD_PATH + " L1000 240 L0 240 Z";
+
+const HeroChartLine = ({ className = "" }: { className?: string }) => (
+  <div className={`pointer-events-none overflow-hidden ${className}`} aria-hidden>
+    <svg
+      viewBox="0 0 2000 240"
+      preserveAspectRatio="none"
+      className="block h-full w-[200%] animate-ticker"
+    >
+      <defs>
+        <linearGradient id="profitHeroChartFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.22" />
+          <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      {[0, 1000].map((dx) => (
+        <g key={dx} transform={`translate(${dx} 0)`}>
+          <path d={PERIOD_FILL} fill="url(#profitHeroChartFill)" />
+          <path
+            d={PERIOD_PATH}
+            fill="none"
+            stroke="hsl(var(--accent))"
+            strokeWidth="2.5"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+          />
+        </g>
+      ))}
+    </svg>
+  </div>
+);
+
+const heroOutlineStyle: React.CSSProperties = {
+  fontFamily: "'Space Grotesk', system-ui, sans-serif",
+  fontWeight: 700,
+  letterSpacing: "-0.04em",
+  lineHeight: 0.85,
+  color: "transparent",
+  WebkitTextStroke: "2px hsl(var(--foreground))",
+};
 
 const profitNav = [
   { href: "#tasks", label: "Ваши задачи", id: "tasks" },
@@ -45,20 +97,47 @@ const Profit = () => {
     <main className="min-h-screen bg-background text-foreground">
       <SiteHeader pageNav={profitNav} />
 
-      <header className="relative overflow-hidden border-b border-foreground/10 pb-20 pt-28 md:pb-28 md:pt-36">
+      <header className="relative overflow-hidden bg-background pb-16 pt-28 md:pb-20 md:pt-32">
+        {/* Меловой радиальный фон — как на /landing */}
+        <div className="pointer-events-none absolute inset-0" style={{ background: "var(--grad-chalk)" }} />
+        {/* Динамическая биржевая линия — единый фоновый слой за всем первым экраном */}
+        <HeroChartLine className="absolute inset-x-0 top-1/2 h-[60%] -translate-y-1/2 md:h-[55%]" />
+
         <div className="container-px relative mx-auto max-w-7xl">
-          <div className="grid grid-cols-12 gap-6 lg:gap-10">
-            <div className="col-span-12 lg:col-span-9">
-              <h1 className="font-display text-7xl font-semibold leading-[0.75] text-accent sm:text-9xl lg:text-[13rem]">ПРОФИТ</h1>
-              <p className="mt-10 max-w-5xl font-display text-4xl font-semibold leading-[0.98] md:text-6xl lg:text-7xl">
-                {nbsp("Разные финансовые задачи требуют разных инструментов")}
+          {/* Лого + имя автора над названием */}
+          <div className="mb-8 flex items-center gap-3 md:mb-10">
+            <LogoMark size="md" />
+            <span className="font-mono text-sm uppercase tracking-widest text-accent md:text-base">Василий&nbsp;Мещеряков</span>
+          </div>
+
+          {/* Три акцентных подзаголовка — как на /landing */}
+          <div className="mb-8 space-y-1 md:mb-12 md:space-y-2">
+            {["Планирование\u00A0Роста", "Оптимизация\u00A0Финансов", "и\u00A0Трат"].map((t) => (
+              <p key={t} className="font-serif-display text-2xl leading-[1.05] tracking-tight text-foreground sm:text-3xl md:text-5xl lg:text-6xl">
+                {t}
               </p>
-            </div>
-            <div className="col-span-12 mt-8 lg:col-span-9 lg:mt-14">
-              <Button asChild variant="outline" size="icon" className="hidden h-14 w-14 rounded-full md:inline-flex">
-                <a href="#tasks" aria-label={nbsp("Перейти к задачам")}><ArrowDown /></a>
-              </Button>
-            </div>
+            ))}
+          </div>
+
+          {/* ===== DESKTOP / TABLET: одна строка ===== */}
+          <h1 className="relative hidden text-left sm:block" style={{ ...heroOutlineStyle, fontSize: "clamp(5rem, 19vw, 17rem)" }}>
+            П<RubleLetter />ОФИТ
+          </h1>
+
+          {/* ===== MOBILE: две строки П₽О / ФИТ ===== */}
+          <h1 className="relative leading-[0.85] sm:hidden" style={{ ...heroOutlineStyle, fontSize: "clamp(5rem, 30vw, 9rem)" }}>
+            <span className="block">П<RubleLetter />О</span>
+            <span className="block">ФИТ</span>
+          </h1>
+
+          <p className="mt-8 max-w-4xl font-display text-3xl font-semibold leading-tight md:mt-10 md:text-5xl">
+            {nbsp("Разные финансовые задачи требуют разных инструментов")}
+          </p>
+
+          <div className="mt-10 md:mt-14">
+            <Button asChild variant="outline" size="icon" className="hidden h-14 w-14 rounded-full md:inline-flex">
+              <a href="#tasks" aria-label={nbsp("Перейти к задачам")}><ArrowDown /></a>
+            </Button>
           </div>
         </div>
       </header>

@@ -61,9 +61,9 @@ const heroOutlineStyle: React.CSSProperties = {
 };
 
 const profitNav = [
-  { href: "#tasks", label: "Ваши задачи", id: "tasks" },
-  { href: "#levels", label: "Ступени", id: "levels" },
-  { href: "#about", label: "Василий", id: "about" },
+  { href: "#tasks", label: "О курсе", id: "tasks" },
+  { href: "#levels", label: "Программа", id: "levels" },
+  { href: "#about", label: "Об авторе", id: "about" },
   { href: "#reviews", label: "Отзывы", id: "reviews" },
   { href: "#levels", label: "Выбрать тариф", id: "levels", cta: true },
 ];

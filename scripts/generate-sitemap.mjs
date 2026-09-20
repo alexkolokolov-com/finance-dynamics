@@ -26,6 +26,7 @@ const entries = [
   { path: "/checklist", changefreq: "monthly", priority: "0.6" },
   { path: "/calculator", changefreq: "monthly", priority: "0.6" },
   { path: "/bigbudget", changefreq: "monthly", priority: "0.6" },
+  { path: "/profit", changefreq: "weekly", priority: "0.9" },
   { path: "/reviews", changefreq: "monthly", priority: "0.6" },
   { path: "/oferta", changefreq: "yearly", priority: "0.3" },
 ];

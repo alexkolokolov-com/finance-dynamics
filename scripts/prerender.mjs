@@ -32,6 +32,7 @@ const ROUTES = [
   "/calculator",
   "/bigbudget",
   "/landing",
+  "/profit",
   "/support-2026",
   "/traffic",
   "/reviews",

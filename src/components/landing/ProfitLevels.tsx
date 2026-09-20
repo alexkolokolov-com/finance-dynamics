@@ -96,8 +96,8 @@ export const ProfitLevels = () => (
   <section id="levels" className="scroll-mt-24 border-t border-foreground/10 py-20 md:py-28">
     <div className="container-px mx-auto max-w-7xl">
       <div className="max-w-4xl">
-        <h2 className="font-display text-5xl font-semibold leading-[0.95] md:text-7xl">{nbsp("Три ступени. Любая — отдельно.")}</h2>
-        <p className="mt-6 max-w-2xl font-body text-xl leading-relaxed text-foreground/75">{nbsp("Начните со своей задачи или пройдите весь путь — от простого бюджета до инвестиций.")}</p>
+        <h2 className="font-display text-5xl font-semibold leading-[0.95] md:text-7xl">{nbsp("Три ступени курса.")}</h2>
+        <p className="mt-6 max-w-2xl font-body text-xl leading-relaxed text-foreground/75">{nbsp("Начните со своей задачи или пройдите весь путь от ведения бюджета до инвестиций.")}</p>
       </div>
 
       <div className="mt-14">
@@ -106,7 +106,7 @@ export const ProfitLevels = () => (
 
       <article className="mt-4 grid gap-8 bg-board p-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:p-12">
         <div>
-          <p className="font-body text-sm font-semibold text-accent">{nbsp("Все три ступени")}</p>
+          <p className="font-body text-sm font-semibold text-accent">{nbsp("Все 3 ступени")}</p>
           <h3 className="mt-3 max-w-4xl font-display text-4xl font-semibold leading-none text-background md:text-6xl">{nbsp("От шаблона бюджета до инвестиций и долгосрочного плана")}</h3>
           <p className="mt-6 font-body text-xl text-background/75">{nbsp("11 недель + личная консультация Василия")}</p>
         </div>

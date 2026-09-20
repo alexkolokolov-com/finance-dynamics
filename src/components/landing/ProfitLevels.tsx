@@ -61,9 +61,12 @@ const trackedHref = (event: React.MouseEvent<HTMLAnchorElement>) => {
 };
 
 const LevelCard = ({ level }: { level: ProfitLevel }) => (
-  <article className="grid border-t border-foreground/20 py-10 md:grid-cols-[8rem_minmax(0,1fr)_minmax(18rem,0.8fr)] md:gap-10 md:py-14">
+  <article className="grid border-t border-foreground/20 py-10 md:grid-cols-[12rem_minmax(0,1fr)_minmax(18rem,0.8fr)] md:gap-10 md:py-14">
     <div className="mb-6 md:mb-0">
-      <span className="number-display text-7xl text-accent md:text-8xl">{level.number}</span>
+      <p className="flex items-baseline gap-3">
+        <span className="number-display text-7xl text-accent md:text-8xl">{level.number}</span>
+        <span className="font-display text-2xl font-semibold leading-none md:text-3xl">{nbsp("ступень")}</span>
+      </p>
     </div>
     <div>
       <p className="font-body text-sm font-semibold text-accent">{nbsp(level.duration)}</p>
@@ -93,8 +96,8 @@ export const ProfitLevels = () => (
   <section id="levels" className="scroll-mt-24 border-t border-foreground/10 py-20 md:py-28">
     <div className="container-px mx-auto max-w-7xl">
       <div className="max-w-4xl">
-        <h2 className="font-display text-5xl font-semibold leading-[0.95] md:text-7xl">{nbsp("Три ступени. Любая — отдельно.")}</h2>
-        <p className="mt-6 max-w-2xl font-body text-xl leading-relaxed text-foreground/75">{nbsp("Начните со своей задачи или пройдите весь путь — от простого бюджета до инвестиций.")}</p>
+        <h2 className="font-display text-5xl font-semibold leading-[0.95] md:text-7xl">{nbsp("Три ступени курса.")}</h2>
+        <p className="mt-6 max-w-2xl font-body text-xl leading-relaxed text-foreground/75">{nbsp("Начните со своей задачи или пройдите весь путь от ведения бюджета до инвестиций.")}</p>
       </div>
 
       <div className="mt-14">
@@ -103,7 +106,7 @@ export const ProfitLevels = () => (
 
       <article className="mt-4 grid gap-8 bg-board p-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:p-12">
         <div>
-          <p className="font-body text-sm font-semibold text-accent">{nbsp("Все три ступени")}</p>
+          <p className="font-body text-sm font-semibold text-accent">{nbsp("Все 3 ступени")}</p>
           <h3 className="mt-3 max-w-4xl font-display text-4xl font-semibold leading-none text-background md:text-6xl">{nbsp("От шаблона бюджета до инвестиций и долгосрочного плана")}</h3>
           <p className="mt-6 font-body text-xl text-background/75">{nbsp("11 недель + личная консультация Василия")}</p>
         </div>

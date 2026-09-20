@@ -61,9 +61,12 @@ const trackedHref = (event: React.MouseEvent<HTMLAnchorElement>) => {
 };
 
 const LevelCard = ({ level }: { level: ProfitLevel }) => (
-  <article className="grid border-t border-foreground/20 py-10 md:grid-cols-[8rem_minmax(0,1fr)_minmax(18rem,0.8fr)] md:gap-10 md:py-14">
+  <article className="grid border-t border-foreground/20 py-10 md:grid-cols-[12rem_minmax(0,1fr)_minmax(18rem,0.8fr)] md:gap-10 md:py-14">
     <div className="mb-6 md:mb-0">
-      <span className="number-display text-7xl text-accent md:text-8xl">{level.number}</span>
+      <p className="flex items-baseline gap-3">
+        <span className="number-display text-7xl text-accent md:text-8xl">{level.number}</span>
+        <span className="font-display text-2xl font-semibold leading-none md:text-3xl">{nbsp("ступень")}</span>
+      </p>
     </div>
     <div>
       <p className="font-body text-sm font-semibold text-accent">{nbsp(level.duration)}</p>

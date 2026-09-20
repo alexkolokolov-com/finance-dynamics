@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { ArrowDown, Check, CircleDollarSign, HandCoins, Landmark, LineChart, NotebookTabs, ShieldCheck, TrendingUp, WalletCards } from "lucide-react";
+import { LogoMark } from "@/components/LogoMark";
 import { SiteHeader } from "@/components/SiteHeader";
 import { ProfitLevels } from "@/components/landing/ProfitLevels";
 import { InlineReviewGrid, InlineReviewPair } from "@/components/landing/InlineReviews";
@@ -7,6 +8,57 @@ import { CardAbout } from "@/components/sections/CardAbout";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { nbsp } from "@/lib/nbsp";
+
+// ===== Визуал первого экрана как на /landing: контурное П₽ОФИТ, биржевая линия фоном =====
+
+// Буква Р как настоящий символ рубля ₽ — тот же контурный стиль, что и остальные буквы.
+const RubleLetter = () => <span className="inline-block">₽</span>;
+
+// Биржевая линия: один период длиной 1000, start Y == end Y (бесшовный цикл).
+const PERIOD_PATH =
+  "M0 160 L60 150 L120 165 L180 130 L240 145 L300 100 L360 120 L420 85 L480 110 L540 70 L600 95 L660 55 L720 90 L780 120 L840 95 L900 140 L960 115 L1000 160";
+
+const PERIOD_FILL =
+  PERIOD_PATH + " L1000 240 L0 240 Z";
+
+const HeroChartLine = ({ className = "" }: { className?: string }) => (
+  <div className={`pointer-events-none overflow-hidden ${className}`} aria-hidden>
+    <svg
+      viewBox="0 0 2000 240"
+      preserveAspectRatio="none"
+      className="block h-full w-[200%] animate-ticker"
+    >
+      <defs>
+        <linearGradient id="profitHeroChartFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.22" />
+          <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      {[0, 1000].map((dx) => (
+        <g key={dx} transform={`translate(${dx} 0)`}>
+          <path d={PERIOD_FILL} fill="url(#profitHeroChartFill)" />
+          <path
+            d={PERIOD_PATH}
+            fill="none"
+            stroke="hsl(var(--accent))"
+            strokeWidth="2.5"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+          />
+        </g>
+      ))}
+    </svg>
+  </div>
+);
+
+const heroOutlineStyle: React.CSSProperties = {
+  fontFamily: "'Space Grotesk', system-ui, sans-serif",
+  fontWeight: 700,
+  letterSpacing: "-0.04em",
+  lineHeight: 0.85,
+  color: "transparent",
+  WebkitTextStroke: "2px hsl(var(--foreground))",
+};
 
 const profitNav = [
   { href: "#tasks", label: "Ваши задачи", id: "tasks" },

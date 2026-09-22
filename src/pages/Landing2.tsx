@@ -388,9 +388,6 @@ const Landing2 = () => {
         </div>
       </section>
 
-      {/* отзывы — продолжение блока программы */}
-      <InlineReviewPair indices={[5, 7]} bgClass="bg-grid" />
-
       {/* ============== HOW IT WORKS ============== */}
       <section className="relative py-20 md:py-28 border-t border-foreground/10">
         <div className="container-px max-w-7xl mx-auto">

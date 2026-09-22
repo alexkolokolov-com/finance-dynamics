@@ -209,7 +209,7 @@ export const PricingCalculator = ({ pdfMode = false, selection, onSelectionChang
             type="button"
             variant="outline"
             size="icon"
-            onClick={() => setState(initialState)}
+            onClick={() => setState(() => initialState)}
             aria-label="Сбросить выбор"
             title="Сбросить выбор"
             className="shrink-0 rounded-none border-foreground/20 bg-card"

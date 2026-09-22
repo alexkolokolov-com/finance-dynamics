@@ -145,6 +145,8 @@ type Props = {
   variant?: "default" | "plan";
   /** Принудительно задать прогресс анимации (для PDF/превью). 0..1 */
   forceProgress?: number;
+  /** Заголовок над пазлом (только variant="default") */
+  title?: string;
 };
 
 export default function PuzzleWeeks({ variant = "default", forceProgress, title }: Props) {
@@ -219,7 +221,7 @@ export default function PuzzleWeeks({ variant = "default", forceProgress, title 
       {!isPlan && (
         <div className="mb-10">
           <h3 className="font-serif-display italic text-2xl md:text-3xl lg:text-4xl text-foreground/85 leading-snug tracking-tight">
-            У&nbsp;вас сложится полная картина финансовых инструментов
+            {title ?? "У вас сложится полная картина финансовых инструментов"}
           </h3>
         </div>
       )}

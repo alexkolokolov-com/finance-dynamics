@@ -43,13 +43,24 @@ const supports: Support[] = [
   { id: "vasily", name: "С Василием", unit: 20_000, three: 40_000, threeList: 60_000 },
 ];
 
-const initialState = {
-  course: "budget" as CourseId,
-  mode: "promo" as PriceMode,
-  support: "none" as SupportId,
+export type CalculatorSelection = {
+  course: CourseId;
+  mode: PriceMode;
+  support: SupportId;
+  curatorSteps: number;
+  vasilySteps: number;
+};
+
+export const initialCalculatorSelection: CalculatorSelection = {
+  course: "budget",
+  mode: "promo",
+  support: "none",
   curatorSteps: 1,
   vasilySteps: 1,
 };
+
+const initialState = initialCalculatorSelection;
+
 
 const rub = (value: number) => `${new Intl.NumberFormat("ru-RU").format(value)} ₽`;
 
@@ -69,11 +80,21 @@ const supportSaving = (support: Support | undefined, steps: number) => {
 
 type PricingCalculatorProps = {
   pdfMode?: boolean;
+  /** Управляемый выбор (нужен, чтобы в PDF попал именно выбранный вариант) */
+  selection?: CalculatorSelection;
+  onSelectionChange?: (selection: CalculatorSelection) => void;
 };
 
-export const PricingCalculator = ({ pdfMode = false }: PricingCalculatorProps) => {
-  const [state, setState] = useState(initialState);
+export const PricingCalculator = ({ pdfMode = false, selection, onSelectionChange }: PricingCalculatorProps) => {
+  const [innerState, setInnerState] = useState(initialState);
   const [copied, setCopied] = useState(false);
+
+  const state = selection ?? innerState;
+  const setState = (updater: (current: CalculatorSelection) => CalculatorSelection) => {
+    const next = updater(state);
+    if (selection) onSelectionChange?.(next);
+    else setInnerState(next);
+  };
 
   const selectedCourse = courses.find((course) => course.id === state.course) ?? courses[0];
   const selectedSupport = state.support === "none" ? undefined : supports.find((support) => support.id === state.support);
@@ -110,6 +131,62 @@ export const PricingCalculator = ({ pdfMode = false }: PricingCalculatorProps) =
     }));
   };
 
+  if (pdfMode) {
+    const stepsWord = supportSteps === 1 ? "ступень" : "ступени";
+    return (
+      <div className="container-px mx-auto w-full max-w-5xl">
+        <header className="mb-6">
+          <h2 className="font-serif-display text-3xl font-semibold leading-none text-foreground md:text-5xl">
+            Ваш расчёт
+          </h2>
+          <p className="mt-3 font-body text-sm leading-relaxed text-foreground/65 md:text-base">
+            {nbsp("Выбранная ступень и формат сопровождения")}
+          </p>
+        </header>
+
+        <div className="border border-foreground/15 bg-card">
+          <div className="flex items-baseline justify-between gap-6 border-b border-foreground/10 px-6 py-5">
+            <div>
+              <div className="font-body text-[11px] uppercase tracking-wide text-foreground/45">Ступень</div>
+              <div className="mt-1 font-display text-2xl font-semibold text-foreground">{nbsp(selectedCourse.name)}</div>
+              <div className="mt-1 font-body text-xs text-foreground/55">{nbsp(selectedMode.label)}</div>
+            </div>
+            <div className="text-right">
+              <div className="font-display text-3xl font-semibold text-foreground">{rub(selectedCourse[state.mode])}</div>
+              {state.mode !== "official" && (
+                <del className="mt-1 block font-body text-xs text-foreground/45">{rub(selectedCourse.official)}</del>
+              )}
+            </div>
+          </div>
+
+          <div className="flex items-baseline justify-between gap-6 border-b border-foreground/10 px-6 py-5">
+            <div>
+              <div className="font-body text-[11px] uppercase tracking-wide text-foreground/45">Сопровождение</div>
+              <div className="mt-1 font-display text-2xl font-semibold text-foreground">
+                {selectedSupport ? nbsp(`${selectedSupport.name} · ${supportSteps} ${stepsWord}`) : "Без сопровождения"}
+              </div>
+            </div>
+            <div className="text-right font-display text-3xl font-semibold text-foreground">
+              {supportCost > 0 ? `+ ${rub(supportCost)}` : "—"}
+            </div>
+          </div>
+
+          <div className="grid gap-4 bg-foreground px-6 py-5 text-background md:grid-cols-[1fr_auto] md:items-end">
+            <div>
+              <div className="font-body text-[11px] uppercase tracking-wide text-background/50">Экономия</div>
+              <div className="mt-1 font-display text-xl font-semibold text-accent">{saving > 0 ? rub(saving) : "—"}</div>
+            </div>
+            <div className="md:text-right">
+              <div className="font-body text-[11px] uppercase tracking-wide text-background/50">Итого</div>
+              <div className="mt-1 font-display text-4xl font-semibold">{rub(total)}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+
   const copySummary = async () => {
     await navigator.clipboard?.writeText(summary);
     setCopied(true);
@@ -132,7 +209,7 @@ export const PricingCalculator = ({ pdfMode = false }: PricingCalculatorProps) =
             type="button"
             variant="outline"
             size="icon"
-            onClick={() => setState(initialState)}
+            onClick={() => setState(() => initialState)}
             aria-label="Сбросить выбор"
             title="Сбросить выбор"
             className="shrink-0 rounded-none border-foreground/20 bg-card"

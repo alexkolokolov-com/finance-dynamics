@@ -22,6 +22,8 @@ export type GenerateOpts = {
   scale?: number;
   /** Какую презентацию собирать: /landing-deck (deck) или /landing-deck-2 (deck2) */
   page?: "deck" | "deck2";
+  /** Выбранные параметры калькулятора стоимости (только для deck2) */
+  calculator?: unknown;
 };
 
 const withTimeout = <T,>(p: Promise<T>, ms: number, tag: string): Promise<T | "timeout"> => {
@@ -82,6 +84,7 @@ export async function generateDeckPdf({
   fileName = "profit-kp",
   scale = PDF_W / SLIDE_W,
   page = "deck",
+  calculator,
 }: GenerateOpts) {
   console.log("[pdf] start");
   // динамический импорт, чтобы избежать круговой зависимости
@@ -113,7 +116,7 @@ export async function generateDeckPdf({
     root.render(
       createElement(DeckPage as never, {
         pdfMode:
-          page === "deck2" ? { enabled: true } : { discountApplied, seriesApplied },
+          page === "deck2" ? { enabled: true, calculator } : { discountApplied, seriesApplied },
       } as never)
     );
 

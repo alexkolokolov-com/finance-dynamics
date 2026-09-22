@@ -31,7 +31,11 @@ import { Footer } from "@/components/sections/Footer";
 import { HeroProfit } from "@/components/landing/HeroProfit";
 import PuzzleWeeks from "@/components/landing/PuzzleWeeks";
 import { StairsSlide } from "@/components/landing/StairsSlide";
-import { PricingCalculator } from "@/components/landing/PricingCalculator";
+import {
+  PricingCalculator,
+  initialCalculatorSelection,
+  type CalculatorSelection,
+} from "@/components/landing/PricingCalculator";
 import { generateDeckPdf } from "@/lib/generateDeckPdf";
 import { nbsp } from "@/lib/nbsp";
 
@@ -224,17 +228,19 @@ const SNAP_BASE = "snap-start h-screen overflow-hidden flex flex-col justify-cen
 const PDF_BASE = "relative overflow-hidden flex flex-col justify-center";
 const PDF_SLIDE_STYLE: React.CSSProperties = { width: 1280, height: 720 };
 
-type PdfMode2 = { enabled: true };
+type PdfMode2 = { enabled: true; calculator?: CalculatorSelection };
 type LandingDeck2Props = { pdfMode?: PdfMode2 };
 
 const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
   const [isGenerating, setIsGenerating] = useState(false);
+  const [calculatorSelection, setCalculatorSelection] = useState<CalculatorSelection>(initialCalculatorSelection);
 
   // QA-режим: ?pdfPreview=1 показывает точно тот DOM, который идёт в PDF.
   const pdfPreview =
     typeof window !== "undefined" &&
     new URLSearchParams(window.location.search).get("pdfPreview") === "1";
   const effectivePdfMode: PdfMode2 | undefined = pdfModeProp ?? (pdfPreview ? { enabled: true } : undefined);
+  const effectiveSelection = effectivePdfMode?.calculator ?? calculatorSelection;
 
   const handleGeneratePdf = async () => {
     if (isGenerating) return;
@@ -245,6 +251,7 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
         seriesApplied: {},
         page: "deck2",
         fileName: "profit-kp-2",
+        calculator: calculatorSelection,
       });
     } catch (e) {
       console.error("PDF generation failed", e);
@@ -252,6 +259,7 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
       setIsGenerating(false);
     }
   };
+
 
   const slideCls = (extra = "") => `${effectivePdfMode ? PDF_BASE : SNAP_BASE} ${extra}`;
   const slideAttrs: Record<string, unknown> = effectivePdfMode
@@ -824,7 +832,11 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
         {...slideAttrs}
         className={slideCls("py-8 md:py-10 border-t border-foreground/10 scroll-mt-24")}
       >
-        <PricingCalculator pdfMode={!!effectivePdfMode} />
+        <PricingCalculator
+          pdfMode={!!effectivePdfMode}
+          selection={effectiveSelection}
+          onSelectionChange={setCalculatorSelection}
+        />
       </section>
 
       {/* ============== REVIEWS — продолжение ============== */}

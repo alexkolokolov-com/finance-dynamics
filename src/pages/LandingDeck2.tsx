@@ -257,6 +257,45 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
     ? { "data-pdf-slide": "", style: PDF_SLIDE_STYLE }
     : {};
 
+  // Подгонка слайда под один экран: если содержимое выше доступной высоты,
+  // масштабируем его целиком (и на десктопе, и в PDF), чтобы ничего не обрезалось.
+  const rootRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    const fit = () => {
+      const slides = Array.from(root.children).filter(
+        (el): el is HTMLElement =>
+          el instanceof HTMLElement &&
+          (el.hasAttribute("data-pdf-slide") || el.classList.contains("snap-start"))
+      );
+      slides.forEach((slide) => {
+        const child = slide.firstElementChild as HTMLElement | null;
+        if (!child) return;
+        child.style.transform = "";
+        child.style.transformOrigin = "center center";
+        const cs = getComputedStyle(slide);
+        const avail =
+          slide.clientHeight - parseFloat(cs.paddingTop || "0") - parseFloat(cs.paddingBottom || "0");
+        const need = child.getBoundingClientRect().height;
+        if (avail <= 0 || need <= 0) return;
+        const s = Math.min(1, (avail - 4) / need);
+        if (s < 0.998) child.style.transform = `scale(${s})`;
+      });
+    };
+
+    const raf = requestAnimationFrame(() => requestAnimationFrame(fit));
+    const late = setTimeout(fit, 1500);
+    window.addEventListener("resize", fit);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(late);
+      window.removeEventListener("resize", fit);
+    };
+  }, [effectivePdfMode]);
+
+
   const renderReviewSlides = (indices: number[], pageStartIdx: number, totalPages: number, firstSlideId?: string) => {
     const isPdf = !!effectivePdfMode;
     const driveImage = (id?: string) =>

@@ -31,7 +31,11 @@ import { Footer } from "@/components/sections/Footer";
 import { HeroProfit } from "@/components/landing/HeroProfit";
 import PuzzleWeeks from "@/components/landing/PuzzleWeeks";
 import { StairsSlide } from "@/components/landing/StairsSlide";
-import { PricingCalculator } from "@/components/landing/PricingCalculator";
+import {
+  PricingCalculator,
+  initialCalculatorSelection,
+  type CalculatorSelection,
+} from "@/components/landing/PricingCalculator";
 import { generateDeckPdf } from "@/lib/generateDeckPdf";
 import { nbsp } from "@/lib/nbsp";
 

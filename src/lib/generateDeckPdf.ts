@@ -22,6 +22,8 @@ export type GenerateOpts = {
   scale?: number;
   /** Какую презентацию собирать: /landing-deck (deck) или /landing-deck-2 (deck2) */
   page?: "deck" | "deck2";
+  /** Выбранные параметры калькулятора стоимости (только для deck2) */
+  calculator?: unknown;
 };
 
 const withTimeout = <T,>(p: Promise<T>, ms: number, tag: string): Promise<T | "timeout"> => {

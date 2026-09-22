@@ -1,4 +1,4 @@
-import { Video, FileCheck, Users, Clock, Check, Waves, Repeat2, Wallet, Hourglass, Activity, Settings, ScanSearch, HandCoins, Landmark, HeartHandshake, type LucideIcon } from "lucide-react";
+import { Video, FileCheck, Users, Clock, Check, Waves, Repeat2, Wallet, Hourglass, Activity, Settings, ScanSearch, HandCoins, Landmark, HeartHandshake, NotebookTabs, CircleDollarSign, LineChart, ShieldCheck, TrendingUp, type LucideIcon } from "lucide-react";
 import {
   programGoals,
   mainGoal,

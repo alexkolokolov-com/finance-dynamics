@@ -26,6 +26,11 @@ import goldenSpiral from "@/assets/golden-spiral.png";
 const processIcons = [Video, FileCheck, Users, Clock];
 const audienceIcons = [Waves, Repeat2, Wallet, Hourglass];
 
+const trackedHref = (event: React.MouseEvent<HTMLAnchorElement>) => {
+  event.currentTarget.href = appendStoredParams(event.currentTarget.href);
+};
+
+
 // Задачи — как блок «Курс подойдет тем, кто хочет» на /profit
 const goalTasks = [
   { Icon: NotebookTabs, text: "Собрать понятную финансовую систему" },

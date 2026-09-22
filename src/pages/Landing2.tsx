@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { ArrowUpRight, Video, FileCheck, Users, Clock, Check, Waves, Repeat2, Wallet, WalletCards, Hourglass, HandCoins, Landmark, NotebookTabs, CircleDollarSign, LineChart, ShieldCheck, TrendingUp, Activity, Settings, ScanSearch, HeartHandshake, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { levels } from "@/components/landing/ProfitLevels";
@@ -52,7 +53,7 @@ type WeekItem = {
 
 const programWeeks: WeekItem[] = [
   {
-    week: "Неделя 1",
+    week: "Модуль 1",
     title: "Диагностика системы",
     Icon: Activity,
     points: [
@@ -65,7 +66,7 @@ const programWeeks: WeekItem[] = [
       "Поставлен честный финансовый диагноз и выбран рабочий формат ведения бюджета под ваш образ жизни.",
   },
   {
-    week: "Неделя 2",
+    week: "Модуль 2",
     title: "Принцип шестерёнок",
     Icon: Settings,
     points: [
@@ -78,7 +79,7 @@ const programWeeks: WeekItem[] = [
       "Готовый фундамент личной финансовой системы, которая требует не больше 2 часов в месяц.",
   },
   {
-    week: "Неделя 3",
+    week: "Модуль 3",
     title: "Чёрные дыры бюджета",
     Icon: ScanSearch,
     points: [
@@ -90,7 +91,7 @@ const programWeeks: WeekItem[] = [
       "Найдены первые 15–20 тыс. ₽ «потерянных» денег и закрыты основные точки утечки бюджета.",
   },
   {
-    week: "Неделя 4",
+    week: "Модуль 4",
     title: "Ускорение доходов",
     Icon: HandCoins,
     points: [
@@ -103,7 +104,7 @@ const programWeeks: WeekItem[] = [
       "На руках 2–3 конкретные стратегии роста дохода и план их внедрения на ближайшие месяцы.",
   },
   {
-    week: "Неделя 5",
+    week: "Модуль 5",
     title: "Инвестиции",
     Icon: Landmark,
     points: [
@@ -116,7 +117,7 @@ const programWeeks: WeekItem[] = [
       "Вы трезво смотрите на инвестиционные инструменты. Выбираете себе «по карману» без тревоги упущенной выгоды.",
   },
   {
-    week: "Неделя 6",
+    week: "Модуль 6",
     title: "Психология финансов",
     Icon: HeartHandshake,
     points: [
@@ -297,12 +298,9 @@ const Landing2 = () => {
             <p className="font-display text-3xl font-semibold leading-none text-accent md:text-5xl">
               {nbsp("Все 3 ступени")}
             </p>
-            <h3 className="mt-3 max-w-4xl font-display text-4xl font-semibold leading-none md:text-6xl">
-              {nbsp("От шаблона бюджета до инвестиций и долгосрочного плана")}
-            </h3>
           </div>
-          <PuzzleWeeks />
-          <div className="mt-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <PuzzleWeeks title={"Полный набор инструментов для роста вашего капитала"} />
+          <div className="mt-10 border border-foreground/15 bg-card px-7 py-7 md:px-10 md:py-8 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div>
               <p className="font-body text-xl text-foreground/75">{nbsp("11 недель")}</p>
               <del className="mt-3 block font-display text-4xl font-semibold leading-none text-foreground/55 decoration-foreground/60 md:text-5xl">
@@ -323,8 +321,17 @@ const Landing2 = () => {
           {/* ===== Модули программы ===== */}
           <div className="grid grid-cols-12 gap-6 lg:gap-8 mt-20">
             {programWeeks.map((w, i) => (
+              <Fragment key={i}>
+              {i % 2 === 0 && (
+                <div className="col-span-12 flex items-center gap-4 pt-4 first:pt-0">
+                  <span aria-hidden="true" className="h-px flex-1 bg-foreground/15" />
+                  <span className="font-display text-lg font-semibold text-accent md:text-xl whitespace-nowrap">
+                    {nbsp(`${i / 2 + 1} ступень · ${levels[i / 2].title}`)}
+                  </span>
+                  <span aria-hidden="true" className="h-px flex-1 bg-foreground/15" />
+                </div>
+              )}
               <article
-                key={i}
                 id={`week-${i + 1}`}
                 className="col-span-12 md:col-span-6 group relative border border-foreground/15 bg-card hover:border-foreground transition-colors duration-300 overflow-hidden flex flex-col scroll-mt-24"
               >
@@ -375,6 +382,7 @@ const Landing2 = () => {
                   </div>
                 </div>
               </article>
+              </Fragment>
             ))}
           </div>
         </div>

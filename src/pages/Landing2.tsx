@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { ArrowUpRight, Video, FileCheck, Users, Clock, Check, Waves, Repeat2, Wallet, WalletCards, Hourglass, HandCoins, Landmark, NotebookTabs, CircleDollarSign, LineChart, ShieldCheck, TrendingUp, Activity, Settings, ScanSearch, HeartHandshake, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { levels } from "@/components/landing/ProfitLevels";
@@ -320,8 +321,17 @@ const Landing2 = () => {
           {/* ===== Модули программы ===== */}
           <div className="grid grid-cols-12 gap-6 lg:gap-8 mt-20">
             {programWeeks.map((w, i) => (
+              <Fragment key={i}>
+              {i % 2 === 0 && (
+                <div className="col-span-12 flex items-center gap-4 pt-4 first:pt-0">
+                  <span aria-hidden="true" className="h-px flex-1 bg-foreground/15" />
+                  <span className="font-display text-lg font-semibold text-accent md:text-xl whitespace-nowrap">
+                    {nbsp(`${i / 2 + 1} ступень · ${levels[i / 2].title}`)}
+                  </span>
+                  <span aria-hidden="true" className="h-px flex-1 bg-foreground/15" />
+                </div>
+              )}
               <article
-                key={i}
                 id={`week-${i + 1}`}
                 className="col-span-12 md:col-span-6 group relative border border-foreground/15 bg-card hover:border-foreground transition-colors duration-300 overflow-hidden flex flex-col scroll-mt-24"
               >

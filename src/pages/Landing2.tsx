@@ -303,12 +303,12 @@ const Landing2 = () => {
                 {nbsp("140 000 руб.")}
               </del>
               <strong className="mt-3 block font-display text-4xl font-semibold leading-none text-accent md:text-5xl">
-                {nbsp("69 000 руб.")}
+                {nbsp("79 000 руб.")}
               </strong>
               <p className="mt-2 font-body text-sm text-foreground/60">{nbsp("до 1 октября")}</p>
             </div>
             <Button asChild size="lg" className="rounded-none px-6">
-              <a href="https://nivz.getcourse.ru/profit_level3" target="_blank" rel="noopener noreferrer" onClick={trackedHref}>
+              <a href="https://nivz.getcourse.ru/profit_level123" target="_blank" rel="noopener noreferrer" onClick={trackedHref}>
                 {nbsp("Заказать")} <ArrowUpRight aria-hidden="true" />
               </a>
             </Button>

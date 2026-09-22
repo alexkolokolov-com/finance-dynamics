@@ -1,11 +1,8 @@
-import { ArrowUpRight, Video, FileCheck, Users, Clock, Check, Waves, Repeat2, Wallet, WalletCards, Hourglass, Activity, Settings, ScanSearch, HandCoins, Landmark, HeartHandshake, NotebookTabs, CircleDollarSign, LineChart, ShieldCheck, TrendingUp, type LucideIcon } from "lucide-react";
+import { ArrowUpRight, Video, FileCheck, Users, Clock, Check, Waves, Repeat2, Wallet, WalletCards, Hourglass, HandCoins, Landmark, NotebookTabs, CircleDollarSign, LineChart, ShieldCheck, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { levels } from "@/components/landing/ProfitLevels";
 import {
   mainGoal,
-  modules,
-  processSteps,
-  bonuses,
   targetAudience,
   resultCategories,
   paymentFormats,
@@ -15,13 +12,9 @@ import { CardAbout } from "@/components/sections/CardAbout";
 import { Footer } from "@/components/sections/Footer";
 import { SiteHeader } from "@/components/SiteHeader";
 import { HeroProfit } from "@/components/landing/HeroProfit";
-import PuzzleWeeks from "@/components/landing/PuzzleWeeks";
 import { InlineReviewPair, InlineReviewFeature, InlineReviewGrid } from "@/components/landing/InlineReviews";
 import { handleDiagnosAnketaClick, appendStoredParams } from "@/lib/ymGoals";
 import { nbsp } from "@/lib/nbsp";
-
-import goldenSpiral from "@/assets/golden-spiral.png";
-
 
 const processIcons = [Video, FileCheck, Users, Clock];
 const audienceIcons = [Waves, Repeat2, Wallet, Hourglass];
@@ -42,102 +35,10 @@ const goalTasks = [
   { Icon: HandCoins, text: "Избавиться от долгов" },
   { Icon: TrendingUp, text: "Перестать тревожиться из-за денег" },
 ];
-const module1 = modules[0];
-
-type WeekItem = {
-  week: string;
-  title: string;
-  Icon: LucideIcon;
-  points: string[];
-  result: string;
-};
-
-const programWeeks: WeekItem[] = [
-  {
-    week: "Неделя 1",
-    title: "Диагностика системы",
-    Icon: Activity,
-    points: [
-      "3 главные причины, почему ваши деньги «утекают сквозь пальцы»",
-      "Топ-6 форматов ведения бюджета под разные образы жизни",
-      "10 шаблонов, с которыми даже «безнадёжные» начинают вести учёт",
-      "Разбор ошибок в\u00A0личных финансах и\u00A0как больше не\u00A0наступать на\u00A0те\u00A0же грабли",
-    ],
-    result:
-      "Поставлен честный финансовый диагноз и выбран рабочий формат ведения бюджета под ваш образ жизни.",
-  },
-  {
-    week: "Неделя 2",
-    title: "Принцип шестерёнок",
-    Icon: Settings,
-    points: [
-      "Методика прокручивания «лучшей версии» за те же деньги",
-      "Пошаговый разбор кейса составления бюджета",
-      "Персональная практика по вашему выбранному формату бюджета",
-      "Как потратить 20% сил на учёт, а 80% — на улучшения",
-    ],
-    result:
-      "Готовый фундамент личной финансовой системы, которая требует не больше 2 часов в месяц.",
-  },
-  {
-    week: "Неделя 3",
-    title: "Чёрные дыры бюджета",
-    Icon: ScanSearch,
-    points: [
-      "12 проверенных способов найти «потерянные» деньги и дыры, куда они утекают",
-      "Здоровая экономия: как сокращать лишние траты, не отказываясь от удовольствий",
-      "Управление кредитами без переплат и стресса",
-    ],
-    result:
-      "Найдены первые 15–20 тыс. ₽ «потерянных» денег и закрыты основные точки утечки бюджета.",
-  },
-  {
-    week: "Неделя 4",
-    title: "Ускорение доходов",
-    Icon: HandCoins,
-    points: [
-      "50 инструментов роста доходов при работе в найме и на себя",
-      "Почему 95% людей неправильно просят повышения зарплаты",
-      "Источники дополнительного дохода на фрилансе",
-      "Вычеты, кэшбеки и другие «деньги из воздуха», о которых вы не задумывались",
-    ],
-    result:
-      "На руках 2–3 конкретные стратегии роста дохода и план их внедрения на ближайшие месяцы.",
-  },
-  {
-    week: "Неделя 5",
-    title: "Инвестиции",
-    Icon: Landmark,
-    points: [
-      "Развенчание мифов о пассивном доходе. Что из этого работает, а где зарабатывают на вас",
-      "Консервативные инструменты: депозиты и недвижимость",
-      "Простым языком — как работают фонды, акции и облигации",
-      "Криптовалюта и другие высокорискованные инструменты",
-    ],
-    result:
-      "Вы трезво смотрите на инвестиционные инструменты. Выбираете себе «по карману» без тревоги упущенной выгоды.",
-  },
-  {
-    week: "Неделя 6",
-    title: "Психология финансов",
-    Icon: HeartHandshake,
-    points: [
-      "Почему дисциплина в финансах не работает",
-      "Проработка установок «у меня никогда не будет денег», «деньги — зло»",
-      "Как перестать бояться планировать и начать мечтать о большем",
-      "Техники карьерного планирования в эпоху неопределённости",
-    ],
-    result:
-      "Снята финансовая тревога, появляется уверенность в деньгах и привычка планировать вдолгую.",
-  },
-];
-
-const graduationPoints = [
-  "По\u00A0уникальной методологии вы\u00A0сведёте воедино свои личные и\u00A0финансовые цели на\u00A05 и\u00A010\u00A0лет вперёд:",
-  "Расчёт: сколько именно нужно на\u00A0комфортную жизнь, детей и\u00A0пенсию",
-  "Интеграция мечт в\u00A0финансовый план\u00A0— не\u00A0фантазии, а\u00A0реальные измеримые цели",
-  "Разработка плана\u00A0В, С\u00A0и\u00A0даже Ж\u00A0и\u00A0Ё",
-  
+const levelPrices = [
+  { oldPrice: "30 000 руб.", newPrice: "19 000 руб." },
+  { oldPrice: "40 000 руб.", newPrice: "29 000 руб." },
+  { oldPrice: "70 000 руб.", newPrice: "49 000 руб." },
 ];
 
 const scrollToPricing = () => {
@@ -251,57 +152,75 @@ const Landing2 = () => {
             </div>
           </div>
 
-          {/* ===== Ступени курса: на десктопе лесенкой ===== */}
-          <div className="mt-14 md:mt-20">
+          {/* ===== Ступени курса ===== */}
+          <div className="relative mt-14 md:mt-20 lg:pt-36">
+            <svg
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 top-28 hidden h-44 w-full text-accent lg:block"
+              viewBox="0 0 1200 176"
+              preserveAspectRatio="none"
+            >
+              <path d="M0 176 H400 V104 H800 V32 H1200" fill="none" stroke="currentColor" strokeWidth="2" />
+            </svg>
+            <div className="grid gap-6 md:grid-cols-2 md:items-start lg:grid-cols-3 lg:gap-7">
             {levels.map((level, i) => {
-              const offsets = ["md:ml-0", "md:ml-[10%]", "md:ml-[20%]"];
+              const mobileOffsets = ["mr-8", "ml-4 mr-4", "ml-8"];
+              const tabletOffsets = ["md:mt-9", "md:mt-0", "md:col-start-2 md:-mt-3"];
+              const desktopOffsets = ["lg:mt-36", "lg:mt-18", "lg:mt-0"];
+              const price = levelPrices[i];
+              if (!price) return null;
+              const duration = i === 2 ? "4 недели" : level.duration;
               return (
                 <article
                   key={level.number}
-                  className={`border-t border-foreground/20 py-10 md:py-12 ${offsets[i]} ${
-                    i > 0 ? "md:border-l md:border-foreground/15 md:pl-10 lg:pl-14" : ""
-                  }`}
+                  aria-label={`${level.number} ступень. ${level.title}`}
+                  className={`relative flex min-h-full flex-col overflow-hidden border border-foreground/15 border-t-4 border-t-accent bg-card p-6 ${mobileOffsets[i]} ${tabletOffsets[i]} ${desktopOffsets[i]} md:mx-0 md:p-7 lg:min-h-[46rem] lg:p-8`}
                 >
-                  <div className="grid md:grid-cols-[9rem_minmax(0,1fr)_minmax(16rem,0.75fr)] md:gap-8 lg:gap-10">
-                    <div className="mb-6 md:mb-0">
-                      <p className="flex items-baseline gap-3">
-                        <span className="number-display text-7xl text-accent md:text-8xl">{level.number}</span>
-                        <span className="font-display text-2xl font-semibold leading-none md:text-3xl">
-                          {nbsp("ступень")}
-                        </span>
-                      </p>
-                    </div>
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute right-3 top-0 font-display text-[8rem] font-semibold leading-none text-transparent opacity-20 md:text-[9rem] lg:text-[11rem]"
+                    style={{ WebkitTextStroke: "1px hsl(var(--foreground))" }}
+                  >
+                    {level.number}
+                  </span>
 
-                    <div>
-                      <p className="font-body text-sm font-semibold text-accent">{nbsp(level.duration)}</p>
-                      <h3 className="mt-2 font-display text-3xl font-semibold leading-none md:text-4xl">
-                        {nbsp(level.title)}
-                      </h3>
-                      <p className="mt-5 max-w-xl font-body text-lg leading-relaxed text-foreground/75">
-                        {nbsp(level.description)}
-                      </p>
-                      <Button asChild size="lg" className="mt-7 rounded-none px-6">
-                        <a href={level.href} target="_blank" rel="noopener noreferrer" onClick={trackedHref}>
-                          {nbsp("Выбрать тариф")} <ArrowUpRight aria-hidden="true" />
-                        </a>
-                      </Button>
-                    </div>
+                  <div className="relative z-10 flex h-full flex-col">
+                    <p className="font-body text-sm font-semibold text-accent">{nbsp(duration)}</p>
+                    <h3 className="mt-3 max-w-[14rem] font-display text-3xl font-semibold leading-none md:text-[2rem] lg:text-4xl">
+                      {nbsp(level.title)}
+                    </h3>
+                    <p className="mt-5 font-body leading-relaxed text-foreground/75 lg:text-lg">
+                      {nbsp(level.description)}
+                    </p>
 
-                    <div className="mt-8 border-l-2 border-accent pl-5 md:mt-0">
+                    <div className="mt-7 border-l-2 border-accent pl-4">
                       <p className="font-display text-lg font-semibold">{nbsp("Подходит вам, если:")}</p>
-                      <ul className="mt-5 space-y-4">
+                      <ul className="mt-4 space-y-3">
                         {level.fits.map((item) => (
-                          <li key={item} className="flex gap-3 font-body leading-snug text-foreground/80">
-                            <Check aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
+                          <li key={item} className="flex gap-2.5 font-body text-sm leading-snug text-foreground/80 lg:text-base">
+                            <Check aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
                             <span>{nbsp(item)}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
+
+                    <div className="mt-auto pt-8">
+                      <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1 font-body">
+                        <del className="text-base text-foreground/55 decoration-foreground/60">{nbsp(price.oldPrice)}</del>
+                        <strong className="font-display text-3xl font-semibold leading-none text-accent">{nbsp(price.newPrice)}</strong>
+                      </p>
+                      <Button asChild size="lg" className="mt-6 w-full rounded-none px-5">
+                        <a href={level.href} target="_blank" rel="noopener noreferrer" onClick={trackedHref}>
+                          {nbsp("Выбрать тариф")} <ArrowUpRight aria-hidden="true" />
+                        </a>
+                      </Button>
+                    </div>
                   </div>
                 </article>
               );
             })}
+            </div>
           </div>
 
           {/* ===== Все 3 ступени ===== */}
@@ -314,7 +233,11 @@ const Landing2 = () => {
                 {nbsp("От шаблона бюджета до инвестиций и долгосрочного плана")}
               </h3>
               <p className="mt-6 font-body text-xl text-background/75">
-                {nbsp("11 недель + личная консультация Василия")}
+                {nbsp("11 недель")}
+              </p>
+              <p className="mt-5 flex flex-wrap items-baseline gap-x-4 gap-y-2">
+                <del className="font-body text-lg text-background/55 decoration-background/60">{nbsp("140 000 руб.")}</del>
+                <strong className="font-display text-4xl font-semibold leading-none text-accent md:text-5xl">{nbsp("69 000 руб.")}</strong>
               </p>
             </div>
             <Button

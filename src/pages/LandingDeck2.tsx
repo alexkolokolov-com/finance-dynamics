@@ -268,6 +268,7 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
       const slides = Array.from(root.children).filter(
         (el): el is HTMLElement =>
           el instanceof HTMLElement &&
+          el.getAttribute("data-fit") !== "off" &&
           (el.hasAttribute("data-pdf-slide") || el.classList.contains("snap-start"))
       );
       slides.forEach((slide) => {

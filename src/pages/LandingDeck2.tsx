@@ -390,9 +390,9 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
               className={slideCls("py-6 border-t border-foreground/10")}
             >
               <div className="container-px max-w-7xl mx-auto">
-                <div className="grid grid-cols-12 gap-6 lg:gap-10 mb-4 items-end">
+                <div className="grid grid-cols-12 gap-6 lg:gap-10 mb-3 items-end">
                   <div className="col-span-12 md:col-span-8">
-                    <h2 className="font-serif-display font-semibold text-foreground text-4xl md:text-6xl leading-[0.95] tracking-tight">
+                    <h2 className="font-serif-display font-semibold text-foreground text-4xl md:text-5xl leading-[0.95] tracking-tight">
                       Отзывы выпускников
                     </h2>
                   </div>
@@ -403,11 +403,11 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-3">
+                <div className="grid grid-cols-1 gap-2">
                   {pageReviews.map((r, i) => (
                     <figure
                       key={i}
-                      className="grid grid-cols-12 gap-4 border border-foreground/15 bg-card p-4"
+                      className="grid grid-cols-12 gap-3 border border-foreground/15 bg-card p-3"
                     >
                       <header className="col-span-12 flex items-center gap-4 md:col-span-3 md:items-start">
                         {r.avatar ? (

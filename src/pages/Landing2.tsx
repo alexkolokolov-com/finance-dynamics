@@ -1,4 +1,4 @@
-import { ArrowUpRight, Video, FileCheck, Users, Clock, Check, Waves, Repeat2, Wallet, WalletCards, Hourglass, HandCoins, Landmark, NotebookTabs, CircleDollarSign, LineChart, ShieldCheck, TrendingUp } from "lucide-react";
+import { ArrowUpRight, Video, FileCheck, Users, Clock, Check, Waves, Repeat2, Wallet, WalletCards, Hourglass, HandCoins, Landmark, NotebookTabs, CircleDollarSign, LineChart, ShieldCheck, TrendingUp, Activity, Settings, ScanSearch, HeartHandshake, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { levels } from "@/components/landing/ProfitLevels";
 import {
@@ -12,6 +12,7 @@ import { CardAbout } from "@/components/sections/CardAbout";
 import { Footer } from "@/components/sections/Footer";
 import { SiteHeader } from "@/components/SiteHeader";
 import { HeroProfit } from "@/components/landing/HeroProfit";
+import PuzzleWeeks from "@/components/landing/PuzzleWeeks";
 import { InlineReviewPair, InlineReviewFeature, InlineReviewGrid } from "@/components/landing/InlineReviews";
 import { handleDiagnosAnketaClick, appendStoredParams } from "@/lib/ymGoals";
 import { nbsp } from "@/lib/nbsp";
@@ -39,6 +40,94 @@ const levelPrices = [
   { oldPrice: "30 000 руб.", newPrice: "19 000 руб." },
   { oldPrice: "40 000 руб.", newPrice: "29 000 руб." },
   { oldPrice: "70 000 руб.", newPrice: "49 000 руб." },
+];
+
+type WeekItem = {
+  week: string;
+  title: string;
+  Icon: LucideIcon;
+  points: string[];
+  result: string;
+};
+
+const programWeeks: WeekItem[] = [
+  {
+    week: "Неделя 1",
+    title: "Диагностика системы",
+    Icon: Activity,
+    points: [
+      "3 главные причины, почему ваши деньги «утекают сквозь пальцы»",
+      "Топ-6 форматов ведения бюджета под разные образы жизни",
+      "10 шаблонов, с которыми даже «безнадёжные» начинают вести учёт",
+      "Разбор ошибок в\u00A0личных финансах и\u00A0как больше не\u00A0наступать на\u00A0те\u00A0же грабли",
+    ],
+    result:
+      "Поставлен честный финансовый диагноз и выбран рабочий формат ведения бюджета под ваш образ жизни.",
+  },
+  {
+    week: "Неделя 2",
+    title: "Принцип шестерёнок",
+    Icon: Settings,
+    points: [
+      "Методика прокручивания «лучшей версии» за те же деньги",
+      "Пошаговый разбор кейса составления бюджета",
+      "Персональная практика по вашему выбранному формату бюджета",
+      "Как потратить 20% сил на учёт, а 80% — на улучшения",
+    ],
+    result:
+      "Готовый фундамент личной финансовой системы, которая требует не больше 2 часов в месяц.",
+  },
+  {
+    week: "Неделя 3",
+    title: "Чёрные дыры бюджета",
+    Icon: ScanSearch,
+    points: [
+      "12 проверенных способов найти «потерянные» деньги и дыры, куда они утекают",
+      "Здоровая экономия: как сокращать лишние траты, не отказываясь от удовольствий",
+      "Управление кредитами без переплат и стресса",
+    ],
+    result:
+      "Найдены первые 15–20 тыс. ₽ «потерянных» денег и закрыты основные точки утечки бюджета.",
+  },
+  {
+    week: "Неделя 4",
+    title: "Ускорение доходов",
+    Icon: HandCoins,
+    points: [
+      "50 инструментов роста доходов при работе в найме и на себя",
+      "Почему 95% людей неправильно просят повышения зарплаты",
+      "Источники дополнительного дохода на фрилансе",
+      "Вычеты, кэшбеки и другие «деньги из воздуха», о которых вы не задумывались",
+    ],
+    result:
+      "На руках 2–3 конкретные стратегии роста дохода и план их внедрения на ближайшие месяцы.",
+  },
+  {
+    week: "Неделя 5",
+    title: "Инвестиции",
+    Icon: Landmark,
+    points: [
+      "Развенчание мифов о пассивном доходе. Что из этого работает, а где зарабатывают на вас",
+      "Консервативные инструменты: депозиты и недвижимость",
+      "Простым языком — как работают фонды, акции и облигации",
+      "Криптовалюта и другие высокорискованные инструменты",
+    ],
+    result:
+      "Вы трезво смотрите на инвестиционные инструменты. Выбираете себе «по карману» без тревоги упущенной выгоды.",
+  },
+  {
+    week: "Неделя 6",
+    title: "Психология финансов",
+    Icon: HeartHandshake,
+    points: [
+      "Почему дисциплина в финансах не работает",
+      "Проработка установок «у меня никогда не будет денег», «деньги — зло»",
+      "Как перестать бояться планировать и начать мечтать о большем",
+      "Техники карьерного планирования в эпоху неопределённости",
+    ],
+    result:
+      "Снята финансовая тревога, появляется уверенность в деньгах и привычка планировать вдолгую.",
+  },
 ];
 
 const scrollToPricing = () => {
@@ -203,36 +292,91 @@ const Landing2 = () => {
             </div>
           </div>
 
-          {/* ===== Все 3 ступени ===== */}
-          <article className="mt-16 grid gap-8 bg-board p-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:p-12">
+          {/* ===== Все 3 ступени — пазл, цена и срок ===== */}
+          <div className="mt-16">
+            <p className="font-display text-3xl font-semibold leading-none text-accent md:text-5xl">
+              {nbsp("Все 3 ступени")}
+            </p>
+            <h3 className="mt-3 max-w-4xl font-display text-4xl font-semibold leading-none md:text-6xl">
+              {nbsp("От шаблона бюджета до инвестиций и долгосрочного плана")}
+            </h3>
+          </div>
+          <PuzzleWeeks />
+          <div className="mt-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="font-display text-3xl font-semibold leading-none text-accent md:text-5xl">
-                {nbsp("Все 3 ступени")}
-              </p>
-              <h3 className="mt-3 max-w-4xl font-display text-4xl font-semibold leading-none text-background md:text-6xl">
-                {nbsp("От шаблона бюджета до инвестиций и долгосрочного плана")}
-              </h3>
-              <p className="mt-6 font-body text-xl text-background/75">
-                {nbsp("11 недель")}
-              </p>
-              <del className="mt-5 block font-display text-4xl font-semibold leading-none text-background/55 decoration-background/60 md:text-5xl">
+              <p className="font-body text-xl text-foreground/75">{nbsp("11 недель")}</p>
+              <del className="mt-3 block font-display text-4xl font-semibold leading-none text-foreground/55 decoration-foreground/60 md:text-5xl">
                 {nbsp("140 000 руб.")}
               </del>
               <strong className="mt-3 block font-display text-4xl font-semibold leading-none text-accent md:text-5xl">
                 {nbsp("69 000 руб.")}
               </strong>
-              <p className="mt-2 font-body text-sm text-background/60">{nbsp("до 1 октября")}</p>
+              <p className="mt-2 font-body text-sm text-foreground/60">{nbsp("до 1 октября")}</p>
             </div>
-            <Button
-              asChild
-              size="lg"
-              className="rounded-none bg-accent px-6 text-accent-foreground hover:bg-background hover:text-foreground"
-            >
+            <Button asChild size="lg" className="rounded-none px-6">
               <a href="https://nivz.getcourse.ru/profit_level3" target="_blank" rel="noopener noreferrer" onClick={trackedHref}>
                 {nbsp("Заказать")} <ArrowUpRight aria-hidden="true" />
               </a>
             </Button>
-          </article>
+          </div>
+
+          {/* ===== Модули программы ===== */}
+          <div className="grid grid-cols-12 gap-6 lg:gap-8 mt-20">
+            {programWeeks.map((w, i) => (
+              <article
+                key={i}
+                id={`week-${i + 1}`}
+                className="col-span-12 md:col-span-6 group relative border border-foreground/15 bg-card hover:border-foreground transition-colors duration-300 overflow-hidden flex flex-col scroll-mt-24"
+              >
+                <w.Icon
+                  aria-hidden="true"
+                  strokeWidth={0.9}
+                  className="pointer-events-none select-none absolute text-accent/15 group-hover:text-accent/25 transition-colors duration-500 -top-8 -right-8 w-40 h-40 md:w-48 md:h-48"
+                />
+                <div className="relative flex flex-col flex-1 p-7 md:p-8">
+                  <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-3">
+                    {w.week}
+                  </div>
+                  <h3 className="font-display text-xl md:text-2xl font-bold leading-tight tracking-tight mb-5">
+                    {(() => {
+                      const parts = w.title.split(" ");
+                      if (parts.length < 2) return w.title;
+                      const last = parts.pop();
+                      return (
+                        <>
+                          {parts.join(" ")}
+                          <br />
+                          {last}
+                        </>
+                      );
+                    })()}
+                  </h3>
+
+                  <ul className="space-y-3 mb-8">
+                    {w.points.map((p, pi) => (
+                      <li key={pi} className="flex gap-3">
+                        <span className="font-mono text-accent text-xs shrink-0 pt-1">
+                          →
+                        </span>
+                        <span className="text-sm text-foreground/80 leading-relaxed">
+                          {p}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="bg-foreground text-background -mx-7 md:-mx-8 -mb-7 md:-mb-8 px-7 md:px-8 py-5 mt-auto">
+                    <div className="font-mono text-[10px] uppercase tracking-widest text-accent mb-1">
+                      результат
+                    </div>
+                    <p className="text-sm leading-relaxed text-background/90">
+                      {w.result}
+                    </p>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 

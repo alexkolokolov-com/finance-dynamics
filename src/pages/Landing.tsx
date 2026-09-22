@@ -1,6 +1,5 @@
 import { Video, FileCheck, Users, Clock, Check, Waves, Repeat2, Wallet, WalletCards, Hourglass, Activity, Settings, ScanSearch, HandCoins, Landmark, HeartHandshake, NotebookTabs, CircleDollarSign, LineChart, ShieldCheck, TrendingUp, type LucideIcon } from "lucide-react";
 import {
-  programGoals,
   mainGoal,
   modules,
   processSteps,
@@ -17,6 +16,7 @@ import { HeroProfit } from "@/components/landing/HeroProfit";
 import PuzzleWeeks from "@/components/landing/PuzzleWeeks";
 import { InlineReviewPair, InlineReviewFeature, InlineReviewGrid } from "@/components/landing/InlineReviews";
 import { handleDiagnosAnketaClick } from "@/lib/ymGoals";
+import { nbsp } from "@/lib/nbsp";
 
 import goldenSpiral from "@/assets/golden-spiral.png";
 

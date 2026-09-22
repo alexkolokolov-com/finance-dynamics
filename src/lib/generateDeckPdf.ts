@@ -20,6 +20,8 @@ export type GenerateOpts = {
   seriesApplied: Record<number, boolean>;
   fileName?: string;
   scale?: number;
+  /** Какую презентацию собирать: /landing-deck (deck) или /landing-deck-2 (deck2) */
+  page?: "deck" | "deck2";
 };
 
 const withTimeout = <T,>(p: Promise<T>, ms: number, tag: string): Promise<T | "timeout"> => {
@@ -79,10 +81,12 @@ export async function generateDeckPdf({
   seriesApplied,
   fileName = "profit-kp",
   scale = PDF_W / SLIDE_W,
+  page = "deck",
 }: GenerateOpts) {
   console.log("[pdf] start");
   // динамический импорт, чтобы избежать круговой зависимости
-  const { default: LandingDeck } = await import("@/pages/LandingDeck");
+  const { default: DeckPage } =
+    page === "deck2" ? await import("@/pages/LandingDeck2") : await import("@/pages/LandingDeck");
 
   // оффскрин-хост в реальном вьюпорте (opacity:0): html2canvas корректно
   // клонирует фоны/градиенты только для узлов, физически находящихся в окне.
@@ -107,8 +111,9 @@ export async function generateDeckPdf({
 
   try {
     root.render(
-      createElement(LandingDeck, {
-        pdfMode: { discountApplied, seriesApplied },
+      createElement(DeckPage as never, {
+        pdfMode:
+          page === "deck2" ? { enabled: true } : { discountApplied, seriesApplied },
       } as never)
     );
 

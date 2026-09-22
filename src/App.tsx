@@ -20,6 +20,7 @@ import Landing from "./pages/Landing.tsx";
 import Landing2 from "./pages/Landing2.tsx";
 import Profit from "./pages/Profit.tsx";
 import LandingDeck from "./pages/LandingDeck.tsx";
+import LandingDeck2 from "./pages/LandingDeck2.tsx";
 import Support2026 from "./pages/Support2026.tsx";
 import Traffic from "./pages/Traffic.tsx";
 import Calculator from "./pages/Calculator.tsx";
@@ -60,6 +61,7 @@ const App = () => (
           <Route path="/landing2" element={<Landing2 />} />
           <Route path="/profit" element={<Profit />} />
           <Route path="/landing-deck" element={<LandingDeck />} />
+          <Route path="/landing-deck-2" element={<LandingDeck2 />} />
           <Route path="/support-2026" element={<Support2026 />} />
           <Route path="/traffic" element={<Traffic />} />
           <Route path="/calculator" element={<Calculator />} />

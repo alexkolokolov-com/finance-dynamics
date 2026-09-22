@@ -387,7 +387,7 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
               key={`reviews-${pageStartIdx}-${localIdx}`}
               id={localIdx === 0 ? firstSlideId : undefined}
               {...slideAttrs}
-              className={slideCls("py-6 border-t border-foreground/10")}
+              className={slideCls("py-5 border-t border-foreground/10")}
             >
               <div className="container-px max-w-7xl mx-auto">
                 <div className="grid grid-cols-12 gap-6 lg:gap-10 mb-3 items-end">

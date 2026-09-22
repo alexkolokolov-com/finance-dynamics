@@ -382,6 +382,7 @@ const Landing2 = () => {
                   </div>
                 </div>
               </article>
+              </Fragment>
             ))}
           </div>
         </div>

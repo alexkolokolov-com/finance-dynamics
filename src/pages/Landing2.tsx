@@ -297,12 +297,9 @@ const Landing2 = () => {
             <p className="font-display text-3xl font-semibold leading-none text-accent md:text-5xl">
               {nbsp("Все 3 ступени")}
             </p>
-            <h3 className="mt-3 max-w-4xl font-display text-4xl font-semibold leading-none md:text-6xl">
-              {nbsp("От шаблона бюджета до инвестиций и долгосрочного плана")}
-            </h3>
           </div>
-          <PuzzleWeeks />
-          <div className="mt-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <PuzzleWeeks title={"Полный набор инструментов для роста вашего капитала"} />
+          <div className="mt-10 border border-foreground/15 bg-card px-7 py-7 md:px-10 md:py-8 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div>
               <p className="font-body text-xl text-foreground/75">{nbsp("11 недель")}</p>
               <del className="mt-3 block font-display text-4xl font-semibold leading-none text-foreground/55 decoration-foreground/60 md:text-5xl">

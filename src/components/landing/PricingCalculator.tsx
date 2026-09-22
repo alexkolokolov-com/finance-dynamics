@@ -43,13 +43,24 @@ const supports: Support[] = [
   { id: "vasily", name: "С Василием", unit: 20_000, three: 40_000, threeList: 60_000 },
 ];
 
-const initialState = {
-  course: "budget" as CourseId,
-  mode: "promo" as PriceMode,
-  support: "none" as SupportId,
+export type CalculatorSelection = {
+  course: CourseId;
+  mode: PriceMode;
+  support: SupportId;
+  curatorSteps: number;
+  vasilySteps: number;
+};
+
+export const initialCalculatorSelection: CalculatorSelection = {
+  course: "budget",
+  mode: "promo",
+  support: "none",
   curatorSteps: 1,
   vasilySteps: 1,
 };
+
+const initialState = initialCalculatorSelection;
+
 
 const rub = (value: number) => `${new Intl.NumberFormat("ru-RU").format(value)} ₽`;
 

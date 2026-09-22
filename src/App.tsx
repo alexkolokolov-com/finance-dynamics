@@ -17,6 +17,7 @@ import FinancialHorizon from "./pages/FinancialHorizon.tsx";
 import Gears from "./pages/Gears.tsx";
 import Longevity from "./pages/Longevity.tsx";
 import Landing from "./pages/Landing.tsx";
+import Landing2 from "./pages/Landing2.tsx";
 import Profit from "./pages/Profit.tsx";
 import LandingDeck from "./pages/LandingDeck.tsx";
 import Support2026 from "./pages/Support2026.tsx";

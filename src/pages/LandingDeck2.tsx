@@ -386,10 +386,10 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
               key={`reviews-${pageStartIdx}-${localIdx}`}
               id={localIdx === 0 ? firstSlideId : undefined}
               {...slideAttrs}
-              className={slideCls("py-20 md:py-28 border-t border-foreground/10")}
+              className={slideCls("py-10 md:py-12 border-t border-foreground/10")}
             >
               <div className="container-px max-w-7xl mx-auto">
-                <div className="grid grid-cols-12 gap-6 lg:gap-10 mb-12 items-end">
+                <div className="grid grid-cols-12 gap-6 lg:gap-10 mb-7 items-end">
                   <div className="col-span-12 md:col-span-8">
                     <h2 className="font-serif-display font-semibold text-foreground text-4xl md:text-6xl leading-[0.95] tracking-tight">
                       Отзывы выпускников
@@ -402,13 +402,13 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                <div className="grid grid-cols-1 gap-4">
                   {pageReviews.map((r, i) => (
                     <figure
                       key={i}
-                      className="border border-foreground/15 bg-card p-7 md:p-9 flex flex-col"
+                      className="grid grid-cols-12 gap-5 border border-foreground/15 bg-card p-5 md:p-6"
                     >
-                      <header className="flex items-center gap-4">
+                      <header className="col-span-12 flex items-center gap-4 md:col-span-3 md:items-start">
                         {r.avatar ? (
                           <img
                             src={r.avatar}
@@ -439,16 +439,16 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
                         </div>
                       </header>
 
-                      <blockquote className="mt-6 font-serif-display text-lg md:text-xl leading-snug text-foreground border-l-2 border-accent pl-4">
+                      <blockquote className="col-span-12 font-serif-display text-lg leading-snug text-foreground border-l-2 border-accent pl-4 md:col-span-4 md:text-xl">
                         «{r.quote}»
                       </blockquote>
 
-                      <div className="mt-7 pt-6 border-t border-foreground/10 grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1">
+                      <div className="col-span-12 grid grid-cols-1 gap-5 border-t border-foreground/10 pt-5 sm:grid-cols-2 md:col-span-5 md:border-l md:border-t-0 md:pl-5 md:pt-0">
                         <div>
                           <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-3">
                             Точка&nbsp;А
                           </div>
-                          <ul className="space-y-1.5 font-body text-sm md:text-[0.95rem] leading-relaxed text-foreground/75">
+                          <ul className="space-y-1 font-body text-sm leading-snug text-foreground/75">
                             {r.from.map((line, j) => (
                               <li key={j}>{line}</li>
                             ))}
@@ -458,7 +458,7 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
                           <div className="font-mono text-[10px] uppercase tracking-widest text-accent mb-3">
                             Точка&nbsp;Б
                           </div>
-                          <ul className="space-y-1.5 font-body text-sm md:text-[0.95rem] leading-relaxed text-foreground">
+                          <ul className="space-y-1 font-body text-sm leading-snug text-foreground">
                             {r.to.map((line, j) => (
                               <li key={j}>{line}</li>
                             ))}
@@ -559,14 +559,14 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
 
       {/* ============== EXPERT ============== */}
       <div {...slideAttrs} className={slideCls("")}>
-        <CardAbout eyebrow="Автор программы" heading="Василий Мещеряков" />
+        <CardAbout eyebrow="Автор программы" heading="Василий Мещеряков" scale="deck" />
       </div>
 
       {/* ============== REVIEWS — Алексей + Любовь ============== */}
       {renderReviewSlides([0, 1], 0, 4)}
 
       {/* ============== STAIRS — три ступени на один экран ============== */}
-      <section id="program" {...slideAttrs} className={slideCls("py-16 md:py-20 border-t border-foreground/10 scroll-mt-24")}>
+      <section id="program" {...slideAttrs} className={slideCls("py-8 md:py-10 border-t border-foreground/10 scroll-mt-24")}>
         <StairsSlide />
       </section>
 

@@ -164,7 +164,6 @@ const Landing2 = () => {
             </svg>
             <div className="grid gap-6 md:grid-cols-2 md:items-start lg:grid-cols-3 lg:gap-7">
             {levels.map((level, i) => {
-              const mobileOffsets = ["mr-8", "ml-4 mr-4", "ml-8"];
               const tabletOffsets = ["md:mt-9", "md:mt-0", "md:col-start-2 md:-mt-3 lg:col-start-auto"];
               const desktopOffsets = ["lg:mt-36", "lg:mt-[4.5rem]", "lg:mt-0"];
               const price = levelPrices[i];
@@ -174,7 +173,7 @@ const Landing2 = () => {
                 <article
                   key={level.number}
                   aria-label={`${level.number} ступень. ${level.title}`}
-                  className={`relative flex min-h-full flex-col overflow-hidden border border-foreground/15 border-t-4 border-t-accent bg-card p-6 ${mobileOffsets[i]} ${tabletOffsets[i]} ${desktopOffsets[i]} md:mx-0 md:min-h-[45rem] md:p-7 lg:min-h-[64rem] lg:p-8 xl:min-h-[54rem]`}
+                  className={`relative overflow-hidden border border-foreground/15 border-t-4 border-t-accent bg-card p-6 ${tabletOffsets[i]} ${desktopOffsets[i]} md:p-7 lg:p-8`}
                 >
                   <span
                     aria-hidden="true"
@@ -183,7 +182,7 @@ const Landing2 = () => {
                     {level.number}
                   </span>
 
-                  <div className="relative z-10 flex h-full flex-col">
+                  <div className="relative z-10">
                     <p className="font-body text-sm font-semibold text-accent">{nbsp(duration)}</p>
                     <h3 className="mt-3 max-w-[14rem] font-display text-3xl font-semibold leading-none md:text-[2rem] lg:text-4xl">
                       {nbsp(level.title)}
@@ -204,14 +203,14 @@ const Landing2 = () => {
                       </ul>
                     </div>
 
-                    <div className="mt-auto pt-8">
+                    <div className="pt-8">
                       <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1 font-body">
                         <del className="text-base text-foreground/55 decoration-foreground/60">{nbsp(price.oldPrice)}</del>
                         <strong className="font-display text-3xl font-semibold leading-none text-accent">{nbsp(price.newPrice)}</strong>
                       </p>
                       <Button asChild size="lg" className="mt-6 w-full rounded-none px-5">
                         <a href={level.href} target="_blank" rel="noopener noreferrer" onClick={trackedHref}>
-                          {nbsp("Выбрать тариф")} <ArrowUpRight aria-hidden="true" />
+                          {nbsp("Заказать")} <ArrowUpRight aria-hidden="true" />
                         </a>
                       </Button>
                     </div>
@@ -245,7 +244,7 @@ const Landing2 = () => {
               className="rounded-none bg-accent px-6 text-accent-foreground hover:bg-background hover:text-foreground"
             >
               <a href="https://nivz.getcourse.ru/profit_level3" target="_blank" rel="noopener noreferrer" onClick={trackedHref}>
-                {nbsp("Выбрать тариф")} <ArrowUpRight aria-hidden="true" />
+                {nbsp("Заказать")} <ArrowUpRight aria-hidden="true" />
               </a>
             </Button>
           </article>

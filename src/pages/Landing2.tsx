@@ -165,7 +165,7 @@ const Landing2 = () => {
             <div className="grid gap-6 md:grid-cols-2 md:items-start lg:grid-cols-3 lg:gap-7">
             {levels.map((level, i) => {
               const mobileOffsets = ["mr-8", "ml-4 mr-4", "ml-8"];
-              const tabletOffsets = ["md:mt-9", "md:mt-0", "md:col-start-2 md:-mt-3"];
+              const tabletOffsets = ["md:mt-9", "md:mt-0", "md:col-start-2 md:-mt-3 lg:col-start-auto"];
               const desktopOffsets = ["lg:mt-36", "lg:mt-[4.5rem]", "lg:mt-0"];
               const price = levelPrices[i];
               if (!price) return null;
@@ -174,7 +174,7 @@ const Landing2 = () => {
                 <article
                   key={level.number}
                   aria-label={`${level.number} ступень. ${level.title}`}
-                  className={`relative flex min-h-full flex-col overflow-hidden border border-foreground/15 border-t-4 border-t-accent bg-card p-6 ${mobileOffsets[i]} ${tabletOffsets[i]} ${desktopOffsets[i]} md:mx-0 md:p-7 lg:min-h-[46rem] lg:p-8`}
+                  className={`relative flex min-h-full flex-col overflow-hidden border border-foreground/15 border-t-4 border-t-accent bg-card p-6 ${mobileOffsets[i]} ${tabletOffsets[i]} ${desktopOffsets[i]} md:mx-0 md:min-h-[45rem] md:p-7 lg:min-h-[64rem] lg:p-8 xl:min-h-[54rem]`}
                 >
                   <span
                     aria-hidden="true"

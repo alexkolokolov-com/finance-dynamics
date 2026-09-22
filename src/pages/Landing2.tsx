@@ -278,7 +278,7 @@ const Landing2 = () => {
                       <p className="mt-2 font-body text-sm text-foreground/60">{nbsp("до 1 октября")}</p>
                       <Button asChild size="lg" className="mt-5 w-full rounded-none px-5">
                         <a href={level.href} target="_blank" rel="noopener noreferrer" onClick={trackedHref}>
-                          {nbsp("Заказать")} <ArrowUpRight aria-hidden="true" />
+                          {nbsp("Записаться")} <ArrowUpRight aria-hidden="true" />
                         </a>
                       </Button>
                     </div>
@@ -309,7 +309,7 @@ const Landing2 = () => {
             </div>
             <Button asChild size="lg" className="rounded-none px-6">
               <a href="https://nivz.getcourse.ru/profit_level123" target="_blank" rel="noopener noreferrer" onClick={trackedHref}>
-                {nbsp("Заказать")} <ArrowUpRight aria-hidden="true" />
+                {nbsp("Записаться")} <ArrowUpRight aria-hidden="true" />
               </a>
             </Button>
           </div>

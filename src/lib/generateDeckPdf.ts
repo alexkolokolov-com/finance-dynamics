@@ -84,6 +84,7 @@ export async function generateDeckPdf({
   fileName = "profit-kp",
   scale = PDF_W / SLIDE_W,
   page = "deck",
+  calculator,
 }: GenerateOpts) {
   console.log("[pdf] start");
   // динамический импорт, чтобы избежать круговой зависимости

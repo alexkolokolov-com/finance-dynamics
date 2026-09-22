@@ -392,7 +392,7 @@ const Landing2 = () => {
               Групповая динамика и <span className="italic font-normal">поддержка</span>
             </h2>
             <p className="mt-6 font-serif-display italic text-2xl md:text-3xl text-foreground/85 leading-snug tracking-tight">
-              Мы создали среду, в которой вы гарантированно примените навыки работы с личными финансами и увеличите доходы на 20–30% в год.
+              {nbsp("Вы примените навыки работы с личными финансами и создадите пассивный доход до 100 000 руб. в месяц")}
             </p>
           </div>
 

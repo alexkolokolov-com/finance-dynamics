@@ -309,7 +309,7 @@ const Landing2 = () => {
             </div>
             <Button asChild size="lg" className="rounded-none px-6">
               <a href="https://nivz.getcourse.ru/profit_level123" target="_blank" rel="noopener noreferrer" onClick={trackedHref}>
-                {nbsp("Заказать")} <ArrowUpRight aria-hidden="true" />
+                {nbsp("Записаться")} <ArrowUpRight aria-hidden="true" />
               </a>
             </Button>
           </div>

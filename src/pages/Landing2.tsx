@@ -153,19 +153,10 @@ const Landing2 = () => {
           </div>
 
           {/* ===== Ступени курса ===== */}
-          <div className="relative mt-14 md:mt-20 lg:pt-36">
-            <svg
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-x-0 top-28 hidden h-44 w-full text-accent lg:block"
-              viewBox="0 0 1200 176"
-              preserveAspectRatio="none"
-            >
-              <path d="M0 176 H400 V104 H800 V32 H1200" fill="none" stroke="currentColor" strokeWidth="2" />
-            </svg>
-            <div className="grid gap-6 md:grid-cols-2 md:items-start lg:grid-cols-3 lg:gap-7">
+          <div className="relative mt-14 md:mt-16">
+            <div className="grid gap-6 md:h-[33rem] md:grid-cols-3 md:items-end md:gap-4 lg:gap-7">
             {levels.map((level, i) => {
-              const tabletOffsets = ["md:mt-9", "md:mt-0", "md:col-start-2 md:-mt-3 lg:col-start-auto"];
-              const desktopOffsets = ["lg:mt-36", "lg:mt-[4.5rem]", "lg:mt-0"];
+              const stepHeights = ["md:h-[27rem]", "md:h-[30rem]", "md:h-[33rem]"];
               const price = levelPrices[i];
               if (!price) return null;
               const duration = i === 2 ? "4 недели" : level.duration;
@@ -173,7 +164,7 @@ const Landing2 = () => {
                 <article
                   key={level.number}
                   aria-label={`${level.number} ступень. ${level.title}`}
-                  className={`relative overflow-hidden border border-foreground/15 border-t-4 border-t-accent bg-card p-6 ${tabletOffsets[i]} ${desktopOffsets[i]} md:p-7 lg:p-8`}
+                   className={`relative flex flex-col overflow-hidden border border-foreground/15 border-t-4 border-t-accent bg-card p-6 ${stepHeights[i]} md:p-5 lg:p-7`}
                 >
                   <span
                     aria-hidden="true"
@@ -182,33 +173,24 @@ const Landing2 = () => {
                     {level.number}
                   </span>
 
-                  <div className="relative z-10">
+                  <div className="relative z-10 flex h-full flex-col">
                     <p className="font-body text-sm font-semibold text-accent">{nbsp(duration)}</p>
-                    <h3 className="mt-3 max-w-[14rem] font-display text-3xl font-semibold leading-none md:text-[2rem] lg:text-4xl">
+                    <h3 className="mt-3 max-w-[14rem] font-display text-3xl font-semibold leading-none md:text-[1.65rem] lg:text-4xl">
                       {nbsp(level.title)}
                     </h3>
-                    <p className="mt-5 font-body leading-relaxed text-foreground/75 lg:text-lg">
+                    <p className="mt-5 font-body leading-relaxed text-foreground/75 md:text-sm lg:text-base">
                       {nbsp(level.description)}
                     </p>
 
-                    <div className="mt-7 border-l-2 border-accent pl-4">
-                      <p className="font-display text-lg font-semibold">{nbsp("Подходит вам, если:")}</p>
-                      <ul className="mt-4 space-y-3">
-                        {level.fits.map((item) => (
-                          <li key={item} className="flex gap-2.5 font-body text-sm leading-snug text-foreground/80 lg:text-base">
-                            <Check aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                            <span>{nbsp(item)}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="pt-8">
-                      <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1 font-body">
-                        <del className="text-base text-foreground/55 decoration-foreground/60">{nbsp(price.oldPrice)}</del>
-                        <strong className="font-display text-3xl font-semibold leading-none text-accent">{nbsp(price.newPrice)}</strong>
-                      </p>
-                      <Button asChild size="lg" className="mt-6 w-full rounded-none px-5">
+                    <div className="mt-auto pt-6">
+                      <del className="block font-display text-3xl font-semibold leading-none text-foreground/55 decoration-foreground/60 md:text-2xl lg:text-3xl">
+                        {nbsp(price.oldPrice)}
+                      </del>
+                      <strong className="mt-3 block font-display text-3xl font-semibold leading-none text-accent md:text-2xl lg:text-3xl">
+                        {nbsp(price.newPrice)}
+                      </strong>
+                      <p className="mt-2 font-body text-sm text-foreground/60">{nbsp("до 1 октября")}</p>
+                      <Button asChild size="lg" className="mt-5 w-full rounded-none px-5">
                         <a href={level.href} target="_blank" rel="noopener noreferrer" onClick={trackedHref}>
                           {nbsp("Заказать")} <ArrowUpRight aria-hidden="true" />
                         </a>
@@ -233,10 +215,13 @@ const Landing2 = () => {
               <p className="mt-6 font-body text-xl text-background/75">
                 {nbsp("11 недель")}
               </p>
-              <p className="mt-5 flex flex-wrap items-baseline gap-x-4 gap-y-2">
-                <del className="font-body text-lg text-background/55 decoration-background/60">{nbsp("140 000 руб.")}</del>
-                <strong className="font-display text-4xl font-semibold leading-none text-accent md:text-5xl">{nbsp("69 000 руб.")}</strong>
-              </p>
+              <del className="mt-5 block font-display text-4xl font-semibold leading-none text-background/55 decoration-background/60 md:text-5xl">
+                {nbsp("140 000 руб.")}
+              </del>
+              <strong className="mt-3 block font-display text-4xl font-semibold leading-none text-accent md:text-5xl">
+                {nbsp("69 000 руб.")}
+              </strong>
+              <p className="mt-2 font-body text-sm text-background/60">{nbsp("до 1 октября")}</p>
             </div>
             <Button
               asChild

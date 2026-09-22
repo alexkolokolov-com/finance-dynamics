@@ -292,36 +292,91 @@ const Landing2 = () => {
             </div>
           </div>
 
-          {/* ===== Все 3 ступени ===== */}
-          <article className="mt-16 grid gap-8 bg-board p-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:p-12">
+          {/* ===== Все 3 ступени — пазл, цена и срок ===== */}
+          <div className="mt-16">
+            <p className="font-display text-3xl font-semibold leading-none text-accent md:text-5xl">
+              {nbsp("Все 3 ступени")}
+            </p>
+            <h3 className="mt-3 max-w-4xl font-display text-4xl font-semibold leading-none md:text-6xl">
+              {nbsp("От шаблона бюджета до инвестиций и долгосрочного плана")}
+            </h3>
+          </div>
+          <PuzzleWeeks />
+          <div className="mt-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="font-display text-3xl font-semibold leading-none text-accent md:text-5xl">
-                {nbsp("Все 3 ступени")}
-              </p>
-              <h3 className="mt-3 max-w-4xl font-display text-4xl font-semibold leading-none text-background md:text-6xl">
-                {nbsp("От шаблона бюджета до инвестиций и долгосрочного плана")}
-              </h3>
-              <p className="mt-6 font-body text-xl text-background/75">
-                {nbsp("11 недель")}
-              </p>
-              <del className="mt-5 block font-display text-4xl font-semibold leading-none text-background/55 decoration-background/60 md:text-5xl">
+              <p className="font-body text-xl text-foreground/75">{nbsp("11 недель")}</p>
+              <del className="mt-3 block font-display text-4xl font-semibold leading-none text-foreground/55 decoration-foreground/60 md:text-5xl">
                 {nbsp("140 000 руб.")}
               </del>
               <strong className="mt-3 block font-display text-4xl font-semibold leading-none text-accent md:text-5xl">
                 {nbsp("69 000 руб.")}
               </strong>
-              <p className="mt-2 font-body text-sm text-background/60">{nbsp("до 1 октября")}</p>
+              <p className="mt-2 font-body text-sm text-foreground/60">{nbsp("до 1 октября")}</p>
             </div>
-            <Button
-              asChild
-              size="lg"
-              className="rounded-none bg-accent px-6 text-accent-foreground hover:bg-background hover:text-foreground"
-            >
+            <Button asChild size="lg" className="rounded-none px-6">
               <a href="https://nivz.getcourse.ru/profit_level3" target="_blank" rel="noopener noreferrer" onClick={trackedHref}>
                 {nbsp("Заказать")} <ArrowUpRight aria-hidden="true" />
               </a>
             </Button>
-          </article>
+          </div>
+
+          {/* ===== Модули программы ===== */}
+          <div className="grid grid-cols-12 gap-6 lg:gap-8 mt-20">
+            {programWeeks.map((w, i) => (
+              <article
+                key={i}
+                id={`week-${i + 1}`}
+                className="col-span-12 md:col-span-6 group relative border border-foreground/15 bg-card hover:border-foreground transition-colors duration-300 overflow-hidden flex flex-col scroll-mt-24"
+              >
+                <w.Icon
+                  aria-hidden="true"
+                  strokeWidth={0.9}
+                  className="pointer-events-none select-none absolute text-accent/15 group-hover:text-accent/25 transition-colors duration-500 -top-8 -right-8 w-40 h-40 md:w-48 md:h-48"
+                />
+                <div className="relative flex flex-col flex-1 p-7 md:p-8">
+                  <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-3">
+                    {w.week}
+                  </div>
+                  <h3 className="font-display text-xl md:text-2xl font-bold leading-tight tracking-tight mb-5">
+                    {(() => {
+                      const parts = w.title.split(" ");
+                      if (parts.length < 2) return w.title;
+                      const last = parts.pop();
+                      return (
+                        <>
+                          {parts.join(" ")}
+                          <br />
+                          {last}
+                        </>
+                      );
+                    })()}
+                  </h3>
+
+                  <ul className="space-y-3 mb-8">
+                    {w.points.map((p, pi) => (
+                      <li key={pi} className="flex gap-3">
+                        <span className="font-mono text-accent text-xs shrink-0 pt-1">
+                          →
+                        </span>
+                        <span className="text-sm text-foreground/80 leading-relaxed">
+                          {p}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="bg-foreground text-background -mx-7 md:-mx-8 -mb-7 md:-mb-8 px-7 md:px-8 py-5 mt-auto">
+                    <div className="font-mono text-[10px] uppercase tracking-widest text-accent mb-1">
+                      результат
+                    </div>
+                    <p className="text-sm leading-relaxed text-background/90">
+                      {w.result}
+                    </p>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 

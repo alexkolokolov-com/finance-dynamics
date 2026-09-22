@@ -147,7 +147,7 @@ type Props = {
   forceProgress?: number;
 };
 
-export default function PuzzleWeeks({ variant = "default", forceProgress }: Props) {
+export default function PuzzleWeeks({ variant = "default", forceProgress, title }: Props) {
   const isPlan = variant === "plan";
   const ref = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(forceProgress ?? 0); // 0..1

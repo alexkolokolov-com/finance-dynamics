@@ -246,7 +246,7 @@ const Landing2 = () => {
                 Программа
               </h2>
               <p className="mt-6 font-serif-display italic text-2xl md:text-3xl lg:text-4xl text-foreground/85 max-w-3xl leading-snug tracking-tight">
-                2&nbsp;месяца системной работы с&nbsp;наставником вместо 10&nbsp;лет проб и&nbsp;ошибок
+                3&nbsp;ступени к&nbsp;вашему Профиту
               </p>
             </div>
           </div>

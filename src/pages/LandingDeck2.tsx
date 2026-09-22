@@ -347,7 +347,8 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
     };
 
     const truncateLine = (s: string, max = 140) => (s.length > max ? s.slice(0, max - 1).trimEnd() + "…" : s);
-    const limitItems = (arr: string[], max = 4) => (isPdf ? arr.slice(0, max).map((l) => truncateLine(l)) : arr);
+    const limitItems = (arr: string[], max = 2) =>
+      isPdf ? arr.slice(0, max).map((line) => truncateLine(line, 78)) : arr;
 
     const items = indices
       .map((i) => allReviews[i])
@@ -367,7 +368,7 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
         return {
           name: r.name,
           role: r.role,
-          quote: isPdf ? truncateLine(quote, 180) : quote,
+          quote: isPdf ? truncateLine(quote, 110) : quote,
           avatar: r.avatar ?? driveImage(r.photoId),
           from: limitItems(from, 4),
           to: limitItems(to, 4),
@@ -386,12 +387,12 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
               key={`reviews-${pageStartIdx}-${localIdx}`}
               id={localIdx === 0 ? firstSlideId : undefined}
               {...slideAttrs}
-              className={slideCls("py-20 md:py-28 border-t border-foreground/10")}
+              className={slideCls("py-5 border-t border-foreground/10")}
             >
               <div className="container-px max-w-7xl mx-auto">
-                <div className="grid grid-cols-12 gap-6 lg:gap-10 mb-12 items-end">
+                <div className="grid grid-cols-12 gap-6 lg:gap-10 mb-3 items-end">
                   <div className="col-span-12 md:col-span-8">
-                    <h2 className="font-serif-display font-semibold text-foreground text-4xl md:text-6xl leading-[0.95] tracking-tight">
+                    <h2 className="font-serif-display font-semibold text-foreground text-4xl md:text-5xl leading-[0.95] tracking-tight">
                       Отзывы выпускников
                     </h2>
                   </div>
@@ -402,19 +403,19 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                <div className="grid grid-cols-1 gap-2">
                   {pageReviews.map((r, i) => (
                     <figure
                       key={i}
-                      className="border border-foreground/15 bg-card p-7 md:p-9 flex flex-col"
+                      className="grid grid-cols-12 gap-3 border border-foreground/15 bg-card p-3"
                     >
-                      <header className="flex items-center gap-4">
+                      <header className="col-span-12 flex items-center gap-4 md:col-span-3 md:items-start">
                         {r.avatar ? (
                           <img
                             src={r.avatar}
                             alt={r.name}
                             loading="lazy"
-                            className="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover border border-foreground/15 shrink-0"
+                            className="w-12 h-12 rounded-full object-cover border border-foreground/15 shrink-0"
                             onError={(e) => {
                               (e.currentTarget as HTMLImageElement).style.display = "none";
                             }}
@@ -422,7 +423,7 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
                         ) : (
                           <span
                             aria-hidden
-                            className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-muted border border-foreground/15 grid place-items-center font-serif-display text-xl text-foreground/55 shrink-0"
+                            className="w-12 h-12 rounded-full bg-muted border border-foreground/15 grid place-items-center font-serif-display text-lg text-foreground/55 shrink-0"
                           >
                             {r.name.charAt(0)}
                           </span>
@@ -439,16 +440,16 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
                         </div>
                       </header>
 
-                      <blockquote className="mt-6 font-serif-display text-lg md:text-xl leading-snug text-foreground border-l-2 border-accent pl-4">
+                      <blockquote className="col-span-12 font-serif-display text-lg leading-snug text-foreground border-l-2 border-accent pl-4 md:col-span-4">
                         «{r.quote}»
                       </blockquote>
 
-                      <div className="mt-7 pt-6 border-t border-foreground/10 grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1">
+                      <div className="col-span-12 grid grid-cols-1 gap-4 border-t border-foreground/10 pt-4 sm:grid-cols-2 md:col-span-5 md:border-l md:border-t-0 md:pl-4 md:pt-0">
                         <div>
                           <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-3">
                             Точка&nbsp;А
                           </div>
-                          <ul className="space-y-1.5 font-body text-sm md:text-[0.95rem] leading-relaxed text-foreground/75">
+                          <ul className="space-y-1 font-body text-sm leading-snug text-foreground/75">
                             {r.from.map((line, j) => (
                               <li key={j}>{line}</li>
                             ))}
@@ -458,7 +459,7 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
                           <div className="font-mono text-[10px] uppercase tracking-widest text-accent mb-3">
                             Точка&nbsp;Б
                           </div>
-                          <ul className="space-y-1.5 font-body text-sm md:text-[0.95rem] leading-relaxed text-foreground">
+                          <ul className="space-y-1 font-body text-sm leading-snug text-foreground">
                             {r.to.map((line, j) => (
                               <li key={j}>{line}</li>
                             ))}
@@ -559,14 +560,14 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
 
       {/* ============== EXPERT ============== */}
       <div {...slideAttrs} className={slideCls("")}>
-        <CardAbout eyebrow="Автор программы" heading="Василий Мещеряков" />
+        <CardAbout eyebrow="Автор программы" heading="Василий Мещеряков" scale="deck" />
       </div>
 
       {/* ============== REVIEWS — Алексей + Любовь ============== */}
       {renderReviewSlides([0, 1], 0, 4)}
 
       {/* ============== STAIRS — три ступени на один экран ============== */}
-      <section id="program" {...slideAttrs} className={slideCls("py-16 md:py-20 border-t border-foreground/10 scroll-mt-24")}>
+      <section id="program" {...slideAttrs} className={slideCls("py-8 md:py-10 border-t border-foreground/10 scroll-mt-24")}>
         <StairsSlide />
       </section>
 

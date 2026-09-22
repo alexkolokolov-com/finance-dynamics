@@ -65,7 +65,7 @@ type CardAboutProps = {
   eyebrow?: string;
   heading?: ReactNode;
   quote?: ReactNode;
-  scale?: "hero" | "article";
+  scale?: "hero" | "article" | "deck";
   cta?: {
     label: string;
     href: string;
@@ -104,12 +104,17 @@ export const CardAbout = ({
   hideEducation = false,
 }: CardAboutProps = {}) => {
   const isArticle = scale === "article";
+  const isDeck = scale === "deck";
   const visibleFacts = hideEducation ? facts.slice(1) : facts;
   return (
     <section
       id="about"
       className={`relative overflow-hidden bg-grid scroll-mt-20 ${
-        isArticle ? "pt-6 md:pt-8 pb-16 md:pb-20" : "pt-8 md:pt-12 pb-24 md:pb-32"
+        isArticle
+          ? "pt-6 md:pt-8 pb-16 md:pb-20"
+          : isDeck
+            ? "py-8 md:py-9"
+            : "pt-8 md:pt-12 pb-24 md:pb-32"
       }`}
     >
       {/* плавный градиент-перетекание */}
@@ -129,6 +134,8 @@ export const CardAbout = ({
           className={`font-semibold tracking-tight animate-fade-up ${
             isArticle
               ? "font-display leading-[1.12] text-[clamp(1.6rem,3.6vw,2.4rem)]"
+              : isDeck
+                ? "font-serif-display leading-[0.95] text-4xl md:text-5xl"
               : "font-serif-display leading-[0.95] text-[clamp(2.5rem,8vw,6rem)]"
           }`}
         >
@@ -138,12 +145,12 @@ export const CardAbout = ({
         {/* двухколоночная сетка: речь / эксперт — на планшете тоже в две колонки */}
         <div
           className={`grid grid-cols-12 gap-8 md:gap-10 lg:gap-12 items-start ${
-            isArticle ? "mt-10 md:mt-12" : "mt-16"
+            isArticle ? "mt-10 md:mt-12" : isDeck ? "mt-6 md:mt-7" : "mt-16"
           }`}
         >
           {/* левая колонка — прямая речь */}
           <div
-            className="col-span-12 md:col-span-7 animate-fade-up relative"
+            className={`${isDeck ? "col-span-12 md:col-span-8" : "col-span-12 md:col-span-7"} animate-fade-up relative`}
             style={{ animationDelay: "0.15s" }}
           >
             {/* иконка цитаты слева */}
@@ -168,6 +175,8 @@ export const CardAbout = ({
               className={`font-display leading-[1.45] tracking-tight pl-7 md:pl-14 ${
                 isArticle
                   ? "text-lg md:text-xl space-y-4"
+                  : isDeck
+                    ? "text-lg md:text-xl space-y-3"
                   : "text-xl md:text-2xl lg:text-[1.7rem] space-y-6"
               }`}
             >
@@ -200,10 +209,10 @@ export const CardAbout = ({
 
           {/* правая колонка — фото эксперта (квадрат) */}
           <div
-            className="col-span-12 md:col-span-5 animate-fade-up"
+            className={`${isDeck ? "col-span-12 md:col-span-4" : "col-span-12 md:col-span-5"} animate-fade-up`}
             style={{ animationDelay: "0.3s" }}
           >
-            <div className="relative w-[56%] md:w-[72%] mx-auto">
+            <div className={`relative mx-auto ${isDeck ? "w-[42%] md:w-[48%]" : "w-[56%] md:w-[72%]"}`}>
               {/* мягкая тёплая подложка под портрет */}
               <span aria-hidden className="absolute -inset-2 rounded-full bg-accent-soft/40 -z-10" style={{ background: "hsl(var(--accent-soft) / 0.45)" }} />
               <img
@@ -219,7 +228,7 @@ export const CardAbout = ({
         {/* лента фактов: 3 пары карточек с разделителями между парами */}
         <div
           className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 border border-foreground/15 bg-card animate-fade-up ${
-            isArticle ? "mt-10 md:mt-12" : "mt-16 md:mt-20"
+            isArticle ? "mt-10 md:mt-12" : isDeck ? "mt-7 md:mt-8" : "mt-16 md:mt-20"
           }`}
           style={{ animationDelay: "0.45s" }}
         >
@@ -239,12 +248,12 @@ export const CardAbout = ({
             return (
               <div
                 key={i}
-                className={`p-5 md:p-6 ${innerCls} ${dividerCls}`}
+                className={`${isDeck ? "p-3 md:p-4" : "p-5 md:p-6"} ${innerCls} ${dividerCls}`}
               >
                 {f.kind === "bio" ? (
                   <div className="flex flex-col h-full">
-                    <div className="w-9 h-9 grid place-items-center bg-foreground text-background mb-4">
-                      <f.icon size={16} />
+                    <div className={`${isDeck ? "w-7 h-7 mb-2" : "w-9 h-9 mb-4"} grid place-items-center bg-foreground text-background`}>
+                      <f.icon size={isDeck ? 14 : 16} />
                     </div>
                     <div className="min-w-0">
                       <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
@@ -260,7 +269,7 @@ export const CardAbout = ({
                   </div>
                 ) : (
                   <div className="flex flex-col h-full">
-                    <div className="font-serif-display font-semibold leading-none text-accent text-4xl lg:text-5xl">
+                    <div className={`font-serif-display font-semibold leading-none text-accent ${isDeck ? "text-3xl lg:text-4xl" : "text-4xl lg:text-5xl"}`}>
                       {f.value}
                       {f.unit && (
                         <span className="font-serif-display italic font-normal text-foreground text-xl lg:text-2xl ml-1">

@@ -111,8 +111,9 @@ export async function generateDeckPdf({
 
   try {
     root.render(
-      createElement(LandingDeck, {
-        pdfMode: { discountApplied, seriesApplied },
+      createElement(DeckPage, {
+        pdfMode:
+          page === "deck2" ? { enabled: true } : { discountApplied, seriesApplied },
       } as never)
     );
 

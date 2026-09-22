@@ -1,6 +1,5 @@
-import { Video, FileCheck, Users, Clock, Check, Waves, Repeat2, Wallet, Hourglass, Activity, Settings, ScanSearch, HandCoins, Landmark, HeartHandshake, type LucideIcon } from "lucide-react";
+import { Video, FileCheck, Users, Clock, Check, Waves, Repeat2, Wallet, WalletCards, Hourglass, Activity, Settings, ScanSearch, HandCoins, Landmark, HeartHandshake, NotebookTabs, CircleDollarSign, LineChart, ShieldCheck, TrendingUp, type LucideIcon } from "lucide-react";
 import {
-  programGoals,
   mainGoal,
   modules,
   processSteps,
@@ -17,12 +16,25 @@ import { HeroProfit } from "@/components/landing/HeroProfit";
 import PuzzleWeeks from "@/components/landing/PuzzleWeeks";
 import { InlineReviewPair, InlineReviewFeature, InlineReviewGrid } from "@/components/landing/InlineReviews";
 import { handleDiagnosAnketaClick } from "@/lib/ymGoals";
+import { nbsp } from "@/lib/nbsp";
 
 import goldenSpiral from "@/assets/golden-spiral.png";
 
 
 const processIcons = [Video, FileCheck, Users, Clock];
 const audienceIcons = [Waves, Repeat2, Wallet, Hourglass];
+
+// Задачи — как блок «Курс подойдет тем, кто хочет» на /profit
+const goalTasks = [
+  { Icon: NotebookTabs, text: "Собрать понятную финансовую систему" },
+  { Icon: WalletCards, text: "Перестать жить в ноль" },
+  { Icon: Landmark, text: "Разобраться, куда инвестировать" },
+  { Icon: CircleDollarSign, text: "Начать вести бюджет без мучений" },
+  { Icon: LineChart, text: "Увеличить доход" },
+  { Icon: ShieldCheck, text: "Накопить на пенсию" },
+  { Icon: HandCoins, text: "Избавиться от долгов" },
+  { Icon: TrendingUp, text: "Перестать тревожиться из-за денег" },
+];
 const module1 = modules[0];
 
 type WeekItem = {
@@ -184,18 +196,14 @@ const Landing = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-12 gap-6 lg:gap-8 mb-12">
-            {programGoals.map((goal, i) => (
-              <div
-                key={i}
-                className="col-span-12 md:col-span-6 border-l-2 border-accent pl-5 py-2"
-              >
-                <p className="font-body text-base md:text-lg text-foreground/85 leading-relaxed">
-                  {goal.text}
-                </p>
-              </div>
+          <ul className="mb-12 grid gap-x-12 sm:grid-cols-2">
+            {goalTasks.map(({ Icon, text }) => (
+              <li key={text} className="flex items-center gap-4 border-t border-foreground/15 py-5">
+                <Icon aria-hidden="true" className="h-6 w-6 shrink-0 text-accent" strokeWidth={1.6} />
+                <p className="font-display text-xl font-semibold leading-tight md:text-2xl">{nbsp(text)}</p>
+              </li>
             ))}
-          </div>
+          </ul>
 
           <div className="bg-board p-8 md:p-12 relative overflow-hidden">
             <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full border-2 border-background/15" />

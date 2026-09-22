@@ -1,4 +1,4 @@
-import { ArrowUpRight, Video, FileCheck, Users, Clock, Check, Waves, Repeat2, Wallet, WalletCards, Hourglass, HandCoins, Landmark, NotebookTabs, CircleDollarSign, LineChart, ShieldCheck, TrendingUp } from "lucide-react";
+import { ArrowUpRight, Video, FileCheck, Users, Clock, Check, Waves, Repeat2, Wallet, WalletCards, Hourglass, HandCoins, Landmark, NotebookTabs, CircleDollarSign, LineChart, ShieldCheck, TrendingUp, Activity, Settings, ScanSearch, HeartHandshake, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { levels } from "@/components/landing/ProfitLevels";
 import {
@@ -12,6 +12,7 @@ import { CardAbout } from "@/components/sections/CardAbout";
 import { Footer } from "@/components/sections/Footer";
 import { SiteHeader } from "@/components/SiteHeader";
 import { HeroProfit } from "@/components/landing/HeroProfit";
+import PuzzleWeeks from "@/components/landing/PuzzleWeeks";
 import { InlineReviewPair, InlineReviewFeature, InlineReviewGrid } from "@/components/landing/InlineReviews";
 import { handleDiagnosAnketaClick, appendStoredParams } from "@/lib/ymGoals";
 import { nbsp } from "@/lib/nbsp";
@@ -39,6 +40,94 @@ const levelPrices = [
   { oldPrice: "30 000 руб.", newPrice: "19 000 руб." },
   { oldPrice: "40 000 руб.", newPrice: "29 000 руб." },
   { oldPrice: "70 000 руб.", newPrice: "49 000 руб." },
+];
+
+type WeekItem = {
+  week: string;
+  title: string;
+  Icon: LucideIcon;
+  points: string[];
+  result: string;
+};
+
+const programWeeks: WeekItem[] = [
+  {
+    week: "Неделя 1",
+    title: "Диагностика системы",
+    Icon: Activity,
+    points: [
+      "3 главные причины, почему ваши деньги «утекают сквозь пальцы»",
+      "Топ-6 форматов ведения бюджета под разные образы жизни",
+      "10 шаблонов, с которыми даже «безнадёжные» начинают вести учёт",
+      "Разбор ошибок в\u00A0личных финансах и\u00A0как больше не\u00A0наступать на\u00A0те\u00A0же грабли",
+    ],
+    result:
+      "Поставлен честный финансовый диагноз и выбран рабочий формат ведения бюджета под ваш образ жизни.",
+  },
+  {
+    week: "Неделя 2",
+    title: "Принцип шестерёнок",
+    Icon: Settings,
+    points: [
+      "Методика прокручивания «лучшей версии» за те же деньги",
+      "Пошаговый разбор кейса составления бюджета",
+      "Персональная практика по вашему выбранному формату бюджета",
+      "Как потратить 20% сил на учёт, а 80% — на улучшения",
+    ],
+    result:
+      "Готовый фундамент личной финансовой системы, которая требует не больше 2 часов в месяц.",
+  },
+  {
+    week: "Неделя 3",
+    title: "Чёрные дыры бюджета",
+    Icon: ScanSearch,
+    points: [
+      "12 проверенных способов найти «потерянные» деньги и дыры, куда они утекают",
+      "Здоровая экономия: как сокращать лишние траты, не отказываясь от удовольствий",
+      "Управление кредитами без переплат и стресса",
+    ],
+    result:
+      "Найдены первые 15–20 тыс. ₽ «потерянных» денег и закрыты основные точки утечки бюджета.",
+  },
+  {
+    week: "Неделя 4",
+    title: "Ускорение доходов",
+    Icon: HandCoins,
+    points: [
+      "50 инструментов роста доходов при работе в найме и на себя",
+      "Почему 95% людей неправильно просят повышения зарплаты",
+      "Источники дополнительного дохода на фрилансе",
+      "Вычеты, кэшбеки и другие «деньги из воздуха», о которых вы не задумывались",
+    ],
+    result:
+      "На руках 2–3 конкретные стратегии роста дохода и план их внедрения на ближайшие месяцы.",
+  },
+  {
+    week: "Неделя 5",
+    title: "Инвестиции",
+    Icon: Landmark,
+    points: [
+      "Развенчание мифов о пассивном доходе. Что из этого работает, а где зарабатывают на вас",
+      "Консервативные инструменты: депозиты и недвижимость",
+      "Простым языком — как работают фонды, акции и облигации",
+      "Криптовалюта и другие высокорискованные инструменты",
+    ],
+    result:
+      "Вы трезво смотрите на инвестиционные инструменты. Выбираете себе «по карману» без тревоги упущенной выгоды.",
+  },
+  {
+    week: "Неделя 6",
+    title: "Психология финансов",
+    Icon: HeartHandshake,
+    points: [
+      "Почему дисциплина в финансах не работает",
+      "Проработка установок «у меня никогда не будет денег», «деньги — зло»",
+      "Как перестать бояться планировать и начать мечтать о большем",
+      "Техники карьерного планирования в эпоху неопределённости",
+    ],
+    result:
+      "Снята финансовая тревога, появляется уверенность в деньгах и привычка планировать вдолгую.",
+  },
 ];
 
 const scrollToPricing = () => {

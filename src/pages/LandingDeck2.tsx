@@ -1,0 +1,816 @@
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  Video,
+  FileCheck,
+  Users,
+  Clock,
+  Check,
+  Waves,
+  Repeat2,
+  Wallet,
+  WalletCards,
+  Hourglass,
+  HandCoins,
+  Landmark,
+  NotebookTabs,
+  CircleDollarSign,
+  LineChart,
+  ShieldCheck,
+  TrendingUp,
+  Activity,
+  Settings,
+  ScanSearch,
+  HeartHandshake,
+  type LucideIcon,
+} from "lucide-react";
+import { mainGoal, targetAudience, resultCategories } from "@/data/presentationData";
+import { profitLevels, allLevelsBundle, priceDeadline } from "@/data/profitLevels";
+import { CardAbout } from "@/components/sections/CardAbout";
+import { reviews as allReviews } from "@/data/reviewsData";
+import { Footer } from "@/components/sections/Footer";
+import { HeroProfit } from "@/components/landing/HeroProfit";
+import PuzzleWeeks from "@/components/landing/PuzzleWeeks";
+import { StairsSlide } from "@/components/landing/StairsSlide";
+import { generateDeckPdf } from "@/lib/generateDeckPdf";
+import { nbsp } from "@/lib/nbsp";
+
+const processIcons = [Video, FileCheck, Users, Clock];
+const audienceIcons = [Waves, Repeat2, Wallet, Hourglass];
+
+const goalTasks = [
+  { Icon: NotebookTabs, text: "Собрать понятную финансовую систему" },
+  { Icon: WalletCards, text: "Перестать жить в ноль" },
+  { Icon: Landmark, text: "Разобраться, куда инвестировать" },
+  { Icon: CircleDollarSign, text: "Начать вести бюджет без мучений" },
+  { Icon: LineChart, text: "Увеличить доход" },
+  { Icon: ShieldCheck, text: "Накопить на пенсию" },
+  { Icon: HandCoins, text: "Избавиться от долгов" },
+  { Icon: TrendingUp, text: "Перестать тревожиться из-за денег" },
+];
+
+type ModuleItem = {
+  week: string;
+  title: string;
+  Icon: LucideIcon;
+  points: string[];
+  result: string;
+};
+
+const programModules: ModuleItem[] = [
+  {
+    week: "Модуль 1",
+    title: "Диагностика системы",
+    Icon: Activity,
+    points: [
+      "3 главные причины, почему ваши деньги «утекают сквозь пальцы»",
+      "Топ-6 форматов ведения бюджета под разные образы жизни",
+      "10 шаблонов, с которыми даже «безнадёжные» начинают вести учёт",
+      "Разбор ошибок в\u00A0личных финансах и\u00A0как больше не\u00A0наступать на\u00A0те\u00A0же грабли",
+    ],
+    result:
+      "Поставлен честный финансовый диагноз и выбран рабочий формат ведения бюджета под ваш образ жизни.",
+  },
+  {
+    week: "Модуль 2",
+    title: "Принцип шестерёнок",
+    Icon: Settings,
+    points: [
+      "Методика прокручивания «лучшей версии» за те же деньги",
+      "Пошаговый разбор кейса составления бюджета",
+      "Персональная практика по вашему выбранному формату бюджета",
+      "Как потратить 20% сил на учёт, а 80% — на улучшения",
+    ],
+    result:
+      "Готовый фундамент личной финансовой системы, которая требует не больше 2 часов в месяц.",
+  },
+  {
+    week: "Модуль 3",
+    title: "Чёрные дыры бюджета",
+    Icon: ScanSearch,
+    points: [
+      "12 проверенных способов найти «потерянные» деньги и дыры, куда они утекают",
+      "Здоровая экономия: как сокращать лишние траты, не отказываясь от удовольствий",
+      "Управление кредитами без переплат и стресса",
+    ],
+    result:
+      "Найдены первые 15–20 тыс. ₽ «потерянных» денег и закрыты основные точки утечки бюджета.",
+  },
+  {
+    week: "Модуль 4",
+    title: "Ускорение доходов",
+    Icon: HandCoins,
+    points: [
+      "50 инструментов роста доходов при работе в найме и на себя",
+      "Почему 95% людей неправильно просят повышения зарплаты",
+      "Источники дополнительного дохода на фрилансе",
+      "Вычеты, кэшбеки и другие «деньги из воздуха», о которых вы не задумывались",
+    ],
+    result:
+      "На руках 2–3 конкретные стратегии роста дохода и план их внедрения на ближайшие месяцы.",
+  },
+  {
+    week: "Модуль 5",
+    title: "Инвестиции",
+    Icon: Landmark,
+    points: [
+      "Развенчание мифов о пассивном доходе. Что из этого работает, а где зарабатывают на вас",
+      "Консервативные инструменты: депозиты и недвижимость",
+      "Простым языком — как работают фонды, акции и облигации",
+      "Криптовалюта и другие высокорискованные инструменты",
+    ],
+    result:
+      "Вы трезво смотрите на инвестиционные инструменты. Выбираете себе «по карману» без тревоги упущенной выгоды.",
+  },
+  {
+    week: "Модуль 6",
+    title: "Психология финансов",
+    Icon: HeartHandshake,
+    points: [
+      "Почему дисциплина в финансах не работает",
+      "Проработка установок «у меня никогда не будет денег», «деньги — зло»",
+      "Как перестать бояться планировать и начать мечтать о большем",
+      "Техники карьерного планирования в эпоху неопределённости",
+    ],
+    result:
+      "Снята финансовая тревога, появляется уверенность в деньгах и привычка планировать вдолгую.",
+  },
+];
+
+// Каждая ступень закрывает два модуля — метку ставим в шапке слайда модуля,
+// чтобы в PDF не появлялись почти пустые страницы-разделители.
+const moduleLevel = (i: number) => profitLevels[Math.floor(i / 2)];
+
+type RevealListProps<T> = {
+  items: T[];
+  renderItem: (item: T, index: number) => ReactNode;
+  className?: string;
+  itemClassName?: string;
+  revealAll?: boolean;
+};
+
+function RevealList<T>({ items, renderItem, className, itemClassName, revealAll }: RevealListProps<T>) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [n, setN] = useState(revealAll ? items.length : 0);
+  const nRef = useRef(0);
+  nRef.current = n;
+
+  useEffect(() => {
+    if (revealAll) return;
+    const el = ref.current;
+    if (!el) return;
+    const section = el.closest("[data-slide], section, .snap-start") as HTMLElement | null;
+    if (!section) return;
+
+    let active = false;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        active = entry.intersectionRatio > 0.55;
+      },
+      { threshold: [0, 0.55, 1] }
+    );
+    io.observe(section);
+
+    const onKey = (e: KeyboardEvent) => {
+      if (!active) return;
+      if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") {
+        if (nRef.current < items.length) {
+          e.preventDefault();
+          e.stopPropagation();
+          setN((v) => Math.min(v + 1, items.length));
+        }
+      } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+        if (nRef.current > 0) {
+          e.preventDefault();
+          e.stopPropagation();
+          setN((v) => Math.max(v - 1, 0));
+        }
+      }
+    };
+    window.addEventListener("keydown", onKey, { capture: true });
+    return () => {
+      io.disconnect();
+      window.removeEventListener("keydown", onKey, { capture: true } as never);
+    };
+  }, [items.length, revealAll]);
+
+  const onClick = () => {
+    if (revealAll) return;
+    setN((v) => (v >= items.length ? 0 : v + 1));
+  };
+
+  const shown = revealAll ? items.length : n;
+
+  return (
+    <div ref={ref} onClick={onClick} className={`${revealAll ? "" : "cursor-pointer"} ${className ?? ""}`}>
+      {items.map((it, i) => {
+        const visible = i < shown;
+        const animCls = revealAll
+          ? ""
+          : visible
+          ? "opacity-100 translate-y-0 transition-all duration-500 ease-out"
+          : "opacity-0 translate-y-3 pointer-events-none transition-all duration-500 ease-out";
+        return (
+          <div key={i} data-reveal-item="" className={`${animCls} ${itemClassName ?? ""}`}>
+            {renderItem(it, i)}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+const SNAP_BASE = "snap-start h-screen overflow-hidden flex flex-col justify-center relative";
+const PDF_BASE = "relative overflow-hidden flex flex-col justify-center";
+const PDF_SLIDE_STYLE: React.CSSProperties = { width: 1280, height: 720 };
+
+type PdfMode2 = { enabled: true };
+type LandingDeck2Props = { pdfMode?: PdfMode2 };
+
+const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  // QA-режим: ?pdfPreview=1 показывает точно тот DOM, который идёт в PDF.
+  const pdfPreview =
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).get("pdfPreview") === "1";
+  const effectivePdfMode: PdfMode2 | undefined = pdfModeProp ?? (pdfPreview ? { enabled: true } : undefined);
+
+  const handleGeneratePdf = async () => {
+    if (isGenerating) return;
+    setIsGenerating(true);
+    try {
+      await generateDeckPdf({
+        discountApplied: {},
+        seriesApplied: {},
+        page: "deck2",
+        fileName: "profit-kp-2",
+      });
+    } catch (e) {
+      console.error("PDF generation failed", e);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const slideCls = (extra = "") => `${effectivePdfMode ? PDF_BASE : SNAP_BASE} ${extra}`;
+  const slideAttrs: Record<string, unknown> = effectivePdfMode
+    ? { "data-pdf-slide": "", style: PDF_SLIDE_STYLE }
+    : {};
+
+  const renderReviewSlides = (indices: number[], pageStartIdx: number, totalPages: number, firstSlideId?: string) => {
+    const isPdf = !!effectivePdfMode;
+    const driveImage = (id?: string) =>
+      !isPdf && id ? `https://drive.google.com/thumbnail?id=${id}&sz=w400` : undefined;
+
+    const splitText = (text: string) => {
+      const parts: { label?: string; body: string[] }[] = [];
+      let current: { label?: string; body: string[] } = { body: [] };
+      const isPointA = (t: string) => /^(?:[А-ЯA-Z\s]*\s)?ТОЧКА\s+[АA]:?\s*$/iu.test(t.toUpperCase());
+      const isPointB = (t: string) => /^(?:[А-ЯA-Z\s]*\s)?ТОЧКА\s+[БB]:?\s*$/iu.test(t.toUpperCase());
+      text.split(/\n/).forEach((raw) => {
+        const t = raw.trim();
+        if (!t) return;
+        if (isPointA(t) || isPointB(t)) {
+          if (current.body.length || current.label) parts.push(current);
+          current = { label: isPointA(t) ? "Точка А" : "Точка Б", body: [] };
+        } else {
+          current.body.push(t);
+        }
+      });
+      if (current.body.length || current.label) parts.push(current);
+      return parts;
+    };
+
+    const PAIN_LABELS: Record<string, string> = {
+      "нет_системы": "Нет системы в финансах",
+      "нет_целей_и_плана": "Нет целей и плана",
+      "тревога_и_стресс": "Тревога и стресс из-за денег",
+      "расходы_превышают_доходы": "Расходы превышают доходы",
+      "долги_и_кредиты": "Долги и кредиты",
+    };
+    const RESULT_LABELS: Record<string, string> = {
+      "появилась_система": "Появилась система в финансах",
+      "появился_долгосрочный_план": "Долгосрочный план на 5–10 лет",
+      "спокойствие_и_контроль": "Спокойствие и контроль над деньгами",
+      "доход_вырос": "Доход вырос",
+      "закрыл_долги": "Закрыты долги и кредиты",
+      "качество_жизни_улучшилось": "Качество жизни выросло",
+    };
+
+    const truncateLine = (s: string, max = 140) => (s.length > max ? s.slice(0, max - 1).trimEnd() + "…" : s);
+    const limitItems = (arr: string[], max = 4) => (isPdf ? arr.slice(0, max).map((l) => truncateLine(l)) : arr);
+
+    const items = indices
+      .map((i) => allReviews[i])
+      .filter(Boolean)
+      .map((r) => {
+        const sections = splitText(r.text);
+        const findSection = (label: "А" | "Б") =>
+          sections.find((s) => s.label === (label === "А" ? "Точка А" : "Точка Б"));
+        let from = findSection("А")?.body ?? [];
+        let to = findSection("Б")?.body ?? [];
+        if (!from.length) from = (r.pains ?? []).map((k) => PAIN_LABELS[k] ?? k);
+        if (!to.length) to = (r.results ?? []).map((k) => RESULT_LABELS[k] ?? k);
+        const quote =
+          r.quote && r.quote.trim()
+            ? r.quote
+            : r.text.split("\n").map((l) => l.trim()).find(Boolean) ?? "";
+        return {
+          name: r.name,
+          role: r.role,
+          quote: isPdf ? truncateLine(quote, 180) : quote,
+          avatar: r.avatar ?? driveImage(r.photoId),
+          from: limitItems(from, 4),
+          to: limitItems(to, 4),
+        };
+      });
+
+    const pages: typeof items[] = [];
+    for (let i = 0; i < items.length; i += 2) pages.push(items.slice(i, i + 2));
+
+    return (
+      <>
+        {pages.map((pageReviews, localIdx) => {
+          const pageNum = pageStartIdx + localIdx + 1;
+          return (
+            <section
+              key={`reviews-${pageStartIdx}-${localIdx}`}
+              id={localIdx === 0 ? firstSlideId : undefined}
+              {...slideAttrs}
+              className={slideCls("py-20 md:py-28 border-t border-foreground/10")}
+            >
+              <div className="container-px max-w-7xl mx-auto">
+                <div className="grid grid-cols-12 gap-6 lg:gap-10 mb-12 items-end">
+                  <div className="col-span-12 md:col-span-8">
+                    <h2 className="font-serif-display font-semibold text-foreground text-4xl md:text-6xl leading-[0.95] tracking-tight">
+                      Отзывы выпускников
+                    </h2>
+                  </div>
+                  <div className="col-span-12 md:col-span-4 md:text-right">
+                    <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                      §&nbsp;{String(pageNum).padStart(2, "0")} / {String(totalPages).padStart(2, "0")}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                  {pageReviews.map((r, i) => (
+                    <figure
+                      key={i}
+                      className="border border-foreground/15 bg-card p-7 md:p-9 flex flex-col"
+                    >
+                      <header className="flex items-center gap-4">
+                        {r.avatar ? (
+                          <img
+                            src={r.avatar}
+                            alt={r.name}
+                            loading="lazy"
+                            className="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover border border-foreground/15 shrink-0"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).style.display = "none";
+                            }}
+                          />
+                        ) : (
+                          <span
+                            aria-hidden
+                            className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-muted border border-foreground/15 grid place-items-center font-serif-display text-xl text-foreground/55 shrink-0"
+                          >
+                            {r.name.charAt(0)}
+                          </span>
+                        )}
+                        <div className="min-w-0">
+                          <div className="font-serif-display font-semibold text-xl text-foreground leading-tight">
+                            {r.name}
+                          </div>
+                          {r.role && (
+                            <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mt-1">
+                              {r.role}
+                            </div>
+                          )}
+                        </div>
+                      </header>
+
+                      <blockquote className="mt-6 font-serif-display text-lg md:text-xl leading-snug text-foreground border-l-2 border-accent pl-4">
+                        «{r.quote}»
+                      </blockquote>
+
+                      <div className="mt-7 pt-6 border-t border-foreground/10 grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1">
+                        <div>
+                          <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-3">
+                            Точка&nbsp;А
+                          </div>
+                          <ul className="space-y-1.5 font-body text-sm md:text-[0.95rem] leading-relaxed text-foreground/75">
+                            {r.from.map((line, j) => (
+                              <li key={j}>{line}</li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div>
+                          <div className="font-mono text-[10px] uppercase tracking-widest text-accent mb-3">
+                            Точка&nbsp;Б
+                          </div>
+                          <ul className="space-y-1.5 font-body text-sm md:text-[0.95rem] leading-relaxed text-foreground">
+                            {r.to.map((line, j) => (
+                              <li key={j}>{line}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </figure>
+                  ))}
+                </div>
+              </div>
+            </section>
+          );
+        })}
+      </>
+    );
+  };
+
+  return (
+    <main
+      className={
+        effectivePdfMode
+          ? "pdf-export physics-theme"
+          : "physics-theme h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      }
+    >
+      {/* ============== HERO ============== */}
+      <section className={slideCls("")} {...slideAttrs}>
+        <HeroProfit pdfMode={!!effectivePdfMode} ctaTarget="program" />
+      </section>
+
+      {/* ============== AUDIENCE ============== */}
+      <section id="pains" {...slideAttrs} className={slideCls("py-20 md:py-28 border-t border-foreground/10 scroll-mt-24")}>
+        <div className="container-px max-w-7xl mx-auto">
+          <h2 className="font-serif-display font-semibold text-foreground text-4xl md:text-6xl leading-[0.95] tracking-tight max-w-4xl">
+            Вы уперлись в <span className="italic font-normal">финансовый потолок</span>?
+          </h2>
+
+          <RevealList
+            revealAll={!!effectivePdfMode}
+            items={targetAudience.fits}
+            className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8"
+            renderItem={(item, i) => {
+              const Icon = audienceIcons[i] ?? Check;
+              return (
+                <div className="border border-foreground/15 bg-card p-7 md:p-10 hard-shadow flex gap-5 md:gap-6 items-start">
+                  <div className="w-12 h-12 md:w-14 md:h-14 grid place-items-center bg-foreground text-background shrink-0">
+                    <Icon size={24} strokeWidth={1.75} />
+                  </div>
+                  <p className="font-serif-display text-xl md:text-2xl leading-snug tracking-tight">{item}</p>
+                </div>
+              );
+            }}
+          />
+        </div>
+      </section>
+
+      {/* ============== GOALS ============== */}
+      <section {...slideAttrs} className={slideCls("py-20 md:py-28 border-t border-foreground/10")}>
+        <div className="container-px max-w-7xl mx-auto w-full">
+          <h2 className="font-serif-display font-semibold text-foreground text-4xl md:text-5xl lg:text-6xl leading-[0.95] tracking-tight mb-10 md:mb-12">
+            Цели сопровождения
+          </h2>
+
+          <RevealList
+            revealAll={!!effectivePdfMode}
+            items={goalTasks}
+            className="grid grid-cols-1 gap-x-12 sm:grid-cols-2"
+            renderItem={({ Icon, text }) => (
+              <div className="flex items-center gap-4 border-t border-foreground/15 py-4 md:py-5">
+                <Icon aria-hidden="true" className="h-6 w-6 shrink-0 text-accent" strokeWidth={1.6} />
+                <p className="font-display text-lg font-semibold leading-tight md:text-xl lg:text-2xl">{nbsp(text)}</p>
+              </div>
+            )}
+          />
+        </div>
+      </section>
+
+      {/* ============== MAIN GOAL ============== */}
+      <section {...slideAttrs} className={slideCls("py-20 md:py-28 border-t border-foreground/10")}>
+        <div className="container-px max-w-7xl mx-auto w-full">
+          <div className="bg-board p-10 md:p-16 lg:p-20 relative overflow-hidden">
+            <div className="absolute -top-24 -right-24 w-[28rem] h-[28rem] rounded-full border-2 border-background/15" />
+            <div
+              className="absolute -top-12 -right-12 w-72 h-72 rounded-full border border-accent/40"
+              style={{ borderStyle: "dashed" }}
+            />
+            <div className="absolute top-16 right-16 w-7 h-7 rounded-full bg-accent shadow-[0_0_30px_hsl(var(--accent))]" />
+            <div className="relative max-w-4xl">
+              <div className="font-mono text-[11px] uppercase tracking-widest text-accent mb-6">Главная цель</div>
+              <p className="font-display text-3xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight">
+                {mainGoal}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============== EXPERT ============== */}
+      <div {...slideAttrs} className={slideCls("")}>
+        <CardAbout eyebrow="Автор программы" heading="Василий Мещеряков" />
+      </div>
+
+      {/* ============== REVIEWS — Алексей + Любовь ============== */}
+      {renderReviewSlides([0, 1], 0, 4)}
+
+      {/* ============== STAIRS — три ступени на один экран ============== */}
+      <section id="program" {...slideAttrs} className={slideCls("py-16 md:py-20 border-t border-foreground/10 scroll-mt-24")}>
+        <StairsSlide />
+      </section>
+
+      {/* ============== ALL LEVELS: пазл + цена ============== */}
+      <section {...slideAttrs} className={slideCls("py-16 md:py-20 border-t border-foreground/10")}>
+        <div className="container-px max-w-7xl mx-auto w-full">
+          <p className="font-display text-3xl font-semibold leading-none text-accent md:text-5xl">
+            {nbsp(allLevelsBundle.title)}
+          </p>
+          <PuzzleWeeks
+            title={"Полный набор инструментов для роста вашего капитала"}
+            forceProgress={effectivePdfMode ? 1 : undefined}
+          />
+          <div className="mt-8 border border-foreground/15 bg-card px-7 py-6 md:px-10 md:py-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="font-body text-lg text-foreground/75 md:text-xl">{nbsp(allLevelsBundle.duration)}</p>
+              <del className="mt-2 block font-display text-3xl font-semibold leading-none text-foreground/55 decoration-foreground/60 md:text-4xl">
+                {nbsp(allLevelsBundle.oldPrice)}
+              </del>
+            </div>
+            <div className="md:text-right">
+              <strong className="block font-display text-4xl font-semibold leading-none text-accent md:text-5xl">
+                {nbsp(allLevelsBundle.price)}
+              </strong>
+              <p className="mt-2 font-body text-sm text-foreground/60">{nbsp(priceDeadline)}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============== MODULE SLIDES ============== */}
+      {programModules.map((w, i) => {
+        const level = moduleLevel(i);
+        return (
+          <section
+            key={i}
+            id={`week-${i + 1}`}
+            {...slideAttrs}
+            className={slideCls("py-20 md:py-28 border-t border-foreground/10 scroll-mt-24 overflow-hidden")}
+          >
+            <div className="container-px max-w-7xl mx-auto w-full">
+              <div className="max-w-4xl">
+                <div className="mb-4 flex flex-wrap items-center gap-3">
+                  <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+                    {w.week}
+                  </span>
+                  <span aria-hidden="true" className="h-px w-8 bg-foreground/20" />
+                  <span className="font-display text-sm font-semibold text-accent md:text-base">
+                    {nbsp(`${level.number} ступень · ${level.title}`)}
+                  </span>
+                </div>
+                <h3 className="font-serif-display font-semibold text-foreground text-3xl md:text-5xl leading-[0.95] tracking-tight mb-8 md:mb-10">
+                  {w.title}
+                </h3>
+                <RevealList
+                  revealAll={!!effectivePdfMode}
+                  items={[...w.points, w.result]}
+                  className="space-y-4 md:space-y-5"
+                  renderItem={(p, idx) => {
+                    const isResult = idx === w.points.length;
+                    if (isResult) {
+                      return (
+                        <div className="mt-6 md:mt-8 bg-foreground text-background p-7 md:p-9 relative overflow-hidden flex flex-col">
+                          <w.Icon
+                            aria-hidden
+                            strokeWidth={0.9}
+                            className="pointer-events-none select-none absolute -top-6 -right-6 w-36 h-36 md:w-44 md:h-44 text-accent/25"
+                          />
+                          <div className="relative font-mono text-[11px] uppercase tracking-widest text-accent mb-4">
+                            Результат модуля
+                          </div>
+                          <p className="relative font-serif-display text-xl md:text-2xl leading-snug text-background">
+                            {p}
+                          </p>
+                        </div>
+                      );
+                    }
+                    return (
+                      <div className="flex gap-4">
+                        <span className="font-mono text-accent text-sm shrink-0 pt-1.5">→</span>
+                        <span className="font-body text-base md:text-lg text-foreground/85 leading-relaxed">{p}</span>
+                      </div>
+                    );
+                  }}
+                />
+              </div>
+            </div>
+          </section>
+        );
+      })}
+
+      {/* ============== HOW IT WORKS ============== */}
+      <section {...slideAttrs} className={slideCls("py-20 md:py-28 border-t border-foreground/10")}>
+        <div className="container-px max-w-7xl mx-auto">
+          <div className="mb-14 max-w-4xl">
+            <h2 className="font-serif-display font-semibold text-foreground text-4xl md:text-6xl leading-[0.95] tracking-tight">
+              Групповая динамика и <span className="italic font-normal">поддержка</span>
+            </h2>
+            <p className="mt-6 font-serif-display italic text-2xl md:text-3xl text-foreground/85 leading-snug tracking-tight">
+              {nbsp(
+                "Вы примените навыки работы с личными финансами и создадите пассивный доход до 100 000 руб. в месяц"
+              )}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-12 gap-6 lg:gap-8">
+            {[
+              { title: "Живые эфиры", text: "Каждую неделю, записи у вас навсегда" },
+              { title: "Домашние задания", text: "С персональной обратной связью куратора" },
+              { title: "Едино\u00ADмышленники", text: "Обмен опытом в парах и тройках" },
+            ].map((step, i) => {
+              const Icon = processIcons[i];
+              return (
+                <article
+                  key={i}
+                  className="col-span-12 md:col-span-4 relative border border-foreground/15 bg-card overflow-hidden flex flex-col"
+                >
+                  <Icon
+                    aria-hidden="true"
+                    strokeWidth={0.9}
+                    className="pointer-events-none select-none absolute text-accent/15 top-2 right-2 w-24 h-24 md:w-28 md:h-28"
+                  />
+                  <div className="relative flex flex-col flex-1 p-7 md:p-8">
+                    <h3 className="font-display text-xl md:text-2xl font-bold leading-tight tracking-tight mb-4">
+                      {step.title}
+                    </h3>
+                    <p className="text-sm md:text-base text-foreground/80 leading-relaxed">{step.text}</p>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ============== YULIA CASE ============== */}
+      <section {...slideAttrs} className={slideCls("py-20 md:py-28 border-t border-foreground/10 bg-grid")}>
+        <div className="container-px max-w-7xl mx-auto">
+          <figure className="border border-foreground/20 bg-foreground text-background overflow-hidden">
+            <div className="p-6 md:p-8 lg:p-10 flex flex-col">
+              <div className="flex items-start justify-between gap-4 flex-wrap">
+                <header className="flex items-center gap-4">
+                  <img
+                    src="https://drive.google.com/thumbnail?id=1NdDFC31rr5NX_d3zs2PDMQiq-Q4OkCBB&sz=w800"
+                    alt="Юлия"
+                    loading="lazy"
+                    className="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover border border-background/20 shrink-0"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).style.display = "none";
+                    }}
+                  />
+                  <div className="min-w-0">
+                    <div className="font-display font-bold text-xl md:text-2xl leading-tight text-background">Юлия</div>
+                    <div className="font-mono text-[11px] uppercase tracking-widest mt-1 text-background/55">
+                      Интернет-маркетолог, 48&nbsp;лет
+                    </div>
+                  </div>
+                </header>
+
+                <a
+                  href="https://clck.ru/3SffWb"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-accent text-accent-foreground font-mono text-[11px] uppercase tracking-widest hover:opacity-90 transition-opacity"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                  Смотреть видео
+                </a>
+              </div>
+
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+                <ul className="space-y-3 font-body text-[15px] leading-relaxed text-background/90">
+                  {[
+                    "Стоимость программы окупилась ещё во\u00A0время обучения только за\u00A0счёт возврата НДФЛ, хотя Юлия думала, что ей\u00A0налоговый вычет не\u00A0положен.",
+                    "Принято стратегическое решение не\u00A0закрывать ипотеку досрочно, а\u00A0использовать деньги эффективнее.",
+                    "Найдена зона перерасхода, которая годами не\u00A0отслеживалась (какая зона\u00A0— смотрите в\u00A0видео).",
+                  ].map((item, i) => (
+                    <li key={i} className="flex gap-3">
+                      <span aria-hidden className="font-mono text-accent text-base leading-6 shrink-0">
+                        +
+                      </span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <p className="font-body text-[15px] leading-relaxed text-background/90 md:pl-6 md:border-l md:border-background/15 pt-5 border-t border-background/15 md:pt-0 md:border-t-0">
+                  🔥 И&nbsp;самый важный результат&nbsp;— эмоциональный. Просто посмотрите наше интервью. Ни&nbsp;один
+                  текст не&nbsp;передаст те&nbsp;эмоции, которые описала Юлия&nbsp;— как она ведёт планы спокойно
+                  и&nbsp;даже ждёт конца месяца, чтобы их&nbsp;заполнить. Видит горизонты 1&nbsp;год, 10&nbsp;лет
+                  и&nbsp;даже 25&nbsp;лет вперёд.
+                </p>
+              </div>
+            </div>
+          </figure>
+        </div>
+      </section>
+
+      {/* ============== RESULTS ============== */}
+      <section id="results" {...slideAttrs} className={slideCls("py-20 md:py-28 border-t border-foreground/10 scroll-mt-24")}>
+        <div className="container-px max-w-7xl mx-auto">
+          <div className="grid grid-cols-12 gap-6 lg:gap-10 mb-12 items-end">
+            <div className="col-span-12 md:col-span-8">
+              <h2 className="font-serif-display font-semibold text-foreground text-4xl md:text-6xl leading-[0.95] tracking-tight">
+                Что вы получите
+              </h2>
+            </div>
+          </div>
+
+          <RevealList
+            items={resultCategories}
+            revealAll={!!effectivePdfMode}
+            className="grid grid-cols-12 gap-6 lg:gap-8"
+            renderItem={(cat, i) => (
+              <div className="h-full border border-foreground/15 bg-card p-7 md:p-8">
+                <div className="flex items-center gap-3 mb-5 pb-4 border-b border-foreground/10">
+                  <span className="number-display text-2xl text-accent">0{i + 1}</span>
+                  <h3 className="font-display text-lg md:text-xl font-bold tracking-tight">{cat.title}</h3>
+                </div>
+                <ul className="space-y-3">
+                  {cat.points.map((p, pi) => (
+                    <li key={pi} className="flex gap-3">
+                      <Check className="w-4 h-4 text-accent shrink-0 mt-1" strokeWidth={2} />
+                      <span className="text-sm text-foreground/80 leading-relaxed">{p}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            itemClassName="col-span-12 md:col-span-4"
+          />
+        </div>
+      </section>
+
+      {/* ============== RESULTS — HIGHLIGHT ============== */}
+      <section {...slideAttrs} className={slideCls("py-20 md:py-28 border-t border-foreground/10")}>
+        <div className="container-px max-w-7xl mx-auto w-full">
+          <div className="bg-board relative overflow-hidden p-8 md:p-14 lg:p-20">
+            <svg
+              className="absolute bottom-0 right-0 w-72 h-72 md:w-96 md:h-96 text-background/15"
+              viewBox="0 0 8 8"
+              fill="none"
+              preserveAspectRatio="xMaxYMax meet"
+              aria-hidden="true"
+            >
+              <path d="M0 8 H1 V7 H2 V6 H3 V5 H4 V4 H5 V3 H6 V2 H7 V1 H8 V0" stroke="currentColor" strokeWidth="0.12" />
+            </svg>
+            <div className="relative max-w-4xl">
+              <p className="font-display text-2xl md:text-4xl lg:text-5xl text-background leading-[1.15] tracking-tight">
+                Вы&nbsp;обгоняете 99%&nbsp;населения по&nbsp;финансовой грамотности и&nbsp;впервые чётко осознаёте, чего
+                хотите от&nbsp;жизни в&nbsp;деньгах и&nbsp;как&nbsp;к&nbsp;этому подконтрольно прийти
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============== REVIEWS — продолжение ============== */}
+      {renderReviewSlides([15, 14, 17, 16, 9, 8], 1, 4, "reviews")}
+
+      {/* ============== FOOTER CTA — только в браузерной версии ============== */}
+      {!effectivePdfMode && (
+        <section {...slideAttrs} className={slideCls("py-20 md:py-28 border-t border-foreground/10")}>
+          <div className="container-px max-w-7xl mx-auto">
+            <div className="bg-board relative overflow-hidden p-10 md:p-16 text-center">
+              <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full border-2 border-background/10" />
+              <div
+                className="absolute -bottom-20 -left-20 w-72 h-72 rounded-full border border-accent/30"
+                style={{ borderStyle: "dashed" }}
+              />
+              <div className="relative">
+                <h2 className="font-serif-display font-semibold text-background text-3xl md:text-5xl lg:text-6xl leading-[0.95] tracking-tight max-w-3xl mx-auto">
+                  Готовы построить фундамент капитала?
+                </h2>
+                <div className="mt-10 flex justify-center">
+                  <button
+                    type="button"
+                    onClick={handleGeneratePdf}
+                    disabled={isGenerating}
+                    className="inline-flex items-center gap-2 px-7 py-4 bg-accent text-accent-foreground font-mono text-xs uppercase tracking-widest hover:bg-background hover:text-foreground transition-colors disabled:opacity-60 disabled:cursor-progress"
+                  >
+                    {isGenerating ? "Готовим PDF…" : "Сформировать КП →"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+      {!effectivePdfMode && <Footer />}
+    </main>
+  );
+};
+
+export default LandingDeck2;

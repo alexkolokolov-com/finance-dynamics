@@ -13,7 +13,7 @@ type ProfitLevel = {
   featured?: boolean;
 };
 
-const levels: ProfitLevel[] = [
+export const levels: ProfitLevel[] = [
   {
     number: "1",
     title: "Ленивый бюджет",

@@ -1,4 +1,6 @@
-import { Video, FileCheck, Users, Clock, Check, Waves, Repeat2, Wallet, WalletCards, Hourglass, Activity, Settings, ScanSearch, HandCoins, Landmark, HeartHandshake, NotebookTabs, CircleDollarSign, LineChart, ShieldCheck, TrendingUp, type LucideIcon } from "lucide-react";
+import { ArrowUpRight, Video, FileCheck, Users, Clock, Check, Waves, Repeat2, Wallet, WalletCards, Hourglass, Activity, Settings, ScanSearch, HandCoins, Landmark, HeartHandshake, NotebookTabs, CircleDollarSign, LineChart, ShieldCheck, TrendingUp, type LucideIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { levels } from "@/components/landing/ProfitLevels";
 import {
   mainGoal,
   modules,
@@ -15,7 +17,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { HeroProfit } from "@/components/landing/HeroProfit";
 import PuzzleWeeks from "@/components/landing/PuzzleWeeks";
 import { InlineReviewPair, InlineReviewFeature, InlineReviewGrid } from "@/components/landing/InlineReviews";
-import { handleDiagnosAnketaClick } from "@/lib/ymGoals";
+import { handleDiagnosAnketaClick, appendStoredParams } from "@/lib/ymGoals";
 import { nbsp } from "@/lib/nbsp";
 
 import goldenSpiral from "@/assets/golden-spiral.png";
@@ -23,6 +25,11 @@ import goldenSpiral from "@/assets/golden-spiral.png";
 
 const processIcons = [Video, FileCheck, Users, Clock];
 const audienceIcons = [Waves, Repeat2, Wallet, Hourglass];
+
+const trackedHref = (event: React.MouseEvent<HTMLAnchorElement>) => {
+  event.currentTarget.href = appendStoredParams(event.currentTarget.href);
+};
+
 
 // Задачи — как блок «Курс подойдет тем, кто хочет» на /profit
 const goalTasks = [
@@ -239,245 +246,87 @@ const Landing2 = () => {
                 Программа
               </h2>
               <p className="mt-6 font-serif-display italic text-2xl md:text-3xl lg:text-4xl text-foreground/85 max-w-3xl leading-snug tracking-tight">
-                2&nbsp;месяца системной работы с&nbsp;наставником вместо 10&nbsp;лет проб и&nbsp;ошибок
+                3&nbsp;ступени к&nbsp;вашему Профиту
               </p>
             </div>
           </div>
 
-          {/* ===== TIMELINE: 6 недель + выпускной проект ===== */}
-          {(() => {
-            type TItem = {
-              w: string;
-              lines: [string, string];
-              href: string;
-              final?: boolean;
-            };
-            const timeline: TItem[] = [
-              { w: "Нед.1", lines: ["Диагностика", "системы"], href: "#week-1" },
-              { w: "Нед.2", lines: ["Принцип", "шестерёнок"], href: "#week-2" },
-              { w: "Нед.3", lines: ["Чёрные дыры", "бюджета"], href: "#week-3" },
-              { w: "Нед.4", lines: ["Ускорение", "доходов"], href: "#week-4" },
-              { w: "Нед.5", lines: ["Инвестиции", ""], href: "#week-5" },
-              { w: "Нед.6", lines: ["Психология", "финансов"], href: "#week-6" },
-              { w: "Нед.7–8", lines: ["Выпускной", "проект"], href: "#graduation", final: true },
-            ];
-
-            const labelCls = (it: TItem) =>
-              `font-display font-bold text-sm lg:text-base leading-tight transition-colors ${
-                it.final
-                  ? "text-accent group-hover:text-accent"
-                  : "text-foreground group-hover:text-accent"
-              }`;
-
-            const squareCls = (it: TItem) =>
-              `relative z-10 min-w-14 h-11 px-2 grid place-items-center font-mono text-xs font-semibold tracking-tight transition-colors ${
-                it.final
-                  ? "bg-accent text-accent-foreground group-hover:bg-accent/90"
-                  : "bg-foreground text-background group-hover:bg-accent group-hover:text-accent-foreground"
-              }`;
-
-            return (
-              <div className="mb-16 md:mb-20">
-                {/* MOBILE: вертикальный таймлайн, подписи слева/справа */}
-                <ol className="md:hidden relative space-y-2">
-                  <span
-                    aria-hidden
-                    className="absolute top-3 bottom-3 left-1/2 -translate-x-1/2 w-px bg-foreground/25"
-                  />
-                  {timeline.map((it, i) => {
-                    const onLeft = i % 2 === 0;
-                    return (
-                      <li key={i}>
-                        <a
-                          href={it.href}
-                          className="group grid grid-cols-[1fr_auto_1fr] items-center gap-x-4 py-2"
-                        >
-                          <span
-                            className={`${labelCls(it)} text-right ${
-                              onLeft ? "" : "invisible"
-                            }`}
-                          >
-                            {it.lines[0]}
-                            <br />
-                            {it.lines[1]}
-                          </span>
-                          <span className={squareCls(it)}>{it.w}</span>
-                          <span
-                            className={`${labelCls(it)} text-left ${
-                              !onLeft ? "" : "invisible"
-                            }`}
-                          >
-                            {it.lines[0]}
-                            <br />
-                            {it.lines[1]}
-                          </span>
-                        </a>
-                      </li>
-                    );
-                  })}
-                </ol>
-
-                {/* DESKTOP/TABLET: горизонтальный таймлайн, подписи сверху/снизу */}
-                <ol className="hidden md:grid grid-cols-7 relative">
-                  <span
-                    aria-hidden
-                    className="absolute top-1/2 -translate-y-1/2 h-px bg-foreground/25"
-                    style={{
-                      left: `calc(100% / 14)`,
-                      right: `calc(100% / 14)`,
-                    }}
-                  />
-                  {timeline.map((it, i) => {
-                    const above = i % 2 === 0;
-                    return (
-                      <li key={i} className="relative">
-                        <a
-                          href={it.href}
-                          className="group grid grid-rows-[5rem_auto_5rem] items-center justify-items-center text-center px-2"
-                        >
-                          <span
-                            className={`${labelCls(it)} self-end pb-3 ${
-                              above ? "" : "invisible"
-                            }`}
-                          >
-                            {it.lines[0]}
-                            <br />
-                            {it.lines[1]}
-                          </span>
-                          <span className={squareCls(it)}>{it.w}</span>
-                          <span
-                            className={`${labelCls(it)} self-start pt-3 ${
-                              !above ? "" : "invisible"
-                            }`}
-                          >
-                            {it.lines[0]}
-                            <br />
-                            {it.lines[1]}
-                          </span>
-                        </a>
-                      </li>
-                    );
-                  })}
-                </ol>
-              </div>
-            );
-          })()}
-
-          {/* ===== PUZZLE: 6 недель = 6 деталей ===== */}
-          <PuzzleWeeks />
-
-          <div className="grid grid-cols-12 gap-6 lg:gap-8 mt-20">
-            {programWeeks.map((w, i) => (
-              <article
-                key={i}
-                id={`week-${i + 1}`}
-                className="col-span-12 md:col-span-6 group relative border border-foreground/15 bg-card hover:border-foreground transition-colors duration-300 overflow-hidden flex flex-col scroll-mt-24"
-              >
-                <w.Icon
-                  aria-hidden="true"
-                  strokeWidth={0.9}
-                  className="pointer-events-none select-none absolute text-accent/15 group-hover:text-accent/25 transition-colors duration-500 -top-8 -right-8 w-40 h-40 md:w-48 md:h-48"
-                />
-                <div className="relative flex flex-col flex-1 p-7 md:p-8">
-                  <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-3">
-                    {w.week}
-                  </div>
-                  <h3 className="font-display text-xl md:text-2xl font-bold leading-tight tracking-tight mb-5">
-                    {(() => {
-                      const parts = w.title.split(" ");
-                      if (parts.length < 2) return w.title;
-                      const last = parts.pop();
-                      return (
-                        <>
-                          {parts.join(" ")}
-                          <br />
-                          {last}
-                        </>
-                      );
-                    })()}
-                  </h3>
-
-                  <ul className="space-y-3 mb-8">
-                    {w.points.map((p, pi) => (
-                      <li key={pi} className="flex gap-3">
-                        <span className="font-mono text-accent text-xs shrink-0 pt-1">
-                          →
+          {/* ===== Ступени курса: на десктопе лесенкой ===== */}
+          <div className="mt-14 md:mt-20">
+            {levels.map((level, i) => {
+              const offsets = ["md:ml-0", "md:ml-[10%]", "md:ml-[20%]"];
+              return (
+                <article
+                  key={level.number}
+                  className={`border-t border-foreground/20 py-10 md:py-12 ${offsets[i]} ${
+                    i > 0 ? "md:border-l md:border-foreground/15 md:pl-10 lg:pl-14" : ""
+                  }`}
+                >
+                  <div className="grid md:grid-cols-[9rem_minmax(0,1fr)_minmax(16rem,0.75fr)] md:gap-8 lg:gap-10">
+                    <div className="mb-6 md:mb-0">
+                      <p className="flex items-baseline gap-3">
+                        <span className="number-display text-7xl text-accent md:text-8xl">{level.number}</span>
+                        <span className="font-display text-2xl font-semibold leading-none md:text-3xl">
+                          {nbsp("ступень")}
                         </span>
-                        <span className="text-sm text-foreground/80 leading-relaxed">
-                          {p}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="bg-foreground text-background -mx-7 md:-mx-8 -mb-7 md:-mb-8 px-7 md:px-8 py-5 mt-auto">
-                    <div className="font-mono text-[10px] uppercase tracking-widest text-accent mb-1">
-                      результат
+                      </p>
                     </div>
-                    <p className="text-sm leading-relaxed text-background/90">
-                      {w.result}
-                    </p>
-                  </div>
-                </div>
-              </article>
 
-            ))}
+                    <div>
+                      <p className="font-body text-sm font-semibold text-accent">{nbsp(level.duration)}</p>
+                      <h3 className="mt-2 font-display text-3xl font-semibold leading-none md:text-4xl">
+                        {nbsp(level.title)}
+                      </h3>
+                      <p className="mt-5 max-w-xl font-body text-lg leading-relaxed text-foreground/75">
+                        {nbsp(level.description)}
+                      </p>
+                      <Button asChild size="lg" className="mt-7 rounded-none px-6">
+                        <a href={level.href} target="_blank" rel="noopener noreferrer" onClick={trackedHref}>
+                          {nbsp("Выбрать тариф")} <ArrowUpRight aria-hidden="true" />
+                        </a>
+                      </Button>
+                    </div>
+
+                    <div className="mt-8 border-l-2 border-accent pl-5 md:mt-0">
+                      <p className="font-display text-lg font-semibold">{nbsp("Подходит вам, если:")}</p>
+                      <ul className="mt-5 space-y-4">
+                        {level.fits.map((item) => (
+                          <li key={item} className="flex gap-3 font-body leading-snug text-foreground/80">
+                            <Check aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
+                            <span>{nbsp(item)}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
           </div>
 
-          {/* ===== PUZZLE (повтор) с оверлеем «долгосрочный финансовый план» ===== */}
-          <PuzzleWeeks variant="plan" />
-
-          {/* GRADUATION — chalkboard */}
-          <div id="graduation" className="mt-20 bg-board relative overflow-hidden p-8 md:p-14 scroll-mt-24">
-            {/* фон: золотое сечение — на мобильной/планшетной по ширине сверху, на десктопе под левой колонкой */}
-            <img
-              src={goldenSpiral}
-              alt=""
-              aria-hidden="true"
-              className="pointer-events-none select-none absolute top-0 left-0 w-full h-auto lg:w-[42%] lg:h-full lg:object-cover lg:object-left opacity-80"
-            />
-
-
-
-
-            <div className="relative grid grid-cols-12 gap-6 lg:gap-10">
-              <div className="col-span-12 lg:col-span-5">
-                <div className="font-mono text-[11px] uppercase tracking-widest text-accent mb-4">
-                  Выпускной проект
-                </div>
-                <h3 className="font-display text-3xl md:text-5xl font-bold leading-[0.95] tracking-tight">
-                  <span className="italic font-light">Долгосрочный</span>
-                  <br />
-                  финансовый план
-                </h3>
-              </div>
-
-              <div className="col-span-12 lg:col-span-7">
-                <ul className="space-y-4">
-                  {graduationPoints.map((p, i) => (
-                    <li key={i} className="flex gap-4">
-                      <span className="font-mono text-accent text-xs shrink-0 pt-1">
-                        —
-                      </span>
-                      <span className="text-background/90 leading-relaxed">
-                        {p}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-8 pt-6 border-t border-background/20">
-                  <div className="font-mono text-[10px] uppercase tracking-widest text-accent mb-2">
-                    Результат
-                  </div>
-                  <div className="font-display text-lg md:text-xl text-background leading-relaxed space-y-3">
-                    <p>Вы&nbsp;запускаете своё мышление на&nbsp;10&nbsp;лет вперёд без страха и&nbsp;боли.</p>
-                    <p>У&nbsp;вас есть запасной план, и&nbsp;в&nbsp;случае кризиса вы&nbsp;не&nbsp;паникуете.</p>
-                  </div>
-                </div>
-              </div>
+          {/* ===== Все 3 ступени ===== */}
+          <article className="mt-16 grid gap-8 bg-board p-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:p-12">
+            <div>
+              <p className="font-display text-3xl font-semibold leading-none text-accent md:text-5xl">
+                {nbsp("Все 3 ступени")}
+              </p>
+              <h3 className="mt-3 max-w-4xl font-display text-4xl font-semibold leading-none text-background md:text-6xl">
+                {nbsp("От шаблона бюджета до инвестиций и долгосрочного плана")}
+              </h3>
+              <p className="mt-6 font-body text-xl text-background/75">
+                {nbsp("11 недель + личная консультация Василия")}
+              </p>
             </div>
-          </div>
+            <Button
+              asChild
+              size="lg"
+              className="rounded-none bg-accent px-6 text-accent-foreground hover:bg-background hover:text-foreground"
+            >
+              <a href="https://nivz.getcourse.ru/profit_level3" target="_blank" rel="noopener noreferrer" onClick={trackedHref}>
+                {nbsp("Выбрать тариф")} <ArrowUpRight aria-hidden="true" />
+              </a>
+            </Button>
+          </article>
         </div>
       </section>
 

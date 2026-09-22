@@ -2,59 +2,9 @@ import { ArrowUpRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { appendStoredParams } from "@/lib/ymGoals";
 import { nbsp } from "@/lib/nbsp";
+import { profitLevels, type ProfitLevel } from "@/data/profitLevels";
 
-type ProfitLevel = {
-  number: string;
-  title: string;
-  duration: string;
-  description: string;
-  fits: string[];
-  href: string;
-  featured?: boolean;
-};
-
-export const levels: ProfitLevel[] = [
-  {
-    number: "1",
-    title: "Ленивый бюджет",
-    duration: "3 недели",
-    description: "Шаблоны, механики и способы вести бюджет легко и эффективно.",
-    fits: [
-      "Начинаете вести бюджет и бросаете",
-      "Не понимаете, какое приложение, таблицу или способ учёта выбрать",
-      "Записываете расходы, но это не помогает",
-      "Ненавидите вести финансы и хотите простое решение",
-    ],
-    href: "https://nivz.getcourse.ru/profit_level1",
-  },
-  {
-    number: "2",
-    title: "Денежный поток",
-    duration: "4 недели",
-    description: "Инструменты, которые помогают растить доход, тратить без чувства вины и лучше жить за свои деньги.",
-    fits: [
-      "Доход нормальный, но хочется большего",
-      "Непонятно, куда направлять свободные деньги",
-      "Хочется копить, но не отказывать себе в жизни сейчас",
-      "Хочется увеличивать доход, а не бесконечно оптимизировать кофе",
-      "Доход растёт, а качество жизни — нет",
-    ],
-    href: "https://nivz.getcourse.ru/profit_level2",
-  },
-  {
-    number: "3",
-    title: "Разумные инвестиции",
-    duration: "4 недели + личная консультация",
-    description: "Шаблон и механика долгосрочного планирования вместе с инструментами инвестирования.",
-    fits: [
-      "Накопить на пенсию",
-      "Купить квартиру, машину, яхту или пароход",
-      "Обеспечить детей",
-      "Инвестировать, не ошибаясь",
-    ],
-    href: "https://nivz.getcourse.ru/profit_level3",
-  },
-];
+export const levels = profitLevels;
 
 const trackedHref = (event: React.MouseEvent<HTMLAnchorElement>) => {
   event.currentTarget.href = appendStoredParams(event.currentTarget.href);

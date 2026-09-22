@@ -154,9 +154,9 @@ const Landing2 = () => {
 
           {/* ===== Ступени курса ===== */}
           <div className="relative mt-14 md:mt-16">
-            <div className="grid gap-6 md:h-[31rem] md:grid-cols-3 md:items-end md:gap-4 lg:gap-7">
+            <div className="grid gap-6 md:h-[33rem] md:grid-cols-3 md:items-end md:gap-4 lg:gap-7">
             {levels.map((level, i) => {
-              const stepHeights = ["md:h-[23rem]", "md:h-[27rem]", "md:h-[31rem]"];
+              const stepHeights = ["md:h-[27rem]", "md:h-[30rem]", "md:h-[33rem]"];
               const price = levelPrices[i];
               if (!price) return null;
               const duration = i === 2 ? "4 недели" : level.duration;

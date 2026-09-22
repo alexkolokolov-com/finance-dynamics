@@ -347,8 +347,8 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
     };
 
     const truncateLine = (s: string, max = 140) => (s.length > max ? s.slice(0, max - 1).trimEnd() + "…" : s);
-    const limitItems = (arr: string[], max = 3) =>
-      isPdf ? arr.slice(0, max).map((line) => truncateLine(line, 96)) : arr;
+    const limitItems = (arr: string[], max = 2) =>
+      isPdf ? arr.slice(0, max).map((line) => truncateLine(line, 78)) : arr;
 
     const items = indices
       .map((i) => allReviews[i])
@@ -368,7 +368,7 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
         return {
           name: r.name,
           role: r.role,
-          quote: isPdf ? truncateLine(quote, 130) : quote,
+          quote: isPdf ? truncateLine(quote, 110) : quote,
           avatar: r.avatar ?? driveImage(r.photoId),
           from: limitItems(from, 4),
           to: limitItems(to, 4),
@@ -387,10 +387,10 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
               key={`reviews-${pageStartIdx}-${localIdx}`}
               id={localIdx === 0 ? firstSlideId : undefined}
               {...slideAttrs}
-              className={slideCls("py-7 md:py-8 border-t border-foreground/10")}
+              className={slideCls("py-6 border-t border-foreground/10")}
             >
               <div className="container-px max-w-7xl mx-auto">
-                <div className="grid grid-cols-12 gap-6 lg:gap-10 mb-5 items-end">
+                <div className="grid grid-cols-12 gap-6 lg:gap-10 mb-4 items-end">
                   <div className="col-span-12 md:col-span-8">
                     <h2 className="font-serif-display font-semibold text-foreground text-4xl md:text-6xl leading-[0.95] tracking-tight">
                       Отзывы выпускников
@@ -407,7 +407,7 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
                   {pageReviews.map((r, i) => (
                     <figure
                       key={i}
-                      className="grid grid-cols-12 gap-4 border border-foreground/15 bg-card p-4 md:p-5"
+                      className="grid grid-cols-12 gap-4 border border-foreground/15 bg-card p-4"
                     >
                       <header className="col-span-12 flex items-center gap-4 md:col-span-3 md:items-start">
                         {r.avatar ? (
@@ -415,7 +415,7 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
                             src={r.avatar}
                             alt={r.name}
                             loading="lazy"
-                            className="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover border border-foreground/15 shrink-0"
+                            className="w-12 h-12 rounded-full object-cover border border-foreground/15 shrink-0"
                             onError={(e) => {
                               (e.currentTarget as HTMLImageElement).style.display = "none";
                             }}
@@ -423,7 +423,7 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
                         ) : (
                           <span
                             aria-hidden
-                            className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-muted border border-foreground/15 grid place-items-center font-serif-display text-xl text-foreground/55 shrink-0"
+                            className="w-12 h-12 rounded-full bg-muted border border-foreground/15 grid place-items-center font-serif-display text-lg text-foreground/55 shrink-0"
                           >
                             {r.name.charAt(0)}
                           </span>

@@ -347,7 +347,8 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
     };
 
     const truncateLine = (s: string, max = 140) => (s.length > max ? s.slice(0, max - 1).trimEnd() + "…" : s);
-    const limitItems = (arr: string[], max = 4) => (isPdf ? arr.slice(0, max).map((l) => truncateLine(l)) : arr);
+    const limitItems = (arr: string[], max = 3) =>
+      isPdf ? arr.slice(0, max).map((line) => truncateLine(line, 96)) : arr;
 
     const items = indices
       .map((i) => allReviews[i])
@@ -367,7 +368,7 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
         return {
           name: r.name,
           role: r.role,
-          quote: isPdf ? truncateLine(quote, 180) : quote,
+          quote: isPdf ? truncateLine(quote, 130) : quote,
           avatar: r.avatar ?? driveImage(r.photoId),
           from: limitItems(from, 4),
           to: limitItems(to, 4),
@@ -386,10 +387,10 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
               key={`reviews-${pageStartIdx}-${localIdx}`}
               id={localIdx === 0 ? firstSlideId : undefined}
               {...slideAttrs}
-              className={slideCls("py-10 md:py-12 border-t border-foreground/10")}
+              className={slideCls("py-7 md:py-8 border-t border-foreground/10")}
             >
               <div className="container-px max-w-7xl mx-auto">
-                <div className="grid grid-cols-12 gap-6 lg:gap-10 mb-7 items-end">
+                <div className="grid grid-cols-12 gap-6 lg:gap-10 mb-5 items-end">
                   <div className="col-span-12 md:col-span-8">
                     <h2 className="font-serif-display font-semibold text-foreground text-4xl md:text-6xl leading-[0.95] tracking-tight">
                       Отзывы выпускников
@@ -402,11 +403,11 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-4">
+                <div className="grid grid-cols-1 gap-3">
                   {pageReviews.map((r, i) => (
                     <figure
                       key={i}
-                      className="grid grid-cols-12 gap-5 border border-foreground/15 bg-card p-5 md:p-6"
+                      className="grid grid-cols-12 gap-4 border border-foreground/15 bg-card p-4 md:p-5"
                     >
                       <header className="col-span-12 flex items-center gap-4 md:col-span-3 md:items-start">
                         {r.avatar ? (
@@ -439,11 +440,11 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
                         </div>
                       </header>
 
-                      <blockquote className="col-span-12 font-serif-display text-lg leading-snug text-foreground border-l-2 border-accent pl-4 md:col-span-4 md:text-xl">
+                      <blockquote className="col-span-12 font-serif-display text-lg leading-snug text-foreground border-l-2 border-accent pl-4 md:col-span-4">
                         «{r.quote}»
                       </blockquote>
 
-                      <div className="col-span-12 grid grid-cols-1 gap-5 border-t border-foreground/10 pt-5 sm:grid-cols-2 md:col-span-5 md:border-l md:border-t-0 md:pl-5 md:pt-0">
+                      <div className="col-span-12 grid grid-cols-1 gap-4 border-t border-foreground/10 pt-4 sm:grid-cols-2 md:col-span-5 md:border-l md:border-t-0 md:pl-4 md:pt-0">
                         <div>
                           <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-3">
                             Точка&nbsp;А

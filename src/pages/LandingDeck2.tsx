@@ -31,6 +31,7 @@ import { Footer } from "@/components/sections/Footer";
 import { HeroProfit } from "@/components/landing/HeroProfit";
 import PuzzleWeeks from "@/components/landing/PuzzleWeeks";
 import { StairsSlide } from "@/components/landing/StairsSlide";
+import { PricingCalculator } from "@/components/landing/PricingCalculator";
 import { generateDeckPdf } from "@/lib/generateDeckPdf";
 import { nbsp } from "@/lib/nbsp";
 
@@ -815,6 +816,15 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* ============== PRICING CALCULATOR ============== */}
+      <section
+        id="calculator"
+        {...slideAttrs}
+        className={slideCls("py-8 md:py-10 border-t border-foreground/10 scroll-mt-24")}
+      >
+        <PricingCalculator pdfMode={!!effectivePdfMode} />
       </section>
 
       {/* ============== REVIEWS — продолжение ============== */}

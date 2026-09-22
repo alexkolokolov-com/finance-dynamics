@@ -166,7 +166,7 @@ const Landing2 = () => {
             {levels.map((level, i) => {
               const mobileOffsets = ["mr-8", "ml-4 mr-4", "ml-8"];
               const tabletOffsets = ["md:mt-9", "md:mt-0", "md:col-start-2 md:-mt-3"];
-              const desktopOffsets = ["lg:mt-36", "lg:mt-18", "lg:mt-0"];
+              const desktopOffsets = ["lg:mt-36", "lg:mt-[4.5rem]", "lg:mt-0"];
               const price = levelPrices[i];
               if (!price) return null;
               const duration = i === 2 ? "4 недели" : level.duration;
@@ -178,8 +178,7 @@ const Landing2 = () => {
                 >
                   <span
                     aria-hidden="true"
-                    className="pointer-events-none absolute right-3 top-0 font-display text-[8rem] font-semibold leading-none text-transparent opacity-20 md:text-[9rem] lg:text-[11rem]"
-                    style={{ WebkitTextStroke: "1px hsl(var(--foreground))" }}
+                    className="pointer-events-none absolute right-3 top-0 font-display text-[8rem] font-semibold leading-none text-transparent opacity-20 [-webkit-text-stroke:1px_hsl(var(--foreground))] md:text-[9rem] lg:text-[11rem]"
                   >
                     {level.number}
                   </span>

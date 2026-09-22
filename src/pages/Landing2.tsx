@@ -17,7 +17,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { HeroProfit } from "@/components/landing/HeroProfit";
 import PuzzleWeeks from "@/components/landing/PuzzleWeeks";
 import { InlineReviewPair, InlineReviewFeature, InlineReviewGrid } from "@/components/landing/InlineReviews";
-import { handleDiagnosAnketaClick } from "@/lib/ymGoals";
+import { handleDiagnosAnketaClick, appendStoredParams } from "@/lib/ymGoals";
 import { nbsp } from "@/lib/nbsp";
 
 import goldenSpiral from "@/assets/golden-spiral.png";

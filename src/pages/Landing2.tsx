@@ -148,7 +148,7 @@ const landingPageNav = [
   { href: "#pricing", label: "Записаться", id: "pricing", cta: true },
 ];
 
-const Landing = () => {
+const Landing2 = () => {
   return (
     <main className="physics-theme min-h-screen">
       <SiteHeader pageNav={landingPageNav} />
@@ -740,4 +740,4 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default Landing2;

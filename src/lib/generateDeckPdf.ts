@@ -20,6 +20,8 @@ export type GenerateOpts = {
   seriesApplied: Record<number, boolean>;
   fileName?: string;
   scale?: number;
+  /** Какую презентацию собирать: /landing-deck (deck) или /landing-deck-2 (deck2) */
+  page?: "deck" | "deck2";
 };
 
 const withTimeout = <T,>(p: Promise<T>, ms: number, tag: string): Promise<T | "timeout"> => {

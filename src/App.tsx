@@ -20,6 +20,7 @@ import Landing from "./pages/Landing.tsx";
 import Landing2 from "./pages/Landing2.tsx";
 import Profit from "./pages/Profit.tsx";
 import LandingDeck from "./pages/LandingDeck.tsx";
+import LandingDeck2 from "./pages/LandingDeck2.tsx";
 import Support2026 from "./pages/Support2026.tsx";
 import Traffic from "./pages/Traffic.tsx";
 import Calculator from "./pages/Calculator.tsx";

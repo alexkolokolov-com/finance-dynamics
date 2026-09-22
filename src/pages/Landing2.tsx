@@ -147,7 +147,7 @@ const Landing2 = () => {
     <main className="physics-theme min-h-screen">
       <SiteHeader pageNav={landingPageNav} />
       {/* ============== HERO ============== */}
-      <HeroProfit />
+      <HeroProfit ctaTarget="cta" />
 
       {/* ============== AUDIENCE ============== */}
       <section className="relative py-20 md:py-28 border-t border-foreground/10">

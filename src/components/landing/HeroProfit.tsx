@@ -56,9 +56,9 @@ const outlineStyle: React.CSSProperties = {
   WebkitTextStroke: "2px hsl(var(--foreground))",
 };
 
-type HeroProfitProps = { pdfMode?: boolean };
+type HeroProfitProps = { pdfMode?: boolean; ctaTarget?: string };
 
-export const HeroProfit = ({ pdfMode = false }: HeroProfitProps = {}) => {
+export const HeroProfit = ({ pdfMode = false, ctaTarget = "pricing" }: HeroProfitProps = {}) => {
   // высота, которую занимают кнопки + их верхний отступ (mt-10/14 + py-3 + border):
   // mt-14 ≈ 56px, кнопка ≈ 50px → ~106px. Округляем до 7rem (112px).
   const profitOffsetCls = pdfMode ? "mt-28 md:mt-32" : "";
@@ -122,7 +122,7 @@ export const HeroProfit = ({ pdfMode = false }: HeroProfitProps = {}) => {
               Программа
             </button>
             <button
-              onClick={() => scrollTo("pricing")}
+              onClick={() => scrollTo(ctaTarget)}
               className="inline-flex items-center gap-2 px-5 py-3 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-accent-foreground transition-colors hard-shadow"
             >
               Записаться&nbsp;→

@@ -81,10 +81,12 @@ export async function generateDeckPdf({
   seriesApplied,
   fileName = "profit-kp",
   scale = PDF_W / SLIDE_W,
+  page = "deck",
 }: GenerateOpts) {
   console.log("[pdf] start");
   // динамический импорт, чтобы избежать круговой зависимости
-  const { default: LandingDeck } = await import("@/pages/LandingDeck");
+  const { default: DeckPage } =
+    page === "deck2" ? await import("@/pages/LandingDeck2") : await import("@/pages/LandingDeck");
 
   // оффскрин-хост в реальном вьюпорте (opacity:0): html2canvas корректно
   // клонирует фоны/градиенты только для узлов, физически находящихся в окне.

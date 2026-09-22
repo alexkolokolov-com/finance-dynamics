@@ -6,7 +6,6 @@ import {
   mainGoal,
   targetAudience,
   resultCategories,
-  paymentFormats,
 } from "@/data/presentationData";
 import { CardAbout } from "@/components/sections/CardAbout";
 
@@ -131,9 +130,6 @@ const programWeeks: WeekItem[] = [
   },
 ];
 
-const scrollToPricing = () => {
-  document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" });
-};
 
 const scrollToProgram = () => {
   document.getElementById("program")?.scrollIntoView({ behavior: "smooth" });
@@ -143,7 +139,7 @@ const landingPageNav = [
   { href: "#program", label: "Программа", id: "program" },
   { href: "#results", label: "Результаты", id: "results" },
   { href: "#reviews", label: "Отзывы", id: "reviews" },
-  { href: "#pricing", label: "Записаться", id: "pricing", cta: true },
+  { href: "#cta", label: "Записаться", id: "cta", cta: true },
 ];
 
 const Landing2 = () => {
@@ -151,7 +147,7 @@ const Landing2 = () => {
     <main className="physics-theme min-h-screen">
       <SiteHeader pageNav={landingPageNav} />
       {/* ============== HERO ============== */}
-      <HeroProfit />
+      <HeroProfit ctaTarget="cta" />
 
       {/* ============== AUDIENCE ============== */}
       <section className="relative py-20 md:py-28 border-t border-foreground/10">
@@ -396,7 +392,7 @@ const Landing2 = () => {
               Групповая динамика и <span className="italic font-normal">поддержка</span>
             </h2>
             <p className="mt-6 font-serif-display italic text-2xl md:text-3xl text-foreground/85 leading-snug tracking-tight">
-              Мы создали среду, в которой вы гарантированно примените навыки работы с личными финансами и увеличите доходы на 20–30% в год.
+              {nbsp("Вы примените навыки работы с личными финансами и создадите пассивный доход до 100 000 руб. в месяц")}
             </p>
           </div>
 
@@ -432,62 +428,8 @@ const Landing2 = () => {
         </div>
       </section>
 
-      {/* ============== PRICING ============== */}
-      <section
-        id="pricing"
-        className="relative py-20 md:py-28 border-t border-foreground/10 bg-grid scroll-mt-24"
-      >
-        <div className="container-px max-w-7xl mx-auto">
-          <div className="mb-14">
-            <h2 className="font-serif-display font-semibold text-foreground text-4xl md:text-6xl leading-[0.95] tracking-tight">
-              Тарифы
-            </h2>
-          </div>
-
-          <div className="max-w-3xl mx-auto">
-            <div className="relative bg-card border border-foreground/15 p-8 md:p-12 hard-shadow text-center">
-              <div className="mb-8 md:mb-10">
-                <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-3">
-                  Банковская рассрочка до 12 месяцев
-                </div>
-                <div className="font-display text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1] whitespace-nowrap">
-                  от <span className="text-accent">5 000</span> ₽/мес
-                </div>
-                <div className="mt-4 font-body text-lg md:text-xl text-foreground/65">
-                  без переплат
-                </div>
-              </div>
-
-              <div className="border-t border-foreground/10 pt-8 md:pt-10 mb-8 md:mb-10">
-                <ul className="space-y-4 text-left">
-                  {paymentFormats.map((format, i) => (
-                    <li key={i} className="flex items-start gap-3 text-foreground/85">
-                      <span className="font-mono text-accent mt-0.5">◆</span>
-                      <span className="font-body text-base md:text-lg leading-relaxed">{format}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <a
-                href="https://nivz.getcourse.ru/diagnostic"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-accent-foreground transition-colors"
-              >
-                Оставить заявку →
-              </a>
-              <p className="mt-4 max-w-md mx-auto text-center font-body text-sm md:text-base text-foreground/70 leading-relaxed">
-                ВАЖНО: заполнение заявки ни&nbsp;к&nbsp;чему вас не&nbsp;обязывает, но даёт возможность узнать об&nbsp;актуальной программе обучения, ваших возможных результатах и&nbsp;получить персональные условия на&nbsp;участие
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      {/* Кейс Юлии — продолжение блока стоимости (тот же клетчатый фон) */}
-      <section className="relative -mt-16 md:-mt-24 pt-0 pb-16 md:pb-24 bg-grid">
+      {/* Кейс Юлии */}
+      <section className="relative pt-16 md:pt-24 pb-16 md:pb-24 bg-grid">
         <div className="container-px max-w-7xl mx-auto">
           <figure className="border border-foreground/20 bg-foreground text-background overflow-hidden">
             <div className="p-6 md:p-8 lg:p-10 flex flex-col">
@@ -615,7 +557,7 @@ const Landing2 = () => {
 
 
       {/* ============== FOOTER CTA ============== */}
-      <section className="relative py-20 md:py-28 border-t border-foreground/10">
+      <section id="cta" className="relative py-20 md:py-28 border-t border-foreground/10 scroll-mt-24">
         <div className="container-px max-w-7xl mx-auto">
           <div className="bg-board relative overflow-hidden p-10 md:p-16 text-center">
             <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full border-2 border-background/10" />
@@ -629,10 +571,13 @@ const Landing2 = () => {
               </h2>
               <div className="mt-10 flex justify-center">
               <a
-                  href="#pricing"
+                  href="https://nivz.getcourse.ru/diagnostic"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={handleDiagnosAnketaClick}
                   className="inline-flex items-center gap-2 px-7 py-4 bg-accent text-accent-foreground font-mono text-xs uppercase tracking-widest hover:bg-background hover:text-foreground transition-colors"
                 >
-                  к тарифам →
+                  Записаться →
                 </a>
               </div>
             </div>

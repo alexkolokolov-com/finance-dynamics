@@ -23,6 +23,18 @@ import goldenSpiral from "@/assets/golden-spiral.png";
 
 const processIcons = [Video, FileCheck, Users, Clock];
 const audienceIcons = [Waves, Repeat2, Wallet, Hourglass];
+
+// Задачи — как блок «Курс подойдет тем, кто хочет» на /profit
+const goalTasks = [
+  { Icon: NotebookTabs, text: "Собрать понятную финансовую систему" },
+  { Icon: WalletCards, text: "Перестать жить в ноль" },
+  { Icon: Landmark, text: "Разобраться, куда инвестировать" },
+  { Icon: CircleDollarSign, text: "Начать вести бюджет без мучений" },
+  { Icon: LineChart, text: "Увеличить доход" },
+  { Icon: ShieldCheck, text: "Накопить на пенсию" },
+  { Icon: HandCoins, text: "Избавиться от долгов" },
+  { Icon: TrendingUp, text: "Перестать тревожиться из-за денег" },
+];
 const module1 = modules[0];
 
 type WeekItem = {

@@ -832,7 +832,11 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
         {...slideAttrs}
         className={slideCls("py-8 md:py-10 border-t border-foreground/10 scroll-mt-24")}
       >
-        <PricingCalculator pdfMode={!!effectivePdfMode} />
+        <PricingCalculator
+          pdfMode={!!effectivePdfMode}
+          selection={effectiveSelection}
+          onSelectionChange={setCalculatorSelection}
+        />
       </section>
 
       {/* ============== REVIEWS — продолжение ============== */}

@@ -468,6 +468,7 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
 
   return (
     <main
+      ref={rootRef}
       className={
         effectivePdfMode
           ? "pdf-export physics-theme"
@@ -475,7 +476,7 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
       }
     >
       {/* ============== HERO ============== */}
-      <section className={slideCls("")} {...slideAttrs}>
+      <section data-fit="off" className={slideCls("")} {...slideAttrs}>
         <HeroProfit pdfMode={!!effectivePdfMode} ctaTarget="program" />
       </section>
 

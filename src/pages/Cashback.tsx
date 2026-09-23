@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { useEffect, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
@@ -240,10 +241,7 @@ const tariffs = [
 
 
 const Cashback = () => {
-  useEffect(() => {
-    document.title = "Кэшбэк-гайд — ежемесячный разбор банковских выгод";
-  }, []);
-
+  usePageMeta({ title: "Кэшбэк-гайд — ежемесячный разбор банковских выгод", description: "Ежемесячный гайд по кэшбэку: какие категории выбрать в банках, чтобы не терять деньги на обычных покупках." });
 
   const pageNav = [
     { href: "#inside", label: "Что внутри", id: "inside" },

@@ -6,17 +6,23 @@ import { resolve } from "node:path";
 
 const BASE_URL = "https://vasyaifin.ru";
 
+// Только публичные, индексируемые страницы.
+// Служебные (/landing2, /landing-deck, /landing-deck-2, /traffic, /old)
+// закрыты от индексации и в карту не попадают.
 const entries = [
   { path: "/", changefreq: "weekly", priority: "1.0" },
   { path: "/blog", changefreq: "weekly", priority: "0.9" },
+  { path: "/consultations", changefreq: "weekly", priority: "0.9" },
+  { path: "/landing", changefreq: "weekly", priority: "0.9" },
+  { path: "/profit", changefreq: "weekly", priority: "0.9" },
+  { path: "/support-2026", changefreq: "monthly", priority: "0.8" },
+  { path: "/corporate", changefreq: "monthly", priority: "0.8" },
   { path: "/longevity", changefreq: "monthly", priority: "0.8" },
   { path: "/financial-horizon", changefreq: "monthly", priority: "0.8" },
   { path: "/financial-plan", changefreq: "monthly", priority: "0.8" },
   { path: "/crisis-decisions", changefreq: "monthly", priority: "0.8" },
   { path: "/gears", changefreq: "monthly", priority: "0.8" },
   { path: "/budget-methods", changefreq: "monthly", priority: "0.7" },
-  { path: "/consultations", changefreq: "weekly", priority: "0.9" },
-  { path: "/corporate", changefreq: "monthly", priority: "0.8" },
   { path: "/lectures", changefreq: "monthly", priority: "0.7" },
   { path: "/decisions", changefreq: "monthly", priority: "0.7" },
   { path: "/negotiations", changefreq: "monthly", priority: "0.7" },
@@ -26,7 +32,6 @@ const entries = [
   { path: "/checklist", changefreq: "monthly", priority: "0.6" },
   { path: "/calculator", changefreq: "monthly", priority: "0.6" },
   { path: "/bigbudget", changefreq: "monthly", priority: "0.6" },
-  { path: "/profit", changefreq: "weekly", priority: "0.9" },
   { path: "/reviews", changefreq: "monthly", priority: "0.6" },
   { path: "/oferta", changefreq: "yearly", priority: "0.3" },
 ];

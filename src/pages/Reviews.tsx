@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { useMemo, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
@@ -191,6 +192,7 @@ const ReviewCard = ({ r, index }: { r: Review; index: number }) => {
 };
 
 const Reviews = () => {
+  usePageMeta({ title: "Отзывы клиентов", description: "Отзывы участников курсов и консультаций «Вася и финансы»: с чем приходили и какие результаты получили." });
   const allResults = useMemo(() => {
     const s = new Set<string>();
     reviews.forEach((r) => r.results.forEach((t) => s.add(t)));

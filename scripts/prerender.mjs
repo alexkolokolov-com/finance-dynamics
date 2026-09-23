@@ -11,17 +11,21 @@ const DIST = resolve("dist");
 const PORT = 4321;
 const SITE_URL = process.env.SITE_URL || "https://vasyaifin.ru";
 
+// Список адресов совпадает с public/sitemap.xml (scripts/generate-sitemap.mjs).
 const ROUTES = [
   "/",
   "/blog",
+  "/consultations",
+  "/landing",
+  "/profit",
+  "/support-2026",
+  "/corporate",
   "/longevity",
   "/financial-horizon",
   "/financial-plan",
   "/crisis-decisions",
   "/gears",
   "/budget-methods",
-  "/consultations",
-  "/corporate",
   "/lectures",
   "/decisions",
   "/negotiations",
@@ -31,13 +35,8 @@ const ROUTES = [
   "/checklist",
   "/calculator",
   "/bigbudget",
-  "/landing",
-  "/profit",
-  "/support-2026",
-  "/traffic",
   "/reviews",
   "/oferta",
-  "/old",
 ];
 
 const MIME = {

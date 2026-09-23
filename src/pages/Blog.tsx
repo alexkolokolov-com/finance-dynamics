@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -9,10 +10,7 @@ const posts = blogPosts;
 
 
 const Blog = () => {
-  useEffect(() => {
-    document.title = "Блог · Вася и финансы";
-  }, []);
-
+  usePageMeta({ title: "Блог о личных финансах", description: "Статьи Василия Мещерякова о личных финансах: финансовый план, бюджет, горизонт планирования, решения в кризис и финансовое долголетие." });
   return (
     <main className="bg-background text-foreground">
       <SiteHeader />

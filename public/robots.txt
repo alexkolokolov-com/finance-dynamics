@@ -59,4 +59,11 @@ Allow: /
 User-agent: *
 Allow: /
 
+# Служебные страницы и презентации — не для индексации
+Disallow: /landing2
+Disallow: /landing-deck
+Disallow: /landing-deck-2
+Disallow: /traffic
+Disallow: /old
+
 Sitemap: https://vasyaifin.ru/sitemap.xml

@@ -1,4 +1,5 @@
 import { useEffect, type ReactNode } from "react";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { Varioqub } from "@/components/Varioqub";
@@ -22,16 +23,25 @@ export const ArticlePage = ({
   toc?: boolean;
   children: ReactNode;
 }) => {
+  usePageMeta({ title, description });
+
+  // Разметка статьи для поисковиков и AI-ассистентов
   useEffect(() => {
-    document.title = `${title} · Вася и финансы`;
-    if (!description) return;
-    let meta = document.querySelector<HTMLMetaElement>('meta[name="description"]');
-    if (!meta) {
-      meta = document.createElement("meta");
-      meta.name = "description";
-      document.head.appendChild(meta);
-    }
-    meta.content = description;
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.dataset.article = "true";
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: title,
+      description,
+      inLanguage: "ru-RU",
+      mainEntityOfPage: `https://vasyaifin.ru${window.location.pathname}`,
+      author: { "@type": "Person", name: "Василий Мещеряков" },
+      publisher: { "@type": "Organization", name: "Вася и финансы", url: "https://vasyaifin.ru/" },
+    });
+    document.head.appendChild(script);
+    return () => script.remove();
   }, [title, description]);
 
   return (

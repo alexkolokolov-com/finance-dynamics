@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { Video, FileCheck, Users, Clock, Check, Plus, Waves, Repeat2, Wallet, Hourglass, Activity, Settings, ScanSearch, HandCoins, Landmark, HeartHandshake, type LucideIcon } from "lucide-react";
 import {
@@ -259,6 +260,7 @@ const PDF_SLIDE_STYLE: React.CSSProperties = { width: 1280, height: 720 };
 type LandingDeckProps = { pdfMode?: PdfMode };
 
 const LandingDeck = ({ pdfMode: pdfModeProp }: LandingDeckProps = {}) => {
+  usePageMeta({ title: "Коммерческое предложение «Профит»", noindex: true });
   const [discountAppliedState, setDiscountApplied] = useState<Record<number, boolean>>({});
   const [seriesAppliedState, setSeriesApplied] = useState<Record<number, boolean>>({});
   const [isGenerating, setIsGenerating] = useState(false);

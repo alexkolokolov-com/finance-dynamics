@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { Link } from "react-router-dom";
 import { SiteHeader } from "@/components/SiteHeader";
 import { CardAbout } from "@/components/sections/CardAbout";
@@ -21,11 +22,8 @@ const cardPageNav = [
 ];
 
 const Card = () => {
+  usePageMeta({ title: "Вася и финансы · Василий Мещеряков", description: "Простыми словами о том, как избавиться от финансовой тревоги и жить лучше за те же деньги: консультации, сопровождение, курсы и кэшбэк-гайд." });
   const { hash } = useLocation();
-
-  useEffect(() => {
-    document.title = "Вася и финансы · личный сайт";
-  }, []);
 
   useEffect(() => {
     if (hash) {

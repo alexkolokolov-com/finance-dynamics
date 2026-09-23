@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { useEffect, type ReactNode } from "react";
 import { Helmet } from "react-helmet-async";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -480,9 +481,7 @@ function Footer() {
 }
 
 const BigBudget = () => {
-  useEffect(() => {
-    document.title = BIGBUDGET_TITLE;
-  }, []);
+  usePageMeta({ title: "Марафон «Теория большого бюджета»", description: "Бесплатный практикум по личным финансам от Василия Мещерякова: как начать вести бюджет и перестать жить в ноль." });
   return (
     <main className="bigbudget-theme min-h-screen">
       <Helmet>

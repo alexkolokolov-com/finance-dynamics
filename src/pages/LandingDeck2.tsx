@@ -346,10 +346,6 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
       "качество_жизни_улучшилось": "Качество жизни выросло",
     };
 
-    const truncateLine = (s: string, max = 140) => (s.length > max ? s.slice(0, max - 1).trimEnd() + "…" : s);
-    const limitItems = (arr: string[], max = 2) =>
-      isPdf ? arr.slice(0, max).map((line) => truncateLine(line, 78)) : arr;
-
     const items = indices
       .map((i) => allReviews[i])
       .filter(Boolean)
@@ -368,10 +364,10 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
         return {
           name: r.name,
           role: r.role,
-          quote: isPdf ? truncateLine(quote, 110) : quote,
+          quote,
           avatar: r.avatar ?? driveImage(r.photoId),
-          from: limitItems(from, 4),
-          to: limitItems(to, 4),
+          from,
+          to,
         };
       });
 
@@ -407,64 +403,64 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
                   {pageReviews.map((r, i) => (
                     <figure
                       key={i}
-                      className="grid grid-cols-12 gap-3 border border-foreground/15 bg-card p-3"
+                      className="grid grid-cols-1 gap-4 border border-foreground/15 bg-card p-4 md:grid-cols-[40fr_60fr] md:gap-5 min-[900px]:grid-cols-[30fr_24fr_46fr]"
                     >
-                      <header className="col-span-12 flex items-center gap-4 md:col-span-3 md:items-start">
-                        {r.avatar ? (
-                          <img
-                            src={r.avatar}
-                            alt={r.name}
-                            loading="lazy"
-                            className="w-12 h-12 rounded-full object-cover border border-foreground/15 shrink-0"
-                            onError={(e) => {
-                              (e.currentTarget as HTMLImageElement).style.display = "none";
-                            }}
-                          />
-                        ) : (
-                          <span
-                            aria-hidden
-                            className="w-12 h-12 rounded-full bg-muted border border-foreground/15 grid place-items-center font-serif-display text-lg text-foreground/55 shrink-0"
-                          >
-                            {r.name.charAt(0)}
-                          </span>
-                        )}
-                        <div className="min-w-0">
-                          <div className="font-serif-display font-semibold text-xl text-foreground leading-tight">
-                            {r.name}
-                          </div>
-                          {r.role && (
-                            <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mt-1">
-                              {r.role}
-                            </div>
+                      <div className="min-w-0 md:col-span-2 min-[900px]:col-span-1">
+                        <header className="flex items-start gap-4">
+                          {r.avatar ? (
+                            <img
+                              src={r.avatar}
+                              alt={r.name}
+                              loading="lazy"
+                              className="w-12 h-12 rounded-full object-cover border border-foreground/15 shrink-0"
+                              onError={(e) => {
+                                (e.currentTarget as HTMLImageElement).style.display = "none";
+                              }}
+                            />
+                          ) : (
+                            <span
+                              aria-hidden
+                              className="w-12 h-12 rounded-full bg-muted border border-foreground/15 grid place-items-center font-serif-display text-lg text-foreground/55 shrink-0"
+                            >
+                              {r.name.charAt(0)}
+                            </span>
                           )}
-                        </div>
-                      </header>
-
-                      <blockquote className="col-span-12 font-serif-display text-lg leading-snug text-foreground border-l-2 border-accent pl-4 md:col-span-4">
-                        «{r.quote}»
-                      </blockquote>
-
-                      <div className="col-span-12 grid grid-cols-1 gap-4 border-t border-foreground/10 pt-4 sm:grid-cols-2 md:col-span-5 md:border-l md:border-t-0 md:pl-4 md:pt-0">
-                        <div>
-                          <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-3">
-                            Точка&nbsp;А
+                          <div className="min-w-0">
+                            <div className="font-serif-display font-semibold text-xl text-foreground leading-tight">
+                              {r.name}
+                            </div>
+                            {r.role && (
+                              <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mt-1">
+                                {r.role}
+                              </div>
+                            )}
                           </div>
-                          <ul className="space-y-1 font-body text-sm leading-snug text-foreground/75">
-                            {r.from.map((line, j) => (
-                              <li key={j}>{line}</li>
-                            ))}
-                          </ul>
+                        </header>
+                        <blockquote className="mt-4 border-l-2 border-accent pl-4 font-body text-sm leading-snug text-foreground">
+                          «{r.quote}»
+                        </blockquote>
+                      </div>
+
+                      <div className="min-w-0 border-t border-foreground/10 pt-4 min-[900px]:border-l min-[900px]:border-t-0 min-[900px]:pl-5 min-[900px]:pt-0">
+                        <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-3">
+                          Точка&nbsp;А
                         </div>
-                        <div>
-                          <div className="font-mono text-[10px] uppercase tracking-widest text-accent mb-3">
-                            Точка&nbsp;Б
-                          </div>
-                          <ul className="space-y-1 font-body text-sm leading-snug text-foreground">
-                            {r.to.map((line, j) => (
-                              <li key={j}>{line}</li>
-                            ))}
-                          </ul>
+                        <ul className="space-y-1 font-body text-sm leading-snug text-foreground/75">
+                          {r.from.map((line, j) => (
+                            <li key={j}>{line}</li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="min-w-0 border-t border-foreground/10 pt-4 md:border-l md:pl-5 min-[900px]:pt-0">
+                        <div className="font-mono text-[10px] uppercase tracking-widest text-accent mb-3">
+                          Точка&nbsp;Б
                         </div>
+                        <ul className="space-y-1 font-body text-sm leading-snug text-foreground">
+                          {r.to.map((line, j) => (
+                            <li key={j}>{line}</li>
+                          ))}
+                        </ul>
                       </div>
                     </figure>
                   ))}

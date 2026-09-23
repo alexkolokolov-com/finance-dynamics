@@ -66,4 +66,7 @@ Disallow: /landing-deck-2
 Disallow: /traffic
 Disallow: /old
 
+# Юридические страницы — без поисковой ценности
+Disallow: /oferta
+
 Sitemap: https://vasyaifin.ru/sitemap.xml

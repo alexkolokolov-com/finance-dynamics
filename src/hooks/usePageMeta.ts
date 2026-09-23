@@ -52,7 +52,10 @@ export const usePageMeta = ({ title, description, noindex, path }: PageMeta) => 
       upsertMeta("name", "twitter:description", description);
     }
 
-    const url = `${SITE_URL}${path ?? window.location.pathname}`;
+    // Сервер отдаёт адреса с завершающим слэшем — canonical должен совпадать.
+    const rawPath = path ?? window.location.pathname;
+    const normalized = rawPath === "/" ? "/" : rawPath.replace(/\/+$/, "") + "/";
+    const url = `${SITE_URL}${normalized}`;
     upsertCanonical(url);
     upsertMeta("property", "og:url", url);
 

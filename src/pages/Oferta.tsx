@@ -24,7 +24,7 @@ function Li({ children }: { children: ReactNode }) {
 }
 
 const Oferta = () => {
-  usePageMeta({ title: "Публичная оферта", description: "Публичная оферта ООО «ВАСЯ И ФИНАНСЫ»: условия оказания услуг, оплата, возвраты и реквизиты." });
+  usePageMeta({ title: "Публичная оферта", description: "Публичная оферта ООО «ВАСЯ И ФИНАНСЫ»: условия оказания услуг, оплата, возвраты и реквизиты.", noindex: true });
   useEffect(() => {
     document.title = "Публичная оферта — ООО «ВАСЯ И ФИНАНСЫ»";
     window.scrollTo(0, 0);

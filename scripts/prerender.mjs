@@ -6,38 +6,14 @@ import { createServer } from "node:http";
 import { readFile, mkdir, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { extname, join, resolve } from "node:path";
+import { getIndexableRoutes } from "./routes.mjs";
 
 const DIST = resolve("dist");
 const PORT = 4321;
 const SITE_URL = process.env.SITE_URL || "https://vasyaifin.ru";
 
-// Список адресов совпадает с public/sitemap.xml (scripts/generate-sitemap.mjs).
-const ROUTES = [
-  "/",
-  "/blog",
-  "/consultations",
-  "/landing",
-  "/profit",
-  "/support-2026",
-  "/corporate",
-  "/longevity",
-  "/financial-horizon",
-  "/financial-plan",
-  "/crisis-decisions",
-  "/gears",
-  "/budget-methods",
-  "/lectures",
-  "/decisions",
-  "/negotiations",
-  "/event",
-  "/conference",
-  "/cashback",
-  "/checklist",
-  "/calculator",
-  "/bigbudget",
-  "/reviews",
-  "/oferta",
-];
+// Список адресов берётся из маршрутов приложения — тот же источник, что и карта сайта.
+const ROUTES = getIndexableRoutes().map((r) => r.url);
 
 const MIME = {
   ".html": "text/html; charset=utf-8",
@@ -102,7 +78,7 @@ const run = async () => {
         const ogUrl = document.querySelector('meta[property="og:url"]');
         if (ogUrl) ogUrl.setAttribute("content", canonical);
         return "<!doctype html>\n" + document.documentElement.outerHTML;
-      }, `${SITE_URL}${route === "/" ? "/" : route}`);
+      }, `${SITE_URL}${route}`);
 
       const textLength = await page.evaluate(
         () => (document.querySelector("#root")?.innerText || "").trim().length,
@@ -111,7 +87,7 @@ const run = async () => {
         throw new Error(`too little rendered text (${textLength} chars)`);
       }
 
-      const dir = route === "/" ? DIST : join(DIST, route);
+      const dir = route === "/" ? DIST : join(DIST, route.replace(/\/$/, ""));
       await mkdir(dir, { recursive: true });
       await writeFile(join(dir, "index.html"), html, "utf8");
       console.log(`prerendered ${route} (${textLength} chars of text)`);

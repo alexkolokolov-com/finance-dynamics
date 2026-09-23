@@ -7,6 +7,7 @@ import { CardTextbook } from "@/components/sections/CardTextbook";
 import vasilyPortrait from "@/assets/vasily-hero.png.asset.json";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 const decisionsPageNav = [
   { href: "#mistakes", label: "Ошибки", id: "mistakes" },
@@ -136,6 +137,7 @@ const steps = [
 ];
 
 const Decisions = () => {
+  usePageMeta({ title: "Как перестать совершать дорогие финансовые ошибки", description: "Бизнес-решения по личным финансам: как перестать совершать дорогие финансовые ошибки и выстроить систему принятия решений." });
   const { hash } = useLocation();
 
   useEffect(() => {

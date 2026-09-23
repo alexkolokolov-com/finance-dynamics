@@ -8,6 +8,7 @@ import { CardAbout } from "@/components/sections/CardAbout";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { nbsp } from "@/lib/nbsp";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 // ===== Визуал первого экрана как на /landing: контурное П₽ОФИТ, биржевая линия фоном =====
 
@@ -81,6 +82,7 @@ const tasks = [
 ];
 
 const Profit = () => {
+  usePageMeta({ title: "ПРОФИТ — курс о личных финансах", description: "Курс «Профит» Василия Мещерякова: три ступени от ленивого бюджета до разумных инвестиций. Живые эфиры и бессрочный доступ к записям." });
   useEffect(() => {
     document.title = "ПРОФИТ — курс о личных финансах Василия Мещерякова";
     const description = "Три ступени курса ПРОФИТ: ленивый бюджет, управление деньгами и инвестиции. Можно выбрать одну задачу или пройти весь курс.";

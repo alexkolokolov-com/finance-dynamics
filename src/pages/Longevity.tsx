@@ -6,8 +6,10 @@ import { LifeTimeline } from "@/components/longevity/LifeTimeline";
 import { Button } from "@/components/ui/button";
 import { nbsp } from "@/lib/nbsp";
 import longevityHero from "@/assets/longevity-hero.jpg";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 const Longevity = () => {
+  usePageMeta({ title: "Финансовое долголетие — интерактивный таймлайн", description: "Финансовое долголетие: как планировать деньги на горизонте 120 лет. Интерактивный таймлайн и примеры известных людей." });
   const [headlineWord, setHeadlineWord] = useState("");
   const [headlineIsFinal, setHeadlineIsFinal] = useState(false);
 

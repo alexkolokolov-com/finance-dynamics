@@ -403,9 +403,9 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
                   {pageReviews.map((r, i) => (
                     <figure
                       key={i}
-                      className="grid grid-cols-1 gap-4 border border-foreground/15 bg-card p-4 md:grid-cols-[40fr_60fr] md:gap-5 lg:grid-cols-[30fr_24fr_46fr]"
+                      className="grid grid-cols-1 gap-4 border border-foreground/15 bg-card p-4 md:grid-cols-[40fr_60fr] md:gap-5 min-[900px]:grid-cols-[30fr_24fr_46fr]"
                     >
-                      <div className="min-w-0 md:col-span-2 lg:col-span-1">
+                      <div className="min-w-0 md:col-span-2 min-[900px]:col-span-1">
                         <header className="flex items-start gap-4">
                           {r.avatar ? (
                             <img
@@ -441,7 +441,7 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
                         </blockquote>
                       </div>
 
-                      <div className="min-w-0 border-t border-foreground/10 pt-4 lg:border-l lg:border-t-0 lg:pl-5 lg:pt-0">
+                      <div className="min-w-0 border-t border-foreground/10 pt-4 min-[900px]:border-l min-[900px]:border-t-0 min-[900px]:pl-5 min-[900px]:pt-0">
                         <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-3">
                           Точка&nbsp;А
                         </div>
@@ -452,7 +452,7 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
                         </ul>
                       </div>
 
-                      <div className="min-w-0 border-t border-foreground/10 pt-4 md:border-l md:pl-5 lg:pt-0">
+                      <div className="min-w-0 border-t border-foreground/10 pt-4 md:border-l md:pl-5 min-[900px]:pt-0">
                         <div className="font-mono text-[10px] uppercase tracking-widest text-accent mb-3">
                           Точка&nbsp;Б
                         </div>

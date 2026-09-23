@@ -13,6 +13,7 @@ import {
 
 import { nbsp } from "@/lib/nbsp";
 import expertPhoto from "@/assets/expert-vasily.jpg";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 const pageNav: HeaderNavLink[] = [
   { href: "#about", label: "О тренинге", id: "about" },
@@ -162,6 +163,7 @@ const RequestButton = ({ className = "" }: { className?: string }) => (
 );
 
 const Corporate = () => {
+  usePageMeta({ title: "Корпоративное обучение", description: "Корпоративное обучение финансовой грамотности для команд: практические программы Василия Мещерякова для сотрудников компаний." });
   useEffect(() => {
     document.title = "Корпоративное обучение «Вася и финансы»";
     const desc = document.querySelector('meta[name="description"]');

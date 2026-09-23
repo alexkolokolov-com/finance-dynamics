@@ -9,6 +9,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 type Block = {
   num: string;
@@ -69,6 +70,7 @@ const blocks: Block[] = [
 ];
 
 const Checklist = () => {
+  usePageMeta({ title: "Чек-лист · финансы в семье", description: "Чек-лист «Финансы в семье»: как говорить о деньгах без ссор и выстроить общий семейный бюджет." });
   const pdfHref = useMemo(() => {
     if (typeof window === "undefined") return "/checklist-finance-family.pdf";
 

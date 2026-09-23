@@ -5,6 +5,7 @@ import { TrafficRegisterDialog } from "@/components/traffic/TrafficRegisterDialo
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import { nbsp } from "@/lib/nbsp";
 import expertAvatar from "@/assets/expert-vasily.jpg";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 const eventHeroPhoto = { url: `${import.meta.env.BASE_URL}event-hero.jpg` };
 
@@ -81,6 +82,7 @@ const quoteParagraphs = [
 ];
 
 const Event = () => {
+  usePageMeta({ title: "Бизнес-завтрак", description: "Бизнес-завтрак «Вася и финансы»: живое мероприятие о личных финансах, инвестициях и спокойном отношении к деньгам." });
   useEffect(() => {
     document.title = "Бизнес-завтрак «Вася и финансы»";
     const desc = document.querySelector('meta[name="description"]');

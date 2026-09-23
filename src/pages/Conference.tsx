@@ -4,6 +4,7 @@ import { Calendar, MapPin, Ticket, Check, Quote, Users, BookOpen, Compass, Arrow
 import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { OrbitDiagram } from "@/components/OrbitDiagram";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 const pageNav: HeaderNavLink[] = [
   { href: "#about", label: "О конференции", id: "about" },
@@ -105,6 +106,7 @@ const benefits = [
 ];
 
 const Conference = () => {
+  usePageMeta({ title: "Конференция — бесплатно", description: "Бесплатная онлайн-конференция «Вася и финансы»: практические инструменты личных финансов от Василия Мещерякова." });
   useEffect(() => {
     document.title = "Конференция «Вася и финансы» · бесплатно";
     const desc = document.querySelector('meta[name="description"]');

@@ -29,6 +29,7 @@ import clockImage from "@/assets/clock-method-new.png";
 import testimonialYulia from "@/assets/testimonial-yulia.png";
 import testimonialTatyana from "@/assets/testimonial-tatyana.png";
 import testimonialValentina from "@/assets/testimonial-valentina.png";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 const pageNav: HeaderNavLink[] = [
   { href: "#about", label: "О тренинге", id: "about" },
@@ -219,6 +220,7 @@ const renderStoryText = (item: (typeof trainerStory)[number]) => {
 };
 
 const Negotiations = () => {
+  usePageMeta({ title: "Коммерческие переговоры — тренинг-практикум", description: "Тренинг-практикум по коммерческим переговорам: как отстаивать цену и условия без потери клиентов." });
   const [storyOpen, setStoryOpen] = useState(false);
   const [expanded, setExpanded] = useState<Set<number>>(new Set());
   const [showAllMobile, setShowAllMobile] = useState(false);

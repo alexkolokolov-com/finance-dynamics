@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { Fragment } from "react";
 import { ArrowUpRight, Video, FileCheck, Users, Clock, Check, Waves, Repeat2, Wallet, WalletCards, Hourglass, HandCoins, Landmark, NotebookTabs, CircleDollarSign, LineChart, ShieldCheck, TrendingUp, Activity, Settings, ScanSearch, HeartHandshake, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -143,6 +144,7 @@ const landingPageNav = [
 ];
 
 const Landing2 = () => {
+  usePageMeta({ title: "Финансовое сопровождение «Профит»", noindex: true });
   return (
     <main className="physics-theme min-h-screen">
       <SiteHeader pageNav={landingPageNav} />

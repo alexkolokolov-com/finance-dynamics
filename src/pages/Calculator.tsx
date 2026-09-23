@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { useEffect, useMemo, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
@@ -191,6 +192,7 @@ const CashbackReviewGrid = ({ items, columns = 2 }: { items: CashbackReview[]; c
 
 // ====== Page ======
 const Calculator = () => {
+  usePageMeta({ title: "Калькулятор потерянного кэшбэка", description: "Посчитайте, сколько денег вы теряете на кэшбэке за год, и как это исправить за несколько шагов." });
   const [mode, setMode] = useState<"quick" | "detail">("quick");
   const [totalSpend, setTotalSpend] = useState(120000);
   const [profile, setProfile] = useState<"family" | "city" | "auto" | "balanced">("family");
@@ -201,10 +203,6 @@ const Calculator = () => {
     (Object.keys(detailRanges) as CatId[]).forEach((k) => (d[k] = detailRanges[k].def));
     return d;
   });
-
-  useEffect(() => {
-    document.title = "Калькулятор потерянного кэшбэка · Вася и финансы";
-  }, []);
 
   const styleMul = style === "lazy" ? 0.72 : style === "optimal" ? 0.9 : style === "max" ? 1.12 : 0.62;
   const penalty = current === "one" ? 1.0 : current === "few" ? 0.82 : current === "some" ? 0.62 : 0.38;

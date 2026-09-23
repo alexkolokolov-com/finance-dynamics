@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { Video, FileCheck, Users, Clock, Check, Waves, Repeat2, Wallet, WalletCards, Hourglass, Activity, Settings, ScanSearch, HandCoins, Landmark, HeartHandshake, NotebookTabs, CircleDollarSign, LineChart, ShieldCheck, TrendingUp, type LucideIcon } from "lucide-react";
 import {
   mainGoal,
@@ -149,6 +150,7 @@ const landingPageNav = [
 ];
 
 const Landing = () => {
+  usePageMeta({ title: "Финансовое сопровождение «Профит»", description: "Курс-сопровождение по личным финансам: бюджет без мучений, управление деньгами и инвестиции. Живые эфиры с Василием Мещеряковым." });
   return (
     <main className="physics-theme min-h-screen">
       <SiteHeader pageNav={landingPageNav} />

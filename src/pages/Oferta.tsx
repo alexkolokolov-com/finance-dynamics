@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { useEffect, type ReactNode } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 
@@ -23,6 +24,7 @@ function Li({ children }: { children: ReactNode }) {
 }
 
 const Oferta = () => {
+  usePageMeta({ title: "Публичная оферта", description: "Публичная оферта ООО «ВАСЯ И ФИНАНСЫ»: условия оказания услуг, оплата, возвраты и реквизиты." });
   useEffect(() => {
     document.title = "Публичная оферта — ООО «ВАСЯ И ФИНАНСЫ»";
     window.scrollTo(0, 0);

@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   Video,
@@ -232,6 +233,7 @@ type PdfMode2 = { enabled: true; calculator?: CalculatorSelection };
 type LandingDeck2Props = { pdfMode?: PdfMode2 };
 
 const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
+  usePageMeta({ title: "Коммерческое предложение «Профит»", noindex: true });
   const [isGenerating, setIsGenerating] = useState(false);
   const [calculatorSelection, setCalculatorSelection] = useState<CalculatorSelection>(initialCalculatorSelection);
 

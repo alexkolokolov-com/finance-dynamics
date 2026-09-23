@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
@@ -194,6 +195,7 @@ const ReviewCard = ({ r, i }: { r: typeof galleryReviews[0]; i: number }) => {
 };
 
 const Consultations = () => {
+  usePageMeta({ title: "Личные финансовые консультации", description: "Индивидуальные консультации по личным финансам с Василием Мещеряковым: диагностика, бюджет, накопления, план на год. Онлайн, по записи." });
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />

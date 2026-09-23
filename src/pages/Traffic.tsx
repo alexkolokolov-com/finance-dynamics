@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { useEffect, useState } from "react";
 import { Check, Plus, Waves, Repeat2, Wallet, Hourglass, Activity, Settings, ScanSearch, HandCoins, AlertTriangle, ShieldCheck, TrendingUp, Target, Sparkles, type LucideIcon } from "lucide-react";
 import {
@@ -257,6 +258,7 @@ const scrollToPricing = () => {
 
 
 const Traffic = () => {
+  usePageMeta({ title: "Финансовое сопровождение", noindex: true });
   const { expired, label, min, sec } = useOfferTimer();
 
   return (

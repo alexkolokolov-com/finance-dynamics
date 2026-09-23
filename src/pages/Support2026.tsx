@@ -1,6 +1,8 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Check, Users, MessageSquare, Calendar, FileText, HelpCircle, Sparkles, HeartHandshake, TrendingUp } from "lucide-react";
 import { LogoMark } from "@/components/LogoMark";
+import { SiteHeader } from "@/components/SiteHeader";
 import { OrbitDiagram } from "@/components/OrbitDiagram";
 
 const SLIDE = "snap-start min-h-screen w-full flex flex-col justify-center relative px-6 md:px-16 py-20";
@@ -176,6 +178,7 @@ function GrowthChart() {
 }
 
 const Support2026 = () => {
+  usePageMeta({ title: "Финансовое сопровождение 2026", description: "Годовое финансовое сопровождение 2026: личный план, регулярные встречи и поддержка Василия Мещерякова на каждом шаге." });
   // Слайд 3: поэтапное появление карточек поверх графика
   const continueRef = useRef<HTMLElement>(null);
   const { n: continueStep, next: nextContinue } = useReveal(inside.length, continueRef);
@@ -190,6 +193,7 @@ const Support2026 = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SiteHeader />
       <main className="snap-y snap-mandatory h-screen overflow-y-scroll">
 
         {/* 1. Title */}

@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { TrafficRegisterDialog } from "@/components/traffic/TrafficRegisterDialog";
@@ -84,6 +85,7 @@ const RequestButton = ({ className = "" }: { className?: string }) => (
 );
 
 const Lectures = () => {
+  usePageMeta({ title: "Лекции о личных финансах", description: "Лекции и выступления Василия Мещерякова для компаний и открытых мероприятий: финансовая грамотность, психология денег, рост дохода." });
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />

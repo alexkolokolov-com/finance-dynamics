@@ -141,14 +141,6 @@ const Decisions = () => {
 
   useEffect(() => {
     document.title = "Как перестать совершать дорогие финансовые ошибки · Вася и финансы";
-    const desc = document.querySelector('meta[name="description"]');
-    const content =
-      "Разбор самых дорогих ошибок в личных финансах и пошаговый метод, как перестать их совершать — спокойно, без формул и чувства вины.";
-    if (desc) desc.setAttribute("content", content);
-  }, []);
-
-  useEffect(() => {
-    if (hash) {
       const el = document.querySelector(hash);
       if (el) {
         setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 50);

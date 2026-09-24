@@ -99,11 +99,14 @@ const Longevity = () => {
               <span aria-hidden="true" className="ml-[0.04em] inline-flex w-[0.72em] justify-start text-accent">
                 {[0, 1, 2].map((dot) => <span key={dot} className="longevity-dot">.</span>)}
               </span>
-              <span
-                aria-hidden="true"
-                className={`longevity-typewriter mt-1 block min-h-[0.93em] text-center sm:ml-[0.13em] sm:mt-0 sm:inline-block sm:min-w-[4.8em] sm:text-left ${headlineIsFinal ? "longevity-typewriter-final text-accent" : "text-muted-foreground"}`}
-              >
-                {headlineWord}
+              <span className="relative mt-1 block min-h-[0.93em] text-center sm:ml-[0.13em] sm:mt-0 sm:inline-block sm:min-w-[4.8em] sm:text-left">
+                <span className={headlineIsFinal ? "text-accent" : "invisible"}>{nbsp("Лучше")}</span>
+                <span
+                  aria-hidden="true"
+                  className={`longevity-typewriter absolute left-0 top-0 w-full text-center sm:text-left ${headlineIsFinal ? "hidden" : "text-muted-foreground"}`}
+                >
+                  {headlineWord}
+                </span>
               </span>
             </span>
           </h1>

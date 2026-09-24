@@ -462,7 +462,7 @@ function FinalCTA() {
 }
 
 const BigBudget = () => {
-  usePageMeta({ title: "Марафон «Теория большого бюджета»", description: "Бесплатный практикум по личным финансам от Василия Мещерякова: как начать вести бюджет и перестать жить в ноль." });
+  usePageMeta({ title: "Марафон «Теория большого бюджета»", description: "Бесплатный практикум по личным финансам от Василия Мещерякова: как начать вести бюджет и перестать жить в ноль.", noindex: true });
   return (
     <main className="bigbudget-theme min-h-screen">
       <Helmet>

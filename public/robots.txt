@@ -66,6 +66,11 @@ Disallow: /landing-deck-2
 Disallow: /traffic
 Disallow: /old
 
+# Завершившиеся офферы
+Disallow: /support-2026
+Disallow: /negotiations
+Disallow: /bigbudget
+
 # Юридические страницы — без поисковой ценности
 Disallow: /oferta
 

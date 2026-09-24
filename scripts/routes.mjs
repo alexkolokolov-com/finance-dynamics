@@ -18,6 +18,10 @@ const EXCLUDED = new Set([
   "/traffic",
   "/old",
   "/oferta",
+  // Завершившиеся офферы — закрыты от индексации
+  "/support-2026",
+  "/negotiations",
+  "/bigbudget",
 ]);
 
 // Приоритет и частота обновления по смыслу страницы.

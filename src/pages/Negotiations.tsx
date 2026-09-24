@@ -220,7 +220,7 @@ const renderStoryText = (item: (typeof trainerStory)[number]) => {
 };
 
 const Negotiations = () => {
-  usePageMeta({ title: "Коммерческие переговоры — тренинг-практикум", description: "Тренинг-практикум по коммерческим переговорам: как отстаивать цену и условия без потери клиентов." });
+  usePageMeta({ title: "Коммерческие переговоры — тренинг-практикум", description: "Тренинг-практикум по коммерческим переговорам: как отстаивать цену и условия без потери клиентов.", noindex: true });
   const [storyOpen, setStoryOpen] = useState(false);
   const [expanded, setExpanded] = useState<Set<number>>(new Set());
   const [showAllMobile, setShowAllMobile] = useState(false);

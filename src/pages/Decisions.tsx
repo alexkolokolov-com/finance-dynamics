@@ -15,8 +15,6 @@ const decisionsPageNav = [
   { href: "#why", label: "Почему так", id: "why" },
   { href: "#method", label: "Метод", id: "method" },
   { href: "#consultations", label: "Консультации", id: "consultations" },
-  { href: "/bigbudget", label: "Марафон" },
-  { href: "/blog", label: "Блог" },
 ];
 
 type Mistake = {
@@ -140,14 +138,6 @@ const steps = [
 const Decisions = () => {
   usePageMeta({ title: "Как перестать совершать дорогие финансовые ошибки", description: "Бизнес-решения по личным финансам: как перестать совершать дорогие финансовые ошибки и выстроить систему принятия решений." });
   const { hash } = useLocation();
-
-  useEffect(() => {
-    document.title = "Как перестать совершать дорогие финансовые ошибки · Вася и финансы";
-    const desc = document.querySelector('meta[name="description"]');
-    const content =
-      "Разбор самых дорогих ошибок в личных финансах и пошаговый метод, как перестать их совершать — спокойно, без формул и чувства вины.";
-    if (desc) desc.setAttribute("content", content);
-  }, []);
 
   useEffect(() => {
     if (hash) {

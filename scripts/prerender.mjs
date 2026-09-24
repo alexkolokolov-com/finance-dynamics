@@ -53,7 +53,9 @@ const startServer = () =>
 const run = async () => {
   const { chromium } = await import("playwright");
   const server = await startServer();
-  const browser = await chromium.launch();
+  const browser = await chromium.launch({
+    executablePath: process.env.CHROMIUM_EXECUTABLE_PATH || undefined,
+  });
   const page = await browser.newPage({ viewport: { width: 1280, height: 1600 } });
 
   const failures = [];

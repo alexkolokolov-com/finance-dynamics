@@ -15,8 +15,6 @@ const decisionsPageNav = [
   { href: "#why", label: "Почему так", id: "why" },
   { href: "#method", label: "Метод", id: "method" },
   { href: "#consultations", label: "Консультации", id: "consultations" },
-  { href: "/bigbudget", label: "Марафон" },
-  { href: "/blog", label: "Блог" },
 ];
 
 type Mistake = {

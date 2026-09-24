@@ -88,7 +88,7 @@ const Lectures = () => {
   usePageMeta({ title: "Лекции о личных финансах", description: "Лекции и выступления Василия Мещерякова для компаний и открытых мероприятий: финансовая грамотность, психология денег, рост дохода." });
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SiteHeader />
+      <SiteHeader pageNav={lecturesPageNav} />
 
       {/* Hero */}
       <section className="relative pt-28 md:pt-36 lg:pt-40 pb-16 md:pb-24 overflow-hidden bg-grid">
@@ -136,7 +136,7 @@ const Lectures = () => {
       </section>
 
       {/* Корпоративные лекции */}
-      <section className="relative py-24 md:py-32 overflow-hidden">
+      <section id="corporate" className="relative py-24 md:py-32 overflow-hidden scroll-mt-28">
         <div className="container-px max-w-7xl mx-auto">
           <div className="font-mono text-xs uppercase tracking-widest text-accent mb-6 animate-fade-up">
             § 01 · Для&nbsp;организаций
@@ -171,7 +171,7 @@ const Lectures = () => {
       </section>
 
       {/* Разовые лекции */}
-      <section className="relative py-24 md:py-32 overflow-hidden bg-grid">
+      <section id="talks" className="relative py-24 md:py-32 overflow-hidden bg-grid scroll-mt-28">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{ background: "var(--grad-chalk)" }}
@@ -210,7 +210,7 @@ const Lectures = () => {
       </section>
 
       {/* Об эксперте */}
-      <section className="relative py-24 md:py-32 overflow-hidden">
+      <section id="about" className="relative py-24 md:py-32 overflow-hidden scroll-mt-28">
         <div className="container-px max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             <div className="lg:col-span-4 animate-fade-up">
@@ -266,7 +266,7 @@ const Lectures = () => {
       </section>
 
       {/* Стоимость */}
-      <section className="relative py-24 md:py-32 overflow-hidden bg-grid">
+      <section id="pricing" className="relative py-24 md:py-32 overflow-hidden bg-grid scroll-mt-28">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{ background: "var(--grad-chalk)" }}

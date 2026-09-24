@@ -14,6 +14,7 @@ import { CardAbout } from "@/components/sections/CardAbout";
 import { reviews as allReviews } from "@/data/reviewsData";
 
 import { Footer } from "@/components/sections/Footer";
+import { SiteHeader } from "@/components/SiteHeader";
 
 import { HeroProfit } from "@/components/landing/HeroProfit";
 import PuzzleWeeks from "@/components/landing/PuzzleWeeks";
@@ -529,6 +530,7 @@ const LandingDeck = ({ pdfMode: pdfModeProp }: LandingDeckProps = {}) => {
           : "physics-theme h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       }
     >
+      <SiteHeader />
       
       {/* ============== HERO ============== */}
       <section className={slideCls("")} {...slideAttrs}>
@@ -1181,7 +1183,7 @@ const LandingDeck = ({ pdfMode: pdfModeProp }: LandingDeckProps = {}) => {
           </div>
         </section>
       )}
-      {!effectivePdfMode && <Footer />}
+      <Footer />
     </main>
   );
 };

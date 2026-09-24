@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
+import { Footer } from "@/components/sections/Footer";
 
 const NotFound = () => {
   const location = useLocation();
@@ -23,6 +24,7 @@ const NotFound = () => {
           </a>
         </div>
       </div>
+      <Footer />
     </main>
   );
 };

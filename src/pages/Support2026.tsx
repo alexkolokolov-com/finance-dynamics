@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Check, Users, MessageSquare, Calendar, FileText, HelpCircle, Sparkles, HeartHandshake, TrendingUp } from "lucide-react";
 import { LogoMark } from "@/components/LogoMark";
 import { SiteHeader } from "@/components/SiteHeader";
+import { Footer } from "@/components/sections/Footer";
 import { OrbitDiagram } from "@/components/OrbitDiagram";
 
 const SLIDE = "snap-start min-h-screen w-full flex flex-col justify-center relative px-6 md:px-16 py-20";
@@ -383,6 +384,8 @@ const Support2026 = () => {
             </ul>
           </div>
         </section>
+
+        <Footer />
 
       </main>
     </div>

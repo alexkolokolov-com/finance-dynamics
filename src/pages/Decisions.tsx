@@ -140,7 +140,7 @@ const Decisions = () => {
   const { hash } = useLocation();
 
   useEffect(() => {
-    document.title = "Как перестать совершать дорогие финансовые ошибки · Вася и финансы";
+    if (hash) {
       const el = document.querySelector(hash);
       if (el) {
         setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 50);

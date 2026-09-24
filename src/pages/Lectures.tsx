@@ -84,6 +84,13 @@ const RequestButton = ({ className = "" }: { className?: string }) => (
   />
 );
 
+const lecturesPageNav = [
+  { href: "#corporate", label: "Для организаций", id: "corporate" },
+  { href: "#talks", label: "Выступления", id: "talks" },
+  { href: "#about", label: "Обо мне", id: "about" },
+  { href: "#pricing", label: "Форматы и цены", id: "pricing" },
+];
+
 const Lectures = () => {
   usePageMeta({ title: "Лекции о личных финансах", description: "Лекции и выступления Василия Мещерякова для компаний и открытых мероприятий: финансовая грамотность, психология денег, рост дохода." });
   return (

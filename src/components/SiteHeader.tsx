@@ -85,7 +85,7 @@ export const SiteHeader = ({ pageNav }: { pageNav?: HeaderNavLink[] }) => {
             </div>
           </a>
 
-          <nav className="hidden md:flex items-center gap-2 lg:gap-3">
+          <nav aria-label="Основная навигация" className="hidden xl:flex items-center gap-2">
             {globalNav.map((l) => (
               <a key={l.href} href={l.href} className={pill}>
                 <span className="normal-case tracking-normal font-body">{l.label}</span>
@@ -98,12 +98,12 @@ export const SiteHeader = ({ pageNav }: { pageNav?: HeaderNavLink[] }) => {
             aria-label={open ? "Закрыть меню" : "Открыть меню"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="md:hidden inline-flex items-center justify-center w-10 h-10 border border-foreground/20 hover:border-accent hover:text-accent transition-colors"
+            className="xl:hidden inline-flex items-center justify-center w-10 h-10 border border-foreground/20 hover:border-accent hover:text-accent transition-colors"
           >
             {open ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
-        {pageLinks.length > 0 && (
+        {pageLinks.length > 0 && !open && (
           <nav
             aria-label="Навигация по странице"
             className="absolute left-0 right-0 top-full border-b border-foreground/10 bg-background/95 backdrop-blur-md"
@@ -130,7 +130,7 @@ export const SiteHeader = ({ pageNav }: { pageNav?: HeaderNavLink[] }) => {
       </header>
 
       <div
-        className={`fixed inset-0 z-40 md:hidden transition-opacity duration-300 ${
+          className={`fixed inset-0 z-40 xl:hidden transition-opacity duration-300 ${
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         aria-hidden={!open}

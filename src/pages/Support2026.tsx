@@ -179,7 +179,7 @@ function GrowthChart() {
 }
 
 const Support2026 = () => {
-  usePageMeta({ title: "Финансовое сопровождение 2026", description: "Годовое финансовое сопровождение 2026: личный план, регулярные встречи и поддержка Василия Мещерякова на каждом шаге." });
+  usePageMeta({ title: "Финансовое сопровождение 2026", description: "Годовое финансовое сопровождение 2026: личный план, регулярные встречи и поддержка Василия Мещерякова на каждом шаге.", noindex: true });
   // Слайд 3: поэтапное появление карточек поверх графика
   const continueRef = useRef<HTMLElement>(null);
   const { n: continueStep, next: nextContinue } = useReveal(inside.length, continueRef);

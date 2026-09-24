@@ -28,11 +28,11 @@ const LevelCard = ({ level, programLink }: { level: ProfitLevel; programLink?: b
             {nbsp("Выбрать тариф")} <ArrowUpRight aria-hidden="true" />
           </a>
         </Button>
-        {programLink && level.number === "3" && (
+        {programLink && (
           <a
-            href="#level3-program"
+            href={`#level${level.number}-program`}
             onClick={(e) => {
-              const el = document.getElementById("level3-program");
+              const el = document.getElementById(`level${level.number}-program`);
               if (el) { e.preventDefault(); el.scrollIntoView({ behavior: "smooth", block: "start" }); }
             }}
             className="font-body text-base font-semibold text-foreground underline decoration-accent decoration-2 underline-offset-[6px] transition-colors hover:text-accent"

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Check, CircleDollarSign, HandCoins, Landmark, LineChart, NotebookTabs, ShieldCheck, TrendingUp, WalletCards } from "lucide-react";
 import { LogoMark } from "@/components/LogoMark";
 import { SiteHeader } from "@/components/SiteHeader";
-import { Level3Program } from "@/components/landing/Level3Program";
+import { Level1Program, Level2Program, Level3Program } from "@/components/landing/Level3Program";
 import { ProfitLevels } from "@/components/landing/ProfitLevels";
 import { InlineReviewGrid, InlineReviewPair } from "@/components/landing/InlineReviews";
 import { CardAbout } from "@/components/sections/CardAbout";
@@ -198,6 +198,8 @@ const Profit = () => {
         <InlineReviewGrid indices={[15, 14, 17, 16, 9, 8]} columns={3} className="pb-0 pt-12" />
       </section>
 
+      <Level1Program />
+      <Level2Program />
       <Level3Program />
 
       <section className="border-t border-foreground/10 py-20 md:py-28">

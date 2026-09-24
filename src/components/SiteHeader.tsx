@@ -11,9 +11,8 @@ export type HeaderNavLink = {
   mono?: boolean;
 };
 
-// Глобальное меню сайта (используется на всех контентных/служебных страницах:
-// блог, статьи, оферта, 404). Лендинги (Card, BigBudget, Landing) передают свой
-// pageNav с якорями секций + CTA.
+// Единое глобальное меню сайта. pageNav, если передан, всегда выводится
+// отдельным вторым уровнем и не заменяет основные ссылки.
 export const globalNav: HeaderNavLink[] = [
   { href: "/consultations", label: "Консультации" },
   { href: "/landing", label: "Сопровождение" },
@@ -24,7 +23,7 @@ export const globalNav: HeaderNavLink[] = [
   { href: "/reviews", label: "Отзывы" },
 ];
 
-export const SiteHeader = ({ pageNav = globalNav }: { pageNav?: HeaderNavLink[] }) => {
+export const SiteHeader = ({ pageNav }: { pageNav?: HeaderNavLink[] }) => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
@@ -37,7 +36,7 @@ export const SiteHeader = ({ pageNav = globalNav }: { pageNav?: HeaderNavLink[] 
   }, []);
 
   useEffect(() => {
-    const sections = pageNav
+    const sections = (pageNav ?? [])
       .map((p) => (p.id ? document.getElementById(p.id) : null))
       .filter((el): el is HTMLElement => !!el);
     if (sections.length === 0) return;
@@ -66,7 +65,7 @@ export const SiteHeader = ({ pageNav = globalNav }: { pageNav?: HeaderNavLink[] 
     "badge-tag whitespace-nowrap hover:border-accent hover:text-accent transition-colors";
   const ctaPill =
     "badge-tag whitespace-nowrap border-accent text-foreground hover:bg-accent hover:text-accent-foreground transition-colors";
-  const pageLinks = pageNav.filter((l) => l.href && l.label);
+  const pageLinks = (pageNav ?? []).filter((l) => l.href && l.label);
 
   return (
     <>
@@ -87,21 +86,11 @@ export const SiteHeader = ({ pageNav = globalNav }: { pageNav?: HeaderNavLink[] 
           </a>
 
           <nav className="hidden md:flex items-center gap-2 lg:gap-3">
-            {pageLinks.map((l) => {
-              const isCta = !!l.cta;
-              const isActive = active === l.id;
-              return (
-                <a
-                  key={l.href}
-                  href={l.href}
-                  className={`${isCta ? ctaPill : pill} ${
-                    !isCta && isActive ? "border-accent text-accent" : ""
-                  } ${l.className ?? ""}`}
-                >
-                  <span className="normal-case tracking-normal font-body">{l.label}</span>
-                </a>
-              );
-            })}
+            {globalNav.map((l) => (
+              <a key={l.href} href={l.href} className={pill}>
+                <span className="normal-case tracking-normal font-body">{l.label}</span>
+              </a>
+            ))}
           </nav>
 
           <button
@@ -114,6 +103,30 @@ export const SiteHeader = ({ pageNav = globalNav }: { pageNav?: HeaderNavLink[] 
             {open ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
+        {pageLinks.length > 0 && (
+          <nav
+            aria-label="Навигация по странице"
+            className="absolute left-0 right-0 top-full border-b border-foreground/10 bg-background/95 backdrop-blur-md"
+          >
+            <div className="mx-auto flex max-w-7xl items-center gap-2 overflow-x-auto px-5 py-2 [scrollbar-width:none] sm:px-8 [&::-webkit-scrollbar]:hidden">
+              {pageLinks.map((l) => {
+                const isCta = !!l.cta;
+                const isActive = active === l.id;
+                return (
+                  <a
+                    key={`${l.href}-${l.label}`}
+                    href={l.href}
+                    className={`${isCta ? ctaPill : pill} ${
+                      !isCta && isActive ? "border-accent text-accent" : ""
+                    } ${l.className ?? ""}`}
+                  >
+                    <span className="normal-case tracking-normal font-body">{l.label}</span>
+                  </a>
+                );
+              })}
+            </div>
+          </nav>
+        )}
       </header>
 
       <div
@@ -124,23 +137,19 @@ export const SiteHeader = ({ pageNav = globalNav }: { pageNav?: HeaderNavLink[] 
       >
         <div className="absolute inset-0 bg-background/95 backdrop-blur-md" onClick={() => setOpen(false)} />
         <div className="relative h-full pt-24 px-8 overflow-y-auto">
-          {pageLinks.length > 0 && (
-            <ul className="space-y-1">
-              {pageLinks.map((l) => (
+          <ul className="space-y-1">
+              {globalNav.map((l) => (
                 <li key={l.href}>
                   <a
                     href={l.href}
                     onClick={() => setOpen(false)}
-                    className={`block py-2 font-serif-display text-3xl hover:text-accent transition-colors ${
-                      active === l.id ? "text-accent" : ""
-                    } ${l.cta ? "text-accent" : ""}`}
+                    className="block py-2 font-serif-display text-3xl hover:text-accent transition-colors"
                   >
                     {l.label}
                   </a>
                 </li>
               ))}
-            </ul>
-          )}
+          </ul>
         </div>
       </div>
     </>

@@ -13,14 +13,6 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 
-const cardPageNav = [
-  { href: "/consultations", label: "Консультации" },
-  { href: "/landing", label: "Сопровождение" },
-  { href: "/cashback", label: "Кэшбэк-гайд" },
-  { href: "/blog", label: "Блог" },
-  { href: "/reviews", label: "Отзывы" },
-];
-
 const Card = () => {
   usePageMeta({ title: "Вася и финансы · Василий Мещеряков", description: "Простыми словами о том, как избавиться от финансовой тревоги и жить лучше за те же деньги: консультации, сопровождение, курсы и кэшбэк-гайд." });
   const { hash } = useLocation();
@@ -36,7 +28,7 @@ const Card = () => {
 
   return (
     <main className="bg-background text-foreground">
-      <SiteHeader pageNav={cardPageNav} />
+      <SiteHeader />
       <section className="relative min-h-screen pt-24 pb-16 overflow-hidden">
         <div className="container-px max-w-7xl mx-auto relative">
           {/* split: текст слева / портрет справа */}

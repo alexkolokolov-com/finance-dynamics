@@ -139,7 +139,7 @@ const scrollToProgram = () => {
 const landingPageNav = [
   { href: "#program", label: "Программа", id: "program" },
   { href: "#results", label: "Результаты", id: "results" },
-  { href: "#reviews", label: "Отзывы", id: "reviews" },
+  { href: "#reviews", label: "Истории участников", id: "reviews" },
   { href: "#cta", label: "Записаться", id: "cta", cta: true },
 ];
 

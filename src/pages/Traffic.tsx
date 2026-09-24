@@ -268,7 +268,7 @@ const Traffic = () => {
           { href: "#program", label: "Программа", id: "program" },
           { href: "#pricing", label: "Тарифы", id: "pricing" },
           { href: "#results", label: "Результаты", id: "results" },
-          { href: "#reviews", label: "Отзывы", id: "reviews" },
+          { href: "#reviews", label: "Истории участников", id: "reviews" },
           { href: "#top", label: "Записаться", id: "top", cta: true },
         ]}
       />

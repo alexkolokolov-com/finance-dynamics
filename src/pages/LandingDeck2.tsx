@@ -29,6 +29,7 @@ import { profitLevels, allLevelsBundle, priceDeadline } from "@/data/profitLevel
 import { CardAbout } from "@/components/sections/CardAbout";
 import { reviews as allReviews } from "@/data/reviewsData";
 import { Footer } from "@/components/sections/Footer";
+import { SiteHeader } from "@/components/SiteHeader";
 import { HeroProfit } from "@/components/landing/HeroProfit";
 import PuzzleWeeks from "@/components/landing/PuzzleWeeks";
 import { StairsSlide } from "@/components/landing/StairsSlide";
@@ -484,6 +485,7 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
           : "physics-theme h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       }
     >
+      <SiteHeader />
       {/* ============== HERO ============== */}
       <section data-fit="off" className={slideCls("")} {...slideAttrs}>
         <HeroProfit pdfMode={!!effectivePdfMode} ctaTarget="program" />
@@ -870,7 +872,7 @@ const LandingDeck2 = ({ pdfMode: pdfModeProp }: LandingDeck2Props = {}) => {
           </div>
         </section>
       )}
-      {!effectivePdfMode && <Footer />}
+      <Footer />
     </main>
   );
 };

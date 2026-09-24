@@ -92,20 +92,20 @@ const Longevity = () => {
               className="aspect-[16/10] w-full object-cover sm:aspect-[3/1]"
             />
           </div>
-          <h1 aria-label="После 40 жизнь может стать лучше" className="mx-auto mt-8 max-w-7xl font-display text-[clamp(2.7rem,7.3vw,7rem)] font-semibold leading-[0.93] sm:mt-12">
-            <span className="block whitespace-nowrap">{nbsp("После 40 жизнь")}</span>
-            <span className="mt-1 block whitespace-nowrap">
-              {nbsp("может стать")}
-              <span aria-hidden="true" className="ml-[0.04em] inline-flex w-[0.72em] justify-start text-accent">
-                {[0, 1, 2].map((dot) => <span key={dot} className="longevity-dot">.</span>)}
-              </span>
-              <span className="relative mt-1 block min-h-[0.93em] text-center sm:ml-[0.13em] sm:mt-0 sm:inline-block sm:min-w-[4.8em] sm:text-left">
-                <span className={headlineIsFinal ? "text-accent" : "invisible"}>{nbsp("Лучше")}</span>
-                <span
-                  aria-hidden="true"
-                  className={`longevity-typewriter absolute left-0 top-0 w-full text-center sm:text-left ${headlineIsFinal ? "hidden" : "text-muted-foreground"}`}
-                >
-                  {headlineWord}
+          <h1 className="mx-auto mt-8 max-w-7xl font-display text-[clamp(2.7rem,7.3vw,7rem)] font-semibold leading-[0.93] sm:mt-12">
+            <span className="sr-only">После 40 жизнь может стать... Лучше</span>
+            <span aria-hidden="true">
+              <span className="block whitespace-nowrap">{nbsp("После 40 жизнь")}</span>
+              <span className="mt-1 block whitespace-nowrap">
+                {nbsp("может стать")}
+                <span className="ml-[0.04em] inline-flex w-[0.72em] justify-start text-accent">
+                  {[0, 1, 2].map((dot) => <span key={dot} className="longevity-dot">.</span>)}
+                </span>
+                <span className="relative mt-1 block min-h-[0.93em] text-center sm:ml-[0.13em] sm:mt-0 sm:inline-block sm:min-w-[4.8em] sm:text-left">
+                  <span className={headlineIsFinal ? "text-accent" : "invisible"}>{nbsp("Лучше")}</span>
+                  <span className={`longevity-typewriter absolute left-0 top-0 w-full text-center sm:text-left ${headlineIsFinal ? "hidden" : "text-muted-foreground"}`}>
+                    {headlineWord}
+                  </span>
                 </span>
               </span>
             </span>

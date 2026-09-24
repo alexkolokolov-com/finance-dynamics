@@ -9,6 +9,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
+import { Footer } from "@/components/sections/Footer";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 type Block = {
@@ -294,6 +295,7 @@ const Checklist = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </main>
   );
 };

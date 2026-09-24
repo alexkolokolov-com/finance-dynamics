@@ -1,6 +1,7 @@
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { useEffect, type ReactNode } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
+import { Footer } from "@/components/sections/Footer";
 
 function H2({ children }: { children: ReactNode }) {
   return (
@@ -479,6 +480,7 @@ const Oferta = () => {
           </div>
         </article>
       </div>
+      <Footer />
     </main>
   );
 };

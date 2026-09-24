@@ -65,7 +65,7 @@ const profitNav = [
   { href: "#tasks", label: "О курсе", id: "tasks" },
   { href: "#levels", label: "Программа", id: "levels" },
   { href: "#about", label: "Об авторе", id: "about" },
-  { href: "#reviews", label: "Отзывы", id: "reviews" },
+  { href: "#reviews", label: "Истории участников", id: "reviews" },
   { href: "#levels", label: "Выбрать тариф", id: "levels", cta: true },
 ];
 

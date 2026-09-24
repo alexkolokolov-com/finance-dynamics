@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Youtube } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
+import { Footer } from "@/components/sections/Footer";
 
 const methods: string[] = [
   "Ежемесячный в Excel — доходы / расходы / сбережения",
@@ -148,6 +149,7 @@ const BudgetMethods = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </main>
   );
 };

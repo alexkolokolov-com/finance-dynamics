@@ -2,6 +2,7 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import { useEffect, type ReactNode } from "react";
 import { Helmet } from "react-helmet-async";
 import { SiteHeader } from "@/components/SiteHeader";
+import { Footer } from "@/components/sections/Footer";
 import { BigBudgetBoard } from "@/components/bigbudget/BigBudgetBoard";
 import { AtomOrbit } from "@/components/bigbudget/AtomOrbit";
 import { BigBudgetRegisterDialog } from "@/components/bigbudget/BigBudgetRegisterDialog";
@@ -16,7 +17,7 @@ const BIGBUDGET_DESC = "Бесплатный практикум по личны�
 const bigBudgetPageNav = [
   { href: "#program", label: "Программа", id: "program" },
   { href: "#results", label: "Результаты", id: "results" },
-  { href: "#reviews", label: "Отзывы", id: "reviews" },
+  { href: "#reviews", label: "Истории участников", id: "reviews" },
   { href: "#register", label: "Регистрация", id: "register", cta: true },
 ];
 
@@ -457,26 +458,6 @@ function FinalCTA() {
         </div>
       </div>
     </section>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="px-4 py-10 chalk-text opacity-70 text-sm">
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-center md:justify-center md:flex-wrap gap-2 md:gap-x-6 md:gap-y-2 text-center">
-        <div>ООО «ВАСЯ и ФИНАНСЫ»</div>
-        <div>ИНН 5040197296</div>
-        <div>ОГРН 1255000069213</div>
-        <a
-          href="https://nivz.getcourse.ru/PDP_Policy"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline hover:chalk-accent"
-        >
-          Политика обработки перс. данных
-        </a>
-      </div>
-    </footer>
   );
 }
 

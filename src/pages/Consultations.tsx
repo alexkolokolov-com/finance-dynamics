@@ -54,12 +54,12 @@ const stages = [
 const BASE_PRICE = 20000;
 
 const calendar = [
-  { month: "Сентябрь", discount: 0, seats: 5 },
-  { month: "Октябрь", discount: 20, seats: 8 },
-  { month: "Ноябрь", discount: 30, seats: 4 },
-  { month: "Декабрь", discount: 40, seats: 1 },
-  { month: "Январь 2027", discount: 60, seats: 9 },
-  { month: "Февраль 2027", discount: 60, seats: 10 },
+  { month: "Октябрь", discount: 0, seats: 7 },
+  { month: "Ноябрь", discount: 20, seats: 4 },
+  { month: "Декабрь", discount: 30, seats: 1 },
+  { month: "Январь 2027", discount: 40, seats: 4 },
+  { month: "Февраль 2027", discount: 60, seats: 7 },
+  { month: "Март 2027", discount: 60, seats: 10 },
 ];
 
 const results = [

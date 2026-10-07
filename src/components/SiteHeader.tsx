@@ -15,8 +15,7 @@ export type HeaderNavLink = {
 // отдельным вторым уровнем и не заменяет основные ссылки.
 export const globalNav: HeaderNavLink[] = [
   { href: "/consultations", label: "Консультации" },
-  { href: "/landing", label: "Сопровождение" },
-  { href: "/profit", label: "Профит" },
+  { href: "/profit", label: "Сопровождение" },
   { href: "/corporate", label: "Для компаний" },
   { href: "/cashback", label: "Кэшбэк-гайд" },
   { href: "/blog", label: "Блог" },

@@ -10,7 +10,7 @@ const trackedHref = (event: React.MouseEvent<HTMLAnchorElement>) => {
   event.currentTarget.href = appendStoredParams(event.currentTarget.href);
 };
 
-const LevelCard = ({ level, programLink }: { level: ProfitLevel; programLink?: boolean }) => (
+const LevelCard = ({ level, programLink, tariffHref }: { level: ProfitLevel; programLink?: boolean; tariffHref?: string }) => (
   <article className="grid border-t border-foreground/20 py-10 md:grid-cols-[12rem_minmax(0,1fr)_minmax(18rem,0.8fr)] md:gap-10 md:py-14">
     <div className="mb-6 md:mb-0">
       <p className="flex items-baseline gap-3">
@@ -24,7 +24,7 @@ const LevelCard = ({ level, programLink }: { level: ProfitLevel; programLink?: b
       <p className="mt-5 max-w-xl font-body text-lg leading-relaxed text-foreground/75">{nbsp(level.description)}</p>
       <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4">
         <Button asChild size="lg" className="rounded-none px-6">
-          <a href={level.href} target="_blank" rel="noopener noreferrer" onClick={trackedHref}>
+          <a href={tariffHref ?? level.href} target="_blank" rel="noopener noreferrer" onClick={trackedHref}>
             {nbsp("Выбрать тариф")} <ArrowUpRight aria-hidden="true" />
           </a>
         </Button>
@@ -56,7 +56,7 @@ const LevelCard = ({ level, programLink }: { level: ProfitLevel; programLink?: b
   </article>
 );
 
-export const ProfitLevels = ({ programLink = false }: { programLink?: boolean }) => (
+export const ProfitLevels = ({ programLink = false, tariffHref }: { programLink?: boolean; tariffHref?: string }) => (
   <section id="levels" className="scroll-mt-24 border-t border-foreground/10 py-20 md:py-28">
     <div className="container-px mx-auto max-w-7xl">
       <div className="max-w-4xl">
@@ -65,7 +65,7 @@ export const ProfitLevels = ({ programLink = false }: { programLink?: boolean })
       </div>
 
       <div className="mt-14">
-        {levels.map((level) => <LevelCard key={level.number} level={level} programLink={programLink} />)}
+        {levels.map((level) => <LevelCard key={level.number} level={level} programLink={programLink} tariffHref={tariffHref} />)}
       </div>
 
       <article className="mt-4 grid gap-8 bg-board p-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:p-12">

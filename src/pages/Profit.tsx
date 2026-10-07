@@ -163,7 +163,7 @@ const Profit = () => {
         </div>
       </section>
 
-      <ProfitLevels programLink />
+      <ProfitLevels programLink tariffHref="https://nivz.getcourse.ru/profit_level3" />
 
       <section className="border-y border-foreground/10 bg-grid py-16 md:py-20">
         <div className="container-px mx-auto max-w-7xl">

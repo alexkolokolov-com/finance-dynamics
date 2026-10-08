@@ -169,8 +169,10 @@ const Profit = () => {
         </div>
       </section>
 
-      <section className="py-12 md:py-16">
-        <div className="container-px mx-auto max-w-7xl">
+      <ProfitLevels
+        programLink
+        tariffHref="https://nivz.getcourse.ru/profit_level3"
+        afterIntro={(
           <article className="grid gap-6 bg-accent-soft p-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-10 md:p-9">
             <div>
               <h2 className="max-w-3xl font-display text-2xl font-semibold leading-tight md:text-4xl">{nbsp("Если вы хотите получить скидку на прохождение курса, это можно сделать через созвон с командой.")}</h2>
@@ -185,10 +187,8 @@ const Profit = () => {
               <p className="font-body text-base font-semibold text-foreground/70">{nbsp("Предложение доступно до 10 октября")}</p>
             </div>
           </article>
-        </div>
-      </section>
-
-      <ProfitLevels programLink tariffHref="https://nivz.getcourse.ru/profit_level3" />
+        )}
+      />
 
       <section className="border-y border-foreground/10 bg-grid py-10 md:py-14">
         <div className="container-px mx-auto max-w-7xl">

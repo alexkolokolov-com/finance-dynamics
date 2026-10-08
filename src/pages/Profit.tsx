@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Check, CircleDollarSign, HandCoins, Landmark, LineChart, NotebookTabs, ShieldCheck, TrendingUp, WalletCards } from "lucide-react";
+import { ArrowUpRight, Check, CircleDollarSign, HandCoins, Landmark, LineChart, NotebookTabs, ShieldCheck, TrendingUp, WalletCards } from "lucide-react";
 import { LogoMark } from "@/components/LogoMark";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Level1Program, Level2Program, Level3Program } from "@/components/landing/Level3Program";
@@ -10,6 +10,12 @@ import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { nbsp } from "@/lib/nbsp";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { appendStoredParams } from "@/lib/ymGoals";
+
+// Ссылка на анкету GetCourse сохраняет utm-параметры визита.
+const trackedHref = (event: React.MouseEvent<HTMLAnchorElement>) => {
+  event.currentTarget.href = appendStoredParams(event.currentTarget.href);
+};
 
 // ===== Визуал первого экрана как на /landing: контурное П₽ОФИТ, биржевая линия фоном =====
 
@@ -164,6 +170,25 @@ const Profit = () => {
       </section>
 
       <ProfitLevels programLink tariffHref="https://nivz.getcourse.ru/profit_level3" />
+
+      <section className="pb-20 md:pb-28">
+        <div className="container-px mx-auto max-w-7xl">
+          <article className="grid gap-8 bg-accent-soft p-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-12 md:p-12">
+            <div>
+              <h2 className="max-w-3xl font-display text-3xl font-semibold leading-tight md:text-5xl">{nbsp("Если вы хотите получить скидку на прохождение курса, это можно сделать через созвон с командой.")}</h2>
+              <p className="mt-5 max-w-2xl font-body text-lg leading-relaxed text-foreground/80 md:text-xl">{nbsp("Заполните короткую анкету и мы свяжемся с вами в течение суток.")}</p>
+            </div>
+            <div className="flex flex-col items-start gap-4">
+              <Button asChild size="lg" className="rounded-none bg-foreground px-7 text-background hover:bg-accent hover:text-accent-foreground">
+                <a href="https://nivz.getcourse.ru/reservation" target="_blank" rel="noopener noreferrer" onClick={trackedHref}>
+                  {nbsp("Заполнить анкету")} <ArrowUpRight aria-hidden="true" />
+                </a>
+              </Button>
+              <p className="font-body text-base font-semibold text-foreground/70">{nbsp("Предложение доступно до 10 октября")}</p>
+            </div>
+          </article>
+        </div>
+      </section>
 
       <section className="border-y border-foreground/10 bg-grid py-16 md:py-20">
         <div className="container-px mx-auto max-w-7xl">

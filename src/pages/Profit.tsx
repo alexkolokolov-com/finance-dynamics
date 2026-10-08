@@ -169,17 +169,15 @@ const Profit = () => {
         </div>
       </section>
 
-      <ProfitLevels programLink tariffHref="https://nivz.getcourse.ru/profit_level3" />
-
-      <section className="pb-20 md:pb-28">
+      <section className="py-12 md:py-16">
         <div className="container-px mx-auto max-w-7xl">
-          <article className="grid gap-8 bg-accent-soft p-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-12 md:p-12">
+          <article className="grid gap-6 bg-accent-soft p-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-10 md:p-9">
             <div>
-              <h2 className="max-w-3xl font-display text-3xl font-semibold leading-tight md:text-5xl">{nbsp("Если вы хотите получить скидку на прохождение курса, это можно сделать через созвон с командой.")}</h2>
-              <p className="mt-5 max-w-2xl font-body text-lg leading-relaxed text-foreground/80 md:text-xl">{nbsp("Заполните короткую анкету и мы свяжемся с вами в течение суток.")}</p>
+              <h2 className="max-w-3xl font-display text-2xl font-semibold leading-tight md:text-4xl">{nbsp("Если вы хотите получить скидку на прохождение курса, это можно сделать через созвон с командой.")}</h2>
+              <p className="mt-4 max-w-2xl font-body text-base leading-relaxed text-foreground/80 md:text-lg">{nbsp("Заполните короткую анкету и мы свяжемся с вами в течение суток.")}</p>
             </div>
             <div className="flex flex-col items-start gap-4">
-              <Button asChild size="lg" className="rounded-none bg-foreground px-7 text-background hover:bg-accent hover:text-accent-foreground">
+              <Button asChild size="lg" className="h-14 rounded-none bg-foreground px-9 text-lg text-background hover:bg-accent hover:text-accent-foreground [&_svg]:size-5">
                 <a href="https://nivz.getcourse.ru/reservation" target="_blank" rel="noopener noreferrer" onClick={trackedHref}>
                   {nbsp("Заполнить анкету")} <ArrowUpRight aria-hidden="true" />
                 </a>
@@ -189,6 +187,8 @@ const Profit = () => {
           </article>
         </div>
       </section>
+
+      <ProfitLevels programLink tariffHref="https://nivz.getcourse.ru/profit_level3" />
 
       <section className="border-y border-foreground/10 bg-grid py-16 md:py-20">
         <div className="container-px mx-auto max-w-7xl">

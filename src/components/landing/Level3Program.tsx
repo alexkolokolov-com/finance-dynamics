@@ -65,7 +65,7 @@ const lessons2: Lesson[] = [
 ];
 
 const LevelProgram = ({ id, number, title, subtitle, lessons }: { id: string; number: string; title: string; subtitle: string; lessons: Lesson[] }) => (
-  <section id={id} className="scroll-mt-32 border-t border-foreground/10 py-20 md:py-28">
+  <section id={id} className="scroll-mt-32 border-t border-foreground/10 py-12 md:py-16">
     <div className="container-px mx-auto max-w-7xl">
       <p className="flex items-baseline gap-3">
         <span className="number-display text-6xl text-accent md:text-7xl">{number}</span>
@@ -74,9 +74,9 @@ const LevelProgram = ({ id, number, title, subtitle, lessons }: { id: string; nu
       <h2 className="mt-4 font-display text-5xl font-semibold leading-[0.95] md:text-7xl">{nbsp(title)}</h2>
       <p className="mt-5 font-body text-xl font-semibold text-accent">{nbsp(subtitle)}</p>
 
-      <div className="mt-14 grid gap-x-10 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-10 grid gap-x-10 md:grid-cols-2 lg:grid-cols-3">
         {lessons.map((lesson, i) => (
-          <article key={lesson.title} className="border-t border-foreground/20 py-8">
+          <article key={lesson.title} className="border-t border-foreground/20 py-6">
             <p className="number-display text-5xl text-accent">{String(i + 1).padStart(2, "0")}</p>
             <p className="mt-4 font-body text-sm font-semibold text-foreground/60">{nbsp(`Урок ${i + 1}`)}</p>
             <h3 className="mt-1 font-display text-2xl font-semibold leading-tight">{nbsp(lesson.title)}</h3>

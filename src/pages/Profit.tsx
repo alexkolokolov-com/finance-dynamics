@@ -106,7 +106,7 @@ const Profit = () => {
     <main className="min-h-screen bg-background text-foreground">
       <SiteHeader pageNav={profitNav} />
 
-      <header className="relative overflow-hidden bg-background pb-16 pt-28 md:pb-20 md:pt-32">
+      <header className="relative overflow-hidden bg-background pb-10 pt-28 md:pb-14 md:pt-32">
         {/* Меловой радиальный фон — как на /landing */}
         <div className="pointer-events-none absolute inset-0" style={{ background: "var(--grad-chalk)" }} />
         {/* Динамическая биржевая линия — единый фоновый слой за всем первым экраном */}
@@ -146,12 +146,12 @@ const Profit = () => {
         </div>
       </header>
 
-      <section id="tasks" className="scroll-mt-24 pb-20 pt-8 md:pb-28 md:pt-10">
+      <section id="tasks" className="scroll-mt-24 pb-12 pt-6 md:pb-16 md:pt-8">
         <div className="container-px mx-auto max-w-7xl">
           <h2 className="max-w-3xl font-display text-5xl font-semibold leading-[0.95] md:text-7xl">{nbsp("У каждого своё «болит»")}</h2>
           <p className="mt-7 max-w-xl font-body text-xl leading-relaxed text-foreground/75">{nbsp("Разная точка старта, разные цели и разный темп. Финансовых сложностей гораздо больше, чем один универсальный шаблон способен решить.")}</p>
 
-          <div className="mt-16 md:mt-24">
+          <div className="mt-10 md:mt-14">
             <p className="font-display text-3xl font-semibold leading-tight md:text-4xl">{nbsp("Курс подойдет тем, кто хочет:")}</p>
             <ul className="mt-8 grid gap-x-12 sm:grid-cols-2">
               {tasks.map(({ Icon, text }) => (
@@ -163,7 +163,7 @@ const Profit = () => {
             </ul>
           </div>
 
-          <div className="mt-16 border-l-4 border-accent py-2 pl-6 md:mt-24 md:pl-10">
+          <div className="mt-10 border-l-4 border-accent py-2 pl-6 md:mt-14 md:pl-10">
             <p className="max-w-5xl font-display text-3xl font-semibold leading-tight md:text-5xl">{nbsp("Я не пытаюсь решить всё «бюджетом» или «долгосрочным планом». Каждую финансовую задачу разбираю отдельно и даю под неё свои инструменты.")}</p>
           </div>
         </div>
@@ -190,7 +190,7 @@ const Profit = () => {
 
       <ProfitLevels programLink tariffHref="https://nivz.getcourse.ru/profit_level3" />
 
-      <section className="border-y border-foreground/10 bg-grid py-16 md:py-20">
+      <section className="border-y border-foreground/10 bg-grid py-10 md:py-14">
         <div className="container-px mx-auto max-w-7xl">
           <h2 className="font-display text-4xl font-semibold leading-none md:text-6xl">{nbsp("Во всех тарифах")}</h2>
           <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -216,7 +216,7 @@ const Profit = () => {
       />
       <InlineReviewPair indices={[0, 1]} bgClass="bg-grid" />
 
-      <section id="reviews" className="scroll-mt-24 border-t border-foreground/10 py-20 md:py-28">
+      <section id="reviews" className="scroll-mt-24 border-t border-foreground/10 py-12 md:py-16">
         <div className="container-px mx-auto max-w-7xl">
           <h2 className="font-display text-5xl font-semibold leading-none md:text-7xl">{nbsp("Отзывы участников")}</h2>
         </div>
@@ -227,7 +227,7 @@ const Profit = () => {
       <Level2Program />
       <Level3Program />
 
-      <section className="border-t border-foreground/10 py-20 md:py-28">
+      <section className="border-t border-foreground/10 py-12 md:py-16">
         <div className="container-px mx-auto max-w-7xl">
           <div className="bg-board p-8 text-center md:p-14">
             <h2 className="mx-auto max-w-4xl font-display text-4xl font-semibold leading-none text-background md:text-6xl">{nbsp("Выберите задачу, с которой хотите начать")}</h2>

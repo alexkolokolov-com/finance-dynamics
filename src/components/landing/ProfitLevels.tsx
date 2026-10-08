@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { ArrowUpRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { appendStoredParams } from "@/lib/ymGoals";
@@ -11,7 +12,7 @@ const trackedHref = (event: React.MouseEvent<HTMLAnchorElement>) => {
 };
 
 const LevelCard = ({ level, programLink, tariffHref }: { level: ProfitLevel; programLink?: boolean; tariffHref?: string }) => (
-  <article className="grid border-t border-foreground/20 py-10 md:grid-cols-[12rem_minmax(0,1fr)_minmax(18rem,0.8fr)] md:gap-10 md:py-14">
+  <article className="grid border-t border-foreground/20 py-7 md:grid-cols-[12rem_minmax(0,1fr)_minmax(18rem,0.8fr)] md:gap-10 md:py-9">
     <div className="mb-6 md:mb-0">
       <p className="flex items-baseline gap-3">
         <span className="number-display text-7xl text-accent md:text-8xl">{level.number}</span>
@@ -56,15 +57,17 @@ const LevelCard = ({ level, programLink, tariffHref }: { level: ProfitLevel; pro
   </article>
 );
 
-export const ProfitLevels = ({ programLink = false, tariffHref }: { programLink?: boolean; tariffHref?: string }) => (
-  <section id="levels" className="scroll-mt-24 border-t border-foreground/10 py-20 md:py-28">
+export const ProfitLevels = ({ programLink = false, tariffHref, afterIntro }: { programLink?: boolean; tariffHref?: string; afterIntro?: ReactNode }) => (
+  <section id="levels" className="scroll-mt-24 border-t border-foreground/10 py-12 md:py-16">
     <div className="container-px mx-auto max-w-7xl">
       <div className="max-w-4xl">
         <h2 className="font-display text-5xl font-semibold leading-[0.95] md:text-7xl">{nbsp("Три ступени курса")}</h2>
         <p className="mt-6 max-w-2xl font-body text-xl leading-relaxed text-foreground/75">{nbsp("Начните со своей задачи или пройдите весь путь от ведения бюджета до инвестиций.")}</p>
       </div>
 
-      <div className="mt-14">
+      {afterIntro && <div className="mt-8 md:mt-10">{afterIntro}</div>}
+
+      <div className="mt-10 md:mt-12">
         {levels.map((level) => <LevelCard key={level.number} level={level} programLink={programLink} tariffHref={tariffHref} />)}
       </div>
 

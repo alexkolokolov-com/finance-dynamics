@@ -17,7 +17,7 @@ export const PlanCalculator = () => {
         {[{ label: "Ежемесячный доход", value: income, min: 250000, max: 650000, step: 10000, change: setIncome, captions: ["250 тыс.", "650 тыс."] }, { label: "Большие цели за год", value: goals, min: 0, max: 2500000, step: 50000, change: setGoals, captions: ["0 ₽", "2,5 млн"] }].map((item) => (
           <div key={item.label}>
             <div className="mb-5 flex flex-wrap items-baseline justify-between gap-2"><span className="text-sm text-muted-foreground">{nbsp(item.label)}</span><output className="font-display text-xl font-semibold">{money(item.value)}</output></div>
-            <Slider aria-label={item.label} value={[item.value]} min={item.min} max={item.max} step={item.step} onValueChange={([value]) => { if (value !== undefined) item.change(value); }} />
+            <Slider thumbLabel={item.label} value={[item.value]} min={item.min} max={item.max} step={item.step} onValueChange={([value]) => { if (value !== undefined) item.change(value); }} />
             <div className="mt-3 flex justify-between text-xs text-muted-foreground">{item.captions.map((caption) => <span key={caption}>{nbsp(caption)}</span>)}</div>
           </div>
         ))}

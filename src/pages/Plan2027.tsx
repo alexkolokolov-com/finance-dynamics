@@ -7,7 +7,7 @@ import { PlanProgram } from "@/components/plan2027/PlanProgram";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { plan2027 } from "@/data/plan2027";
 import { nbsp } from "@/lib/nbsp";
-import planImage from "@/assets/plan2027-year.jpg";
+import planImage from "@/assets/plan2027-clean.jpg";
 import portrait from "@/assets/vasily-hero.png.asset.json";
 
 const pageNav = [
@@ -31,9 +31,9 @@ const Plan2027 = () => {
         <section className="border-b border-border pb-10 pt-40 md:pb-12 md:pt-40">
           <div className={`${inner} grid items-center gap-8 md:grid-cols-[1.1fr_1fr] lg:gap-12`}>
             <div className="min-w-0">
-              <h1 className="font-display text-5xl font-semibold leading-[1.05] lg:text-6xl xl:text-7xl">Год<br />{nbsp("в деньгах.")}<br /><span className="text-accent">2027</span></h1>
-              <p className="mt-6 text-xl leading-relaxed lg:text-2xl">{nbsp("Вы знаете, чего хотите в следующем году. А знаете, сколько денег вам на это понадобится?")}</p>
-              <p className="mt-4 leading-relaxed text-muted-foreground">{nbsp("За пять дней составьте свой финансовый план на 2027 год: переведите цели в цифры, рассчитайте бюджет и определите, что нужно сделать, чтобы планы сбылись.")}</p>
+              <span className="badge-tag mb-5 inline-flex normal-case font-body tracking-normal">{nbsp("Стратегическая сессия")}</span>
+              <h1 className="font-display text-[36px] font-semibold leading-[1.1] lg:text-5xl xl:text-6xl"><span className="block whitespace-nowrap">Год в деньгах</span><span className="block text-accent">2027</span></h1>
+              <p className="mt-6 text-xl leading-relaxed lg:text-2xl">{nbsp("За 5 дней составьте финансовый план на 2027 год: переведите цели в цифры, рассчитайте бюджет и задачи, чтобы планы сбылись.")}</p>
               <Button size="lg" asChild className="mt-7"><a href="#prices">Регистрация <ArrowUpRight /></a></Button>
             </div>
             <img src={planImage} alt="Годовой финансовый план: календарь на двенадцать месяцев, накопления, жильё и отпуск" width={1024} height={1024} className="aspect-square w-full rounded-lg object-contain" />

@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUpRight, CalendarDays, Check, GraduationCap, Heart, House, Info, Plane, Radio, Pencil, FileText } from "lucide-react";
+import { ArrowUpRight, Check, GraduationCap, Heart, House, Info, Plane } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
@@ -7,7 +7,7 @@ import { PlanProgram } from "@/components/plan2027/PlanProgram";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { plan2027 } from "@/data/plan2027";
 import { nbsp } from "@/lib/nbsp";
-import planImage from "@/assets/plan-hero.jpg";
+import planImage from "@/assets/plan2027-year.jpg";
 import portrait from "@/assets/vasily-hero.png.asset.json";
 
 const pageNav = [
@@ -28,15 +28,15 @@ const Plan2027 = () => {
     <div className="bg-background font-body text-foreground [&_h1]:tracking-normal [&_h2]:tracking-normal [&_h3]:tracking-normal [&_h4]:tracking-normal">
       <SiteHeader pageNav={pageNav} />
       <main>
-        <section className="relative isolate overflow-hidden border-b border-border pb-10 pt-40 md:pb-12 md:pt-44">
-          <img src={planImage} alt="" aria-hidden="true" className="absolute inset-0 -z-10 h-full w-full object-cover opacity-[0.12]" />
-          <div className={inner}>
-            <p className="mb-5 flex items-center gap-2 text-sm text-accent"><CalendarDays className="size-4 shrink-0" />{nbsp("Финансовая стратсессия · 31 окт — 4 ноя")}</p>
-            <h1 className="max-w-4xl font-display text-5xl font-semibold leading-[1.05] sm:text-6xl md:text-7xl">{nbsp("Год в деньгах.")} <span className="text-accent">2027</span></h1>
-            <p className="mt-6 max-w-2xl text-xl leading-relaxed md:text-2xl">{nbsp("Вы знаете, чего хотите в следующем году. А знаете, сколько денег вам на это понадобится?")}</p>
-            <p className="mt-4 max-w-2xl leading-relaxed text-muted-foreground">{nbsp("За пять дней составьте свой финансовый план на 2027 год: переведите цели в цифры, рассчитайте бюджет и определите, что нужно сделать, чтобы планы сбылись.")}</p>
-            <div className="mt-7 flex flex-wrap gap-3"><Button size="lg" asChild><a href="#prices">Выбрать участие <ArrowUpRight /></a></Button><Button size="lg" variant="outline" asChild><a href="#program">Посмотреть программу <ArrowDown /></a></Button></div>
-            <div className="mt-8 flex flex-wrap gap-x-7 gap-y-3 border-t border-border pt-6 text-sm">{[{ Icon: Radio, text: "3 прямых эфира" }, { Icon: Pencil, text: "2 дня практики" }, { Icon: FileText, text: "План на 12 месяцев" }].map(({ Icon, text }) => <span key={text} className="flex items-center gap-2"><Icon className="size-4 text-accent" />{nbsp(text)}</span>)}</div>
+        <section className="border-b border-border pb-10 pt-40 md:pb-12 md:pt-40">
+          <div className={`${inner} grid items-center gap-8 md:grid-cols-[1.1fr_1fr] lg:gap-12`}>
+            <div className="min-w-0">
+              <h1 className="font-display text-5xl font-semibold leading-[1.05] lg:text-6xl xl:text-7xl">Год<br />{nbsp("в деньгах.")}<br /><span className="text-accent">2027</span></h1>
+              <p className="mt-6 text-xl leading-relaxed lg:text-2xl">{nbsp("Вы знаете, чего хотите в следующем году. А знаете, сколько денег вам на это понадобится?")}</p>
+              <p className="mt-4 leading-relaxed text-muted-foreground">{nbsp("За пять дней составьте свой финансовый план на 2027 год: переведите цели в цифры, рассчитайте бюджет и определите, что нужно сделать, чтобы планы сбылись.")}</p>
+              <Button size="lg" asChild className="mt-7"><a href="#prices">Регистрация <ArrowUpRight /></a></Button>
+            </div>
+            <img src={planImage} alt="Годовой финансовый план: календарь на двенадцать месяцев, накопления, жильё и отпуск" width={1024} height={1024} className="aspect-square w-full rounded-lg object-contain" />
           </div>
         </section>
 

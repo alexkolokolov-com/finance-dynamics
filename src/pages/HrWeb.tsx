@@ -67,15 +67,16 @@ const HrWeb = () => {
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <h2 className="text-3xl font-semibold tracking-normal md:text-4xl">{nbsp("Что разберём на вебинаре")}</h2>
           </div>
-          <div className="grid gap-x-12 md:grid-cols-2 lg:grid-cols-3">
-            {hrWebProgram.map((part) => (
-              <div key={part.title} className="border-t border-border py-5">
-                <h3 className="text-xl font-semibold leading-snug tracking-normal">{nbsp(part.title)}</h3>
-                <p className="mt-3 text-base leading-relaxed text-muted-foreground">{nbsp(part.description)}</p>
-              </div>
+          <ul className="grid gap-x-12 md:grid-cols-2">
+            {hrWebProgram.map((thesis) => (
+              <li key={thesis} className="flex items-start gap-3 border-t border-border py-4">
+                <span aria-hidden className="mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                <span className="text-base leading-snug md:text-lg">{nbsp(thesis)}</span>
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
+
 
         <section id="bonus" className="scroll-mt-36 bg-accent-soft/30">
           <div className={`${sectionClass} grid gap-8 md:grid-cols-[1.1fr_1fr] md:gap-16`}>

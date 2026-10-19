@@ -25,7 +25,7 @@ const expertFacts: FactCard[] = [
   { kind: "metric", value: "14", unit: "лет", sub: nbsp("в Procter & Gamble") },
   { kind: "metric", value: "3", unit: "года", sub: nbsp("консалтинга по личным финансам") },
   { kind: "metric", value: "1500", sub: nbsp("семей прошли программы и консультации") },
-  { kind: "metric", value: "200", unit: nbsp("тыс. ₽"), sub: nbsp("от 200 тысяч до 1,2 млн рублей — ежемесячные бюджеты семей") },
+  { kind: "metric", value: "200", unit: "тыс.", sub: nbsp("от 200 тысяч до 1,2 млн рублей — ежемесячные бюджеты семей") },
 ];
 
 const HrWeb = () => {
@@ -39,7 +39,7 @@ const HrWeb = () => {
           <div className="container-px mx-auto grid max-w-7xl items-center gap-8 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
             <div className="min-w-0">
               <span className="badge-tag mb-6">{nbsp("Вебинар для HR")}</span>
-               <h1 className="break-words text-4xl font-semibold leading-[0.95] tracking-normal sm:text-6xl lg:text-7xl xl:text-8xl">Финансовое<br />благополучие<br /><span className="font-normal italic">сотрудников</span></h1>
+               <h1 className="text-4xl font-semibold leading-[0.95] tracking-normal sm:text-6xl lg:text-6xl xl:text-7xl">Финансовое<br />благополучие<br /><span className="font-normal italic">сотрудников</span></h1>
                <p className="mt-6 max-w-xl text-xl leading-relaxed md:text-2xl">{nbsp(`${hrWebOffer.subtitle}.`)}</p>
               <div className="my-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
                 <span className="inline-flex items-center gap-2"><CalendarDays size={18} className="text-accent" /><time dateTime={hrWebOffer.date}>{nbsp(hrWebOffer.dateLabel)}</time></span>

@@ -105,7 +105,7 @@ const HrWeb = () => {
                   <CalendarDays className="mt-1 h-6 w-6 shrink-0 text-accent" />
                   <div>
                     <p className="text-xl font-semibold">{nbsp("Участие в прямом эфире")}</p>
-                    <p className="mt-1 text-lg text-primary-foreground/80">{nbsp("60 минут с разбором и ответами на вопросы")}</p>
+                    <p className="mt-1 text-lg text-primary-foreground/80">{nbsp("Разбор и ответы на вопросы")}</p>
                   </div>
                 </li>
                 <li className="flex gap-4 border-t border-primary-foreground/20 pt-6">

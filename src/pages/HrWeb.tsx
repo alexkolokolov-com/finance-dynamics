@@ -12,6 +12,15 @@ import { hrWebOffer, hrWebProgram } from "@/data/hrWeb";
 import { nbsp } from "@/lib/nbsp";
 import expertPhoto from "@/assets/expert-vasily.jpg";
 import authorPhoto from "@/assets/hero-photo.png";
+import programIllustration1 from "@/assets/hr-web-card-1.jpg";
+import programIllustration2 from "@/assets/hr-web-card-2.jpg";
+import programIllustration3 from "@/assets/hr-web-card-3.jpg";
+
+const programIllustrations: { src: string; alt: string }[] = [
+  { src: programIllustration1, alt: "Сотрудник за ноутбуком устало опирается на руку, над головой тают монеты и купюры" },
+  { src: programIllustration2, alt: "Сотрудник держит корпоративный пакет заботы, а из его кошелька выпадает последняя монета" },
+  { src: programIllustration3, alt: "Человек раскладывает монеты по возрастающим стопкам рядом с бюджетным блокнотом и конвертами" },
+];
 
 const pageNav: HeaderNavLink[] = [
   { href: "#for-whom", label: "О вебинаре", id: "for-whom" },

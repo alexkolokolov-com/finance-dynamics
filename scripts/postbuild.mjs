@@ -28,12 +28,29 @@ for (const route of routes) {
 cpSync(join(DIST, "index.html"), join(DIST, "404.html"));
 console.log(`postbuild: fallback entries written for ${routes.length} routes`);
 
-// 2. Пререндер реального HTML (нефатально).
-try {
-  const res = spawnSync("node", ["scripts/prerender.mjs"], { stdio: "inherit", timeout: 15 * 60_000 });
-  if (res.status !== 0) {
-    console.error("postbuild: prerender failed, keeping fallback entries");
+// 2. Пререндер реального HTML (нефатально). Если браузера нет — пробуем один раз скачать.
+const tryPrerender = () => {
+  try {
+    const res = spawnSync("node", ["scripts/prerender.mjs"], { stdio: "inherit", timeout: 15 * 60_000 });
+    return res.status === 0;
+  } catch (error) {
+    console.error(`postbuild: prerender error (${error.message})`);
+    return false;
   }
-} catch (error) {
-  console.error(`postbuild: prerender skipped (${error.message}), keeping fallback entries`);
+};
+
+if (tryPrerender()) {
+  console.log("postbuild: prerender OK");
+} else {
+  console.error("postbuild: prerender failed, trying to install browser");
+  try {
+    spawnSync("npx", ["playwright", "install", "chromium"], { stdio: "inherit", timeout: 5 * 60_000 });
+  } catch (error) {
+    console.error(`postbuild: browser install skipped (${error.message})`);
+  }
+  if (tryPrerender()) {
+    console.log("postbuild: prerender OK after browser install");
+  } else {
+    console.error("postbuild: prerender unavailable, keeping fallback entries");
+  }
 }

@@ -94,9 +94,8 @@ const HrWeb = () => {
           </div>
           <div className="grid gap-5 md:grid-cols-1 xl:grid-cols-3 xl:gap-6">
             {hrWebProgram.map((topic) => (
-              <article key={topic.title} className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 md:grid md:grid-cols-[1.1fr_1fr] md:items-center md:gap-10 md:p-8 xl:block xl:p-8">
-                <h3 className="text-xl font-semibold leading-snug tracking-normal md:text-2xl">{nbsp(topic.title)}</h3>
-                <p className="mt-4 text-base leading-relaxed text-foreground/80 md:mt-0 md:text-lg xl:mt-4">{nbsp(topic.text)}</p>
+              <article key={topic} className="rounded-2xl border border-border bg-card p-6 md:p-8">
+                <p className="text-lg leading-relaxed md:text-2xl">{nbsp(topic)}</p>
               </article>
             ))}
           </div>

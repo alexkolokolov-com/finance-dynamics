@@ -16,16 +16,8 @@ describe("HR webinar offer", () => {
   });
   it("has three programme cards without timings", () => {
     expect(hrWebProgram).toHaveLength(3);
-    expect(
-      hrWebProgram.every(
-        (topic) => topic.title.trim().length > 0 && topic.text.trim().length > 0,
-      ),
-    ).toBe(true);
-    expect(
-      hrWebProgram.every(
-        (topic) => !/\d+\s*мин/.test(`${topic.title} ${topic.text}`),
-      ),
-    ).toBe(true);
+    expect(hrWebProgram.every((topic) => topic.trim().length > 0)).toBe(true);
+    expect(hrWebProgram.every((topic) => !/\d+\s*мин/.test(topic))).toBe(true);
   });
 
   it("uses temporary registration", () => {

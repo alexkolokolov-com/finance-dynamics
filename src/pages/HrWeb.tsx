@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, Briefcase, CalendarDays, Clock3, Gift } from "lucide-react";
+import { ArrowRight, Briefcase, CalendarDays, Gift } from "lucide-react";
 import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
@@ -39,22 +39,19 @@ const HrWeb = () => {
               <img src={expertPhoto} alt="Василий Мещеряков, ведущий вебинара" className="aspect-[4/3] w-full object-cover object-[50%_18%] md:aspect-[4/5] lg:aspect-square" fetchPriority="high" />
               <div className="absolute inset-x-3 top-3 flex flex-wrap gap-2 md:hidden">
                 <span className="badge-tag bg-card/95 text-xs"><time dateTime={`${hrWebOffer.date}T${hrWebOffer.time}`}>{nbsp(`${hrWebOffer.dateLabel} · ${hrWebOffer.timeLabel}`)}</time></span>
-                <span className="badge-tag bg-card/95 text-xs">{nbsp("Онлайн · бесплатно")}</span>
               </div>
               <figcaption className="absolute inset-x-0 bottom-3 px-3">
                 <p className="badge-tag max-w-full bg-card/95 text-xs md:text-sm">{nbsp("Василий Мещеряков · ex-P&G")}</p>
               </figcaption>
             </figure>
             <div className="min-w-0">
-              <span className="badge-tag mb-5 hidden md:inline-flex">{nbsp("Вебинар для HR")}</span>
+              <div className="mb-5 hidden flex-wrap gap-2 md:flex">
+                <span className="badge-tag inline-flex items-center gap-2"><CalendarDays size={16} className="text-accent" /><time dateTime={`${hrWebOffer.date}T${hrWebOffer.time}`}>{nbsp(`${hrWebOffer.dateLabel} · ${hrWebOffer.timeLabel}`)}</time></span>
+                <span className="badge-tag">{nbsp("Вебинар для HR")}</span>
+              </div>
               <h1 className="text-[clamp(2rem,9vw,2.75rem)] md:text-[clamp(2.5rem,5.5vw,4.5rem)] font-semibold leading-[0.98] tracking-normal">{nbsp("Финансовое благополучие")} <span className="font-normal italic">сотрудников</span></h1>
               <p className="mt-4 max-w-xl text-lg leading-snug md:mt-6 md:text-2xl">{nbsp(`${hrWebOffer.subtitle.split(". ")[0]}.`)}</p>
-              <div className="my-6 hidden flex-wrap items-center gap-x-6 gap-y-3 text-sm md:flex">
-                <span className="inline-flex items-center gap-2"><CalendarDays size={18} className="text-accent" /><time dateTime={`${hrWebOffer.date}T${hrWebOffer.time}`}>{nbsp(`${hrWebOffer.dateLabel} · ${hrWebOffer.timeLabel}`)}</time></span>
-                <span className="inline-flex items-center gap-2"><Clock3 size={18} className="text-accent" />{nbsp(`${hrWebOffer.durationMinutes} минут`)}</span>
-                <span className="font-medium text-accent">Бесплатно</span>
-              </div>
-              <Button onClick={() => setRegisterOpen(true)} className={`${ctaClass} mt-5 w-full sm:w-auto md:mt-0`}>Зарегистрироваться<ArrowRight /></Button>
+              <Button onClick={() => setRegisterOpen(true)} className={`${ctaClass} mt-5 w-full sm:w-auto md:mt-8`}>Зарегистрироваться<ArrowRight /></Button>
             </div>
           </div>
         </section>

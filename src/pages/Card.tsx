@@ -1,4 +1,5 @@
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { ExpertPhotoBadge } from "@/components/ExpertPhotoBadge";
 import { Link } from "react-router-dom";
 import { SiteHeader } from "@/components/SiteHeader";
 import { CardAbout } from "@/components/sections/CardAbout";
@@ -67,13 +68,7 @@ const Card = () => {
                   className="absolute inset-0 w-full h-full object-cover object-center scale-[0.9]"
                 />
 
-                <div className="absolute inset-x-0 bottom-3 sm:bottom-4 z-10 flex justify-start px-3 sm:px-4">
-                  <span className="badge-tag bg-card/95 backdrop-blur-sm text-xs min-[360px]:text-sm md:text-base whitespace-nowrap px-2.5 py-1.5 inline-flex items-center gap-1.5 shadow-sm font-medium">
-                    <span>Василий Мещеряков</span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" aria-hidden="true" />
-                    <span className="text-foreground/80">ex-sales director <span className="text-accent">P&amp;G</span></span>
-                  </span>
-                </div>
+                <ExpertPhotoBadge />
               </div>
 
               <div className="md:hidden mt-6 w-full max-w-[360px] sm:max-w-[420px] mx-auto">

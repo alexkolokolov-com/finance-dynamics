@@ -13,6 +13,7 @@ import { nbsp } from "@/lib/nbsp";
 import expertPhoto from "@/assets/expert-vasily.jpg";
 import authorPhoto from "@/assets/hero-photo.png";
 import programIllustration1 from "@/assets/hr-web-card-1.jpg";
+import socialImage from "@/assets/hr-web-social.jpg.asset.json";
 import programIllustration2 from "@/assets/hr-web-card-2.jpg";
 import programIllustration3 from "@/assets/hr-web-card-3.jpg";
 
@@ -38,7 +39,7 @@ const expertFacts: FactCard[] = [
 ];
 
 const HrWeb = () => {
-   usePageMeta({ title: "Финансовое благополучие сотрудников — вебинар для HR", description: "Бесплатный вебинар Василия Мещерякова 23 октября в 19:00 Мск: как financial wellbeing дополняет корпоративные бенефиты. Практические упражнения и диагностика команды. 60 минут.", path: "/hr-web" });
+   usePageMeta({ title: "Финансовое благополучие сотрудников — вебинар для HR", description: "Бесплатный вебинар Василия Мещерякова 23 октября в 19:00 Мск: как financial wellbeing дополняет корпоративные бенефиты. Практические упражнения и диагностика команды. 60 минут.", path: "/hr-web", image: `https://vasyaifin.lovable.app${socialImage.url}`, imageAlt: "Финансовый стресс сотрудника — иллюстрация программы вебинара для HR" });
   return (
     <>
       <SiteHeader pageNav={pageNav} />

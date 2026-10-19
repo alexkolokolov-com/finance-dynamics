@@ -75,11 +75,11 @@ const HrWeb = () => {
               </div>
             </figure>
             <div className="mt-6 rounded-2xl bg-accent p-7 text-accent-foreground md:mt-8 md:p-12 lg:grid lg:grid-cols-12 lg:items-end lg:gap-12 lg:p-14">
-              <p className="font-display text-3xl font-semibold leading-[1.05] tracking-normal md:text-5xl lg:col-span-9 lg:text-6xl">
+              <p className="font-display text-3xl font-semibold leading-[1.05] tracking-normal md:text-5xl lg:col-span-8 lg:text-[3.25rem]">
                 {nbsp("Удерживает не прибавка, а финансовое благополучие")}
                 <span className="mt-3 block text-lg font-normal opacity-75 md:text-2xl">financial well-being</span>
               </p>
-              <p className="mt-6 max-w-md text-lg leading-snug md:text-xl lg:col-span-3 lg:mt-0">{nbsp("Компании пока почти не уделяют ему внимания. Именно об этом вебинар.")}</p>
+              <p className="mt-6 max-w-md text-lg leading-snug md:text-xl lg:col-span-4 lg:mt-0">{nbsp("Компании пока почти не уделяют ему внимания. Именно об этом вебинар.")}</p>
             </div>
           </div>
         </section>

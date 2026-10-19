@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ExpertPhotoBadge } from "@/components/ExpertPhotoBadge";
-import { ArrowRight, Briefcase, CalendarDays, Gift } from "lucide-react";
+import { ArrowRight, Briefcase, CalendarDays, Gift, Sprout } from "lucide-react";
 import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";

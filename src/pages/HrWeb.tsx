@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ExpertPhotoBadge } from "@/components/ExpertPhotoBadge";
-import { ArrowRight, Briefcase, CalendarDays, Gift } from "lucide-react";
+import { ArrowRight, Briefcase, CalendarDays } from "lucide-react";
 import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
@@ -155,30 +155,18 @@ const HrWeb = () => {
         </section>
 
         <section id="registration" className="scroll-mt-36 bg-primary text-primary-foreground">
-          <div className={`${sectionClass} grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-end lg:gap-16`}>
-            <div>
-              <h2 className="text-3xl font-semibold leading-tight tracking-normal md:text-4xl">{nbsp("Что вы получите при регистрации")}</h2>
-              <ul className="mt-8 space-y-6">
-                <li className="flex gap-4 border-t border-primary-foreground/20 pt-6">
-                  <CalendarDays className="mt-1 h-6 w-6 shrink-0 text-accent" />
-                  <div>
-                    <p className="text-xl font-semibold">{nbsp("Участие в прямом эфире")}</p>
-                    <p className="mt-1 text-lg text-primary-foreground/80">{nbsp("Разбор и ответы на вопросы")}</p>
-                  </div>
-                </li>
-                <li className="flex gap-4 border-t border-primary-foreground/20 pt-6">
-                  <Gift className="mt-1 h-6 w-6 shrink-0 text-accent" />
-                  <div>
-                    <p className="text-accent">{nbsp("Подарок участникам в конце эфира")}</p>
-                    <p className="mt-1 text-xl font-semibold">{nbsp("Индекс финансового спокойствия команды")}</p>
-                    <p className="mt-2 text-lg leading-relaxed text-primary-foreground/80">{nbsp("Готовая анонимная диагностика: 10 вопросов, 5 минут на запуск. Поможет понять, какие финансовые проблемы беспокоят сотрудников и какая поддержка им действительно нужна.")}</p>
-                  </div>
-                </li>
-              </ul>
+          <div className={`${sectionClass} grid items-start gap-10 md:grid-cols-2 md:gap-10 lg:gap-16`}>
+            <div className="min-w-0">
+              <h2 className="text-3xl font-semibold leading-tight tracking-normal md:text-4xl">{nbsp("Регистрация на вебинар")}</h2>
+              <p className="mt-5 text-lg leading-relaxed md:text-xl">
+                <time dateTime={`${hrWebOffer.date}T${hrWebOffer.time}`}>{nbsp(`${hrWebOffer.dateLabel} · ${hrWebOffer.timeLabel}`)}</time>
+              </p>
+              <Button onClick={() => setRegisterOpen(true)} className="mt-6 h-auto min-h-14 w-full whitespace-normal rounded-none bg-accent px-8 py-4 text-base text-accent-foreground hover:bg-accent/90 sm:w-auto">Зарегистрироваться<ArrowRight /></Button>
             </div>
-            <div className="lg:justify-self-end">
-              <p className="mb-4 text-lg text-primary-foreground/80"><time dateTime={`${hrWebOffer.date}T${hrWebOffer.time}`}>{nbsp(`${hrWebOffer.dateLabel} · ${hrWebOffer.timeLabel}`)}</time>{nbsp(` · ${hrWebOffer.durationMinutes} минут · онлайн`)}</p>
-              <Button onClick={() => setRegisterOpen(true)} className={`${ctaClass} w-full bg-accent text-accent-foreground sm:w-auto`}>Зарегистрироваться<ArrowRight /></Button>
+            <div className="min-w-0">
+              <p className="text-lg leading-relaxed">{nbsp("Подарок участникам в конце эфира")}</p>
+              <p className="mt-3 text-2xl font-semibold leading-snug">{nbsp("Индекс финансового спокойствия команды")}</p>
+              <p className="mt-4 text-lg leading-relaxed">{nbsp("Анонимная диагностика: 10 вопросов, 5 минут на запуск.")}</p>
             </div>
           </div>
         </section>

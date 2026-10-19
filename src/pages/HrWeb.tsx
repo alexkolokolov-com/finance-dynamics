@@ -77,11 +77,16 @@ const HrWeb = () => {
           </div>
         </section>
 
-        <section className="bg-primary text-primary-foreground">
-          <div className={`${sectionClass} md:py-20`}>
-            <h2 className="font-display text-4xl font-semibold leading-[1.02] tracking-normal md:text-6xl">{nbsp("Financial well-being")}</h2>
-            <p className="mt-6 max-w-3xl text-balance text-2xl font-semibold leading-snug text-accent md:mt-8 md:text-4xl">{nbsp("Можно жить лучше за те же деньги!")}</p>
-            <p className="mt-4 max-w-3xl text-lg leading-relaxed text-primary-foreground/80 md:text-2xl">{nbsp("Продолжая работать в вашей компании, сотрудники станут увеличивать свой капитал и лояльность к работодателю.")}</p>
+        <section className="relative overflow-hidden bg-primary text-primary-foreground">
+          <Sprout
+            aria-hidden
+            className="pointer-events-none absolute -top-8 right-0 z-0 h-44 w-44 text-accent/20 md:-top-10 md:h-72 md:w-72"
+            strokeWidth={1}
+          />
+          <div className={`${sectionClass} relative z-10 md:py-20`}>
+            <h2 className="text-3xl font-semibold tracking-normal md:text-4xl">{nbsp("Financial well-being")}</h2>
+            <p className="mt-6 max-w-3xl text-lg font-semibold leading-snug text-accent md:mt-8 md:text-2xl">{nbsp("Можно жить лучше за те же деньги!")}</p>
+            <p className="mt-3 max-w-3xl text-lg leading-relaxed text-primary-foreground/80 md:text-2xl">{nbsp("Продолжая работать в вашей компании, сотрудники станут увеличивать свой капитал и лояльность к работодателю.")}</p>
           </div>
         </section>
 

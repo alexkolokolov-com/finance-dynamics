@@ -20,6 +20,6 @@ describe("HR webinar offer", () => {
   });
 
   it("uses temporary registration", () => {
-    expect(hrWebOffer.registrationMode).toBe("placeholder");
+    expect(hrWebOffer.registrationMode).toBe("getcourse");
   });
 });

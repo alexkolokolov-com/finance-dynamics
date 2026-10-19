@@ -30,7 +30,7 @@ const expertFacts: FactCard[] = [
 
 const HrWeb = () => {
   const [registerOpen, setRegisterOpen] = useState(false);
-   usePageMeta({ title: "Финансовое благополучие сотрудников — вебинар для HR", description: "Бесплатный вебинар Василия Мещерякова 21 октября: как financial wellbeing дополняет корпоративные бенефиты. Практические упражнения и диагностика команды. 60 минут.", path: "/hr-web" });
+   usePageMeta({ title: "Финансовое благополучие сотрудников — вебинар для HR", description: "Бесплатный вебинар Василия Мещерякова 23 октября в 19:00 Мск: как financial wellbeing дополняет корпоративные бенефиты. Практические упражнения и диагностика команды. 60 минут.", path: "/hr-web" });
   return (
     <>
       <SiteHeader pageNav={pageNav} />
@@ -42,7 +42,7 @@ const HrWeb = () => {
                <h1 className="text-4xl font-semibold leading-[0.95] tracking-normal sm:text-6xl lg:text-6xl xl:text-7xl">Финансовое<br />благополучие<br /><span className="font-normal italic">сотрудников</span></h1>
                <p className="mt-6 max-w-xl text-xl leading-relaxed md:text-2xl">{nbsp(`${hrWebOffer.subtitle}.`)}</p>
               <div className="my-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
-                <span className="inline-flex items-center gap-2"><CalendarDays size={18} className="text-accent" /><time dateTime={hrWebOffer.date}>{nbsp(hrWebOffer.dateLabel)}</time></span>
+                <span className="inline-flex items-center gap-2"><CalendarDays size={18} className="text-accent" /><time dateTime={`${hrWebOffer.date}T${hrWebOffer.time}`}>{nbsp(`${hrWebOffer.dateLabel} · ${hrWebOffer.timeLabel}`)}</time></span>
                 <span className="inline-flex items-center gap-2"><Clock3 size={18} className="text-accent" />{nbsp(`${hrWebOffer.durationMinutes} минут`)}</span>
                 <span className="font-medium text-accent">Бесплатно</span>
               </div>
@@ -115,7 +115,7 @@ const HrWeb = () => {
 
         <section id="registration" className="scroll-mt-36 bg-primary text-primary-foreground">
           <div className={`${sectionClass} grid items-center gap-8 md:grid-cols-[1.4fr_1fr]`}>
-             <div><p className="mb-4 text-primary-foreground/70">{nbsp("21 октября · 60 минут · бесплатно")}</p><h2 className="text-3xl font-semibold leading-tight tracking-normal md:text-4xl">{nbsp("Финансовое благополучие — новый инструмент корпоративной заботы")}</h2><p className="mt-4 max-w-2xl text-lg leading-relaxed text-primary-foreground/75">{nbsp("Узнайте, как помочь сотрудникам увереннее управлять личными финансами и повысить ценность корпоративных бенефитов")}</p></div>
+             <div><p className="mb-4 text-primary-foreground/70">{nbsp("23 октября · 19:00 Мск · 60 минут · бесплатно")}</p><h2 className="text-3xl font-semibold leading-tight tracking-normal md:text-4xl">{nbsp("Финансовое благополучие — новый инструмент корпоративной заботы")}</h2><p className="mt-4 max-w-2xl text-lg leading-relaxed text-primary-foreground/75">{nbsp("Узнайте, как помочь сотрудникам увереннее управлять личными финансами и повысить ценность корпоративных бенефитов")}</p></div>
               <div className="md:justify-self-end"><Button onClick={() => setRegisterOpen(true)} className={`${ctaClass} bg-accent text-accent-foreground`}>{nbsp("Зарегистрироваться бесплатно")}<ArrowRight /></Button><p className="mt-3 max-w-xs text-sm leading-relaxed text-primary-foreground/65">{nbsp("Пока доступна пробная форма. Запись на вебинар ещё не открыта.")}</p></div>
           </div>
         </section>

@@ -130,9 +130,10 @@ const HrWeb = () => {
           <div className="pointer-events-none absolute inset-0" style={{ background: "var(--grad-chalk)" }} />
           <div className={`${sectionClass} relative grid items-center gap-8 md:grid-cols-12 md:gap-10 lg:gap-12`}>
             <div className="md:col-span-5">
+              <ExpertPhotoBadge inline className="mb-3 md:hidden" />
               <div className="relative mx-auto aspect-[4/5] max-w-[380px] overflow-hidden rounded-2xl border border-foreground/10 md:mx-0 md:max-w-md">
                 <img src={expertPhoto} alt="Василий Мещеряков" loading="lazy" className="h-full w-full object-cover object-center" />
-                <ExpertPhotoBadge />
+                <ExpertPhotoBadge className="hidden md:flex" />
               </div>
             </div>
             <div className="md:col-span-7">

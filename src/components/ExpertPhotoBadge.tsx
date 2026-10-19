@@ -6,8 +6,9 @@ const Role = () => (
 );
 const Dot = () => <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />;
 
-export const ExpertPhotoBadge = ({ className = "" }: { className?: string }) => (
-  <div className={`absolute inset-x-0 bottom-3 z-10 flex px-3 sm:bottom-4 sm:px-4 ${className}`}>
+/** inline — плашка стоит отдельным блоком (например, над фото на телефоне), а не поверх снимка. */
+export const ExpertPhotoBadge = ({ className = "", inline = false }: { className?: string; inline?: boolean }) => (
+  <div className={inline ? `flex justify-center gap-1.5 ${className}` : `absolute inset-x-0 bottom-3 z-10 flex px-3 sm:bottom-4 sm:px-4 ${className}`}>
     <div className="flex flex-col items-start gap-1.5 text-xs min-[360px]:hidden">
       <span className={pill}>Василий Мещеряков</span>
       <span className={pill}><Role /></span>

@@ -17,7 +17,7 @@ export const HrWebRegisterDialog = ({ open, onOpenChange }: { open: boolean; onO
       <DialogContent className="max-h-[90dvh] w-[calc(100%-2rem)] overflow-y-auto rounded-lg sm:max-w-lg">
         <DialogHeader>
           <DialogTitle className="pr-6 text-2xl tracking-normal">{nbsp("Регистрация на вебинар")}</DialogTitle>
-          <DialogDescription>{nbsp("21 октября · бесплатно · 60 минут")}</DialogDescription>
+          <DialogDescription>{nbsp("23 октября · 19:00 Мск · бесплатно · 60 минут")}</DialogDescription>
         </DialogHeader>
         <p className="flex items-start gap-3 rounded-md bg-secondary p-4 text-sm text-muted-foreground">
           <Info className="mt-0.5 h-4 w-4 shrink-0" />

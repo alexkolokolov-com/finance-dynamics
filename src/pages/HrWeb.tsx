@@ -74,15 +74,17 @@ const HrWeb = () => {
                 </div>
               </div>
             </figure>
-            <div className="mt-6 rounded-2xl bg-accent p-7 text-accent-foreground md:mt-8 md:p-12 lg:grid lg:grid-cols-12 lg:items-end lg:gap-12 lg:p-14">
-              <p className="font-display text-3xl font-semibold leading-[1.05] tracking-normal md:text-5xl lg:col-span-8 lg:text-[3.25rem]">
-                {nbsp("Удерживает не прибавка, а финансовое благополучие")}
-                <span className="mt-3 block text-lg font-normal opacity-75 md:text-2xl">financial well-being</span>
-              </p>
-              <p className="mt-6 max-w-md text-lg leading-snug md:text-xl lg:col-span-4 lg:mt-0">{nbsp("Компании пока почти не уделяют ему внимания. Именно об этом вебинар.")}</p>
-            </div>
           </div>
         </section>
+
+        <section className="bg-primary text-primary-foreground">
+          <div className={`${sectionClass} md:py-20`}>
+            <h2 className="font-display text-4xl font-semibold leading-[1.02] tracking-normal md:text-6xl">{nbsp("Financial well-being")}</h2>
+            <p className="mt-6 max-w-3xl text-balance text-2xl font-semibold leading-snug text-accent md:mt-8 md:text-4xl">{nbsp("Можно жить лучше за те же деньги!")}</p>
+            <p className="mt-4 max-w-3xl text-lg leading-relaxed text-primary-foreground/80 md:text-2xl">{nbsp("Продолжая работать в вашей компании, сотрудники станут увеличивать свой капитал и лояльность к работодателю.")}</p>
+          </div>
+        </section>
+
 
         <section id="program" className={`${sectionClass} scroll-mt-36`}>
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">

@@ -80,7 +80,7 @@ const HrWeb = () => {
         <section className="bg-primary text-primary-foreground">
           <div className={`${sectionClass} md:py-20`}>
             <h2 className="font-display text-4xl font-semibold leading-[1.02] tracking-normal md:text-6xl">{nbsp("Financial well-being")}</h2>
-            <p className="mt-6 max-w-3xl text-2xl font-semibold leading-snug text-accent md:mt-8 md:text-4xl">{nbsp("Можно жить лучше за те же деньги!")}</p>
+            <p className="mt-6 max-w-3xl text-xl font-semibold leading-snug text-accent md:mt-8 md:text-4xl">{nbsp("Можно жить лучше за те же деньги!")}</p>
             <p className="mt-4 max-w-3xl text-lg leading-relaxed text-primary-foreground/80 md:text-2xl">{nbsp("Продолжая работать в вашей компании, сотрудники станут увеличивать свой капитал и лояльность к работодателю.")}</p>
           </div>
         </section>

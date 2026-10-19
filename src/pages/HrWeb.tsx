@@ -12,10 +12,8 @@ import expertPhoto from "@/assets/expert-vasily.jpg";
 import retentionImage from "@/assets/hr-web-retention.jpg";
 
 const pageNav: HeaderNavLink[] = [
-  { href: "#for-whom", label: "Для кого", id: "for-whom" },
+  { href: "#for-whom", label: "О вебинаре", id: "for-whom" },
   { href: "#program", label: "Программа", id: "program" },
-  { href: "#bonus", label: "Диагностика", id: "bonus" },
-  { href: "#speaker", label: "Ведущий", id: "speaker" },
   { href: "#registration", label: "Регистрация", id: "registration", cta: true },
 ];
 const ctaClass = "h-auto min-h-14 whitespace-normal rounded-none bg-primary px-8 py-4 text-base text-primary-foreground hover:bg-accent hover:text-accent-foreground";
@@ -35,25 +33,29 @@ const HrWeb = () => {
     <>
       <SiteHeader pageNav={pageNav} />
       <main>
-        <section className="relative overflow-hidden bg-grid pb-10 pt-36 md:pb-16 md:pt-40">
-          <div className="container-px mx-auto grid max-w-7xl items-center gap-8 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
+        <section className="relative overflow-hidden bg-grid pb-10 pt-32 md:pb-16 md:pt-40">
+          <div className="container-px mx-auto grid max-w-7xl items-center gap-6 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
+            <figure className="relative order-first mx-auto w-full max-w-[380px] overflow-hidden rounded-2xl lg:order-last lg:max-w-md">
+              <img src={expertPhoto} alt="Василий Мещеряков, ведущий вебинара" className="aspect-[4/3] w-full object-cover object-[50%_18%] lg:aspect-square" fetchPriority="high" />
+              <div className="absolute inset-x-3 top-3 flex flex-wrap gap-2 lg:hidden">
+                <span className="badge-tag bg-card/95 text-xs"><time dateTime={`${hrWebOffer.date}T${hrWebOffer.time}`}>{nbsp(`${hrWebOffer.dateLabel} · ${hrWebOffer.timeLabel}`)}</time></span>
+                <span className="badge-tag bg-card/95 text-xs">{nbsp("Онлайн · бесплатно")}</span>
+              </div>
+              <figcaption className="absolute inset-x-0 bottom-3 px-3">
+                <p className="badge-tag max-w-full bg-card/95 text-xs md:text-sm">{nbsp("Василий Мещеряков · ex-P&G")}</p>
+              </figcaption>
+            </figure>
             <div className="min-w-0">
-              <span className="badge-tag mb-6">{nbsp("Вебинар для HR")}</span>
-               <h1 className="text-4xl font-semibold leading-[0.95] tracking-normal sm:text-6xl lg:text-6xl xl:text-7xl">Финансовое<br />благополучие<br /><span className="font-normal italic">сотрудников</span></h1>
-               <p className="mt-6 max-w-xl text-xl leading-relaxed md:text-2xl">{nbsp(`${hrWebOffer.subtitle}.`)}</p>
-              <div className="my-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
+              <span className="badge-tag mb-5 hidden lg:inline-flex">{nbsp("Вебинар для HR")}</span>
+              <h1 className="text-[clamp(2rem,9vw,4.5rem)] font-semibold leading-[0.98] tracking-normal">{nbsp("Финансовое благополучие")} <span className="font-normal italic">сотрудников</span></h1>
+              <p className="mt-4 max-w-xl text-lg leading-snug md:mt-6 md:text-2xl">{nbsp(`${hrWebOffer.subtitle.split(". ")[0]}.`)}</p>
+              <div className="my-6 hidden flex-wrap items-center gap-x-6 gap-y-3 text-sm lg:flex">
                 <span className="inline-flex items-center gap-2"><CalendarDays size={18} className="text-accent" /><time dateTime={`${hrWebOffer.date}T${hrWebOffer.time}`}>{nbsp(`${hrWebOffer.dateLabel} · ${hrWebOffer.timeLabel}`)}</time></span>
                 <span className="inline-flex items-center gap-2"><Clock3 size={18} className="text-accent" />{nbsp(`${hrWebOffer.durationMinutes} минут`)}</span>
                 <span className="font-medium text-accent">Бесплатно</span>
               </div>
-              <Button onClick={() => setRegisterOpen(true)} className={ctaClass}>Зарегистрироваться<ArrowRight /></Button>
+              <Button onClick={() => setRegisterOpen(true)} className={`${ctaClass} mt-5 w-full sm:w-auto lg:mt-0`}>Зарегистрироваться<ArrowRight /></Button>
             </div>
-            <figure className="relative mx-auto w-full max-w-[380px] overflow-hidden rounded-2xl lg:max-w-md">
-              <img src={expertPhoto} alt="Василий Мещеряков, ведущий вебинара" className="aspect-square w-full object-cover object-[50%_18%]" fetchPriority="high" />
-              <figcaption className="absolute inset-x-0 bottom-4 px-4">
-                <p className="badge-tag max-w-full bg-card/95 text-sm">{nbsp("Василий Мещеряков · ex-P&G")}</p>
-              </figcaption>
-            </figure>
           </div>
         </section>
 
@@ -61,10 +63,8 @@ const HrWeb = () => {
           <div className={sectionClass}>
             <div className="grid items-center gap-8 lg:grid-cols-[1fr_1.2fr] lg:gap-12">
               <div>
-                 <h2 className="text-3xl font-semibold leading-tight tracking-normal md:text-4xl">{nbsp("Хорошая зарплата")}<br /><span className="text-accent">{nbsp("не гарантирует финансового спокойствия")}</span></h2>
-                 <p className="mt-5 text-xl leading-relaxed">{nbsp("Сотрудник может получать достойную зарплату, иметь ДМС, корпоративные льготы и интересную работу, но продолжать жить от зарплаты до зарплаты, тревожиться из-за кредитов и не иметь накоплений.")}</p>
-                 <p className="mt-5 leading-relaxed text-muted-foreground">{nbsp("Повышение зарплаты далеко не всегда решает проблему. Финансовый стресс влияет на вовлечённость, продуктивность и отношение к работодателю.")}</p>
-                 <p className="mt-5 leading-relaxed text-muted-foreground">{nbsp("Финансовая грамотность — ещё один инструмент корпоративной заботы, который дополняет существующие benefits.")}</p>
+                <h2 className="text-3xl font-semibold leading-tight tracking-normal md:text-4xl">{nbsp("Хорошая зарплата")} <span className="text-accent">{nbsp("не гарантирует финансового спокойствия")}</span></h2>
+                <p className="mt-5 text-lg leading-relaxed md:text-xl">{nbsp("Сотрудник может получать достойную зарплату, иметь ДМС и льготы, но жить от зарплаты до зарплаты, тревожиться из-за кредитов и не иметь накоплений.")}</p>
               </div>
               <img src={retentionImage} alt="Работодатель показывает пустые карманы, а незаменимый сотрудник уходит, оставляя команду без опоры" width={1536} height={1024} loading="lazy" className="aspect-[3/2] w-full rounded-lg object-contain" />
             </div>
@@ -109,14 +109,14 @@ const HrWeb = () => {
             hideEducation
              factsOverride={expertFacts}
             heading={nbsp("Василий Мещеряков")}
-             quote={<><p>{nbsp("Василий Мещеряков — 14 лет в Procter & Gamble, директор по продажам (Band 3). Последние 3 года занимается консалтингом по личным финансам.")}</p><p>{nbsp("Через программы и консультации прошли 1500 семей с ежемесячными бюджетами от 200 тысяч до 1,2 млн рублей. Автор книги «Ленивый бюджет».")}</p></>}
+             quote={<p>{nbsp("Автор книги «Ленивый бюджет».")}</p>}
           />
         </section>
 
         <section id="registration" className="scroll-mt-36 bg-primary text-primary-foreground">
           <div className={`${sectionClass} grid items-center gap-8 md:grid-cols-[1.4fr_1fr]`}>
-             <div><p className="mb-4 text-primary-foreground/70">{nbsp("23 октября · 19:00 Мск · 60 минут · бесплатно")}</p><h2 className="text-3xl font-semibold leading-tight tracking-normal md:text-4xl">{nbsp("Финансовое благополучие — новый инструмент корпоративной заботы")}</h2><p className="mt-4 max-w-2xl text-lg leading-relaxed text-primary-foreground/75">{nbsp("Узнайте, как помочь сотрудникам увереннее управлять личными финансами и повысить ценность корпоративных бенефитов")}</p></div>
-              <div className="md:justify-self-end"><Button onClick={() => setRegisterOpen(true)} className={`${ctaClass} bg-accent text-accent-foreground`}>{nbsp("Зарегистрироваться бесплатно")}<ArrowRight /></Button><p className="mt-3 max-w-xs text-sm leading-relaxed text-primary-foreground/65">{nbsp("Пока доступна пробная форма. Запись на вебинар ещё не открыта.")}</p></div>
+             <div><p className="mb-4 text-primary-foreground/80">{nbsp("23 октября · 19:00 Мск · 60 минут · бесплатно")}</p><h2 className="text-3xl font-semibold leading-tight tracking-normal md:text-4xl">{nbsp("Финансовое благополучие — новый инструмент корпоративной заботы")}</h2></div>
+              <div className="md:justify-self-end"><Button onClick={() => setRegisterOpen(true)} className={`${ctaClass} w-full bg-accent text-accent-foreground sm:w-auto`}>Зарегистрироваться<ArrowRight /></Button></div>
           </div>
         </section>
       </main>

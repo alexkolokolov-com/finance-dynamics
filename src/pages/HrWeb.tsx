@@ -126,14 +126,31 @@ const HrWeb = () => {
         </section>
 
 
-        <section id="speaker" className="scroll-mt-36">
-          <CardAbout
-            scale="article"
-            hideEducation
-            factsOverride={expertFacts}
-            heading={nbsp("Василий Мещеряков")}
-            quote={<p>{nbsp("Автор книги «Ленивый бюджет».")}</p>}
-          />
+        <section id="speaker" className="relative scroll-mt-36 overflow-hidden bg-grid">
+          <div className="pointer-events-none absolute inset-0" style={{ background: "var(--grad-chalk)" }} />
+          <div className={`${sectionClass} relative grid items-center gap-8 md:grid-cols-12 md:gap-10 lg:gap-12`}>
+            <div className="md:col-span-5">
+              <div className="relative mx-auto aspect-[4/5] max-w-[380px] overflow-hidden rounded-2xl border border-foreground/10 md:mx-0 md:max-w-md">
+                <img src={expertPhoto} alt="Василий Мещеряков" loading="lazy" className="h-full w-full object-cover object-center" />
+                <ExpertPhotoBadge />
+              </div>
+            </div>
+            <div className="md:col-span-7">
+              <h2 className="text-3xl font-semibold tracking-normal md:text-4xl">{nbsp("Василий Мещеряков")}</h2>
+              <p className="mt-5 text-xl leading-snug md:text-2xl">
+                {nbsp("Помог тысячам людей обрести контроль над личными финансами")}
+              </p>
+              <div className="mt-8 space-y-3 border-t border-border pt-8">
+                <p className="text-xl font-semibold md:text-2xl">{nbsp("Никаких продаж сотрудникам")}</p>
+                <p className="text-lg leading-relaxed">
+                  {nbsp("В рамках корпоративной программы не продаю участникам инвестиционные, страховые, банковские и другие финансовые продукты")}
+                </p>
+              </div>
+              <p className="mt-6 text-lg leading-relaxed">
+                {nbsp("Понятный язык для всех уровней — от рядовых специалистов до топ\u2011менеджеров")}
+              </p>
+            </div>
+          </div>
         </section>
 
         <section id="registration" className="scroll-mt-36 bg-primary text-primary-foreground">

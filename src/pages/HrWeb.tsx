@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { ExpertPhotoBadge } from "@/components/ExpertPhotoBadge";
-import { ArrowRight, Briefcase, CalendarDays, Gift, Sprout } from "lucide-react";
+import { ArrowRight, Briefcase, CalendarDays, Gift } from "lucide-react";
 import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { CardAbout, type FactCard } from "@/components/sections/CardAbout";
 import { HrWebRegisterDialog } from "@/components/hrweb/HrWebRegisterDialog";
+import { WellbeingSprout } from "@/components/hrweb/WellbeingSprout";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { hrWebOffer, hrWebProgram } from "@/data/hrWeb";
 import { nbsp } from "@/lib/nbsp";

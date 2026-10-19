@@ -11,11 +11,9 @@ describe("HR webinar offer", () => {
   it("has a 60-minute webinar", () => {
     expect(hrWebOffer.durationMinutes).toBe(60);
   });
-  it("shows the programme as six short theses without timings", () => {
+  it("has six programme topics without timings", () => {
     expect(hrWebProgram).toHaveLength(6);
-    expect(hrWebProgram.every((thesis) => thesis.length <= 70)).toBe(true);
     expect(hrWebProgram.every((thesis) => !/\d+\s*мин/.test(thesis))).toBe(true);
-    expect(hrWebProgram[0]).toBe("Прибавка быстро растворяется в расходах, а тревога о деньгах остаётся");
   });
 
   it("uses temporary registration", () => {

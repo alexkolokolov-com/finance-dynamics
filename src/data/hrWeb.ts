@@ -1,8 +1,10 @@
 export const hrWebOffer = {
   title: "Финансовое благополучие сотрудников",
   subtitle: "Как повысить ценность корпоративных бенефитов, не увеличивая расходы. Методика financial wellbeing от экс-директора P&G",
-  date: "2026-10-21",
-  dateLabel: "21 октября",
+  date: "2026-10-23",
+  dateLabel: "23 октября",
+  time: "19:00",
+  timeLabel: "19:00 Мск",
   durationMinutes: 60,
   price: 0,
   registrationMode: "placeholder",

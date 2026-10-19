@@ -33,7 +33,7 @@ const HrWeb = () => {
     <>
       <SiteHeader pageNav={pageNav} />
       <main>
-        <section className="relative overflow-hidden bg-grid pb-10 pt-32 md:pb-16 md:pt-40">
+        <section className="relative overflow-hidden bg-grid pb-10 pt-36 md:pb-16 md:pt-40">
           <div className="container-px mx-auto grid max-w-7xl items-center gap-6 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
             <figure className="relative order-first mx-auto w-full max-w-[380px] overflow-hidden rounded-2xl lg:order-last lg:max-w-md">
               <img src={expertPhoto} alt="Василий Мещеряков, ведущий вебинара" className="aspect-[4/3] w-full object-cover object-[50%_18%] lg:aspect-square" fetchPriority="high" />

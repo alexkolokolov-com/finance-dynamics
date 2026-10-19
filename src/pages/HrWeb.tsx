@@ -116,7 +116,7 @@ const HrWeb = () => {
                     loading="lazy"
                     width={1200}
                     height={896}
-                    className="block aspect-[4/3] h-auto w-full object-cover md:absolute md:inset-0 md:aspect-auto md:h-full"
+                    className="block aspect-[4/3] h-auto w-full object-cover md:absolute md:inset-0 md:aspect-auto md:h-full md:object-contain md:p-2"
                   />
                 </div>
                 <p className="flex-1 p-6 text-lg leading-relaxed md:self-center md:p-8 md:text-2xl">{nbsp(topic)}</p>

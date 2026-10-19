@@ -34,10 +34,10 @@ const HrWeb = () => {
       <SiteHeader pageNav={pageNav} />
       <main>
         <section className="relative overflow-hidden bg-grid pb-10 pt-36 md:pb-16 md:pt-40">
-          <div className="container-px mx-auto grid max-w-7xl items-center gap-6 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
-            <figure className="relative order-first mx-auto w-full max-w-[380px] overflow-hidden rounded-2xl lg:order-last lg:max-w-md">
-              <img src={expertPhoto} alt="Василий Мещеряков, ведущий вебинара" className="aspect-[4/3] w-full object-cover object-[50%_18%] lg:aspect-square" fetchPriority="high" />
-              <div className="absolute inset-x-3 top-3 flex flex-wrap gap-2 lg:hidden">
+          <div className="container-px mx-auto grid max-w-7xl items-center gap-6 md:grid-cols-[1.1fr_1fr] md:gap-10 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
+            <figure className="relative order-first mx-auto w-full max-w-[380px] overflow-hidden rounded-2xl md:order-last md:max-w-md">
+              <img src={expertPhoto} alt="Василий Мещеряков, ведущий вебинара" className="aspect-[4/3] w-full object-cover object-[50%_18%] md:aspect-[4/5] lg:aspect-square" fetchPriority="high" />
+              <div className="absolute inset-x-3 top-3 flex flex-wrap gap-2 md:hidden">
                 <span className="badge-tag bg-card/95 text-xs"><time dateTime={`${hrWebOffer.date}T${hrWebOffer.time}`}>{nbsp(`${hrWebOffer.dateLabel} · ${hrWebOffer.timeLabel}`)}</time></span>
                 <span className="badge-tag bg-card/95 text-xs">{nbsp("Онлайн · бесплатно")}</span>
               </div>
@@ -46,22 +46,22 @@ const HrWeb = () => {
               </figcaption>
             </figure>
             <div className="min-w-0">
-              <span className="badge-tag mb-5 hidden lg:inline-flex">{nbsp("Вебинар для HR")}</span>
-              <h1 className="text-[clamp(2rem,9vw,4.5rem)] font-semibold leading-[0.98] tracking-normal">{nbsp("Финансовое благополучие")} <span className="font-normal italic">сотрудников</span></h1>
+              <span className="badge-tag mb-5 hidden md:inline-flex">{nbsp("Вебинар для HR")}</span>
+              <h1 className="text-[clamp(2rem,9vw,2.75rem)] md:text-[clamp(2.5rem,5.5vw,4.5rem)] font-semibold leading-[0.98] tracking-normal">{nbsp("Финансовое благополучие")} <span className="font-normal italic">сотрудников</span></h1>
               <p className="mt-4 max-w-xl text-lg leading-snug md:mt-6 md:text-2xl">{nbsp(`${hrWebOffer.subtitle.split(". ")[0]}.`)}</p>
-              <div className="my-6 hidden flex-wrap items-center gap-x-6 gap-y-3 text-sm lg:flex">
+              <div className="my-6 hidden flex-wrap items-center gap-x-6 gap-y-3 text-sm md:flex">
                 <span className="inline-flex items-center gap-2"><CalendarDays size={18} className="text-accent" /><time dateTime={`${hrWebOffer.date}T${hrWebOffer.time}`}>{nbsp(`${hrWebOffer.dateLabel} · ${hrWebOffer.timeLabel}`)}</time></span>
                 <span className="inline-flex items-center gap-2"><Clock3 size={18} className="text-accent" />{nbsp(`${hrWebOffer.durationMinutes} минут`)}</span>
                 <span className="font-medium text-accent">Бесплатно</span>
               </div>
-              <Button onClick={() => setRegisterOpen(true)} className={`${ctaClass} mt-5 w-full sm:w-auto lg:mt-0`}>Зарегистрироваться<ArrowRight /></Button>
+              <Button onClick={() => setRegisterOpen(true)} className={`${ctaClass} mt-5 w-full sm:w-auto md:mt-0`}>Зарегистрироваться<ArrowRight /></Button>
             </div>
           </div>
         </section>
 
         <section id="for-whom" className="scroll-mt-36">
           <div className={sectionClass}>
-            <div className="grid items-center gap-8 lg:grid-cols-[1fr_1.2fr] lg:gap-12">
+            <div className="grid items-center gap-8 md:grid-cols-[1fr_1.1fr] lg:grid-cols-[1fr_1.2fr] lg:gap-12">
               <div>
                 <h2 className="text-3xl font-semibold leading-tight tracking-normal md:text-4xl">{nbsp("Хорошая зарплата")} <span className="text-accent">{nbsp("не гарантирует финансового спокойствия")}</span></h2>
                 <p className="mt-5 text-lg leading-relaxed md:text-xl">{nbsp("Сотрудник может получать достойную зарплату, иметь ДМС и льготы, но жить от зарплаты до зарплаты, тревожиться из-за кредитов и не иметь накоплений.")}</p>

@@ -9,6 +9,7 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import { hrWebOffer, hrWebProgram } from "@/data/hrWeb";
 import { nbsp } from "@/lib/nbsp";
 import expertPhoto from "@/assets/expert-vasily.jpg";
+import authorPhoto from "@/assets/hero-photo.png";
 
 const pageNav: HeaderNavLink[] = [
   { href: "#for-whom", label: "О вебинаре", id: "for-whom" },
@@ -61,20 +62,20 @@ const HrWeb = () => {
         <section id="for-whom" className="scroll-mt-36">
           <div className={sectionClass}>
             <h2 className="max-w-4xl text-3xl font-semibold leading-tight tracking-normal md:text-5xl">{nbsp("Хорошая зарплата")} <span className="text-accent">{nbsp("не гарантирует финансового спокойствия")}</span></h2>
-            <figure className="mt-8 rounded-2xl border border-border bg-card p-6 md:mt-12 md:p-12">
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-12">
-                <div className="flex items-center gap-4 md:col-span-3 md:flex-col md:items-start">
-                  <img src={expertPhoto} alt="Василий Мещеряков" loading="lazy" className="h-16 w-16 shrink-0 rounded-full object-cover md:h-36 md:w-36" />
-                  <figcaption className="text-sm leading-snug">
-                    <div className="text-base font-semibold md:text-lg">Василий Мещеряков</div>
-                    <div className="mt-1">{nbsp("Канал")} <a href="https://t.me/vasya_lfp" target="_blank" rel="noopener noreferrer" className="text-accent underline underline-offset-4">«Вася и&nbsp;финансы»</a></div>
-                    <div className="mt-1">{nbsp("Книга")} <a href="/book" className="text-accent underline underline-offset-4">«Ленивый бюджет»</a></div>
+            <figure className="mt-8 rounded-2xl border border-border bg-card p-6 md:mt-12 md:p-10 lg:p-12">
+              <div className="flex flex-col gap-6 lg:grid lg:grid-cols-12 lg:gap-12">
+                <blockquote className="lg:order-last lg:col-span-9">
+                  <span aria-hidden className="block text-4xl leading-none text-accent md:text-5xl">“</span>
+                  <p className="mt-2 text-lg leading-relaxed md:text-2xl">{nbsp("Сотрудник может получать достойную зарплату, иметь ДМС и льготы, но жить от зарплаты до зарплаты, тревожиться из-за кредитов и не иметь накоплений.")}</p>
+                </blockquote>
+                <div className="flex items-center gap-4 border-t border-border pt-6 lg:col-span-3 lg:flex-col lg:items-start lg:border-0 lg:pt-0">
+                  <img src={authorPhoto} alt="Василий Мещеряков" loading="lazy" className="h-16 w-16 shrink-0 rounded-full object-cover object-top md:h-20 md:w-20 lg:h-36 lg:w-36" />
+                  <figcaption className="text-sm leading-snug md:text-base">
+                    <div className="text-base font-semibold md:text-lg">{nbsp("Василий Мещеряков")}</div>
+                    <div className="mt-1">{nbsp("Канал")} <a href="https://t.me/vasya_lfp" target="_blank" rel="noopener noreferrer" className="whitespace-nowrap text-accent underline underline-offset-4">«Вася и&nbsp;финансы»</a></div>
+                    <div className="mt-1">{nbsp("Книга")} <a href="/book" className="whitespace-nowrap text-accent underline underline-offset-4">«Ленивый бюджет»</a></div>
                   </figcaption>
                 </div>
-                <blockquote className="md:col-span-9">
-                  <span aria-hidden className="hidden text-5xl leading-none text-accent md:block">“</span>
-                  <p className="text-lg leading-relaxed md:text-2xl">{nbsp("Сотрудник может получать достойную зарплату, иметь ДМС и льготы, но жить от зарплаты до зарплаты, тревожиться из-за кредитов и не иметь накоплений.")}</p>
-                </blockquote>
               </div>
             </figure>
           </div>

@@ -32,6 +32,9 @@ export type PageMeta = {
   noindex?: boolean;
   /** Путь страницы для canonical; по умолчанию текущий */
   path?: string;
+  /** Изображение для соцсетей с доступным абсолютным HTTPS-адресом. */
+  image?: string;
+  imageAlt?: string;
 };
 
 /**
@@ -39,7 +42,7 @@ export type PageMeta = {
  * индексации. Используется на страницах, у которых нет своего шаблона
  * с метаданными.
  */
-export const usePageMeta = ({ title, description, noindex, path }: PageMeta) => {
+export const usePageMeta = ({ title, description, noindex, path, image, imageAlt }: PageMeta) => {
   useEffect(() => {
     const fullTitle = title.includes(BRAND) ? title : `${title} · ${BRAND}`;
     document.title = fullTitle;
@@ -59,11 +62,30 @@ export const usePageMeta = ({ title, description, noindex, path }: PageMeta) => 
     upsertCanonical(url);
     upsertMeta("property", "og:url", url);
 
+    const imageTags = [
+      ["property", "og:image"],
+      ["name", "twitter:image"],
+      ["property", "og:image:alt"],
+    ] as const;
+    const previousImages = imageTags.map(([attr, key]) => ({ attr, key, content: document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`)?.content }));
+    if (image) {
+      upsertMeta("property", "og:image", image);
+      upsertMeta("name", "twitter:image", image);
+      upsertMeta("property", "og:image:alt", imageAlt ?? title);
+    }
+
     const robots = document.head.querySelector<HTMLMetaElement>('meta[name="robots"]');
     if (noindex) {
       upsertMeta("name", "robots", "noindex, nofollow");
     } else if (robots) {
       robots.remove();
     }
-  }, [title, description, noindex, path]);
+    return () => {
+      if (!image) return;
+      previousImages.forEach(({ attr, key, content }) => {
+        if (content !== undefined) upsertMeta(attr, key, content);
+        else document.head.querySelector(`meta[${attr}="${key}"]`)?.remove();
+      });
+    };
+  }, [title, description, noindex, path, image, imageAlt]);
 };

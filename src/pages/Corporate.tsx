@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { ExpertPhotoBadge } from "@/components/ExpertPhotoBadge";
 import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import {
@@ -223,11 +224,7 @@ const Corporate = () => {
                   className="absolute inset-0 w-full h-full object-cover object-[50%_18%]"
                   loading="eager"
                 />
-                <div className="absolute inset-x-0 bottom-3 sm:bottom-4 z-10 flex justify-start px-3 sm:px-4">
-                  <span className="badge-tag bg-card/95 backdrop-blur-sm rounded-full px-3 py-1.5 shadow-sm font-mono text-[10px] md:text-xs uppercase tracking-widest text-accent whitespace-nowrap">
-                    Василий Мещеряков · ex P&amp;G (Band 3)
-                  </span>
-                </div>
+                <ExpertPhotoBadge />
               </div>
 
               <div className="lg:hidden mt-4 w-full max-w-[320px] sm:max-w-[380px] mx-auto">

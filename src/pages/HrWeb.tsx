@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ExpertPhotoBadge } from "@/components/ExpertPhotoBadge";
 import { ArrowRight, Briefcase, CalendarDays, Gift } from "lucide-react";
 import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
@@ -40,9 +41,7 @@ const HrWeb = () => {
               <div className="absolute inset-x-3 top-3 flex flex-wrap gap-2 md:hidden">
                 <span className="badge-tag bg-card/95 text-xs"><time dateTime={`${hrWebOffer.date}T${hrWebOffer.time}`}>{nbsp(`${hrWebOffer.dateLabel} · ${hrWebOffer.timeLabel}`)}</time></span>
               </div>
-              <figcaption className="absolute inset-x-0 bottom-3 px-3">
-                <p className="badge-tag max-w-full bg-card/95 text-xs md:text-sm">{nbsp("Василий Мещеряков · ex-P&G")}</p>
-              </figcaption>
+              <ExpertPhotoBadge />
             </figure>
             <div className="min-w-0">
               <div className="mb-5 hidden flex-wrap gap-2 md:flex">

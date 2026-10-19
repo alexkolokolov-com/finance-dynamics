@@ -92,14 +92,14 @@ const HrWeb = () => {
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <h2 className="text-3xl font-semibold tracking-normal md:text-4xl">{nbsp("Что разберём на вебинаре")}</h2>
           </div>
-          <ul className="grid gap-x-12 md:grid-cols-2">
-            {hrWebProgram.map((thesis) => (
-              <li key={thesis} className="flex items-start gap-3 border-t border-border py-4">
-                <span aria-hidden className="mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                <span className="text-base leading-snug md:text-lg">{nbsp(thesis)}</span>
-              </li>
+          <div className="grid gap-5 md:grid-cols-3 md:gap-6">
+            {hrWebProgram.map((topic) => (
+              <article key={topic.title} className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 md:p-7 lg:p-8">
+                <h3 className="text-xl font-semibold leading-snug tracking-normal md:text-2xl">{nbsp(topic.title)}</h3>
+                <p className="mt-4 text-base leading-relaxed text-foreground/80 md:text-lg">{nbsp(topic.text)}</p>
+              </article>
             ))}
-          </ul>
+          </div>
         </section>
 
 

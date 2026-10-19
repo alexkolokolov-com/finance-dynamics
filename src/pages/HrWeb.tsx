@@ -105,19 +105,21 @@ const HrWeb = () => {
             {hrWebProgram.map((topic, i) => (
               <article
                 key={topic}
-                className={`overflow-hidden rounded-2xl border border-border bg-card md:grid ${i % 2 === 1 ? "md:grid-cols-[3fr_2fr]" : "md:grid-cols-[2fr_3fr]"}`}
+                className={`flex flex-col overflow-hidden rounded-2xl border border-border bg-card md:items-stretch ${i % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"}`}
               >
-                <div className={`relative ${i % 2 === 1 ? "md:order-2" : ""}`}>
+                <div
+                  className={`relative shrink-0 border-b border-border md:w-[240px] md:border-b-0 lg:w-[280px] ${i % 2 === 1 ? "md:border-l" : "md:border-r"}`}
+                >
                   <img
                     src={programIllustrations[i].src}
                     alt={programIllustrations[i].alt}
                     loading="lazy"
-                    width={1376}
-                    height={768}
-                    className="block aspect-[16/9] h-auto w-full object-cover md:absolute md:inset-0 md:aspect-auto md:h-full"
+                    width={1200}
+                    height={896}
+                    className="block aspect-[4/3] h-auto w-full object-cover md:absolute md:inset-0 md:aspect-auto md:h-full md:object-contain md:p-2"
                   />
                 </div>
-                <p className="p-6 text-lg leading-relaxed md:self-center md:p-8 md:text-2xl">{nbsp(topic)}</p>
+                <p className="flex-1 p-6 text-lg leading-relaxed md:self-center md:p-8 md:text-2xl">{nbsp(topic)}</p>
               </article>
             ))}
           </div>

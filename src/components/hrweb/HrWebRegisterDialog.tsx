@@ -16,6 +16,10 @@ export const HrWebRegisterDialog = ({ open, onOpenChange }: { open: boolean; onO
       const script = document.createElement("script");
       script.id = WIDGET_ID;
       script.src = WIDGET_SRC;
+      script.onload = () => {
+        const start = (window as unknown as Record<string, unknown>)[`startWidget${WIDGET_ID}`];
+        if (typeof start === "function") start();
+      };
       el.appendChild(script);
     }, 0);
     return () => window.clearTimeout(timer);

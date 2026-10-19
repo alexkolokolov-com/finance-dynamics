@@ -14,9 +14,18 @@ describe("HR webinar offer", () => {
   it("has a 60-minute webinar", () => {
     expect(hrWebOffer.durationMinutes).toBe(60);
   });
-  it("has six programme topics without timings", () => {
-    expect(hrWebProgram).toHaveLength(6);
-    expect(hrWebProgram.every((thesis) => !/\d+\s*мин/.test(thesis))).toBe(true);
+  it("has three programme cards without timings", () => {
+    expect(hrWebProgram).toHaveLength(3);
+    expect(
+      hrWebProgram.every(
+        (topic) => topic.title.trim().length > 0 && topic.text.trim().length > 0,
+      ),
+    ).toBe(true);
+    expect(
+      hrWebProgram.every(
+        (topic) => !/\d+\s*мин/.test(`${topic.title} ${topic.text}`),
+      ),
+    ).toBe(true);
   });
 
   it("uses temporary registration", () => {

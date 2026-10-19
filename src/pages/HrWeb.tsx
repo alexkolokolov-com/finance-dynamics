@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { CardAbout, type FactCard } from "@/components/sections/CardAbout";
 import { HrWebRegisterForm } from "@/components/hrweb/HrWebRegisterForm";
 import { WellbeingSprout } from "@/components/hrweb/WellbeingSprout";
+import { RegistrationChecklist } from "@/components/hrweb/RegistrationChecklist";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { hrWebOffer, hrWebProgram } from "@/data/hrWeb";
 import { nbsp } from "@/lib/nbsp";
@@ -155,16 +156,14 @@ const HrWeb = () => {
         <section id="registration" className="scroll-mt-36 bg-primary text-primary-foreground">
           <div className={`${sectionClass} grid items-start gap-8 md:grid-cols-2 md:gap-x-10 lg:gap-x-16`}>
             <div className="min-w-0">
-              <h2 className="text-3xl font-semibold leading-tight tracking-normal md:text-4xl">{nbsp("Регистрация на вебинар")}</h2>
-              <p className="mt-5 text-lg leading-relaxed md:text-xl">
-                <time dateTime={`${hrWebOffer.date}T${hrWebOffer.time}`}>{nbsp(`${hrWebOffer.dateLabel} · ${hrWebOffer.timeLabel}`)}</time>
-              </p>
+              <h2 className="text-3xl font-semibold leading-tight tracking-normal md:text-4xl">Регистрация</h2>
             </div>
             <div className="min-w-0 md:col-start-2 md:row-start-1 md:row-span-2">
               <HrWebRegisterForm />
             </div>
-            <div className="min-w-0 md:col-start-1 md:row-start-2">
-              <p className="text-lg leading-relaxed">{nbsp("Подарок участникам в конце эфира")}</p>
+            <div className="relative isolate min-w-0 overflow-hidden md:col-start-1 md:row-start-2">
+              <RegistrationChecklist className="pointer-events-none absolute right-0 top-0 -z-10 h-full max-h-64 w-auto text-accent" />
+              <p className="text-lg leading-relaxed">{nbsp("Подарок участника вебинара")}</p>
               <p className="mt-3 text-2xl font-semibold leading-snug">{nbsp("Индекс финансового спокойствия команды")}</p>
               <p className="mt-4 text-lg leading-relaxed">{nbsp("Анонимная диагностика: 10 вопросов, 5 минут на запуск.")}</p>
             </div>

@@ -102,8 +102,14 @@ const HrWeb = () => {
             <h2 className="text-3xl font-semibold tracking-normal md:text-4xl">{nbsp("Что разберём на вебинаре")}</h2>
           </div>
           <div className="grid gap-5 md:grid-cols-1 xl:grid-cols-3 xl:gap-6">
-            {hrWebProgram.map((topic) => (
+            {hrWebProgram.map((topic, i) => (
               <article key={topic} className="rounded-2xl border border-border bg-card p-6 md:p-8">
+                <div
+                  className="mb-6 border border-dashed p-3 md:p-4"
+                  style={{ borderColor: "hsl(var(--foreground) / 0.25)" }}
+                >
+                  <img src={programIllustrations[i].src} alt={programIllustrations[i].alt} loading="lazy" width={1600} height={912} className="w-full h-auto rounded-lg" />
+                </div>
                 <p className="text-lg leading-relaxed md:text-2xl">{nbsp(topic)}</p>
               </article>
             ))}

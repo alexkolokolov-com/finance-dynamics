@@ -1,11 +1,10 @@
-import { useState } from "react";
 import { ExpertPhotoBadge } from "@/components/ExpertPhotoBadge";
 import { ArrowRight, Briefcase, CalendarDays } from "lucide-react";
 import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { CardAbout, type FactCard } from "@/components/sections/CardAbout";
-import { HrWebRegisterDialog } from "@/components/hrweb/HrWebRegisterDialog";
+import { HrWebRegisterForm } from "@/components/hrweb/HrWebRegisterForm";
 import { WellbeingSprout } from "@/components/hrweb/WellbeingSprout";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { hrWebOffer, hrWebProgram } from "@/data/hrWeb";
@@ -38,7 +37,6 @@ const expertFacts: FactCard[] = [
 ];
 
 const HrWeb = () => {
-  const [registerOpen, setRegisterOpen] = useState(false);
    usePageMeta({ title: "Финансовое благополучие сотрудников — вебинар для HR", description: "Бесплатный вебинар Василия Мещерякова 23 октября в 19:00 Мск: как financial wellbeing дополняет корпоративные бенефиты. Практические упражнения и диагностика команды. 60 минут.", path: "/hr-web" });
   return (
     <>
@@ -60,7 +58,7 @@ const HrWeb = () => {
               </div>
               <h1 className="text-[clamp(2rem,9vw,2.75rem)] md:text-[clamp(2.5rem,5.5vw,4.5rem)] font-semibold leading-[0.98] tracking-normal">{nbsp("Финансовое благополучие")} <span className="font-normal italic">сотрудников</span></h1>
               <p className="mt-4 max-w-xl text-lg leading-snug md:mt-6 md:text-2xl">{nbsp(`${hrWebOffer.subtitle.split(". ")[0]}.`)}</p>
-              <Button onClick={() => setRegisterOpen(true)} className={`${ctaClass} mt-5 w-full sm:w-auto md:mt-8`}>Зарегистрироваться<ArrowRight /></Button>
+              <Button asChild className={`${ctaClass} mt-5 w-full sm:w-auto md:mt-8`}><a href="#registration">Зарегистрироваться<ArrowRight /></a></Button>
             </div>
           </div>
         </section>
@@ -155,15 +153,17 @@ const HrWeb = () => {
         </section>
 
         <section id="registration" className="scroll-mt-36 bg-primary text-primary-foreground">
-          <div className={`${sectionClass} grid items-start gap-10 md:grid-cols-2 md:gap-10 lg:gap-16`}>
+          <div className={`${sectionClass} grid items-start gap-8 md:grid-cols-2 md:gap-x-10 lg:gap-x-16`}>
             <div className="min-w-0">
               <h2 className="text-3xl font-semibold leading-tight tracking-normal md:text-4xl">{nbsp("Регистрация на вебинар")}</h2>
               <p className="mt-5 text-lg leading-relaxed md:text-xl">
                 <time dateTime={`${hrWebOffer.date}T${hrWebOffer.time}`}>{nbsp(`${hrWebOffer.dateLabel} · ${hrWebOffer.timeLabel}`)}</time>
               </p>
-              <Button onClick={() => setRegisterOpen(true)} className="mt-6 h-auto min-h-14 w-full whitespace-normal rounded-none bg-accent px-8 py-4 text-base text-accent-foreground hover:bg-accent/90 sm:w-auto">Зарегистрироваться<ArrowRight /></Button>
             </div>
-            <div className="min-w-0">
+            <div className="min-w-0 md:col-start-2 md:row-start-1 md:row-span-2">
+              <HrWebRegisterForm />
+            </div>
+            <div className="min-w-0 md:col-start-1 md:row-start-2">
               <p className="text-lg leading-relaxed">{nbsp("Подарок участникам в конце эфира")}</p>
               <p className="mt-3 text-2xl font-semibold leading-snug">{nbsp("Индекс финансового спокойствия команды")}</p>
               <p className="mt-4 text-lg leading-relaxed">{nbsp("Анонимная диагностика: 10 вопросов, 5 минут на запуск.")}</p>
@@ -172,7 +172,6 @@ const HrWeb = () => {
         </section>
       </main>
       <Footer />
-      <HrWebRegisterDialog open={registerOpen} onOpenChange={setRegisterOpen} />
     </>
   );
 };

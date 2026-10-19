@@ -9,7 +9,6 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import { hrWebOffer, hrWebProgram } from "@/data/hrWeb";
 import { nbsp } from "@/lib/nbsp";
 import expertPhoto from "@/assets/expert-vasily.jpg";
-import retentionImage from "@/assets/hr-web-retention.jpg";
 
 const pageNav: HeaderNavLink[] = [
   { href: "#for-whom", label: "О вебинаре", id: "for-whom" },

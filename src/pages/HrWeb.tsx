@@ -86,37 +86,42 @@ const HrWeb = () => {
         </section>
 
 
-        <section id="bonus" className="scroll-mt-36 bg-accent-soft/30">
-          <div className={`${sectionClass} grid gap-8 md:grid-cols-[1.1fr_1fr] md:gap-16`}>
-            <div>
-              <Gift className="mb-5 h-8 w-8 text-accent" />
-              <p className="mb-3 text-accent">{nbsp("Подарок участникам в конце эфира")}</p>
-              <h2 className="text-3xl font-semibold leading-tight tracking-normal md:text-4xl">{nbsp("Индекс финансового спокойствия команды")}</h2>
-            </div>
-            <div className="space-y-5">
-              <div className="flex gap-8 border-b border-foreground/15 pb-5">
-                <div><p className="font-display text-4xl font-semibold tracking-normal">10</p><p className="mt-1 text-muted-foreground">вопросов</p></div>
-                <div><p className="font-display text-4xl font-semibold tracking-normal">5</p><p className="mt-1 text-muted-foreground">{nbsp("минут на запуск")}</p></div>
-              </div>
-               <p className="text-lg leading-relaxed">{nbsp("Готовая анонимная диагностика из 10 вопросов. Поможет понять, какие финансовые проблемы беспокоят сотрудников, насколько они уверены в своих финансовых решениях и какая поддержка им действительно нужна.")}</p>
-            </div>
-          </div>
-        </section>
-
         <section id="speaker" className="scroll-mt-36">
           <CardAbout
             scale="article"
             hideEducation
-             factsOverride={expertFacts}
+            factsOverride={expertFacts}
             heading={nbsp("Василий Мещеряков")}
-             quote={<p>{nbsp("Автор книги «Ленивый бюджет».")}</p>}
+            quote={<p>{nbsp("Автор книги «Ленивый бюджет».")}</p>}
           />
         </section>
 
         <section id="registration" className="scroll-mt-36 bg-primary text-primary-foreground">
-          <div className={`${sectionClass} grid items-center gap-8 md:grid-cols-[1.4fr_1fr]`}>
-             <div><p className="mb-4 text-primary-foreground/80">{nbsp("23 октября · 19:00 Мск · 60 минут · бесплатно")}</p><h2 className="text-3xl font-semibold leading-tight tracking-normal md:text-4xl">{nbsp("Финансовое благополучие — новый инструмент корпоративной заботы")}</h2></div>
-              <div className="md:justify-self-end"><Button onClick={() => setRegisterOpen(true)} className={`${ctaClass} w-full bg-accent text-accent-foreground sm:w-auto`}>Зарегистрироваться<ArrowRight /></Button></div>
+          <div className={`${sectionClass} grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-end lg:gap-16`}>
+            <div>
+              <h2 className="text-3xl font-semibold leading-tight tracking-normal md:text-4xl">{nbsp("Что вы получите при регистрации")}</h2>
+              <ul className="mt-8 space-y-6">
+                <li className="flex gap-4 border-t border-primary-foreground/20 pt-6">
+                  <CalendarDays className="mt-1 h-6 w-6 shrink-0 text-accent" />
+                  <div>
+                    <p className="text-xl font-semibold">{nbsp("Участие в прямом эфире")}</p>
+                    <p className="mt-1 text-lg text-primary-foreground/80">{nbsp("Разбор и ответы на вопросы")}</p>
+                  </div>
+                </li>
+                <li className="flex gap-4 border-t border-primary-foreground/20 pt-6">
+                  <Gift className="mt-1 h-6 w-6 shrink-0 text-accent" />
+                  <div>
+                    <p className="text-accent">{nbsp("Подарок участникам в конце эфира")}</p>
+                    <p className="mt-1 text-xl font-semibold">{nbsp("Индекс финансового спокойствия команды")}</p>
+                    <p className="mt-2 text-lg leading-relaxed text-primary-foreground/80">{nbsp("Готовая анонимная диагностика: 10 вопросов, 5 минут на запуск. Поможет понять, какие финансовые проблемы беспокоят сотрудников и какая поддержка им действительно нужна.")}</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div className="lg:justify-self-end">
+              <p className="mb-4 text-lg text-primary-foreground/80"><time dateTime={`${hrWebOffer.date}T${hrWebOffer.time}`}>{nbsp(`${hrWebOffer.dateLabel} · ${hrWebOffer.timeLabel}`)}</time>{nbsp(` · ${hrWebOffer.durationMinutes} минут · онлайн`)}</p>
+              <Button onClick={() => setRegisterOpen(true)} className={`${ctaClass} w-full bg-accent text-accent-foreground sm:w-auto`}>Зарегистрироваться<ArrowRight /></Button>
+            </div>
           </div>
         </section>
       </main>

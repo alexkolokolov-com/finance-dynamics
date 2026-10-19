@@ -101,16 +101,23 @@ const HrWeb = () => {
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <h2 className="text-3xl font-semibold tracking-normal md:text-4xl">{nbsp("Что разберём на вебинаре")}</h2>
           </div>
-          <div className="grid gap-5 md:grid-cols-1 xl:grid-cols-3 xl:gap-6">
+          <div className="grid gap-5 xl:gap-6">
             {hrWebProgram.map((topic, i) => (
-              <article key={topic} className="rounded-2xl border border-border bg-card p-6 md:p-8">
-                <div
-                  className="mb-6 border border-dashed p-3 md:p-4"
-                  style={{ borderColor: "hsl(var(--foreground) / 0.25)" }}
-                >
-                  <img src={programIllustrations[i].src} alt={programIllustrations[i].alt} loading="lazy" width={1600} height={912} className="w-full h-auto rounded-lg" />
+              <article
+                key={topic}
+                className={`overflow-hidden rounded-2xl border border-border bg-card md:grid ${i % 2 === 1 ? "md:grid-cols-[3fr_2fr]" : "md:grid-cols-[2fr_3fr]"}`}
+              >
+                <div className={`relative ${i % 2 === 1 ? "md:order-2" : ""}`}>
+                  <img
+                    src={programIllustrations[i].src}
+                    alt={programIllustrations[i].alt}
+                    loading="lazy"
+                    width={1376}
+                    height={768}
+                    className="block aspect-[16/9] h-auto w-full object-cover md:absolute md:inset-0 md:aspect-auto md:h-full"
+                  />
                 </div>
-                <p className="text-lg leading-relaxed md:text-2xl">{nbsp(topic)}</p>
+                <p className="p-6 text-lg leading-relaxed md:self-center md:p-8 md:text-2xl">{nbsp(topic)}</p>
               </article>
             ))}
           </div>

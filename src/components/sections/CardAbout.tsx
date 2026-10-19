@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import vasily from "@/assets/expert-vasily.jpg";
 import { Atom, Briefcase, Quote, type LucideIcon } from "lucide-react";
 
-type FactCard =
+export type FactCard =
   | {
       kind: "bio";
       label: string;
@@ -72,6 +72,7 @@ type CardAboutProps = {
     onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   };
   hideEducation?: boolean;
+  factsOverride?: FactCard[];
 };
 
 const defaultHeading = (
@@ -102,10 +103,11 @@ export const CardAbout = ({
   scale = "hero",
   cta,
   hideEducation = false,
+  factsOverride,
 }: CardAboutProps = {}) => {
   const isArticle = scale === "article";
   const isDeck = scale === "deck";
-  const visibleFacts = hideEducation ? facts.slice(1) : facts;
+  const visibleFacts = factsOverride ?? (hideEducation ? facts.slice(1) : facts);
   return (
     <section
       id="about"

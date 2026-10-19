@@ -34,7 +34,7 @@ export const HrWebRegisterDialog = ({ open, onOpenChange }: { open: boolean; onO
             <label className="block space-y-2 text-sm font-medium"><span>Имя</span><Input name="name" required autoComplete="off" placeholder="Ваше имя" maxLength={100} /></label>
             <label className="block space-y-2 text-sm font-medium"><span>Email</span><Input name="email" type="email" required autoComplete="off" placeholder="name@company.ru" maxLength={254} /></label>
             <label className="block space-y-2 text-sm font-medium"><span>Компания</span><Input name="company" autoComplete="off" placeholder="Название компании" maxLength={150} /></label>
-            <label className="block space-y-2 text-sm font-medium"><span>{nbsp("Какой вопрос про удержание вас волнует?")}</span><textarea name="question" rows={3} maxLength={2000} className="w-full resize-y rounded-md border border-input bg-background px-3 py-2 text-base font-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" /></label>
+            <label className="block space-y-2 text-sm font-medium"><span>{nbsp("Какой вопрос о финансовом благополучии сотрудников вас волнует?")}</span><textarea name="question" rows={3} maxLength={2000} className="w-full resize-y rounded-md border border-input bg-background px-3 py-2 text-base font-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" /></label>
             <Button type="submit" size="lg" className="h-auto min-h-12 w-full whitespace-normal bg-accent text-accent-foreground hover:bg-accent/90">{nbsp("Проверить форму")}<ArrowRight /></Button>
           </form>
         )}

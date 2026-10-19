@@ -57,11 +57,12 @@ const HrWeb = () => {
 
         <section id="for-whom" className="scroll-mt-36">
           <div className={sectionClass}>
-            <h2 className="max-w-4xl text-3xl font-semibold leading-tight tracking-normal md:text-5xl">{nbsp("Хорошая зарплата")} <span className="text-accent">{nbsp("не гарантирует финансового спокойствия")}</span></h2>
+            <h2 className="max-w-4xl text-3xl font-semibold leading-tight tracking-normal md:text-5xl">{nbsp("Хорошая зарплата не гарантирует")} <span className="text-accent">{nbsp("финансового спокойствия")}</span></h2>
             <figure className="mt-8 rounded-2xl border border-border bg-card p-6 md:mt-12 md:p-10 lg:p-12">
               <div className="flex flex-col gap-6 lg:grid lg:grid-cols-12 lg:gap-12">
                 <blockquote className="lg:order-last lg:col-span-9">
-                  <p className="text-lg leading-relaxed md:text-2xl">{nbsp("Сотрудник может получать достойную зарплату, иметь ДМС и льготы, но жить от зарплаты до зарплаты, тревожиться из-за кредитов и не иметь накоплений.")}</p>
+                  <p className="text-lg leading-relaxed md:text-2xl">{nbsp("Сотрудник может получать достойную зарплату, иметь ДМС и льготы, но жить от зарплаты до зарплаты и не иметь накоплений.")}</p>
+                  <p className="mt-4 text-lg leading-relaxed md:mt-6 md:text-2xl">{nbsp("И в какой-то момент он уходит в компанию, где ему предложили на 30 тысяч больше. Но свои финансовые проблемы он так и не решает")}</p>
                 </blockquote>
                 <div className="flex items-center gap-4 border-t border-border pt-6 lg:col-span-3 lg:flex-col lg:items-start lg:border-0 lg:pt-0">
                   <img src={authorPhoto} alt="Василий Мещеряков" loading="lazy" className="h-16 w-16 shrink-0 rounded-full object-cover object-top md:h-20 md:w-20 lg:h-36 lg:w-36" />
@@ -73,6 +74,9 @@ const HrWeb = () => {
                 </div>
               </div>
             </figure>
+            <div className="mt-6 rounded-2xl border border-accent/25 bg-accent/10 p-6 md:mt-8 md:p-10">
+              <p className="max-w-3xl text-lg leading-snug md:text-2xl">{nbsp("Но есть ещё одна важная составляющая, которой компании пока уделяют мало внимания —")} <span className="font-semibold text-accent">{nbsp("финансовое благополучие (financial well-being)")}</span></p>
+            </div>
           </div>
         </section>
 

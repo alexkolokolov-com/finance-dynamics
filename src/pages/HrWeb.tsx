@@ -12,6 +12,15 @@ import { hrWebOffer, hrWebProgram } from "@/data/hrWeb";
 import { nbsp } from "@/lib/nbsp";
 import expertPhoto from "@/assets/expert-vasily.jpg";
 import authorPhoto from "@/assets/hero-photo.png";
+import programIllustration1 from "@/assets/hr-web-card-1.jpg";
+import programIllustration2 from "@/assets/hr-web-card-2.jpg";
+import programIllustration3 from "@/assets/hr-web-card-3.jpg";
+
+const programIllustrations: { src: string; alt: string }[] = [
+  { src: programIllustration1, alt: "Сотрудник за ноутбуком устало опирается на руку, над головой тают монеты и купюры" },
+  { src: programIllustration2, alt: "Сотрудник держит корпоративный пакет заботы, а из его кошелька выпадает последняя монета" },
+  { src: programIllustration3, alt: "Человек раскладывает монеты по возрастающим стопкам рядом с бюджетным блокнотом и конвертами" },
+];
 
 const pageNav: HeaderNavLink[] = [
   { href: "#for-whom", label: "О вебинаре", id: "for-whom" },
@@ -93,8 +102,14 @@ const HrWeb = () => {
             <h2 className="text-3xl font-semibold tracking-normal md:text-4xl">{nbsp("Что разберём на вебинаре")}</h2>
           </div>
           <div className="grid gap-5 md:grid-cols-1 xl:grid-cols-3 xl:gap-6">
-            {hrWebProgram.map((topic) => (
+            {hrWebProgram.map((topic, i) => (
               <article key={topic} className="rounded-2xl border border-border bg-card p-6 md:p-8">
+                <div
+                  className="mb-6 border border-dashed p-3 md:p-4"
+                  style={{ borderColor: "hsl(var(--foreground) / 0.25)" }}
+                >
+                  <img src={programIllustrations[i].src} alt={programIllustrations[i].alt} loading="lazy" width={1600} height={912} className="w-full h-auto rounded-lg" />
+                </div>
                 <p className="text-lg leading-relaxed md:text-2xl">{nbsp(topic)}</p>
               </article>
             ))}

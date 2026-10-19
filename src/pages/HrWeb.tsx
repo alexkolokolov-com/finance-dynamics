@@ -105,7 +105,7 @@ const HrWeb = () => {
             {hrWebProgram.map((topic, i) => (
               <article
                 key={topic}
-                className="overflow-hidden rounded-2xl border border-border bg-card md:grid md:grid-cols-[2fr_3fr]"
+                className={`overflow-hidden rounded-2xl border border-border bg-card md:grid ${i % 2 === 1 ? "md:grid-cols-[3fr_2fr]" : "md:grid-cols-[2fr_3fr]"}`}
               >
                 <div className={`relative ${i % 2 === 1 ? "md:order-2" : ""}`}>
                   <img

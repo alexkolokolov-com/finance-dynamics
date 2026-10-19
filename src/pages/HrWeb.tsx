@@ -92,11 +92,11 @@ const HrWeb = () => {
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <h2 className="text-3xl font-semibold tracking-normal md:text-4xl">{nbsp("Что разберём на вебинаре")}</h2>
           </div>
-          <div className="grid gap-5 md:grid-cols-3 md:gap-6">
+          <div className="grid gap-5 md:grid-cols-1 xl:grid-cols-3 xl:gap-6">
             {hrWebProgram.map((topic) => (
-              <article key={topic.title} className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 md:p-7 lg:p-8">
+              <article key={topic.title} className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 md:grid md:grid-cols-[1.1fr_1fr] md:items-center md:gap-10 md:p-8 xl:block xl:p-8">
                 <h3 className="text-xl font-semibold leading-snug tracking-normal md:text-2xl">{nbsp(topic.title)}</h3>
-                <p className="mt-4 text-base leading-relaxed text-foreground/80 md:text-lg">{nbsp(topic.text)}</p>
+                <p className="mt-4 text-base leading-relaxed text-foreground/80 md:mt-0 md:text-lg xl:mt-4">{nbsp(topic.text)}</p>
               </article>
             ))}
           </div>

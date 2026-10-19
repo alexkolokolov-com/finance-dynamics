@@ -68,8 +68,8 @@ const HrWeb = () => {
                   <img src={authorPhoto} alt="Василий Мещеряков" loading="lazy" className="h-16 w-16 shrink-0 rounded-full object-cover object-top md:h-20 md:w-20 lg:h-36 lg:w-36" />
                   <figcaption className="text-sm leading-snug md:text-base">
                     <div className="text-base font-semibold md:text-lg">{nbsp("Василий Мещеряков")}</div>
-                    <div className="mt-2 font-mono text-sm md:text-base"><span className="font-light">{nbsp("канал")}</span> <a href="https://t.me/vasya_lfp" target="_blank" rel="noopener noreferrer" className="whitespace-nowrap font-semibold transition-colors hover:text-accent">«Вася и&nbsp;финансы»</a></div>
-                    <div className="mt-1 font-mono text-sm md:text-base"><span className="font-light">{nbsp("книга")}</span> <a href="/book" className="whitespace-nowrap font-semibold transition-colors hover:text-accent">«Ленивый бюджет»</a></div>
+                    <div className="mt-2 font-mono text-[11px] uppercase tracking-widest md:text-xs"><span className="font-light text-foreground/55">канал</span> <a href="https://t.me/vasya_lfp" target="_blank" rel="noopener noreferrer" className="whitespace-nowrap font-semibold text-foreground transition-colors hover:text-accent">Вася и&nbsp;финансы</a></div>
+                    <div className="mt-1 font-mono text-[11px] uppercase tracking-widest md:text-xs"><span className="font-light text-foreground/55">книга</span> <a href="/book" className="whitespace-nowrap font-semibold text-foreground transition-colors hover:text-accent">Ленивый бюджет</a></div>
                   </figcaption>
                 </div>
               </div>

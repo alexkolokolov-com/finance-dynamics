@@ -7,7 +7,7 @@ export const hrWebOffer = {
   timeLabel: "19:00 Мск",
   durationMinutes: 60,
   price: 0,
-  registrationMode: "placeholder",
+  registrationMode: "getcourse",
 } as const;
 
 export const hrWebProgram = [

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, Briefcase, CalendarDays, Clock3, Gift } from "lucide-react";
+import { ArrowRight, Briefcase, CalendarDays, Gift } from "lucide-react";
 import { SiteHeader, type HeaderNavLink } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";

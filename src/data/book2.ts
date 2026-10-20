@@ -143,7 +143,6 @@ export const book2Chapter = {
 } as const;
 
 export const book2Author = {
-  pill: "Об авторе",
   title: "«Я начинал точно не с понимания того, как устроены деньги»",
   name: "Василий Мещеряков",
   paragraphs: [

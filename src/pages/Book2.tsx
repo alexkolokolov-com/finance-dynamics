@@ -453,7 +453,7 @@ const Book2 = () => {
         </section>
 
         {/* 5. Что изменится */}
-        <section id="change" className={`pt-9 pb-[72px] lg:pt-[60px] lg:pb-[120px] ${scrollMt}`}>
+        <section id="change" className={`pt-9 lg:pt-[60px] ${scrollMt}`}>
           <Reveal className={inner}>
             <h2 className={h2}>{nbsp(book2Change.title)}</h2>
             <div className="mt-10">
@@ -479,7 +479,7 @@ const Book2 = () => {
         </section>
 
         {/* 6. Почему эта книга */}
-        <section id="why" className={`${sectionPad} ${scrollMt}`}>
+        <section id="why" className={`pt-10 pb-[72px] lg:pb-[120px] ${scrollMt}`}>
           <Reveal className={inner}>
             <h2 className={h2}>{nbsp(book2Why.title)}</h2>
             <div className="mt-10 border-t border-foreground/10">

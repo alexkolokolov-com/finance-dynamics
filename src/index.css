@@ -424,3 +424,29 @@
     border-top: 2px solid hsl(var(--accent) / 0.55);
   }
 }
+
+/* ===== /book2: появление секций и хук-вопрос ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+.hook-word {
+  opacity: 0;
+  transform: translateY(0.15em);
+}
+.hook-in .hook-word {
+  animation: hook-word-in 0.5s ease forwards;
+}
+@keyframes hook-word-in {
+  from { opacity: 0; transform: translateY(0.15em); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .hook-word { opacity: 1; transform: none; animation: none; }
+}

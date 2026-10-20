@@ -29,6 +29,8 @@ import {
 const inner = "container-px mx-auto max-w-7xl";
 const h2 = "text-center font-display font-semibold tracking-normal leading-[1.08] text-[clamp(30px,4vw,48px)]";
 const sectionPad = "py-[72px] lg:py-[120px]";
+/* Заголовок блока «Об авторе» — ниже основного h2, чтобы текст колонки совпадал по высоте с фото */
+const authorH2 = "text-center font-display font-semibold tracking-normal leading-[1.08] text-[clamp(22px,2.3vw,32px)]";
 const scrollMt = "scroll-mt-[112px] lg:scroll-mt-[124px]";
 const bodyText = "text-lg leading-relaxed";
 
@@ -588,19 +590,19 @@ const Book2 = () => {
         <section id="author" className={`${sectionPad} ${scrollMt}`}>
           <Reveal className={inner}>
             <div className="grid gap-10 md:grid-cols-2 md:gap-14">
-              <figure className="order-first md:order-none">
+              <figure className="order-first md:order-none md:relative">
                 <img
                   src={authorPhoto.url}
                   alt={book2Author.photoAlt}
                   width={836}
                   height={1045}
                   loading="lazy"
-                  className="aspect-[4/5] w-full rounded-xl object-cover"
+                  className="aspect-[4/5] w-full rounded-xl object-cover md:absolute md:inset-x-0 md:bottom-0 md:top-auto md:aspect-auto md:h-full md:w-full"
                 />
               </figure>
               <div className="min-w-0">
                 <span className="badge-tag">{nbsp(book2Author.pill)}</span>
-                <h2 className={`${h2} mt-6`}>{nbsp(book2Author.title)}</h2>
+                <h2 className={`${authorH2} mt-6`}>{nbsp(book2Author.title)}</h2>
                 <p className="mt-6 text-xl font-semibold">{nbsp(book2Author.name)}</p>
                 <div className={`mt-4 space-y-4 ${bodyText}`}>
                   {book2Author.paragraphs.map((text) => (
@@ -608,7 +610,7 @@ const Book2 = () => {
                   ))}
                 </div>
                 <p className={`mt-4 text-muted-foreground ${bodyText}`}>{nbsp(book2Author.muted)}</p>
-                <blockquote className="mt-8 border-l-[3px] border-accent pl-5 text-[22px] font-medium leading-snug md:text-2xl">
+                <blockquote className={`mt-8 border-l-[3px] border-accent pl-5 font-medium ${bodyText}`}>
                   {nbsp(book2Author.quote)}
                 </blockquote>
                 <a

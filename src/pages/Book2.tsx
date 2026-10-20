@@ -577,7 +577,7 @@ const Book2 = () => {
             <div className="rounded-2xl bg-primary p-8 text-primary-foreground md:p-12 lg:p-14">
               <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
                 <div>
-                  <h2 className={h2}>{nbsp(book2Chapter.title)}</h2>
+                  <h2 className={h2Left}>{nbsp(book2Chapter.title)}</h2>
                   <p className={`mt-5 text-primary-foreground/90 ${bodyText}`}>{nbsp(book2Chapter.text)}</p>
                 </div>
                 <div className="min-w-0">

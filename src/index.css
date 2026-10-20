@@ -428,12 +428,10 @@
 /* ===== /book2: появление секций и хук-вопрос ===== */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: opacity 0.4s ease;
 }
 .reveal.is-visible {
   opacity: 1;
-  transform: none;
 }
 .hook-word {
   opacity: 0;

@@ -640,7 +640,7 @@ const Book2 = () => {
                 </li>
               ))}
             </ul>
-            <p className="mt-10 font-display text-[clamp(28px,4vw,36px)] font-semibold leading-tight tracking-normal">
+            <p className="mt-10 text-center font-display text-[clamp(44px,8vw,128px)] font-semibold leading-[1.0] tracking-normal">
               {nbsp(book2NotFor.finalLead)}{" "}
               <span className="text-accent">{nbsp(book2NotFor.finalAccent)}</span>.
             </p>

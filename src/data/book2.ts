@@ -57,7 +57,9 @@ export const book2Change = {
   highlight: "Около 10% в расходах находится практически у всех. На горизонте года это как минимум одно дополнительное путешествие.",
 } as const;
 
-export const book2Why = {
+type Book2WhyItem = { title: string; text: string; stairs?: string[] };
+
+export const book2Why: { title: string; items: Book2WhyItem[] } = {
   title: "Почему эта книга — не очередной сборник финансовых советов",
   items: [
     {

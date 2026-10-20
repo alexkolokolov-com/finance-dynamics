@@ -460,7 +460,7 @@ const Book2 = () => {
               <div className="hidden grid-cols-[1fr_auto_1fr] gap-6 pb-3 text-xs uppercase tracking-wider text-muted-foreground md:grid">
                 <div>{book2Change.wasLabel}</div>
                 <div />
-                <div>{book2Change.willLabel}</div>
+                <div className="font-semibold text-accent">{book2Change.willLabel}</div>
               </div>
               <div className="border-t border-foreground/10">
                 {book2Change.rows.map((row, index) => (

@@ -361,9 +361,9 @@ const Book2 = () => {
           <div className={`${inner} grid items-center gap-8 md:grid-cols-[1.1fr_1fr] md:gap-10 lg:grid-cols-[1.4fr_1fr] lg:gap-16`}>
             <div className="min-w-0">
               <h1 className="font-display text-[clamp(28px,3.6vw,52px)] font-semibold leading-[1.08] tracking-normal">
-                {nbsp("Проблема не в том, что")}
+                {nbsp("Проблема не в том,")}
                 <br />
-                {nbsp("не хватает денег.")}
+                {nbsp("что не хватает денег.")}
                 <br />
                 {nbsp("А в том, что")}
                 <br />

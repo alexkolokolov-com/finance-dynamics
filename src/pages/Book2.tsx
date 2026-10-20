@@ -467,7 +467,7 @@ const Book2 = () => {
               </div>
               <div className="border-t border-foreground/10">
                 {book2Change.rows.map((row, index) => (
-                  <div key={index} className="border-b border-foreground/10 py-5">
+                  <div key={index} className={`border-b border-foreground/10 py-5 ${index === book2Change.rows.length - 1 ? "pb-[67px]" : ""}`}>
                     <div className="grid gap-2 md:grid-cols-[1fr_auto_1fr] md:items-center md:gap-6">
                       <div className="text-[17px] text-muted-foreground">{nbsp(row.was)}</div>
                       <span aria-hidden="true" className="hidden text-accent md:block">→</span>

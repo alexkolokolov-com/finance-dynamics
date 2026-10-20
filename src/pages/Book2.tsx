@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { nbsp } from "@/lib/nbsp";
 import cover from "@/assets/book2-cover.png.asset.json";
+import spread from "@/assets/book2-spread.png.asset.json";
 import pgLogo from "@/assets/pg-logo.webp.asset.json";
 import authorPhoto from "@/assets/author.jpg.asset.json";
 import {
@@ -652,12 +653,12 @@ const Book2 = () => {
             <div className="grid items-center gap-10 rounded-3xl bg-card p-8 md:grid-cols-[1fr_1.2fr] md:p-12 lg:p-16">
               <div className="mx-auto w-[60%] md:w-full">
                 <img
-                  src={cover.url}
-                  alt={book2Hero.coverAlt}
-                  width={1456}
-                  height={1088}
+                  src={spread.url}
+                  alt={book2Preorder.imgAlt}
+                  width={1006}
+                  height={880}
                   loading="lazy"
-                  className="w-full -rotate-3 object-contain shadow-[0_40px_80px_-40px_hsl(28_16%_11%/0.4)]"
+                  className="w-full object-contain"
                 />
               </div>
               <div>

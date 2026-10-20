@@ -369,7 +369,9 @@ const Book2 = () => {
                 <br />
                 {nbsp("что не хватает денег.")}
                 <br />
-                {nbsp(`А в том, что ${book2Hero.titleAccent}${book2Hero.titleDot}`)}
+                {nbsp("А в том, что ")}
+                <span className="text-accent">{nbsp(book2Hero.titleAccent)}</span>
+                {nbsp(book2Hero.titleDot)}
               </h1>
               <p className="mt-5 max-w-xl text-xl leading-snug md:text-[22px]">{nbsp(book2Hero.subtitle)}</p>
               <div className="mt-7 flex flex-col gap-3 lg:flex-row">

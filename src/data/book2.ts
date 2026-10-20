@@ -84,7 +84,7 @@ export const book2Why: { title: string; items: Book2WhyItem[] } = {
       text: "Способ роста дохода попадает в книгу, только если сработал минимум у трёх реальных людей. Чего в книге нет: бинарных опционов, сетевого маркетинга, крипты как быстрого дохода, курсов «миллионер за месяц».",
     },
   ],
-} as const;
+};
 
 type Book2ChapterRow = { n: string; title: string; key?: boolean };
 type Book2Part = { title: string; chapters: Book2ChapterRow[] };
@@ -125,7 +125,7 @@ export const book2Contents: {
       chapters: [{ n: "Заключение", title: "Сценарий первого месяца" }],
     },
   ],
-} as const;
+};
 
 export const book2Chapter = {
   title: "Прочитайте первую главу, прежде чем решать",

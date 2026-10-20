@@ -371,13 +371,13 @@ const Book2 = () => {
                 {book2Hero.titleDot}
               </h1>
               <p className="mt-5 max-w-xl text-xl leading-snug md:text-[22px]">{nbsp(book2Hero.subtitle)}</p>
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                <Button asChild size="lg" className="h-auto min-h-14 px-7 py-4 text-base sm:flex-1">
+              <div className="mt-7 flex flex-col gap-3 lg:flex-row">
+                <Button asChild size="lg" className="h-auto min-h-14 px-7 py-4 text-base lg:flex-1">
                   <a href={PREORDER_URL}>{nbsp(book2Hero.ctaPreorder)}</a>
                 </Button>
                 <a
                   href="#chapter"
-                  className="badge-tag h-auto min-h-14 flex-1 items-center justify-center whitespace-normal px-7 py-4 text-center text-base transition-colors hover:border-accent"
+                  className="badge-tag h-auto min-h-14 items-center justify-center whitespace-normal px-7 py-4 text-center text-base transition-colors hover:border-accent lg:flex-1"
                 >
                   {nbsp(book2Hero.ctaChapter)}
                 </a>

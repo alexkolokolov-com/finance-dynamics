@@ -128,7 +128,7 @@ export const book2Contents: {
 };
 
 export const book2Chapter = {
-  title: "Прочитайте первую главу, прежде чем решать",
+  title: "Прочитайте первую главу перед покупкой",
   text: "Шесть базовых форматов бюджета и как понять, какой ваш. За один вечер у вас будет план на три месяца.",
   namePlaceholder: "Имя",
   emailPlaceholder: "Email",

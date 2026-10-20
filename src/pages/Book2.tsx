@@ -633,7 +633,7 @@ const Book2 = () => {
         <section id="not-for" className={`${sectionPad} ${scrollMt}`}>
           <Reveal className={inner}>
             <h2 className={h2}>{nbsp(book2NotFor.title)}</h2>
-            <ul className={`mt-10 max-w-3xl space-y-5 ${bodyText}`}>
+            <ul className={`mt-10 max-w-5xl space-y-5 ${bodyText}`}>
               {book2NotFor.items.map((text) => (
                 <li key={text} className="flex gap-4">
                   <span aria-hidden="true" className="shrink-0 text-muted-foreground">×</span>

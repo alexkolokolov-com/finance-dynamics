@@ -372,19 +372,19 @@ const Book2 = () => {
               </h1>
               <p className="mt-5 max-w-xl text-xl leading-snug md:text-[22px]">{nbsp(book2Hero.subtitle)}</p>
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                <Button asChild size="lg" className="h-auto min-h-14 px-7 py-4 text-base">
+                <Button asChild size="lg" className="h-auto min-h-14 px-7 py-4 text-base sm:flex-1">
                   <a href={PREORDER_URL}>{nbsp(book2Hero.ctaPreorder)}</a>
                 </Button>
                 <a
                   href="#chapter"
-                  className="badge-tag h-auto min-h-14 justify-center whitespace-normal px-7 py-4 text-base transition-colors hover:border-accent"
+                  className="badge-tag h-auto min-h-14 flex-1 items-center justify-center whitespace-normal px-7 py-4 text-center text-base transition-colors hover:border-accent"
                 >
                   {nbsp(book2Hero.ctaChapter)}
                 </a>
               </div>
               <p className="mt-5 text-sm text-muted-foreground">{nbsp(book2Hero.note)}</p>
             </div>
-            <figure className="order-first mx-auto w-[70%] md:order-last md:w-full">
+            <figure className="mx-auto w-[70%] md:w-full">
               <img
                 src={cover.url}
                 alt={book2Hero.coverAlt}

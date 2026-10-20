@@ -86,7 +86,15 @@ export const book2Why: { title: string; items: Book2WhyItem[] } = {
   ],
 } as const;
 
-export const book2Contents = {
+type Book2ChapterRow = { n: string; title: string; key?: boolean };
+type Book2Part = { title: string; chapters: Book2ChapterRow[] };
+
+export const book2Contents: {
+  title: string;
+  subtitle: string;
+  keyPill: string;
+  parts: Book2Part[];
+} = {
   title: "Что внутри",
   subtitle: "11 глав, 2 части, практическое задание после каждой главы, 30+ ответов на частые вопросы",
   keyPill: "Ключевая по мнению автора",

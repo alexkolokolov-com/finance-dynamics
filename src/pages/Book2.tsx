@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { ArrowDown, ArrowRight, BookOpen, ChevronDown, Plus } from "lucide-react";
+import { ArrowDown, ArrowRight, ChevronDown, Plus } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
@@ -27,7 +27,7 @@ import {
 } from "@/data/book2";
 
 const inner = "container-px mx-auto max-w-7xl";
-const h2 = "font-display font-semibold tracking-normal leading-[1.08] text-[clamp(30px,4vw,48px)]";
+const h2 = "text-center font-display font-semibold tracking-normal leading-[1.08] text-[clamp(30px,4vw,48px)]";
 const sectionPad = "py-[72px] lg:py-[120px]";
 const scrollMt = "scroll-mt-[112px] lg:scroll-mt-[124px]";
 const bodyText = "text-lg leading-relaxed";
@@ -71,11 +71,9 @@ const StickyBar = () => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const hero = document.getElementById("hero");
+    const problem = document.getElementById("problem");
     const preorder = document.getElementById("preorder");
-    if (!hero || !preorder) return;
-    const heroObs = new IntersectionObserver(([entry]) => setHidden(entry.isIntersecting), { threshold: 0 });
-    heroObs.observe(hero);
+    if (!problem || !preorder) return;
 
     const sections = book2StickyNav
       .flatMap((item) => item.ids as readonly string[])
@@ -97,8 +95,10 @@ const StickyBar = () => {
 
     const onScroll = () => {
       const header = document.querySelector("header");
-      if (header) setTop(header.offsetHeight);
-      const heroTop = hero.offsetTop;
+      const headerH = header ? header.offsetHeight : 0;
+      setTop(headerH);
+      setHidden(problem.getBoundingClientRect().top > headerH);
+      const heroTop = problem.offsetTop;
       const end = preorder.offsetTop + preorder.offsetHeight;
       const value = end > heroTop ? (window.scrollY - heroTop) / (end - heroTop) : 0;
       setProgress(Math.min(1, Math.max(0, value)));
@@ -107,7 +107,6 @@ const StickyBar = () => {
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {
-      heroObs.disconnect();
       secObs.disconnect();
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
@@ -361,12 +360,13 @@ const Book2 = () => {
         <section id="hero" className="bg-grid pb-10 pt-36 md:pb-16 md:pt-40">
           <div className={`${inner} grid items-center gap-8 md:grid-cols-[1.1fr_1fr] md:gap-10 lg:grid-cols-[1.4fr_1fr] lg:gap-16`}>
             <div className="min-w-0">
-              <span className="badge-tag mb-6 hidden md:inline-flex">
-                <BookOpen size={16} className="text-accent" />
-                {nbsp(book2Hero.pill)}
-              </span>
-              <h1 className="font-display text-[clamp(36px,5vw,64px)] font-semibold leading-[1.05] tracking-normal">
-                {nbsp(book2Hero.titleLead)} {nbsp(book2Hero.titlePlain)}
+              <h1 className="font-display text-[clamp(28px,3.6vw,52px)] font-semibold leading-[1.08] tracking-normal">
+                {nbsp("Проблема не в том, что")}
+                <br />
+                {nbsp("не хватает денег.")}
+                <br />
+                {nbsp("А в том, что")}
+                <br />
                 <span className="text-accent">{nbsp(book2Hero.titleAccent)}</span>
                 {book2Hero.titleDot}
               </h1>
@@ -392,7 +392,7 @@ const Book2 = () => {
                 height={1088}
                 loading="eager"
                 fetchPriority="high"
-                className="mx-auto w-full object-contain shadow-[0_40px_80px_-40px_hsl(28_16%_11%/0.4)]"
+                className="mx-auto w-full object-contain"
               />
             </figure>
           </div>
@@ -400,9 +400,9 @@ const Book2 = () => {
 
         {/* 2. Полоса доверия */}
         <section id="trust" className="border-y border-foreground/15 py-8 lg:py-12">
-          <div className={`${inner} grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4`}>
-            {book2Trust.map((stat) => (
-              <div key={stat.label}>
+          <div className={`${inner} grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-5`}>
+            {book2Trust.map((stat, index) => (
+              <div key={stat.label} className={index === 4 ? "col-span-2 flex flex-col items-center text-center lg:col-span-1 lg:block lg:text-left" : ""}>
                 {stat.topLogo ? (
                   <img src={pgLogo.url} alt="P&G" className="h-8 w-auto grayscale opacity-60" loading="lazy" />
                 ) : (
@@ -428,12 +428,11 @@ const Book2 = () => {
                 </span>
               ))}
             </h2>
-            <p className="mx-auto mt-8 max-w-[640px] text-lg leading-relaxed text-accent-foreground/85">{nbsp(book2Hook.sub)}</p>
           </div>
         </section>
 
         {/* 4. Проблема */}
-        <section id="problem" className={`${sectionPad} ${scrollMt}`}>
+        <section id="problem" className={`pt-[72px] pb-9 lg:pt-[120px] lg:pb-[60px] ${scrollMt}`}>
           <Reveal className={inner}>
             <h2 className={h2}>{nbsp(book2Problem.title)}</h2>
             <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -446,12 +445,15 @@ const Book2 = () => {
                 </div>
               ))}
             </div>
-            <p className="mx-auto mt-10 max-w-2xl text-center text-xl font-semibold">{nbsp(book2Problem.outro)}</p>
+            <p className="mx-auto mt-10 max-w-2xl text-center text-xl">
+              <span className="block font-semibold">{nbsp(book2Problem.outro)}</span>
+              <span className="block italic">{nbsp(book2Problem.outroSecond)}</span>
+            </p>
           </Reveal>
         </section>
 
         {/* 5. Что изменится */}
-        <section id="change" className={`${sectionPad} ${scrollMt}`}>
+        <section id="change" className={`pt-9 pb-[72px] lg:pt-[60px] lg:pb-[120px] ${scrollMt}`}>
           <Reveal className={inner}>
             <h2 className={h2}>{nbsp(book2Change.title)}</h2>
             <div className="mt-10">
@@ -467,14 +469,11 @@ const Book2 = () => {
                       <div className="text-[17px] text-muted-foreground">{nbsp(row.was)}</div>
                       <span aria-hidden="true" className="hidden text-accent md:block">→</span>
                       <span aria-hidden="true" className="text-accent md:hidden">↓</span>
-                      <div className="text-[17px] font-semibold">{nbsp(row.will)}</div>
+                      <div className="text-[17px] font-semibold text-accent">{nbsp(row.will)}</div>
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
-            <div className="mt-8 rounded-xl border border-accent bg-transparent p-6 text-xl leading-relaxed md:p-8">
-              {nbsp(book2Change.highlight)}
             </div>
           </Reveal>
         </section>
@@ -525,7 +524,7 @@ const Book2 = () => {
         <section id="contents" className={`${sectionPad} ${scrollMt}`}>
           <Reveal className={inner}>
             <h2 className={h2}>{nbsp(book2Contents.title)}</h2>
-            <p className="mt-4 text-lg text-muted-foreground">{nbsp(book2Contents.subtitle)}</p>
+            <p className="mt-4 text-center text-lg text-muted-foreground">{nbsp(book2Contents.subtitle)}</p>
             <div className="mt-10 border-t border-foreground/10">
               {book2Contents.parts.map((part, index) => {
                 const open = openPart.includes(index);

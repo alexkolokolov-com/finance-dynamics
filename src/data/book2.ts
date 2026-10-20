@@ -22,12 +22,12 @@ export const book2Trust = [
   { top: "P&G", topLogo: true, label: "Ex-директор по продажам" },
   { top: "1 500+", topLogo: false, label: "личных бюджетов разобрано" },
   { top: "13 000", topLogo: false, label: "читателей канала" },
-  { top: "19", topLogo: false, label: "научных источников в книге" },
+  { top: "14 лет", topLogo: false, label: "корпоративной карьеры" },
+  { top: "6 млрд ₽", topLogo: false, label: "бюджет в управлении" },
 ] as const;
 
 export const book2Hook = {
   question: "Это ваша лучшая жизнь за эти деньги?",
-  sub: "Главный вопрос книги. Автор задал его себе — и при тех же деньгах доля путешествий в семейном бюджете выросла с 4% до 17%, а доля одежды упала с 12% до 7%.",
 } as const;
 
 export const book2Problem = {
@@ -40,7 +40,8 @@ export const book2Problem = {
     "Считали: «откладываю 80 тыс. в месяц, за пять лет будет почти 5 млн». А через пять лет на счёте 500 тысяч.",
     "Хочется в инвестиции, но страшно: вдруг деньги понадобятся, когда акции на дне.",
   ],
-  outro: "Дело не в нехватке денег и не в слабой силе воли. Дело в том, что нет системы, которая подходит лично вам.",
+  outro: "Дело не в нехватке денег и не в слабой силе воли.",
+  outroSecond: "Дело в том, что нет системы, которая подходит лично вам.",
 } as const;
 
 export const book2Change = {
@@ -54,7 +55,6 @@ export const book2Change = {
     { was: "Доход растёт только на индексацию", will: "У вас есть план роста, по два действия в месяц" },
     { was: "Переживаете о деньгах, когда уже поздно", will: "Переживаете заранее, пока можно спокойно принять решение" },
   ],
-  highlight: "Около 10% в расходах находится практически у всех. На горизонте года это как минимум одно дополнительное путешествие.",
 } as const;
 
 type Book2WhyItem = { title: string; text: string; stairs?: string[] };
@@ -178,8 +178,7 @@ export const book2Preorder = {
 
 // Разделы липкой полосы: href — цель клика, ids — секции, в которых пункт активен.
 export const book2StickyNav = [
-  { href: "#hook", label: "Проблема", ids: ["hook", "problem"] },
-  { href: "#change", label: "Что изменится", ids: ["change"] },
+  { href: "#change", label: "Ваши изменения", ids: ["change"] },
   { href: "#why", label: "Почему эта книга", ids: ["why"] },
   { href: "#contents", label: "Содержание", ids: ["contents"] },
   { href: "#chapter", label: "Первая глава", ids: ["chapter"] },

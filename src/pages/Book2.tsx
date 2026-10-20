@@ -446,7 +446,7 @@ const Book2 = () => {
               ))}
             </div>
             <p className="mx-auto mt-10 max-w-2xl text-center text-xl">
-              <span className="block font-semibold">{nbsp(book2Problem.outro)}</span>
+              <span className="block italic">{nbsp(book2Problem.outro)}</span>
               <span className="block italic">{nbsp(book2Problem.outroSecond)}</span>
             </p>
           </Reveal>

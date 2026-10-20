@@ -21,7 +21,7 @@ describe("Book2 landing (/book2)", () => {
   });
 
   it("shows the four trust facts including P&G", () => {
-    expect(book2Trust).toHaveLength(4);
+    expect(book2Trust).toHaveLength(5);
     expect(book2Trust[0].top).toBe("P&G");
     expect(book2Trust[0].topLogo).toBe(true);
     expect(book2Trust[1].top).toBe("1 500+");
@@ -53,8 +53,8 @@ describe("Book2 landing (/book2)", () => {
     expect(book2NotFor.items).toHaveLength(4);
   });
 
-  it("has six sticky-bar sections", () => {
-    expect(book2StickyNav).toHaveLength(6);
-    expect(book2StickyNav[0]).toMatchObject({ href: "#hook", label: "Проблема" });
+  it("has five sticky-bar sections", () => {
+    expect(book2StickyNav).toHaveLength(5);
+    expect(book2StickyNav[0]).toMatchObject({ href: "#change", label: "Ваши изменения" });
   });
 });

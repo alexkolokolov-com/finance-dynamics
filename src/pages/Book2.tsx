@@ -482,7 +482,7 @@ const Book2 = () => {
         </section>
 
         {/* 6. Почему эта книга */}
-        <section id="why" className={`pt-[34px] ${scrollMt}`}>
+        <section id="why" className={`pt-[64px] ${scrollMt}`}>
           <Reveal className={inner}>
             <h2 className={h2}>{nbsp(book2Why.title)}</h2>
             <div className="mt-10 border-t border-foreground/10">

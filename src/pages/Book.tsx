@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { book, bookChapters } from "@/data/book";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { nbsp } from "@/lib/nbsp";
-import authorPhoto from "@/assets/expert-vasily.jpg";
+import bookCover from "@/assets/book-cover.jpg";
 import avatar from "@/assets/hero-photo.png";
 
 const pageNav: HeaderNavLink[] = [
@@ -25,10 +25,8 @@ const Book = () => {
       <main className="bg-background text-foreground">
         <section className="bg-grid pb-10 pt-36 md:pb-16 md:pt-40">
           <div className={`${inner} grid items-center gap-6 md:grid-cols-[1.1fr_1fr] md:gap-10 lg:grid-cols-[1.4fr_1fr] lg:gap-16`}>
-            <figure className="relative order-first mx-auto w-full max-w-md overflow-hidden rounded-lg md:order-last">
-              <img src={authorPhoto} alt="Василий Мещеряков, автор книги «Ленивый бюджет»" width={800} height={1000} loading="eager" fetchPriority="high" className="h-[28svh] min-h-40 w-full object-cover object-[50%_25%] md:aspect-[4/5] md:h-auto md:max-h-[480px]" />
-              <div className="absolute left-3 top-3 md:hidden"><span className="badge-tag bg-card/95"><BookOpen size={15} className="text-accent" />Книга</span></div>
-              <figcaption className="absolute inset-x-3 bottom-3"><span className="badge-tag bg-card/95">{nbsp(book.author)}</span></figcaption>
+            <figure className="order-first mx-auto w-full max-w-md md:order-last">
+              <img src={bookCover} alt="Обложка книги «Ленивый бюджет» Василия Мещерякова" width={848} height={1264} loading="eager" fetchPriority="high" className="mx-auto h-[28svh] min-h-40 w-auto max-w-full rounded-lg object-contain md:h-auto md:max-h-[480px]" />
             </figure>
             <div className="min-w-0">
               <span className="badge-tag mb-6 hidden md:inline-flex"><BookOpen size={16} className="text-accent" />Книга</span>

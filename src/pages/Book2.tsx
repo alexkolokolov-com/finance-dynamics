@@ -34,7 +34,7 @@ const authorH2 = "text-center font-display font-semibold tracking-normal leading
 const scrollMt = "scroll-mt-[112px] lg:scroll-mt-[124px]";
 const bodyText = "text-lg leading-relaxed";
 
-/* Появление секции снизу вверх, один раз; без анимаций при reduced-motion */
+/* Плавное появление секции (только затухание, без сдвига), один раз; без анимаций при reduced-motion */
 const Reveal = ({ children, className = "" }: { children: ReactNode; className?: string }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -481,7 +481,7 @@ const Book2 = () => {
         </section>
 
         {/* 6. Почему эта книга */}
-        <section id="why" className={`pt-10 pb-[72px] lg:pb-[120px] ${scrollMt}`}>
+        <section id="why" className={`pt-[34px] ${scrollMt}`}>
           <Reveal className={inner}>
             <h2 className={h2}>{nbsp(book2Why.title)}</h2>
             <div className="mt-10 border-t border-foreground/10">
@@ -523,7 +523,7 @@ const Book2 = () => {
         </section>
 
         {/* 7. Содержание */}
-        <section id="contents" className={`${sectionPad} ${scrollMt}`}>
+        <section id="contents" className={`pt-[34px] pb-[72px] lg:pb-[120px] ${scrollMt}`}>
           <Reveal className={inner}>
             <h2 className={h2}>{nbsp(book2Contents.title)}</h2>
             <p className="mt-4 text-center text-lg text-muted-foreground">{nbsp(book2Contents.subtitle)}</p>

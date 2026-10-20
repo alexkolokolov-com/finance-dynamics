@@ -29,6 +29,8 @@ import {
 const inner = "container-px mx-auto max-w-7xl";
 const h2 = "text-center font-display font-semibold tracking-normal leading-[1.08] text-[clamp(30px,4vw,48px)]";
 const sectionPad = "py-[72px] lg:py-[120px]";
+/* Заголовок блока «Об авторе» — ниже основного h2, чтобы текст колонки совпадал по высоте с фото */
+const authorH2 = "text-center font-display font-semibold tracking-normal leading-[1.08] text-[clamp(22px,2.3vw,32px)]";
 const scrollMt = "scroll-mt-[112px] lg:scroll-mt-[124px]";
 const bodyText = "text-lg leading-relaxed";
 

@@ -663,7 +663,7 @@ const Book2 = () => {
                 />
               </div>
               <div>
-                <h2 className={h2}>{nbsp(book2Preorder.title)}</h2>
+                <h2 className={h2Left}>{nbsp(book2Preorder.title)}</h2>
                 <p className={`mt-5 ${bodyText}`}>{nbsp(book2Preorder.text)}</p>
                 <Button asChild size="lg" className="mt-8 h-auto min-h-14 px-8 py-4 text-lg">
                   <a href={PREORDER_URL}>{nbsp(book2Preorder.cta)}</a>

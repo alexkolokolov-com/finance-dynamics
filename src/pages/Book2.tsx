@@ -28,6 +28,8 @@ import {
 
 const inner = "container-px mx-auto max-w-7xl";
 const h2 = "text-center font-display font-semibold tracking-normal leading-[1.08] text-[clamp(30px,4vw,48px)]";
+/* Тот же заголовок, но выровненный по левому краю — для блоков с двумя колонками */
+const h2Left = "text-left font-display font-semibold tracking-normal leading-[1.08] text-[clamp(30px,4vw,48px)]";
 const sectionPad = "py-[72px] lg:py-[120px]";
 /* Заголовок блока «Об авторе» — ниже основного h2, чтобы текст колонки совпадал по высоте с фото */
 const authorH2 = "text-center font-display font-semibold tracking-normal leading-[1.08] text-[clamp(22px,2.3vw,32px)]";
@@ -575,7 +577,7 @@ const Book2 = () => {
             <div className="rounded-2xl bg-primary p-8 text-primary-foreground md:p-12 lg:p-14">
               <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
                 <div>
-                  <h2 className={h2}>{nbsp(book2Chapter.title)}</h2>
+                  <h2 className={h2Left}>{nbsp(book2Chapter.title)}</h2>
                   <p className={`mt-5 text-primary-foreground/90 ${bodyText}`}>{nbsp(book2Chapter.text)}</p>
                 </div>
                 <div className="min-w-0">

@@ -668,10 +668,6 @@ const Book2 = () => {
                 <Button asChild size="lg" className="mt-8 h-auto min-h-14 px-8 py-4 text-lg">
                   <a href={PREORDER_URL}>{nbsp(book2Preorder.cta)}</a>
                 </Button>
-                <a href="#chapter" className="mt-5 block text-muted-foreground underline-offset-4 transition-colors hover:text-accent hover:underline">
-                  {nbsp(book2Preorder.chapterLink)}
-                </a>
-              </div>
             </div>
           </Reveal>
         </section>

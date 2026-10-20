@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { nbsp } from "@/lib/nbsp";
 import cover from "@/assets/book2-cover.png.asset.json";
+import spread from "@/assets/book2-spread.png.asset.json";
 import pgLogo from "@/assets/pg-logo.webp.asset.json";
 import authorPhoto from "@/assets/author.jpg.asset.json";
 import {

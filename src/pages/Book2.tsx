@@ -600,8 +600,7 @@ const Book2 = () => {
                 />
               </figure>
               <div className="min-w-0">
-                <span className="badge-tag">{nbsp(book2Author.pill)}</span>
-                <h2 className={`${authorH2} mt-6`}>{nbsp(book2Author.title)}</h2>
+                <h2 className={authorH2}>{nbsp(book2Author.title)}</h2>
                 <p className="mt-6 text-xl font-semibold">{nbsp(book2Author.name)}</p>
                 <div className={`mt-4 space-y-4 ${bodyText}`}>
                   {book2Author.paragraphs.map((text) => (

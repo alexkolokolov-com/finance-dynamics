@@ -230,7 +230,7 @@
 .lb3 .hero .ctas{grid-template-columns:minmax(0,1fr);margin-top:26px}
 .lb3 .hero .ctas .btn{width:100%}
 .lb3 .hero .fact{margin-top:14px}
-.lb3 .hero .hero-img{width:min(280px,100%)}
+.lb3 .hero .hero-img{width:min(266px,100%)}
 .lb3 .chg-h{display:none}
 .lb3 .chg-r{grid-template-columns:minmax(0,1fr);gap:8px}
 .lb3 .chg-r .arr{text-align:left;transform:rotate(90deg);width:24px}
@@ -253,6 +253,15 @@
 .lb3 .tc .big.pg img{width:52px;height:52px;display:block}
 @media (max-width:900px){
 .lb3 .hero-img{width:min(440px,100%);margin:0 auto}
+}
+/* компактный режим хиро для низких экранов, чтобы блок умещался во viewport */
+@media (max-width:700px) and (max-height:720px){
+.lb3 .hero h1{font-size:26px}
+.lb3 .hero .lead{margin-top:12px;font-size:16px;min-height:0}
+.lb3 .hero .ctas{margin-top:18px;gap:8px}
+.lb3 .hero .ctas .btn{padding:14px 18px;font-size:15px}
+.lb3 .hero .fact{margin-top:12px;font-size:14px}
+.lb3 .hero .hero-img{width:min(200px,100%)}
 }
 @media (prefers-reduced-motion:reduce){
 .lb3 .hero-img{animation:none}

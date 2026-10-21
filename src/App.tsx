@@ -85,6 +85,8 @@ const App = () => (
           <Route path="/hr-web" element={<HrWeb />} />
           <Route path="/book" element={<Book />} />
           <Route path="/book2" element={<Book2 />} />
+          <Route path="/book-3" element={<Book3Page />} />
+
           <Route path="/old" element={<Index />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

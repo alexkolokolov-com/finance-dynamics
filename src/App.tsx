@@ -39,6 +39,8 @@ import Plan2027 from "./pages/Plan2027.tsx";
 import HrWeb from "./pages/HrWeb.tsx";
 import Book from "./pages/Book.tsx";
 import Book2 from "./pages/Book2.tsx";
+import Book3Page from "./pages/Book3Page.tsx";
+
 
 const queryClient = new QueryClient();
 

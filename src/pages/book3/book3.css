@@ -257,11 +257,11 @@
 /* компактный режим хиро для низких экранов, чтобы блок умещался во viewport */
 @media (max-width:700px) and (max-height:720px){
 .lb3 .hero h1{font-size:26px}
-.lb3 .hero .lead{margin-top:12px;font-size:16px;min-height:0}
-.lb3 .hero .ctas{margin-top:18px;gap:8px}
-.lb3 .hero .ctas .btn{padding:14px 18px;font-size:15px}
+.lb3 .hero .lead{margin-top:12px;font-size:15px;min-height:0}
+.lb3 .hero .ctas{margin-top:16px;gap:8px}
+.lb3 .hero .ctas .btn{padding:12px 16px;font-size:15px}
 .lb3 .hero .fact{margin-top:12px;font-size:14px}
-.lb3 .hero .hero-img{width:min(200px,100%)}
+.lb3 .hero .hero-img{width:min(180px,100%)}
 }
 @media (prefers-reduced-motion:reduce){
 .lb3 .hero-img{animation:none}

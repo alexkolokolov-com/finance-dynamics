@@ -230,7 +230,7 @@
 .lb3 .hero .ctas{grid-template-columns:minmax(0,1fr);margin-top:26px}
 .lb3 .hero .ctas .btn{width:100%}
 .lb3 .hero .fact{margin-top:14px}
-.lb3 .hero-img{width:min(280px,100%)}
+.lb3 .hero .hero-img{width:min(280px,100%)}
 .lb3 .chg-h{display:none}
 .lb3 .chg-r{grid-template-columns:minmax(0,1fr);gap:8px}
 .lb3 .chg-r .arr{text-align:left;transform:rotate(90deg);width:24px}

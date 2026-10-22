@@ -325,7 +325,7 @@ export function initBookFlip(root: HTMLElement): () => void {
   if (!el || !section) return () => {};
   const card = el.closest(".pre-card");
   return createBookFlip(THREE, el, {
-    pages: [p1, p2, p3, p4, p5, p6],
+    pages: [p6, p3, p1, p2, p4, p5],
     section,
     topOffset: () =>
       (root.querySelector("#bbar")?.offsetHeight || 60) +

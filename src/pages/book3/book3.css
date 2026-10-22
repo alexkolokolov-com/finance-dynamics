@@ -249,6 +249,10 @@
 }
 .lb3 .hero-img{width:min(560px,118%);max-width:none;height:auto;display:block;margin-right:-6%;filter:drop-shadow(0 28px 34px rgba(33,29,26,.18));animation:lb3-float 6s ease-in-out infinite}
 @keyframes lb3-float{50%{transform:translateY(-10px)}}
+/* блок «Прочитайте первую главу» — высота ~450px, контент центрирован по вертикали */
+@media (min-width:901px){
+.lb3 .lead-card{padding-block:36px;min-height:450px}
+}
 .lb3 .pre-img{width:100%;max-width:500px;height:auto;display:block;margin:0 auto;filter:drop-shadow(0 24px 30px rgba(33,29,26,.16))}
 .lb3 .tc .big.pg img{width:52px;height:52px;display:block}
 @media (max-width:900px){

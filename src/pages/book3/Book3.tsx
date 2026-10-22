@@ -160,8 +160,8 @@ export default function Book3() {
           <h2 className="h2" data-a="up">Что внутри</h2>
           <p className="sub" data-a="up">12&nbsp;глав, 2&nbsp;части, практическое задание после каждой главы, 30+ ответов на&nbsp;частые вопросы</p>
           <div className="cont" data-a="up">
-            <div className="acc-i"><button className="acc-b" type="button" aria-expanded="true" aria-controls="p1" id="p1b"><span className="n">I</span><span className="t">Часть 1. Очень нелегкие&nbsp;– первые шаги</span><i className="chev" aria-hidden="true"></i></button>
-              <div className="acc-p open" id="p1" role="region" aria-labelledby="p1b"><div><div className="in">
+            <div className="acc-i"><button className="acc-b" type="button" aria-expanded="false" aria-controls="p1" id="p1b"><span className="n">I</span><span className="t">Часть 1. Очень нелегкие&nbsp;– первые шаги</span><i className="chev" aria-hidden="true"></i></button>
+              <div className="acc-p" id="p1" role="region" aria-labelledby="p1b"><div><div className="in">
                 <div className="chap"><span className="k">Глава 1</span><span className="v">Почему все боятся слова «бюджет» как&nbsp;огня?</span></div>
                 <div className="chap"><span className="k">Глава 2</span><span className="v">Принцип шестерёнок: вечный двигатель ваших финансов<span className="key">Ключевая по&nbsp;мнению автора</span></span></div>
                 <div className="chap"><span className="k">Глава 3</span><span className="v">Ищем серые зоны в&nbsp;расходах</span></div>
@@ -234,7 +234,7 @@ export default function Book3() {
       </section>
 
       {/* 10. кому не подойдёт */}
-      <section className="sec" id="notfor" style={{ paddingTop: 0 } as CSSProperties}>
+      <section className="sec" id="notfor">
         <div className="wrap">
           <h2 className="h2 one" data-a="up">Честно: кому эта книга не&nbsp;подойдёт</h2>
           <div className="nf"><ul>

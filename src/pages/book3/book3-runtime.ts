@@ -281,6 +281,15 @@ export function initLazyBudget(root: HTMLElement): () => void {
       links.forEach((a) => a.classList.toggle("on", a.dataset.s === act));
       cur.textContent = act ? NAMES[act] : "Ленивый бюджет";
     }
+    // Полоса — под выделенным пунктом (на телефоне — под названием текущей части).
+    const navOn = root.querySelector<HTMLElement>("#bb-n a.on");
+    const target = navOn && navOn.offsetParent ? navOn : act ? cur : null;
+    if (target) {
+      const br = bar.getBoundingClientRect(), tr = target.getBoundingClientRect();
+      prog.style.left = (tr.left - br.left) + "px";
+      prog.style.width = tr.width + "px";
+      prog.style.opacity = "1";
+    } else prog.style.opacity = "0";
   }
   window.addEventListener("scroll", () => { if (!ticking) { ticking = true; frame(upd); } }, onPassive);
   window.addEventListener("resize", upd, on);

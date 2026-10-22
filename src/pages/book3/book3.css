@@ -277,7 +277,7 @@
 .lb3 .au-t p,.lb3 .au-t blockquote{font-size:clamp(18px,2.5vh,22px)}
 .lb3 .pre-card{padding-block:36px;padding-inline:5%;min-height:450px;grid-template-columns:minmax(0,.31fr) minmax(0,.69fr);gap:44px}
 .lb3 .pre-card .h2{font-size:clamp(30px,3.5vw,44px);line-height:1.06}
-.lb3 .pre-card .txt{margin-top:12px}
-.lb3 .pre-card .act{margin-top:14px}
+.lb3 .pre-card .txt{margin-top:35px}
+.lb3 .pre-card .act{margin-top:35px}
 .lb3 .pre-img{max-width:320px}
 }

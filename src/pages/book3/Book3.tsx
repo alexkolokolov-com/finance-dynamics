@@ -46,7 +46,7 @@ export default function Book3() {
           <nav className="bb-n" id="bb-n">
             <a href="#change" data-s="change">Ваши изменения</a>
             <a href="#why" data-s="why">Почему эта книга</a>
-            <a href="#contents" data-s="contents">Содержание</a>
+            <a href="#contents" data-s="contents">Что внутри</a>
             <a href="#chapter" data-s="chapter">🎁 Подарок</a>
             <a href="#author" data-s="author">Об&nbsp;авторе</a>
           </nav>
@@ -56,7 +56,7 @@ export default function Book3() {
         <div className="bb-dd" id="bb-dd" hidden>
           <a href="#change" data-s="change">Ваши изменения</a>
           <a href="#why" data-s="why">Почему эта книга</a>
-          <a href="#contents" data-s="contents">Содержание</a>
+          <a href="#contents" data-s="contents">Что внутри</a>
           <a href="#chapter" data-s="chapter">🎁 Подарок</a>
           <a href="#author" data-s="author">Об&nbsp;авторе</a>
         </div>

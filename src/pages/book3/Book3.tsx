@@ -47,7 +47,7 @@ export default function Book3() {
             <a href="#change" data-s="change">Ваши изменения</a>
             <a href="#why" data-s="why">Почему эта книга</a>
             <a href="#contents" data-s="contents">Содержание</a>
-            <a href="#chapter" data-s="chapter">Первая глава</a>
+            <a href="#chapter" data-s="chapter">🎁 Подарок</a>
             <a href="#author" data-s="author">Об&nbsp;авторе</a>
           </nav>
           <a className="btn sm" href="#preorder">Предзаказ</a>
@@ -57,7 +57,7 @@ export default function Book3() {
           <a href="#change" data-s="change">Ваши изменения</a>
           <a href="#why" data-s="why">Почему эта книга</a>
           <a href="#contents" data-s="contents">Содержание</a>
-          <a href="#chapter" data-s="chapter">Первая глава</a>
+          <a href="#chapter" data-s="chapter">🎁 Подарок</a>
           <a href="#author" data-s="author">Об&nbsp;авторе</a>
         </div>
       </div>

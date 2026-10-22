@@ -147,22 +147,24 @@ export default function Book3() {
           <h2 className="h2" data-a="up">Что внутри</h2>
           <p className="sub" data-a="up">12&nbsp;глав, 2&nbsp;части, практическое задание после каждой главы, 30+ ответов на&nbsp;частые вопросы</p>
           <div className="cont" data-a="up">
-            <div className="acc-i"><button className="acc-b" type="button" aria-expanded="true" aria-controls="p1" id="p1b"><span className="n">I</span><span className="t">Часть 1. Порядок в&nbsp;деньгах</span><i className="chev" aria-hidden="true"></i></button>
+            <div className="acc-i"><button className="acc-b" type="button" aria-expanded="true" aria-controls="p1" id="p1b"><span className="n">I</span><span className="t">Часть 1. Очень нелегкие&nbsp;– первые шаги</span><i className="chev" aria-hidden="true"></i></button>
               <div className="acc-p open" id="p1" role="region" aria-labelledby="p1b"><div><div className="in">
-                <div className="chap"><span className="k">Глава 1</span><span className="v">Как выбрать формат бюджета, который вы&nbsp;не&nbsp;бросите</span></div>
-                <div className="chap"><span className="k">Глава 2</span><span className="v">Почему ошибки в&nbsp;первом бюджете не&nbsp;имеют значения<span className="key">Ключевая по&nbsp;мнению автора</span></span></div>
-                <div className="chap"><span className="k">Глава 3</span><span className="v">Как найти около 10% в&nbsp;расходах без жёсткой экономии</span></div>
-                <div className="chap"><span className="k">Глава 4</span><span className="v">Как на&nbsp;самом деле растут доходы, а&nbsp;не&nbsp;как обещает реклама</span></div>
-                <div className="chap"><span className="k">Глава 5</span><span className="v">Почему через пять лет денег меньше, чем вы&nbsp;рассчитывали<span className="key">Ключевая по&nbsp;мнению автора</span></span></div>
-                <div className="chap"><span className="k">Глава 6</span><span className="v">Сколько денег у&nbsp;вас на&nbsp;самом деле свободно</span></div>
+                <div className="chap"><span className="k">Глава 1</span><span className="v">Почему все боятся слова «бюджет» как&nbsp;огня?</span></div>
+                <div className="chap"><span className="k">Глава 2</span><span className="v">Принцип шестерёнок: вечный двигатель ваших финансов<span className="key">Ключевая по&nbsp;мнению автора</span></span></div>
+                <div className="chap"><span className="k">Глава 3</span><span className="v">Ищем серые зоны в&nbsp;расходах</span></div>
+                <div className="chap"><span className="k">Глава 4</span><span className="v">Дерево роста доходов</span></div>
+                <div className="chap"><span className="k">Глава 5</span><span className="v">17&nbsp;способов роста дохода<span className="key">Ключевая по&nbsp;мнению автора</span></span></div>
+                <div className="chap"><span className="k">Глава 6</span><span className="v">Денежный поток</span></div>
+                <div className="chap"><span className="k">Глава 7</span><span className="v">Активы для жизни и&nbsp;подушка безопасности</span></div>
+                <div className="chap"><span className="k">Вопросы</span><span className="v">Частые вопросы и&nbsp;ответы&nbsp;— Часть&nbsp;1</span></div>
               </div></div></div></div>
             <div className="acc-i"><button className="acc-b" type="button" aria-expanded="false" aria-controls="p2" id="p2b"><span className="n">II</span><span className="t">Часть 2. Инвестиции</span><i className="chev" aria-hidden="true"></i></button>
               <div className="acc-p" id="p2" role="region" aria-labelledby="p2b"><div><div className="in">
-                <div className="chap"><span className="k">Глава 7</span><span className="v">Сколько нужно для пассивного дохода</span></div>
-                <div className="chap"><span className="k">Глава 8</span><span className="v">Депозит, ОФЗ, ИИС: скучные инструменты, которые работают</span></div>
-                <div className="chap"><span className="k">Глава 9</span><span className="v">Акции без иллюзий</span></div>
-                <div className="chap"><span className="k">Глава 10</span><span className="v">Почему у&nbsp;75% богатых клиентов капитал в&nbsp;недвижимости</span></div>
-                <div className="chap"><span className="k">Глава 11</span><span className="v">Пять принципов, которые защищают от&nbsp;собственных эмоций</span></div>
+                <div className="chap"><span className="k">Глава 8</span><span className="v">Инвестиционный долгосрочный план</span></div>
+                <div className="chap"><span className="k">Глава 9</span><span className="v">Инвестиционный поток: от&nbsp;депозита до&nbsp;облигаций</span></div>
+                <div className="chap"><span className="k">Глава 10</span><span className="v">Введение в&nbsp;акции</span></div>
+                <div className="chap"><span className="k">Глава 11</span><span className="v">Введение в&nbsp;фонды</span></div>
+                <div className="chap"><span className="k">Глава 12</span><span className="v">Принципы инвестирования</span></div>
               </div></div></div></div>
             <div className="acc-i"><button className="acc-b" type="button" aria-expanded="false" aria-controls="p3" id="p3b"><span className="n">III</span><span className="t">Заключение</span><i className="chev" aria-hidden="true"></i></button>
               <div className="acc-p" id="p3" role="region" aria-labelledby="p3b"><div><div className="in">

@@ -270,3 +270,11 @@
 @media (prefers-reduced-motion:reduce){
 .lb3 .hero-img{animation:none}
 }
+/* блок «Предзаказ» — высота как у блока «Прочитайте первую главу» (450px), заголовок того же размера, иллюстрация уменьшена пропорционально */
+@media (min-width:901px){
+.lb3 .pre-card{padding-block:36px;min-height:450px;grid-template-columns:minmax(0,.34fr) minmax(0,.66fr);gap:44px}
+.lb3 .pre-card .h2{font-size:clamp(30px,4vw,50px);line-height:1.06}
+.lb3 .pre-card .txt{margin-top:12px}
+.lb3 .pre-card .act{margin-top:14px}
+.lb3 .pre-img{max-width:320px}
+}

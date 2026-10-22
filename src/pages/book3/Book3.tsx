@@ -240,7 +240,7 @@ export default function Book3() {
           <div className="pre-card" data-a="ink">
             <img className="pre-img" src={bookOpen} width="1200" height="959" alt="Разворот книги «Ленивый бюджет»" loading="lazy" />
             <div className="pc-t">
-              <h2 className="h2">После прочтения вы&nbsp;скажете: «Личный бюджет&nbsp;— это просто, и&nbsp;я&nbsp;буду вести его всегда»</h2>
+              <h2 className="h2">После прочтения вы&nbsp;скажете:<br />«Личный бюджет&nbsp;— это просто,<br />и&nbsp;я&nbsp;буду вести его всегда»</h2>
               <p className="txt">Оформите предзаказ&nbsp;— и&nbsp;получите книгу одними из&nbsp;первых.</p>
               <div className="act"><a className="btn" href="#preorder" id="pre-btn">Оформить предзаказ</a><span className="chk" data-ink="check" data-w="3.5" data-pd=".5" aria-hidden="true"></span></div>
             </div>

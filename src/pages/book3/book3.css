@@ -168,7 +168,7 @@
 .lb3 .nf-last{margin-top:56px;text-align:center;font-size:clamp(32px,3.8vw,48px);font-weight:700;letter-spacing:-.025em;line-height:1.15}
 .lb3 .nf-last .acc{color:var(--accent)}
 .lb3 .pre-card{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:72px 6%;display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:56px;align-items:center}
-.lb3 .pre-card .h2{text-align:left;margin:0;max-width:none;font-size:clamp(30px,3.5vw,52px);line-height:1.08}
+.lb3 .pre-card .h2{text-align:left;margin:0;max-width:none;font-size:clamp(30px,3.5vw,48px);line-height:1.08}
 .lb3 .pre-card .txt{margin-top:24px;font-size:19px;color:var(--ink)}
 .lb3 .pre-card .act{margin-top:36px;display:flex;align-items:center;gap:8px}
 .lb3 .pre-card .act .btn{padding-inline:46px}
@@ -275,7 +275,7 @@
 /* цитата в блоке об авторе: шрифт увеличен за счёт удалённой строки о семье */
 .lb3 .au-t p,.lb3 .au-t blockquote{font-size:clamp(18px,2.5vh,22px)}
 .lb3 .pre-card{padding-block:36px;min-height:450px;grid-template-columns:minmax(0,.34fr) minmax(0,.66fr);gap:44px}
-.lb3 .pre-card .h2{font-size:clamp(30px,4vw,50px);line-height:1.06}
+.lb3 .pre-card .h2{font-size:clamp(30px,4vw,46px);line-height:1.06}
 .lb3 .pre-card .txt{margin-top:12px}
 .lb3 .pre-card .act{margin-top:14px}
 .lb3 .pre-img{max-width:320px}

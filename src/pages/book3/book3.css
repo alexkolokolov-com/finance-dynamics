@@ -154,7 +154,7 @@
 .lb3 .photo{border-radius:24px;overflow:hidden;background:var(--line);height:100%;min-height:0}
 .lb3 .photo img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;display:block}
 .lb3 .au-t{display:flex;flex-direction:column;justify-content:space-between;gap:18px;min-height:0}
-.lb3 .au-t .h2{font-size:clamp(24px,2.5vw,36px);max-width:22ch}
+.lb3 .au-t .h2{font-size:clamp(24px,2.5vw,34px);max-width:none;text-align:left;margin-inline:0}
 .lb3 .au-t .nm{font-size:clamp(17px,1.5vw,20px);font-weight:600;margin-top:clamp(14px,2.4vh,26px)}
 .lb3 .au-mid{display:grid;gap:clamp(8px,1.4vh,14px)}
 .lb3 .au-t p{font-size:clamp(14.5px,1.95vh,17.5px);line-height:1.55;max-width:62ch}
@@ -272,6 +272,8 @@
 }
 /* блок «Предзаказ» — высота как у блока «Прочитайте первую главу» (450px), заголовок того же размера, иллюстрация уменьшена пропорционально */
 @media (min-width:901px){
+/* цитата в блоке об авторе: шрифт увеличен за счёт удалённой строки о семье */
+.lb3 .au-t blockquote{font-size:clamp(18px,2.5vh,22px)}
 .lb3 .pre-card{padding-block:36px;min-height:450px;grid-template-columns:minmax(0,.34fr) minmax(0,.66fr);gap:44px}
 .lb3 .pre-card .h2{font-size:clamp(30px,4vw,50px);line-height:1.06}
 .lb3 .pre-card .txt{margin-top:12px}

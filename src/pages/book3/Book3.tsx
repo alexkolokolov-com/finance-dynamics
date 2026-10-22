@@ -145,7 +145,7 @@ export default function Book3() {
       <section className="sec" id="contents" style={{ paddingTop: 0 } as CSSProperties}>
         <div className="wrap">
           <h2 className="h2" data-a="up">Что внутри</h2>
-          <p className="sub" data-a="up">11&nbsp;глав, 2&nbsp;части, практическое задание после каждой главы, 30+ ответов на&nbsp;частые вопросы</p>
+          <p className="sub" data-a="up">12&nbsp;глав, 2&nbsp;части, практическое задание после каждой главы, 30+ ответов на&nbsp;частые вопросы</p>
           <div className="cont" data-a="up">
             <div className="acc-i"><button className="acc-b" type="button" aria-expanded="true" aria-controls="p1" id="p1b"><span className="n">I</span><span className="t">Часть 1. Порядок в&nbsp;деньгах</span><i className="chev" aria-hidden="true"></i></button>
               <div className="acc-p open" id="p1" role="region" aria-labelledby="p1b"><div><div className="in">

@@ -48,7 +48,11 @@ function createBookFlip(THREE, container, opts) {
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  renderer.domElement.style.cssText = "display:block;width:100%;height:100%;opacity:0;transition:opacity .5s ease";
+  // Область (container) = место самой книги. Холст больше области, чтобы поднятый лист и тень не обрезались.
+  const PADX = 0.16, PADY = 0.62;          // запас холста по бокам и сверху/снизу, доля размера области
+  renderer.domElement.style.cssText = "position:absolute;pointer-events:none;display:block;" +
+    "left:" + (-PADX * 100) + "%;top:" + (-PADY * 100) + "%;width:" + (100 + 2 * PADX * 100) + "%;height:" + (100 + 2 * PADY * 100) + "%;" +
+    "opacity:0;transition:opacity .5s ease";
   container.appendChild(renderer.domElement);
 
   const scene = new THREE.Scene();
@@ -210,28 +214,34 @@ function createBookFlip(THREE, container, opts) {
   for (const sx of [-1, 1]) for (const sy of [-1, 1]) {
     fitPts.push([sx * (W + 0.035), sy * (H / 2 + 0.03), 0], [sx * (W + 0.035), sy * (H / 2 + 0.03), -T - 0.03]);
   }
-  for (const sy of [-1, 1]) for (const x of [-0.35, 0, 0.35]) fitPts.push([x, sy * H / 2, 0.92]);
   const vtmp = new THREE.Vector3();
   function frameCamera() {
-    const w = container.clientWidth || 1, h = container.clientHeight || 1;
+    const cw = container.clientWidth || 1, ch = container.clientHeight || 1;
+    const w = Math.round(cw * (1 + 2 * PADX)), h = Math.round(ch * (1 + 2 * PADY));
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
     book.updateMatrixWorld(true);
-    // подбираем расстояние так, чтобы книга и поднятый лист целиком помещались в область
-    const dir = new THREE.Vector3(0.012, -0.56, 0.83).normalize();
-    const target = new THREE.Vector3(0, 0.0, 0.16);
+    // книга (обложка по углам) вписывается ровно в область container внутри большого холста
+    const limX = 1 / (1 + 2 * PADX), limY = 1 / (1 + 2 * PADY);
+    const dir = new THREE.Vector3(0.012, -0.70, 0.71).normalize();
+    const target = new THREE.Vector3(0, 0, 0);
     const fits = (d) => {
       camera.position.copy(target).addScaledVector(dir, d);
       camera.lookAt(target);
       camera.updateMatrixWorld(true);
-      return fitPts.every((q) => {
+      let x0 = 9, x1 = -9, y0 = 9, y1 = -9;
+      for (const q of fitPts) {
         vtmp.set(q[0], q[1], q[2]).applyMatrix4(book.matrixWorld).project(camera);
-        return Math.abs(vtmp.x) <= 0.94 && Math.abs(vtmp.y) <= 0.94;
-      });
+        x0 = Math.min(x0, vtmp.x); x1 = Math.max(x1, vtmp.x); y0 = Math.min(y0, vtmp.y); y1 = Math.max(y1, vtmp.y);
+      }
+      // центрируем книгу в области сдвигом камеры по экрану
+      camera.setViewOffset(w, h, ((x0 + x1) / 2) * w / 2, -((y0 + y1) / 2) * h / 2, w, h);
+      return (x1 - x0) / 2 <= limX && (y1 - y0) / 2 <= limY;
     };
-    let lo = 1.5, hi = 14;
-    for (let k = 0; k < 28; k++) { const mid = (lo + hi) / 2; if (fits(mid)) hi = mid; else lo = mid; }
+    let lo = 1.2, hi = 14;
+    for (let k = 0; k < 30; k++) { camera.clearViewOffset(); const mid = (lo + hi) / 2; if (fits(mid)) hi = mid; else lo = mid; }
+    camera.clearViewOffset();
     fits(hi);
   }
 
@@ -325,7 +335,7 @@ export function initBookFlip(root: HTMLElement): () => void {
   if (!el || !section) return () => {};
   const card = el.closest(".pre-card");
   return createBookFlip(THREE, el, {
-    pages: [p6, p3, p1, p2, p4, p5],
+    pages: [p6, p3, p1, p2, p4, p5], // порядок страниц в книге
     section,
     topOffset: () =>
       (root.querySelector("#bbar")?.offsetHeight || 60) +

@@ -38,7 +38,6 @@ import NotFound from "./pages/NotFound.tsx";
 import Plan2027 from "./pages/Plan2027.tsx";
 import HrWeb from "./pages/HrWeb.tsx";
 import Book from "./pages/Book.tsx";
-import Book2 from "./pages/Book2.tsx";
 import Book3Page from "./pages/Book3Page.tsx";
 
 
@@ -84,7 +83,6 @@ const App = () => (
           <Route path="/plan2027" element={<Plan2027 />} />
           <Route path="/hr-web" element={<HrWeb />} />
           <Route path="/book" element={<Book />} />
-          <Route path="/book2" element={<Book2 />} />
           <Route path="/book-3" element={<Book3Page />} />
 
           <Route path="/old" element={<Index />} />

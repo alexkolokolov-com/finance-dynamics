@@ -8,7 +8,6 @@ import { useEffect, useRef, type CSSProperties } from "react";
 import "./book3.css";
 import { initLazyBudget } from "./book3-runtime";
 import coverStack from "@/assets/book3/cover-stack.webp";
-import bookOpen from "@/assets/book3/book-open.webp";
 import authorPhoto from "@/assets/book3/author.jpg";
 import pgLogo from "@/assets/book3/pg-logo.png";
 
@@ -18,6 +17,20 @@ export default function Book3() {
   useEffect(() => {
     if (!rootRef.current) return;
     return initLazyBudget(rootRef.current);
+  }, []);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    let cleanup: (() => void) | undefined;
+    let cancelled = false;
+    import("./book3-flip").then((m) => {
+      if (!cancelled) cleanup = m.initBookFlip(root);
+    });
+    return () => {
+      cancelled = true;
+      cleanup?.();
+    };
   }, []);
 
   return (
@@ -238,7 +251,7 @@ export default function Book3() {
       <section className="sec" id="preorder" style={{ paddingTop: 0 } as CSSProperties}>
         <div className="wrap">
           <div className="pre-card" data-a="ink">
-            <img className="pre-img" src={bookOpen} width="1200" height="959" alt="Разворот книги «Ленивый бюджет»" loading="lazy" />
+            <div className="pre-img pre-flip" id="pre-flip" role="img" aria-label="Книга «Ленивый бюджет» перелистывается при прокрутке"></div>
             <div className="pc-t">
               <h2 className="h2">После прочтения вы&nbsp;скажете:<br />«Личный бюджет&nbsp;— это просто,<br />и&nbsp;я&nbsp;буду вести его всегда»</h2>
               <p className="txt">Оформите предзаказ&nbsp;— и&nbsp;получите книгу одними из&nbsp;первых.</p>

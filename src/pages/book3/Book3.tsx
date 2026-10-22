@@ -213,7 +213,7 @@ export default function Book3() {
               </div>
               <div className="au-bot">
                 <blockquote>«Если я&nbsp;ошибаюсь&nbsp;— заплачу собственными деньгами. Если нет&nbsp;— у&nbsp;вас в&nbsp;руках окажется один из&nbsp;немногих текстов, который не&nbsp;пытался ничего вам подсунуть»</blockquote>
-                <a className="ch" href="#" target="_blank" rel="noopener">Читать канал автора →</a>
+                <a className="ch" href="https://t.me/vasya_lfp" target="_blank" rel="noopener">Читать канал автора →</a>
               </div>
             </div>
           </div>

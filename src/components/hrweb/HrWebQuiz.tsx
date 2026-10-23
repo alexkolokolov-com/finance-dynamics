@@ -50,7 +50,7 @@ export const HrWebQuiz = () => {
           <p className="text-lg">{nbsp(`Ваш результат: ${score} из ${hrQuizMaxScore} баллов`)}</p>
           <h2 className="mt-3 text-3xl font-semibold leading-tight md:text-4xl">{nbsp(r.title)}</h2>
           {r.text.map((t) => <p key={t} className="mt-5 text-lg leading-relaxed">{nbsp(t)}</p>)}
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-8 flex flex-col gap-3 xl:flex-row">
             <Button asChild className={`${ctaClass} bg-primary text-primary-foreground hover:bg-accent hover:text-accent-foreground`}><a href="/hr-web#registration">Зарегистрироваться на вебинар<ArrowRight /></a></Button>
             <Button variant="outline" onClick={restart} className={ctaClass}><RotateCcw />Пройти заново</Button>
           </div>

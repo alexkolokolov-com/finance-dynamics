@@ -167,6 +167,7 @@ const HrWeb = () => {
               <p className="text-lg leading-relaxed">{nbsp("Подарок участника вебинара")}</p>
               <p className="mt-3 text-2xl font-semibold leading-snug">{nbsp("Индекс финансового спокойствия команды")}</p>
               <p className="mt-4 text-lg leading-relaxed">{nbsp("Анонимная диагностика: 10 вопросов, 5 минут на запуск.")}</p>
+              <a href="/hr-web-index" className="mt-5 inline-flex items-center gap-2 font-semibold text-accent underline-offset-4 hover:underline">{nbsp("Пройти диагностику")}<ArrowRight size={18} /></a>
             </div>
           </div>
         </section>

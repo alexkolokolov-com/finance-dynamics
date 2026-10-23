@@ -37,6 +37,7 @@ import Reviews from "./pages/Reviews.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Plan2027 from "./pages/Plan2027.tsx";
 import HrWeb from "./pages/HrWeb.tsx";
+import HrWebIndex from "./pages/HrWebIndex.tsx";
 import Book from "./pages/Book.tsx";
 import Book3Page from "./pages/Book3Page.tsx";
 
@@ -82,6 +83,7 @@ const App = () => (
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/plan2027" element={<Plan2027 />} />
           <Route path="/hr-web" element={<HrWeb />} />
+          <Route path="/hr-web-index" element={<HrWebIndex />} />
           <Route path="/book" element={<Book />} />
           <Route path="/book-3" element={<Book3Page />} />
 

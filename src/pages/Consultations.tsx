@@ -9,6 +9,12 @@ import { url as vladimirItAvatar } from "@/assets/reviews/vladimir-it.png.asset.
 import { url as svetlanaAvatar } from "@/assets/reviews/svetlana.png.asset.json";
 import { url as spartakAvatar } from "@/assets/reviews/spartak.png.asset.json";
 import { url as tatyanaAvatar } from "@/assets/reviews/tatyana.png.asset.json";
+import {
+  BASE_PRICE,
+  consultationCalendar as calendar,
+  consultationPrice,
+  seatWord,
+} from "@/data/consultations";
 
 const audience = [
   {
@@ -49,17 +55,6 @@ const stages = [
     title: "Стратегия капитала",
     text: "Строим план накопления: подушка, цели, инвестиции — под ваш доход и образ жизни.",
   },
-];
-
-const BASE_PRICE = 20000;
-
-const calendar = [
-  { month: "Октябрь", discount: 0, seats: 7 },
-  { month: "Ноябрь", discount: 20, seats: 4 },
-  { month: "Декабрь", discount: 30, seats: 1 },
-  { month: "Январь 2027", discount: 40, seats: 4 },
-  { month: "Февраль 2027", discount: 60, seats: 7 },
-  { month: "Март 2027", discount: 60, seats: 10 },
 ];
 
 const results = [
@@ -363,7 +358,7 @@ const Consultations = () => {
                 </thead>
                 <tbody>
                   {calendar.map((c, i) => {
-                    const price = Math.round((BASE_PRICE * (100 - c.discount)) / 100);
+                    const price = consultationPrice(c.discount);
                     return (
                       <tr
                         key={c.month}
@@ -395,12 +390,7 @@ const Consultations = () => {
                           </div>
                         </td>
                         <td className="font-body text-base text-foreground/80 px-6 py-5">
-                          {c.seats}{" "}
-                          {c.seats === 1
-                            ? "место"
-                            : c.seats >= 2 && c.seats <= 4
-                              ? "места"
-                              : "мест"}
+                          {c.seats} {seatWord(c.seats)}
                         </td>
                       </tr>
                     );
@@ -412,7 +402,7 @@ const Consultations = () => {
 
           <div className="mt-12 md:hidden overflow-hidden border border-foreground/15 bg-card hard-shadow animate-fade-up">
             {calendar.map((c, i) => {
-              const price = Math.round((BASE_PRICE * (100 - c.discount)) / 100);
+              const price = consultationPrice(c.discount);
               return (
                 <div
                   key={c.month}
@@ -443,12 +433,7 @@ const Consultations = () => {
                       )}
                     </div>
                     <div className="font-body text-base text-foreground/80">
-                      {c.seats}{" "}
-                      {c.seats === 1
-                        ? "место"
-                        : c.seats >= 2 && c.seats <= 4
-                          ? "места"
-                          : "мест"}
+                      {c.seats} {seatWord(c.seats)}
                     </div>
                   </div>
                 </div>

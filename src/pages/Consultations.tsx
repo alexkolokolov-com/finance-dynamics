@@ -358,7 +358,7 @@ const Consultations = () => {
                 </thead>
                 <tbody>
                   {calendar.map((c, i) => {
-                    const price = Math.round((BASE_PRICE * (100 - c.discount)) / 100);
+                    const price = consultationPrice(c.discount);
                     return (
                       <tr
                         key={c.month}
@@ -390,12 +390,7 @@ const Consultations = () => {
                           </div>
                         </td>
                         <td className="font-body text-base text-foreground/80 px-6 py-5">
-                          {c.seats}{" "}
-                          {c.seats === 1
-                            ? "место"
-                            : c.seats >= 2 && c.seats <= 4
-                              ? "места"
-                              : "мест"}
+                          {c.seats} {seatWord(c.seats)}
                         </td>
                       </tr>
                     );
@@ -407,7 +402,7 @@ const Consultations = () => {
 
           <div className="mt-12 md:hidden overflow-hidden border border-foreground/15 bg-card hard-shadow animate-fade-up">
             {calendar.map((c, i) => {
-              const price = Math.round((BASE_PRICE * (100 - c.discount)) / 100);
+              const price = consultationPrice(c.discount);
               return (
                 <div
                   key={c.month}
@@ -438,12 +433,7 @@ const Consultations = () => {
                       )}
                     </div>
                     <div className="font-body text-base text-foreground/80">
-                      {c.seats}{" "}
-                      {c.seats === 1
-                        ? "место"
-                        : c.seats >= 2 && c.seats <= 4
-                          ? "места"
-                          : "мест"}
+                      {c.seats} {seatWord(c.seats)}
                     </div>
                   </div>
                 </div>

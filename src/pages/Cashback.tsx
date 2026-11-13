@@ -1,518 +1,337 @@
+// @ts-nocheck
+// Страница /cashback: распродажа «Чёрная пятница» (кэшбэк-гайд Василия Мещерякова).
+// Вёрстка, стили и скрипт перенесены 1:1 из согласованного HTML (Ирфан, 12.11.2026).
+// Настройки без правки кода - в public/cashback-sale/config.json:
+//   saleEnd  - когда заканчивается распродажа (время МСК, формат 2026-11-14T23:59:59+03:00);
+//   vipTotal / vipLeft - всего мест в VIP и сколько осталось (после покупки VIP уменьшить vipLeft на 1).
+// Картинки страницы - в public/cashback-sale/img/.
+import { useLayoutEffect, useRef } from "react";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { useEffect, useState } from "react";
-import { SiteHeader } from "@/components/SiteHeader";
-import { Footer } from "@/components/sections/Footer";
-import { CashbackPreviewFlip } from "@/components/cashback/CashbackPreviewFlip";
-import { CalculatorRegisterDialog } from "@/components/calculator/CalculatorRegisterDialog";
-import cashbackHero from "@/assets/cashback-hero.jpg";
 
+const CSS =
+  "@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&display=swap');\n:root{\n  --bg:#FBF8F3; --paper:#FFFFFF; --ink:#1F1B16; --ink-2:#3B342C; --muted:#6E665B; --line:#E8E0D2;\n  --coral:#C2553B; --coral-h:#A9472F; --peach:#E8B8A4; --peach-soft:#F7E7DE;\n  --black:#1F1B16;\n  --ease:cubic-bezier(.23,1,.32,1);\n}\n*{box-sizing:border-box}\nhtml{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:72px}\nbody{margin:0;background:var(--bg);color:var(--ink);font:400 19px/1.5 \"Source Sans 3\",system-ui,-apple-system,\"Segoe UI\",sans-serif;-webkit-font-smoothing:antialiased}\nimg{max-width:100%;display:block}\na{color:inherit}\n.wrap{max-width:1240px;margin:0 auto;padding:0 32px}\nh1,h2,h3{margin:0;font-weight:700;letter-spacing:-.015em;text-wrap:balance}\n.tab{font-variant-numeric:tabular-nums}\n\n/* одна чёрная липкая полоса: таймер + бегущая строка + кнопка */\n.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;background:var(--black);color:#fff;height:48px}\n.topbar .tb-t{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:0 16px 0 20px;font-weight:600;font-size:16px;white-space:nowrap}\n.topbar .tb-t b{font-variant-numeric:tabular-nums;font-size:18px;background:var(--coral);border-radius:7px;padding:3px 9px;min-width:94px;text-align:center}\n.topbar .ticker{flex:1 1 auto;min-width:0;overflow:hidden;white-space:nowrap;font-weight:700;font-size:17px;-webkit-mask-image:linear-gradient(to right,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(to right,transparent,#000 4%,#000 96%,transparent)}\n.topbar .track{display:inline-flex;animation:run 30s linear infinite}\n.topbar .track span{padding:0 18px}\n.topbar .track span::after{content:\"•\";margin-left:36px;color:var(--coral)}\n.topbar .bf{background:var(--coral);color:#fff;border-radius:6px;padding:1px 8px;margin-right:6px}\n.topbar .go{flex:0 0 auto;margin:0 12px;background:var(--coral);color:#fff;text-decoration:none;font-weight:700;font-size:16px;border-radius:9px;padding:8px 14px;transition:background .2s,transform .16s var(--ease)}\n.topbar .go:hover{background:var(--coral-h)}\n.topbar .go:active{transform:scale(.97)}\n@keyframes run{from{transform:translateX(0)}to{transform:translateX(-50%)}}\n\nheader.top .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}\n.logo{font-weight:700;font-size:21px;letter-spacing:-.01em;text-decoration:none}\n.logo span{color:var(--coral)}\nheader.top .crumb{color:var(--muted);font-size:17px}\n\n.btn{display:inline-flex;align-items:center;justify-content:center;text-align:center;min-height:72px;padding:0 40px;border-radius:14px;border:0;background:var(--coral);color:#fff;font-family:inherit;font-weight:700;font-size:23px;line-height:1.15;text-decoration:none;cursor:pointer;box-shadow:0 16px 32px -16px rgba(194,85,59,.65);transition:background .2s,transform .16s var(--ease)}\n.btn:hover{background:var(--coral-h)}\n.btn:active{transform:scale(.97)}\n.btn:focus-visible,.topbar .go:focus-visible,.shot:focus-visible{outline:3px solid var(--black);outline-offset:3px}\n\n/* ЭКРАН 1: заголовок, подзаголовок, картинка, таймер */\n.hero{padding:10px 0 44px}\n.hero .grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:40px;align-items:center}\n.hero h1{font-size:clamp(40px,4.5vw,66px);line-height:1.02;margin-bottom:14px}\n.hero h1 .hl{font-style:normal;color:var(--coral)}\nsup.fn{font-size:.6em;color:var(--coral);margin-left:1px;vertical-align:.5em;line-height:0}\n/* первый экран: Стандарт и VIP без цен */\n.incl2{display:grid;grid-template-columns:1.15fr 1fr;gap:12px;margin:0 0 16px;max-width:700px}\n.incl2 .col{background:var(--paper);border:2px solid var(--line);border-radius:16px;padding:12px 16px}\n.incl2 .col.vip{border-color:var(--coral);background:var(--peach-soft)}\n.incl2 b{display:block;font-size:19px;margin-bottom:6px}\n.incl2 .vip b{color:var(--coral)}\n.incl2 .vip b em{font-style:normal;font-weight:600;font-size:15px;color:var(--ink-2);margin-left:6px}\n.soldout{opacity:.55;pointer-events:none}\n.incl2 ul{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:15.5px;line-height:1.3}\n.incl2 li{position:relative;padding-left:20px}\n.incl2 li::before{content:\"\";position:absolute;left:0;top:5px;width:12px;height:12px;border-radius:50%;background:var(--coral)}\n/* что входит: вместо цен на первом экране */\n.incl{background:var(--paper);border:2px solid var(--line);border-radius:18px;padding:12px 18px 12px;margin:0 0 16px;max-width:620px}\n.incl ul{list-style:none;padding:0;margin:0;display:grid;gap:5px;font-size:18px;line-height:1.35}\n.incl li{display:flex;gap:10px;align-items:flex-start}\n.incl li::before{content:\"\";flex:0 0 20px;height:20px;margin-top:1px;border-radius:50%;background:var(--coral) url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 12.5l3.2 3.2L17 9' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\") center/16px no-repeat}\n.incl li b{font-weight:700}\n.incl li.v::before{background-color:var(--black)}\n.incl .tag{display:inline-block;background:var(--black);color:#fff;font-weight:700;font-size:13px;letter-spacing:.04em;border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:2px}\n.deal{display:flex;align-items:center;gap:12px;line-height:1.2}\n.deal b{background:var(--coral);color:#fff;font-size:30px;font-weight:700;border-radius:14px;padding:8px 14px;transform:rotate(-4deg);box-shadow:0 12px 24px -12px rgba(194,85,59,.7)}\n.deal span{font-weight:700;font-size:18px;max-width:9em}\n.hero .sub{font-size:clamp(19px,1.5vw,22px);line-height:1.4;color:var(--ink-2);margin:0 0 20px;max-width:32em}\n\n.countdown{display:inline-flex;align-items:center;gap:16px;padding:10px 14px 10px 18px;border-radius:18px;background:var(--paper);border:2px solid var(--coral);margin-bottom:16px;animation:pulse 1.6s var(--ease) infinite}\n.countdown .lbl{font-weight:700;font-size:17px;line-height:1.2;color:var(--coral);max-width:7.5em}\n.countdown .boxes{display:flex;align-items:flex-start;gap:6px}\n.countdown .box{min-width:70px;text-align:center;background:var(--black);color:#fff;border-radius:12px;padding:8px 6px 6px}\n.countdown .box b{display:block;font-size:36px;line-height:1;font-variant-numeric:tabular-nums}\n.countdown .box small{display:block;font-size:13px;color:#CFC6B8;margin-top:3px}\n.countdown .sep{font-size:34px;font-weight:700;color:var(--black);padding-top:6px}\n@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(194,85,59,.45)}70%{box-shadow:0 0 0 16px rgba(194,85,59,0)}100%{box-shadow:0 0 0 0 rgba(194,85,59,0)}}\n\n.duo{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:18px}\n.duo .t{position:relative;flex:1 1 220px;max-width:300px;border:2px solid var(--line);background:var(--paper);border-radius:16px;padding:12px 16px}\n.duo .t.vip{border-color:var(--coral);background:var(--peach-soft);color:var(--ink)}\n.duo .t span{display:block;font-weight:700;font-size:16px;margin-bottom:2px}\n.duo .t.vip span em{font-style:normal;color:var(--coral);font-weight:600}\n.duo .t span em{white-space:nowrap}\n.duo .t b{font-size:38px;line-height:1.05;letter-spacing:-.02em}\n.duo .t s{font-size:20px;color:var(--muted);margin-left:8px}\n.duo .t.vip s{color:var(--muted)}\n.duo .off{position:absolute;top:-12px;right:-10px;background:var(--coral);color:#fff;font-style:normal;font-weight:700;font-size:16px;border-radius:999px;padding:3px 10px;transform:rotate(6deg)}\n.cta2{display:flex;flex-wrap:wrap;gap:12px}\n.btn.dark{background:var(--black);box-shadow:none}\n.btn.dark:hover{background:#3A332B}\n.price{display:flex;align-items:center;flex-wrap:wrap;gap:4px 16px;margin-bottom:16px}\n.price b{font-size:50px;line-height:1;font-weight:700;letter-spacing:-.02em}\n.price s{font-size:27px;color:var(--muted)}\n.price .off{background:var(--coral);color:#fff;font-weight:700;font-size:22px;border-radius:999px;padding:6px 14px}\n.price small{flex-basis:100%;font-size:18px;color:var(--muted)}\n.proofs{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:6px;font-size:18px}\n.proofs li{display:flex;gap:10px;align-items:flex-start}\n.proofs li::before{content:\"\";flex:0 0 22px;height:22px;margin-top:2px;border-radius:50%;background:var(--peach-soft) url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 12.5l3.2 3.2L17 9' fill='none' stroke='%23C2553B' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\") center/17px no-repeat}\n.proofs b{font-weight:700}\n\n/* картинка: чек в цветах сайта */\n.pic{position:relative;padding:22px 10px 0}\n.pic::before{content:\"\";position:absolute;inset:6% 4% 10%;border-radius:50%;background:radial-gradient(closest-side,var(--peach-soft),rgba(247,231,222,0));z-index:0}\n.receipt{position:relative;z-index:1;width:min(410px,100%);margin:0 auto;background:var(--paper);padding:28px 26px 32px;transform:rotate(-2deg);filter:drop-shadow(0 26px 30px rgba(31,27,22,.18));\n  -webkit-mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/18px 51% repeat-x,conic-gradient(from 135deg at top,#0000,#000 1deg 89deg,#0000 90deg) top/18px 51% repeat-x;\n  mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/18px 51% repeat-x,conic-gradient(from 135deg at top,#0000,#000 1deg 89deg,#0000 90deg) top/18px 51% repeat-x}\n.rimg{position:relative;z-index:1;display:block;width:min(390px,100%);height:auto;margin:0 auto;transform:rotate(-1.5deg);filter:drop-shadow(0 22px 26px rgba(31,27,22,.22)) drop-shadow(0 3px 4px rgba(31,27,22,.12))}\n.r-head{display:flex;align-items:center;gap:14px;margin-bottom:6px}\n.r-head svg{flex:0 0 44px}\n.r-head b{display:block;font-size:23px;line-height:1.1;letter-spacing:.02em;text-transform:uppercase}\n.r-head span{display:block;font-size:16px;color:var(--muted)}\n.r-cut{border:0;border-top:2px dashed #D9D0C1;margin:11px 0}\n.r-line{display:flex;justify-content:space-between;gap:14px;font-size:17px;line-height:1.45}\n.r-line span:last-child{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}\n.r-line.sum{font-weight:700;font-size:20px}\n.r-line.plus span:last-child{color:var(--coral)}\n.r-box{display:flex;justify-content:space-between;align-items:center;gap:12px;border-radius:14px;padding:10px 14px;margin-top:9px}\n.r-box .k{font-weight:700;font-size:17px;line-height:1.25}\n.r-box .k small{display:block;font-weight:400;font-size:14px;color:var(--muted);margin-top:2px}\n.r-box .v{font-weight:700;font-size:30px;line-height:1;white-space:nowrap;font-variant-numeric:tabular-nums}\n.r-box.plain{background:#F1EEE8;color:var(--ink-2)}\n.r-box.best{background:var(--peach-soft);border:2px solid var(--coral)}\n.r-box.best .v{color:var(--coral);font-size:36px}\n.r-banner{margin:16px -6px 0;background:var(--coral);color:#fff;text-align:center;font-weight:700;font-size:25px;line-height:1.1;padding:11px 14px;transform:rotate(-3deg);text-transform:uppercase;letter-spacing:.01em;\n  clip-path:polygon(1% 8%,8% 0,22% 6%,38% 1%,55% 7%,72% 0,88% 5%,99% 2%,100% 88%,93% 100%,78% 93%,60% 99%,44% 92%,26% 100%,10% 94%,0 99%)}\n.r-note{font-size:13px;color:var(--muted);text-align:center;margin-top:12px}\n.sticker{position:absolute;z-index:2;top:auto;bottom:96px;right:2%;width:104px;height:104px;border-radius:50%;background:var(--coral);color:#fff;display:grid;place-content:center;text-align:center;transform:rotate(12deg);box-shadow:0 14px 28px -14px rgba(194,85,59,.7)}\n.sticker b{font-size:34px;line-height:1}\n.sticker span{font-size:13px;line-height:1.15;color:#fff;font-weight:600}\n.plaque{position:relative;z-index:1;width:min(470px,100%);margin:10px auto 0;color:var(--muted);font-weight:600;font-size:17px;text-align:center}\n.plan-note{margin:18px 0 0;display:flex;gap:14px;align-items:center;border:2px dashed var(--peach);border-radius:16px;padding:14px 20px;font-size:18px;color:var(--ink-2)}\n.plan-note b{color:var(--ink)}\n.t-rev{margin-top:56px}\n\n/* ниже второго экрана */\n.sec{padding:84px 0}\n.sec.white{background:var(--paper)}\n.sec h2,.more h2{font-size:clamp(32px,3.4vw,50px);line-height:1.08;margin-bottom:12px}\n.sec .sub,.more .sub{font-size:20px;line-height:1.5;color:var(--ink-2);margin:0 0 34px;max-width:42em}\n.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}\n\n/* карточки банков: лента */\n.banks-sec{background:var(--black);color:#fff;padding:76px 0 70px;overflow:hidden}\n.banks-sec h2{font-size:clamp(32px,3.4vw,50px);line-height:1.08;margin-bottom:12px}\n.banks-sec h2 em{font-style:normal;color:var(--peach)}\n.banks-sec .sub{font-size:20px;line-height:1.5;color:#D8D0C4;margin:0 0 36px;max-width:40em}\n.belt{overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent)}\n.belt ul{list-style:none;margin:0;padding:10px 0 18px;display:flex;gap:22px;width:max-content;animation:run 60s linear infinite}\n.belt:hover ul{animation-play-state:paused}\n.bank{position:relative;flex:0 0 300px;height:190px;border-radius:18px;padding:18px 20px;display:flex;flex-direction:column;color:#fff;background:linear-gradient(135deg,var(--c1),var(--c2));box-shadow:0 22px 34px -20px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.25);overflow:hidden}\n.bank::after{content:\"\";position:absolute;right:-60px;top:-70px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.09)}\n.bank .bn{font-weight:700;font-size:18px;letter-spacing:.01em}\n.bank .chip{position:absolute;right:20px;top:20px;width:38px;height:28px;border-radius:6px;background:linear-gradient(135deg,#F3DFA2,#C9A55A);box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}\n.bank b{font-size:46px;line-height:1;letter-spacing:-.02em;margin-top:auto}\n.bank .what{font-weight:700;font-size:18px;line-height:1.2;margin-top:4px}\n.bank small{font-size:14px;opacity:.82;margin-top:2px}\n.bank.gpb{--c1:#0B2A6F;--c2:#2A63D3}\n.bank.sber{--c1:#0E7A2E;--c2:#2FBF4F}\n.bank.otp{--c1:#3F8F1F;--c2:#8CC63F}\n.bank.alfa{--c1:#C8102E;--c2:#F2453D}\n.bank.tbank{--c1:#FFDD2D;--c2:#F7C600;color:#1F1B16}\n.bank.ubrr{--c1:#5A1028;--c2:#9E2A4B}\n.bank.raif{--c1:#1F1B16;--c2:#3A342C}\n.bank.raif b{color:#FFE600}\n.bank.halva{--c1:#D9472B;--c2:#F07A3A}\n.bank.novikom{--c1:#0F4C5C;--c2:#1F8A9E}\n.bank.tax{--c1:#6E665B;--c2:#A39885}\n.banks-note{margin:18px 0 0;font-size:16px;color:#BDB4A6}\n\n/* ===== Чек «казино» ===== */\n.rc{--paper:#FFFDF8;--gold:#F2C14E;position:relative;z-index:1;width:min(392px,100%);margin:0 auto;transform:rotate(-1.5deg)}\n.rc-slot{position:relative;z-index:3;height:28px;margin:0 -16px;border-radius:14px;background:linear-gradient(#433C33,#1F1B16);box-shadow:0 12px 20px -10px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.14)}\n.rc-slot i{position:absolute;left:20px;right:48px;top:12px;height:5px;border-radius:3px;background:#0B0907;box-shadow:inset 0 1px 2px #000}\n.rc-slot em{position:absolute;right:20px;top:9px;width:10px;height:10px;border-radius:50%;background:#6BD66B;box-shadow:0 0 8px #6BD66B}\n.rc-feed{position:relative;margin:-14px 6px 0;padding:0 0 34px;overflow:hidden;filter:drop-shadow(0 24px 26px rgba(31,27,22,.22)) drop-shadow(0 3px 4px rgba(31,27,22,.1))}\n.rc-paper{position:relative;padding:26px 22px 26px;color:#2A251F;font-size:16px;line-height:1.25;\n  background:linear-gradient(90deg,rgba(0,0,0,.035),transparent 12%,transparent 88%,rgba(0,0,0,.04)),linear-gradient(#F3EEE4,var(--paper) 30px),var(--paper);\n  -webkit-mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/16px 51% repeat-x,linear-gradient(#000 0 0) top/100% 50% no-repeat;\n  mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/16px 51% repeat-x,linear-gradient(#000 0 0) top/100% 50% no-repeat}\n.rc-paper hr{border:0;border-top:2px dashed #D9CFBF;margin:8px 0}\n.rc-head{display:flex;align-items:center;gap:12px}\n.rc-head svg{flex:0 0 40px}\n.rc-head b{display:block;font-size:23px;white-space:nowrap;line-height:1;font-weight:700;letter-spacing:.05em;text-transform:uppercase}\n.rc-head span{display:block;font-size:14px;color:#857B6D;margin-top:3px}\n.rc-head small{margin-left:auto;align-self:flex-start;background:#1F1B16;color:#fff;font-weight:700;font-size:11px;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;text-align:center;border-radius:6px;padding:4px 7px}\n.rc-row{display:grid;grid-template-columns:22px 1fr auto;align-items:center;gap:10px;padding:2px 0}\n.rc-row span:last-child{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}\n.rc-row .ic{width:20px;height:20px;fill:none;stroke:#C2553B;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}\n.rc-row.tot,.rc-row.dim{grid-template-columns:1fr auto}\n.rc-row.tot{font-weight:700}\n.rc-row.dim{font-size:15px;color:#857B6D}\n.rc-row.dim span:last-child{font-size:19px;color:#2A251F;font-weight:700}\n.rc-win{position:relative;display:grid;grid-template-columns:22px 1fr auto;align-items:center;gap:10px;margin:10px -8px 2px;padding:10px 14px;border-radius:14px;background:#F7E7DE}\n.rc-win .star{width:22px;height:22px;fill:#C2553B}\n.rc-win .k{font-weight:700;font-size:15px;line-height:1.2}\n.rc-win .v{font-weight:700;font-size:31px;line-height:1;color:#C2553B;white-space:nowrap;font-variant-numeric:tabular-nums}\n.lights{position:absolute;inset:-6px;border-radius:18px;padding:5px;pointer-events:none;\n  background:radial-gradient(circle,#FFE38A 0 2.2px,rgba(242,193,78,.25) 3.4px,transparent 4px) 0 0/13px 13px;\n  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);opacity:.95}\n.shine{position:absolute;inset:0;border-radius:14px;overflow:hidden;pointer-events:none}\n.shine::before{content:\"\";position:absolute;top:0;bottom:0;left:-40%;width:30%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.75),transparent);transform:skewX(-20deg)}\n.reel{display:inline-flex;height:1em;line-height:1;overflow:hidden;vertical-align:top}\n.reel .col{display:flex;flex-direction:column;will-change:transform}\n.reel .col span,.reel .gap{display:block;height:1em}\n.reel .gap{width:.22em}\n.rc-stamp{position:relative;margin:10px auto 2px;width:88%;padding:13px 8px 11px;text-align:center;transform:rotate(-4deg)}\n.rc-stamp svg{position:absolute;inset:-4px -6px;width:calc(100% + 12px);height:calc(100% + 8px);overflow:visible}\n.rc-stamp path{fill:none;stroke:#C2553B;stroke-width:3.4;stroke-linecap:round;stroke-dasharray:820;stroke-dashoffset:0}\n.rc-stamp b{position:relative;display:block;font-weight:700;font-size:26px;line-height:1.02;text-transform:uppercase;letter-spacing:.01em;color:#1F1B16}\n.rc-foot{text-align:center;font-weight:600;font-size:15px;color:#9A3F2A}\n.rc-foot b{display:block;font-size:30px;line-height:1.05;color:#C2553B;letter-spacing:-.01em}\n.rc-bar{height:24px;margin:10px 20px 3px;background:repeating-linear-gradient(90deg,#2A251F 0 2px,transparent 2px 4px,#2A251F 4px 5px,transparent 5px 8px,#2A251F 8px 11px,transparent 11px 13px,#2A251F 13px 14px,transparent 14px 17px);opacity:.85}\n.rc-note{text-align:center;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A39886}\n.rc-coins{position:absolute;left:50%;top:70%;width:0;height:0;z-index:4;pointer-events:none}\n.coin{position:absolute;left:-14px;top:-14px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:15px;color:#8A5F14;opacity:0;\n  background:radial-gradient(circle at 35% 30%,#FFF6C8,#F2C14E 42%,#C8962E 78%,#A0741F);box-shadow:inset 0 0 0 2px rgba(255,240,180,.6),0 4px 8px rgba(0,0,0,.25)}\n.spark{position:absolute;z-index:4;width:22px;height:22px;pointer-events:none;transform:scale(0);background:radial-gradient(circle,#FFF6C8,#F2C14E 55%);clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);filter:drop-shadow(0 0 6px rgba(242,193,78,.9))}\n/* анимация: только когда JS включил .play */\n.rc.play .rc-paper{animation:rcPrint 1.5s cubic-bezier(.3,.6,.25,1) both}\n.rc.play .rc-slot em{animation:rcLed .25s steps(2) 6 both}\n.rc.play .rc-stamp path{animation:rcDraw .6s 2.75s ease-out both}\n.rc.play .rc-stamp b{animation:rcStamp .55s 2.7s cubic-bezier(.2,1.7,.4,1) both}\n.rc.play .lights{animation:rcLights .5s 2.9s steps(2) infinite both}\n.rc.play .shine::before{animation:rcShine 3.2s 3s ease-in-out infinite}\n.rc.play .rc-foot b{animation:rcGlow 1.6s 3.2s ease-in-out infinite}\n.rc.play .spark{animation:rcTw 2.4s calc(3s + var(--t)) ease-in-out infinite}\n.rc.burst .coin{animation:rcCoin 1.5s var(--d) cubic-bezier(.15,.7,.3,1) both}\n/* вариант 2, спокойный: без терминала и печати, только барабан +900% и обводка один раз */\n.rc.calm .rc-slot,.rc.calm .lights,.rc.calm .shine{display:none}\n.rc.calm .rc-feed{margin:0 6px;padding:8px 0 34px}\n.rc.calm .rc-paper{padding-top:28px;\n  -webkit-mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/16px 51% repeat-x,conic-gradient(from 135deg at top,#0000,#000 1deg 89deg,#0000 90deg) top/16px 51% repeat-x;\n  mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/16px 51% repeat-x,conic-gradient(from 135deg at top,#0000,#000 1deg 89deg,#0000 90deg) top/16px 51% repeat-x}\n.rc.calm.play .rc-paper,.rc.calm.play .rc-foot b{animation:none}\n.rc.calm.play .rc-stamp path{animation:rcDraw .7s 1.9s ease-out both}\n.rc.calm.play .rc-stamp b{animation:none}\n@keyframes rcPrint{0%{transform:translateY(-101%)}55%{transform:translateY(-25%)}70%{transform:translateY(-12%)}100%{transform:none}}\n@keyframes rcLed{from{background:#6BD66B}to{background:#2E6B2E;box-shadow:none}}\n@keyframes rcDraw{from{stroke-dashoffset:820}to{stroke-dashoffset:0}}\n@keyframes rcStamp{0%{opacity:0;transform:scale(1.9) rotate(6deg)}100%{opacity:1;transform:none}}\n@keyframes rcLights{to{background-position:6.5px 0}}\n@keyframes rcShine{0%,55%{left:-40%}100%{left:140%}}\n@keyframes rcGlow{0%,100%{text-shadow:0 0 0 rgba(242,193,78,0)}50%{text-shadow:0 0 18px rgba(242,193,78,.95)}}\n@keyframes rcTw{0%,100%{transform:scale(0) rotate(0)}40%{transform:scale(var(--s)) rotate(20deg)}70%{transform:scale(0) rotate(40deg)}}\n@keyframes rcCoin{0%{opacity:0;transform:translate(0,0) scale(.3)}12%{opacity:1}80%{opacity:1}100%{opacity:0;transform:translate(var(--dx),calc(var(--dy) + 60px)) rotate(var(--r)) scale(1)}}\n/* что внутри */\n.doc{background:var(--bg);border:1px solid var(--line);border-radius:22px;padding:28px;display:flex;flex-direction:column}\n.doc .who{align-self:flex-start;background:var(--peach-soft);color:#7A3422;font-weight:600;font-size:16px;border-radius:999px;padding:6px 13px;margin-bottom:16px}\n.doc h3{font-size:27px;line-height:1.12;margin-bottom:10px}\n.doc p{margin:0;font-size:19px;color:var(--ink-2)}\n.doc .n{margin-top:auto;padding-top:16px;color:var(--muted);font-size:17px}\n.pages{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin:44px 0 0}\n.pages h3{grid-column:1/-1;font-size:24px;margin-bottom:2px}\n.pages figure{margin:0}\n.pages button{display:block;width:100%;aspect-ratio:3/4;padding:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;cursor:zoom-in;box-shadow:0 14px 30px -20px rgba(31,27,22,.35)}\n.pages img{width:100%;height:100%;object-fit:cover;object-position:top}\n.pages figcaption{margin-top:10px;font-size:16px;line-height:1.4;color:var(--ink-2)}\n\n/* как это работает */\n.steps{counter-reset:st}\n.step{position:relative;padding-top:64px}\n.step::before{counter-increment:st;content:counter(st);position:absolute;top:0;left:0;width:48px;height:48px;border-radius:50%;background:var(--coral);color:#fff;font-weight:700;font-size:22px;display:grid;place-items:center}\n.step h3{font-size:26px;margin-bottom:8px}\n.step p{margin:0;font-size:19px;color:var(--ink-2)}\n\n/* автор */\n.author{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:56px;align-items:center}\n.author img{width:100%;height:auto;border-radius:26px}\n.author h2{margin-bottom:6px}\n.author .role{font-size:20px;color:var(--muted);margin:0 0 22px}\n.author p{font-size:20px;line-height:1.55;margin:0 0 18px;color:var(--ink-2)}\n.author blockquote{margin:26px 0;padding:22px 26px;background:var(--bg);border-left:4px solid var(--coral);border-radius:0 18px 18px 0;font-size:21px;line-height:1.5}\n.author blockquote footer{margin-top:10px;font-size:16px;color:var(--muted)}\n.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 28px;margin:28px 0 0}\n.facts b{display:block;font-size:38px;line-height:1;letter-spacing:-.02em;margin-bottom:4px;color:var(--coral)}\n.facts span{font-size:17px;color:var(--muted)}\n\n/* стена отзывов */\n.more{padding:84px 0 72px}\n.wall{columns:3 300px;column-gap:18px}\n.wall button{display:block;width:100%;margin:0 0 18px;padding:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff;cursor:zoom-in;break-inside:avoid}\n.wall img{width:100%;height:auto}\n.more .btn{margin-top:18px}\n\n/* вопросы */\n.faq{max-width:900px}\n.faq details{border-bottom:1px solid var(--line)}\n.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;align-items:center;padding:22px 0;font-size:22px;font-weight:600;line-height:1.3}\n.faq summary::-webkit-details-marker{display:none}\n.faq summary::after{content:\"+\";flex:0 0 36px;height:36px;border-radius:50%;background:var(--peach-soft);color:var(--coral);display:grid;place-items:center;font-size:24px;font-weight:600;transition:transform .2s var(--ease)}\n.faq details[open] summary::after{transform:rotate(45deg)}\n.faq details p{margin:0 0 22px;font-size:19px;line-height:1.55;color:var(--ink-2);max-width:42em}\n\n/* финал */\n.final{background:var(--black);color:#fff;padding:80px 0;text-align:center}\n.final h2{font-size:clamp(34px,4vw,58px);line-height:1.06;margin:0 auto 14px;max-width:16em}\n.final .t{display:inline-block;font-variant-numeric:tabular-nums;font-weight:700;color:#fff;background:var(--coral);border-radius:12px;padding:0 12px;animation:pulse 1.6s var(--ease) infinite}\n.final p{font-size:21px;color:#D8D0C4;margin:0 0 32px}\n.final .row{display:flex;flex-wrap:wrap;gap:16px;justify-content:center}\n.final .btn.ghost{background:transparent;border:2px solid #fff;box-shadow:none}\n.final .btn.ghost:hover{background:rgba(255,255,255,.1)}\n.zoom{cursor:zoom-in}\n\n/* ЭКРАН 2: отзывы и тарифы */\n.second{background:var(--paper);padding:52px 0 56px}\n.second h2{font-size:clamp(30px,3vw,44px);line-height:1.08;margin-bottom:20px}\n.revs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-bottom:44px}\n.rv{background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:22px;display:flex;flex-direction:column}\n.rv .top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:10px}\n.rv .num{font-size:40px;line-height:1;font-weight:700;color:var(--coral);letter-spacing:-.02em;margin-bottom:6px}\n.rv .ctx{font-weight:700;font-size:18px;line-height:1.3}\n.rv q{quotes:\"«\" \"»\";font-size:17px;line-height:1.45;color:var(--ink-2)}\n.rv .by{font-size:15px;color:var(--muted);margin-top:auto;padding-top:10px}\n.shot{flex:0 0 88px;width:88px;height:88px;padding:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;cursor:zoom-in;position:relative}\n.shot img{width:100%;height:100%;object-fit:cover}\n.shot::after{content:\"скрин\";position:absolute;left:6px;bottom:6px;font:600 12px/1 \"Source Sans 3\",sans-serif;background:rgba(31,27,22,.72);color:#fff;border-radius:6px;padding:3px 6px}\n.plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}\n.plan{border:1px solid var(--line);border-radius:24px;padding:28px 30px;display:flex;flex-direction:column;background:var(--bg)}\n.plan .head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px}\n.plan h3{font-size:30px}\n.plan .sum{display:flex;align-items:baseline;gap:10px}\n.plan .sum b{font-size:46px;line-height:1;letter-spacing:-.02em}\n.plan .sum s{font-size:22px;color:var(--muted)}\n.plan ul{list-style:none;padding:0;margin:0 0 22px;display:grid;gap:9px;font-size:18px;line-height:1.4}\n.plan li{display:flex;gap:11px}\n.plan li::before{content:\"\";flex:0 0 20px;height:20px;margin-top:3px;background:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5' fill='none' stroke='%23C2553B' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\") center/20px no-repeat}\n.plan .btn{width:100%;margin-top:auto}\n.plan.vip{background:var(--black);color:#fff;border-color:var(--black)}\n.plan.vip .sum s{color:#CFC6B8}\n.plan.vip li::before{background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5' fill='none' stroke='%23E8B8A4' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\")}\n.plan.vip .btn{box-shadow:none}\n.seats{background:rgba(255,255,255,.08);border-radius:14px;padding:12px 16px;margin:0 0 20px}\n.seats p{margin:0 0 8px;font-size:17px;display:flex;justify-content:space-between;gap:12px}\n.seats p b{color:var(--peach)}\n.seats .bar{height:9px;border-radius:99px;background:rgba(255,255,255,.18);overflow:hidden}\n.seats .fill{height:100%;border-radius:99px;background:var(--peach)}\n.guarantee{margin-top:18px;display:flex;gap:14px;align-items:center;background:var(--peach-soft);border-radius:16px;padding:14px 20px;font-size:18px;color:var(--ink)}\n.guarantee b{font-size:19px}\nfooter.demo{padding:28px 0 60px;color:var(--muted);font-size:15px}\n\ndialog.lb{border:0;padding:0;background:transparent;max-width:min(92vw,960px);max-height:92vh}\ndialog.lb::backdrop,dialog.exit::backdrop{background:rgba(20,18,15,.72)}\ndialog.lb img{max-height:88vh;width:auto;border-radius:14px;margin:0 auto}\n\n/* окно при попытке уйти */\ndialog.exit{border:0;border-radius:24px;padding:36px 34px 30px;max-width:min(520px,calc(100vw - 32px));background:var(--paper);color:var(--ink);text-align:center;box-shadow:0 30px 80px -20px rgba(0,0,0,.5)}\n.exit .g{display:inline-block;background:var(--coral);color:#fff;font-weight:700;font-size:26px;border-radius:12px;padding:8px 18px;margin-bottom:16px;transform:rotate(-2deg)}\ndialog.exit .two{display:grid;gap:10px}\ndialog.exit h2{font-size:34px;line-height:1.08;margin-bottom:10px}\ndialog.exit p{font-size:19px;color:var(--ink-2);margin:0 0 22px}\ndialog.exit .btn{width:100%}\ndialog.exit .no{display:block;margin:14px auto 0;background:none;border:0;color:var(--muted);font:inherit;font-size:16px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}\n\n/* окно оплаты GetCourse */\ndialog.pay{border:0;border-radius:20px;padding:22px 18px 14px;width:min(560px,calc(100vw - 24px));max-height:92vh;background:var(--paper);box-shadow:0 30px 80px -20px rgba(0,0,0,.5)}\ndialog.pay::backdrop{background:rgba(20,18,15,.72)}\n.pay-t{margin:0 36px 10px 6px;font-weight:700;font-size:20px}\n#pay-f{display:block;width:100%;height:min(640px,72vh);border:0}\n.pay-x{position:absolute;top:10px;right:12px;width:36px;height:36px;border:0;border-radius:50%;background:var(--peach-soft);color:var(--coral);font-size:24px;cursor:pointer}\n/* уведомления */\n.toast{position:fixed;right:24px;bottom:24px;z-index:45;width:min(360px,calc(100vw - 24px));background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 40px -18px rgba(31,27,22,.35);padding:14px 40px 14px 14px;display:flex;gap:12px;align-items:flex-start;opacity:0;transform:translateY(14px);pointer-events:none;transition:opacity .28s var(--ease),transform .28s var(--ease)}\n.toast.show{opacity:1;transform:none;pointer-events:auto}\n.toast .ava{flex:0 0 40px;height:40px;border-radius:50%;background:var(--peach-soft);color:var(--coral);font-weight:700;display:grid;place-items:center;font-size:18px}\n.toast b{display:block;font-size:17px;line-height:1.3}\n.toast span{display:block;font-size:15px;line-height:1.4;color:var(--muted);margin-top:2px}\n.toast button{position:absolute;top:8px;right:8px;width:28px;height:28px;border:0;background:none;color:var(--muted);font-size:20px;line-height:1;cursor:pointer;border-radius:8px}\n\n@media (max-width:980px){\n  .hero .grid{grid-template-columns:1fr;gap:32px}\n  .plans{grid-template-columns:1fr}\n  .grid3{grid-template-columns:1fr}\n  .pages{grid-template-columns:repeat(2,minmax(0,1fr))}\n  .author{grid-template-columns:1fr;gap:28px}\n  .author img{max-width:420px}\n}\n@media (max-width:720px){\n  body{font-size:18px}\n  .wrap{padding:0 16px}\n  .topbar{height:44px}\n  .topbar .long{display:none}\n  .topbar .tb-t{padding:0 8px 0 12px}\n  .topbar .tb-t b{font-size:16px;min-width:84px}\n  .topbar .ticker{font-size:15px}\n  .topbar .go{margin:0 8px;padding:7px 12px;font-size:15px}\n  .duo .t{flex-basis:140px;min-width:0;padding:10px 12px}\n  .duo .t b{font-size:30px}\n  .duo .t span{font-size:15px}\n  .duo .t s{font-size:16px;margin-left:4px}\n  .cta2 .btn{flex:1 1 100%}\n  header.top .wrap{height:54px}\n  header.top .crumb{display:none}\n  .hero{padding:6px 0 40px}\n  .hero h1{font-size:clamp(36px,10.4vw,46px);line-height:1.04;margin-bottom:12px}\n  .hero .sub{font-size:18px;margin-bottom:18px}\n  .countdown{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;margin-bottom:18px}\n  .countdown .lbl{font-size:15px}\n  .countdown .box{min-width:56px}\n  .countdown .box b{font-size:30px}\n  .countdown .sep{font-size:26px}\n  .price b{font-size:44px}\n  .price s{font-size:22px}\n  .price .off{font-size:19px}\n  .btn{width:100%;min-height:64px;font-size:20px;padding:0 20px}\n  .proofs{font-size:16px}\n  .pic{padding-top:22px}\n  .receipt{width:min(340px,100%);padding:28px 22px 34px}\n  .rimg{width:min(330px,100%)}\n  .rc{width:min(340px,100%)}\n  .rc-paper{padding:24px 16px 26px;font-size:16px}\n  .rc-head b{font-size:19px;letter-spacing:.03em}\n  .rc-head small{font-size:10px;padding:3px 6px}\n  .rc-win .k{font-size:15px}\n  .rc-win .v{font-size:30px}\n  .rc-stamp b{font-size:23px}\n  .r-head b{font-size:21px}\n  .r-line{font-size:16px}\n  .r-box .v{font-size:24px}\n  .r-box.best .v{font-size:28px}\n  .r-banner{font-size:22px}\n  .sticker{width:84px;height:84px;right:0;bottom:84px}\n  .sticker b{font-size:26px}\n  .sticker b{font-size:28px}\n  .plaque{font-size:15px;width:min(340px,100%)}\n  .second{padding-bottom:44px}\n  .second .ticker{margin-bottom:32px}\n  .second .wrap{display:flex;flex-direction:column}\n  .revs{margin-bottom:0}\n  .t-rev{margin-top:40px}\n  .incl{padding:10px 14px}\n  .incl2{grid-template-columns:1fr}\n  .incl ul{font-size:16px}\n  .deal b{font-size:24px}\n  .deal span{font-size:16px}\n  .sec,.more{padding:60px 0}\n  .banks-sec{padding:56px 0}\n  .bank{flex-basis:260px;height:170px}\n  .bank b{font-size:38px}\n  .plan-note{flex-direction:column;align-items:flex-start;gap:4px}\n  .faq summary{font-size:19px}\n  .final{padding:60px 0}\n  .revs{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 -16px;padding:0 16px 6px;scrollbar-width:none}\n  .revs::-webkit-scrollbar{display:none}\n  .rv{flex:0 0 86%;scroll-snap-align:start;padding:18px}\n  .rv .num{font-size:34px}\n  .shot{width:76px;height:76px;flex-basis:76px}\n  .plan{padding:24px 20px}\n  .plan h3{font-size:26px}\n  .plan .sum b{font-size:40px}\n  .guarantee{flex-direction:column;align-items:flex-start;gap:4px}\n  .toast{left:12px;right:auto;bottom:12px}\n}\n@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important;animation:none!important}.belt{overflow-x:auto}}";
 
+const HTML =
+  '<div class="topbar" role="region" aria-label="Чёрная пятница">\n  <span class="tb-t"><span class="long">До конца</span> <b data-timer>--:--:--</b></span>\n  <div class="ticker" aria-hidden="true"><div class="track"><span><b class="bf">−75%</b> Чёрная пятница</span><span>Только до 14 ноября</span><span>Скидка года на кэшбэк-гайд</span><span>Мест в VIP мало</span><span>Новые выпуски каждый месяц</span><span><b class="bf">−75%</b> Чёрная пятница</span><span>Только до 14 ноября</span><span>Скидка года на кэшбэк-гайд</span><span>Мест в VIP мало</span><span>Новые выпуски каждый месяц</span><span><b class="bf">−75%</b> Чёрная пятница</span><span>Только до 14 ноября</span><span>Скидка года на кэшбэк-гайд</span><span>Мест в VIP мало</span><span>Новые выпуски каждый месяц</span><span><b class="bf">−75%</b> Чёрная пятница</span><span>Только до 14 ноября</span><span>Скидка года на кэшбэк-гайд</span><span>Мест в VIP мало</span><span>Новые выпуски каждый месяц</span></div></div>\n  <a class="go" href="#pricing">Забрать<span class="long"> −75%</span></a>\n</div>\n\n<header class="top"><div class="wrap">\n  <a class="logo" href="#">Вася <span>и</span> финансы</a>\n  <span class="crumb">Кэшбэк-гайд</span>\n</div></header>\n\n<main>\n<!-- ЭКРАН 1 -->\n<section class="hero"><div class="wrap grid">\n  <div class="copy">\n    <h1>Банки вернут вам до <em class="hl mid">500 000 ₽</em> в год</h1>\n    <p class="sub">Кэшбэк-гайд – ежемесячный разбор банковских карт: какой картой платить в каждой категории, чтобы получать максимум.</p>\n    <div class="incl2" aria-label="Что входит в подписку">\n      <div class="col"><b>Стандарт</b><ul>\n        <li>Основной гайд: какой картой платить в каждой категории</li>\n        <li>Путеводитель: одна-две карты на всё</li>\n        <li>Спецвыпуск: акции месяца с кэшбэком до 50%</li>\n        <li>Новые выпуски каждый месяц, весь год</li>\n      </ul></div>\n      <div class="col vip"><b>VIP <em data-seats-short>осталось 20 мест</em></b><ul>\n        <li>Всё, что в Стандарте</li>\n        <li>Закрытое Telegram-сообщество «Кэшбэк-консьерж»: админы отвечают на любые вопросы</li>\n      </ul></div>\n    </div>\n    <div class="countdown" role="timer" aria-label="До конца распродажи">\n      <span class="lbl">До конца распродажи</span>\n      <span class="boxes"><span class="box"><b data-h>--</b><small>час</small></span><span class="sep">:</span><span class="box"><b data-m>--</b><small>мин</small></span><span class="sep">:</span><span class="box"><b data-s>--</b><small>сек</small></span></span>\n    </div>\n    <div class="cta2"><a class="btn" href="#pricing">Купить со скидкой 75%</a><div class="deal"><b>−75%</b><span>на подписку на год<sup class="fn">*</sup></span></div></div>\n    <ul class="proofs">\n      <li><span>Уже <b>400+ человек</b> вернули суммарно более <b>4,2 млн ₽</b></span></li>\n      <li><span>Не понравится – вернём 100% денег</span></li>\n    </ul>\n  </div>\n  <div class="pic">\n    <div class="rc calm" role="img" aria-label="Чек: покупки на 100 000 рублей в месяц. Обычная карта вернёт 1 000 рублей, правильная 10 000 рублей. Плюс 9 000 рублей каждый месяц, 108 000 рублей в год."><div class="rc-slot"><i></i><em></em></div><div class="rc-feed"><div class="rc-paper"><div class="rc-head"><svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#C2553B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h6l5 24h22l5-17H13"/><circle cx="19" cy="39" r="3"/><circle cx="34" cy="39" r="3"/><path d="M18 20h20M19 25h17"/></svg><div><b>Кэшбэк-гайд</b><span>Покупки за месяц</span></div><small>Чёрная<br>пятница</small></div><hr><div class="rc-row"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7c-1.5-2-5-2-6.2 1.2C4.6 11.6 7 18 9.4 18.6c1 .3 1.6-.4 2.6-.4s1.6.7 2.6.4C17 18 19.4 11.6 18.2 8.2 17 5 13.5 5 12 7zM12 7c0-2 1-3.5 3-4"/></svg><span>Продукты</span><span>35 000 ₽</span></div><div class="rc-row"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-6 8 6v9H4zM10 20v-5h4v5"/></svg><span>ЖКХ</span><span>15 000 ₽</span></div><div class="rc-row"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V5a1 1 0 011-1h7a1 1 0 011 1v15M4 20h11M7 8h5M14 9h2l2 2v6a1.5 1.5 0 003 0V9l-2-2"/></svg><span>Бензин</span><span>10 000 ₽</span></div><div class="rc-row"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v8M5 3v5a2 2 0 004 0V3M7 11v10M17 3c-2 1-2.5 4-2.5 7H17v11"/></svg><span>Рестораны</span><span>15 000 ₽</span></div><div class="rc-row"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 016 0v2"/></svg><span>Покупки</span><span>25 000 ₽</span></div><hr><div class="rc-row tot"><span>Итого покупок</span><span>100 000 ₽</span></div><div class="rc-row dim"><span>Кэшбэк с обычной карты (1%)</span><span>1 000 ₽</span></div><div class="rc-win"><span class="lights" aria-hidden="true"></span><i class="shine" aria-hidden="true"></i><svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.8-4.9 4.6 1.3 6.5L12 17.2l-5.9 3.2 1.3-6.5L2.5 9.3l6.6-.8z"/></svg><span class="k">Кэшбэк с правильной картой</span><span class="v"><span class="reel" data-v="10000">10 000</span> ₽</span></div><div class="rc-stamp"><svg viewBox="0 0 300 110" preserveAspectRatio="none" aria-hidden="true"><path d="M150 8C70 6 10 26 12 58c2 30 70 46 150 44 80-2 130-22 128-50C288 24 230 8 140 12 100 14 60 22 40 34"/></svg><b>+9 000 ₽<br>каждый месяц!</b></div><hr><div class="rc-foot">Ваша дополнительная выгода<b>+108 000 ₽ в год</b></div><div class="rc-bar" aria-hidden="true"></div><div class="rc-note">пример расчёта</div></div></div></div>\n    <div class="plaque"><span aria-hidden="true">* </span>Гайд окупается за первую неделю обычных покупок</div>\n  </div>\n</div></section>\n\n<!-- ЭКРАН 2 -->\n<section class="second">\n  <div class="wrap">\n    <h2 class="t-price" id="pricing">Выберите тариф</h2>\n    <div class="plans">\n      <div class="plan">\n        <div class="head"><h3>Стандарт</h3><div class="sum"><b>2 490 ₽</b><s>9 900 ₽</s></div></div>\n        <ul>\n          <li><span>Основной гайд: какой картой платить в каждой категории</span></li>\n          <li><span>Путеводитель: одна-две карты на всё</span></li>\n          <li><span>Спецвыпуск: акции месяца с кэшбэком до 50%</span></li>\n          <li><span>Новые выпуски каждый месяц, весь год</span></li>\n        </ul>\n        <a class="btn" href="#" data-pay="standard">Забрать Стандарт за 2 490 ₽</a>\n      </div>\n      <div class="plan vip">\n        <div class="head"><h3>VIP</h3><div class="sum"><b>9 900 ₽</b><s>39 900 ₽</s></div></div>\n        <ul>\n          <li><span>Всё, что в Стандарте</span></li>\n          <li><span>Закрытое Telegram-сообщество «Кэшбэк-консьерж»: админы отвечают на любые вопросы</span></li>\n        </ul>\n        <div class="seats"><p><span>Мест в VIP на распродаже</span><b data-seats>осталось 20 из 20</b></p><div class="bar"><div class="fill" data-seats-fill style="width:100%"></div></div></div>\n        <a class="btn" href="#" data-pay="vip">Занять место в VIP</a>\n      </div>\n    </div>\n    <div class="guarantee"><b>Гарантия</b><span>Если гайд не понравится, вернём 100% денег.</span></div>\n    <div class="plan-note"><b>Уже подписаны на кэшбэк-гайд?</b><span>Покупка продлит вашу подписку на 1 год после окончания текущей.</span></div>\n    <h2 class="t-rev">Сколько возвращают подписчики</h2>\n    <div class="revs"><figure class="rv" style="margin:0"><div class="top"><div><div class="num">105 482 ₽</div><div class="ctx">кэшбэк за июнь</div></div><button type="button" class="shot" aria-label="Открыть скриншот"><img loading="lazy" decoding="async" src="/cashback-sale/img/r39-key.webp" alt="Скриншот: кэшбэк за июнь"></button></div><q>Кэшбэк за июнь +105 482,12 ₽</q><figcaption class="by">Клиентка Василия, скриншот из банка</figcaption></figure><figure class="rv" style="margin:0"><div class="top"><div><div class="num">25 000 ₽</div><div class="ctx">вернул на покупке тура</div></div><button type="button" class="shot" aria-label="Открыть скриншот"><img loading="lazy" decoding="async" src="/cashback-sale/img/r41-key.webp" alt="Скриншот: вернул на покупке тура"></button></div><q>Через Путешествия вернул 25 000 руб. на покупку тура</q><figcaption class="by">Подписчик гайда</figcaption></figure><figure class="rv" style="margin:0"><div class="top"><div><div class="num">10 000 ₽</div><div class="ctx">с одних авиабилетов</div></div><button type="button" class="shot" aria-label="Открыть скриншот"><img loading="lazy" decoding="async" src="/cashback-sale/img/r35.webp" alt="Скриншот: с одних авиабилетов"></button></div><q>Купил авиабилеты с 30% кэшбеком. Сумма возврата составит более 10 тысяч</q><figcaption class="by">Подписчик гайда</figcaption></figure></div>\n\n  </div>\n</section>\n\n<section class="banks-sec"><div class="wrap">\n  <h2>Банки меняют условия <em>каждый месяц</em></h2>\n  <p class="sub">То, что было выгодно в октябре, в ноябре может уже не работать. Гайд следит за этим за вас. Вот часть находок ноябрьского выпуска:</p>\n</div>\n  <div class="belt"><ul><li class="bank gpb"><span class="bn">Газпромбанк</span><i class="chip" aria-hidden="true"></i><b>50%</b><span class="what">в ИЛЬ ДЕ БОТЭ</span><small>весь ноябрь, до 5 000 ₽</small></li><li class="bank sber"><span class="bn">Сбер</span><i class="chip" aria-hidden="true"></i><b>от 10%</b><span class="what">на АЗС</span><small>лайфхак ноября</small></li><li class="bank otp"><span class="bn">ОТП Банк</span><i class="chip" aria-hidden="true"></i><b>10%</b><span class="what">на супермаркеты</span><small>почти гарантированно</small></li><li class="bank alfa"><span class="bn">Альфа-Банк</span><i class="chip" aria-hidden="true"></i><b>до 7 000 ₽</b><span class="what">в Альфа-Инвестициях</span><small>новым клиентам до 30.11</small></li><li class="bank tbank"><span class="bn">Т-Банк</span><i class="chip" aria-hidden="true"></i><b>до 30%</b><span class="what">на продукты в «Городе»</span><small>если выпала категория</small></li><li class="bank ubrr"><span class="bn">УБРиР</span><i class="chip" aria-hidden="true"></i><b>7,26%</b><span class="what">на продукты онлайн</span><small>и 5% за ЖКХ и детсады</small></li><li class="bank raif"><span class="bn">Райффайзен</span><i class="chip" aria-hidden="true"></i><b>1,5%</b><span class="what">на всё без лимита</span><small>минимум исключений</small></li><li class="bank halva"><span class="bn">Халва</span><i class="chip" aria-hidden="true"></i><b>10%</b><span class="what">на такси Яндекс Go</span><small>и до 10% в Ленте и Пятёрочке</small></li><li class="bank novikom"><span class="bn">Новиком</span><i class="chip" aria-hidden="true"></i><b>7%</b><span class="what">рублями за ЖКХ</span><small>и 4% на продукты</small></li><li class="bank tax"><span class="bn">Налоги</span><i class="chip" aria-hidden="true"></i><b>до 3%</b><span class="what">кэшбэк за оплату налогов</span><small>разбор в спецвыпуске ноября</small></li><li aria-hidden="true" class="bank gpb"><span class="bn">Газпромбанк</span><i class="chip" aria-hidden="true"></i><b>50%</b><span class="what">в ИЛЬ ДЕ БОТЭ</span><small>весь ноябрь, до 5 000 ₽</small></li><li aria-hidden="true" class="bank sber"><span class="bn">Сбер</span><i class="chip" aria-hidden="true"></i><b>от 10%</b><span class="what">на АЗС</span><small>лайфхак ноября</small></li><li aria-hidden="true" class="bank otp"><span class="bn">ОТП Банк</span><i class="chip" aria-hidden="true"></i><b>10%</b><span class="what">на супермаркеты</span><small>почти гарантированно</small></li><li aria-hidden="true" class="bank alfa"><span class="bn">Альфа-Банк</span><i class="chip" aria-hidden="true"></i><b>до 7 000 ₽</b><span class="what">в Альфа-Инвестициях</span><small>новым клиентам до 30.11</small></li><li aria-hidden="true" class="bank tbank"><span class="bn">Т-Банк</span><i class="chip" aria-hidden="true"></i><b>до 30%</b><span class="what">на продукты в «Городе»</span><small>если выпала категория</small></li><li aria-hidden="true" class="bank ubrr"><span class="bn">УБРиР</span><i class="chip" aria-hidden="true"></i><b>7,26%</b><span class="what">на продукты онлайн</span><small>и 5% за ЖКХ и детсады</small></li><li aria-hidden="true" class="bank raif"><span class="bn">Райффайзен</span><i class="chip" aria-hidden="true"></i><b>1,5%</b><span class="what">на всё без лимита</span><small>минимум исключений</small></li><li aria-hidden="true" class="bank halva"><span class="bn">Халва</span><i class="chip" aria-hidden="true"></i><b>10%</b><span class="what">на такси Яндекс Go</span><small>и до 10% в Ленте и Пятёрочке</small></li><li aria-hidden="true" class="bank novikom"><span class="bn">Новиком</span><i class="chip" aria-hidden="true"></i><b>7%</b><span class="what">рублями за ЖКХ</span><small>и 4% на продукты</small></li><li aria-hidden="true" class="bank tax"><span class="bn">Налоги</span><i class="chip" aria-hidden="true"></i><b>до 3%</b><span class="what">кэшбэк за оплату налогов</span><small>разбор в спецвыпуске ноября</small></li></ul></div>\n<div class="wrap"><p class="banks-note">Условия из ноябрьского выпуска гайда. В нём же – пошаговые инструкции, как получить каждую выгоду.</p></div>\n</section>\n\n<section class="sec" id="inside"><div class="wrap">\n  <h2>Что внутри подписки</h2>\n  <p class="sub">Три PDF каждый месяц на почту и в личный кабинет. Каждый под свою задачу – выбирайте, с чего начать.</p>\n  <div class="grid3">\n    <article class="doc"><span class="who">Если не хочется разбираться</span><h3>Путеводитель для начинающих</h3><p>Простым текстом: одна-две карты на всё, чтобы больше не думать. Начинается с ответов на частые вопросы.</p><span class="n">17 страниц</span></article>\n    <article class="doc"><span class="who">Если хотите максимум</span><h3>Основной гайд</h3><p>Какой картой платить в пяти главных категориях, разбор 10 карт, «ленивая стратегия», комбо-кэшбэк и топ лайфхаков месяца.</p><span class="n">39 страниц</span></article>\n    <article class="doc"><span class="who">Акции только этого месяца</span><h3>Спецвыпуск</h3><p>Одна тема месяца подробно. В ноябре – как получить кэшбэк за налоги, 50% в ИЛЬ ДЕ БОТЭ и чем заменить ОТП в супермаркетах.</p><span class="n">9⁠–⁠12 страниц</span></article>\n  </div>\n  <div class="pages">\n    <h3>Так выглядит ноябрьский выпуск</h3>\n    <figure><button type="button" class="zoom"><img loading="lazy" decoding="async" src="/cashback-sale/img/n-top5.webp" alt="Страница гайда: какой картой платить в ТОП-5 категориях"></button><figcaption>Какой картой платить в пяти главных категориях</figcaption></figure>\n    <figure><button type="button" class="zoom"><img loading="lazy" decoding="async" src="/cashback-sale/img/n-hacks.webp" alt="Страница гайда: топ лайфхаков на ноябрь"></button><figcaption>Топ лайфхаков месяца: старые и новые</figcaption></figure>\n    <figure><button type="button" class="zoom"><img loading="lazy" decoding="async" src="/cashback-sale/img/n-special.webp" alt="Обложка спецвыпуска за ноябрь: налоги с кэшбэком"></button><figcaption>Спецвыпуск ноября: налоги с кэшбэком</figcaption></figure>\n    <figure><button type="button" class="zoom"><img loading="lazy" decoding="async" src="/cashback-sale/img/n-guide.webp" alt="Обложка путеводителя для начинающих, ноябрь"></button><figcaption>Путеводитель от первых шагов до профи</figcaption></figure>\n  </div>\n</div></section>\n\n<section class="sec white"><div class="wrap">\n  <h2>Как это работает</h2>\n  <p class="sub">Никаких сложных схем на старте. Достаточно один раз выбрать карты и раз в месяц сверяться с новым выпуском.</p>\n  <div class="grid3 steps">\n    <div class="step"><h3>Оплачиваете подписку</h3><p>Гайды приходят на почту и открываются в личном кабинете вместе с архивом спецвыпусков.</p></div>\n    <div class="step"><h3>Выбираете свой путь</h3><p>Не хотите разбираться – берёте одну-две карты из Путеводителя. Хотите максимум – собираете комбинацию по Основному гайду.</p></div>\n    <div class="step"><h3>Раз в месяц сверяетесь</h3><p>Приходит новый выпуск: какие категории выбрать и какие акции взять. Около 20 минут в месяц.</p></div>\n  </div>\n</div></section>\n\n<section class="sec" id="author"><div class="wrap author">\n  <img loading="lazy" decoding="async" src="/cashback-sale/img/vasily.webp" width="760" height="950" alt="Василий Мещеряков, финансовый консультант">\n  <div>\n    <h2>Василий Мещеряков</h2>\n    <p class="role">Финансовый консультант, ex-директор по продажам Procter&nbsp;&amp;&nbsp;Gamble, автор канала «Вася и финансы»</p>\n    <p>Окончил ФТИ УрФУ по специальности «Прикладная физика и математика». 14 лет строил карьеру в Procter&nbsp;&amp;&nbsp;Gamble и дошёл до директора по продажам с бюджетом 6 млрд ₽.</p>\n    <p>В 2023 году ушёл в собственное дело и теперь учит людей вести бюджет. За 3 года консультирования разобрал больше 1400 семейных бюджетов.</p>\n    <blockquote>Личные финансы – это физика, а не магия.<footer>Василий Мещеряков</footer></blockquote>\n    <p>Каждый месяц Василий проверяет условия банков и обновляет кэшбэк-гайд. Гайды пишет живой человек, а не искусственный интеллект – всё проверено на себе.</p>\n    <div class="facts">\n      <div><b>14 лет</b><span>корпоративной карьеры в Procter&nbsp;&amp;&nbsp;Gamble</span></div>\n      <div><b>6 млрд ₽</b><span>бюджет в управлении</span></div>\n      <div><b>3 года</b><span>консультирования</span></div>\n      <div><b>1400+</b><span>семейных бюджетов разобрано</span></div>\n    </div>\n  </div>\n</div></section>\n\n<section class="more" style="background:var(--paper)"><div class="wrap">\n  <h2>Ещё отзывы подписчиков</h2>\n  <p class="sub">Скриншоты сообщений Василию. Нажмите, чтобы увеличить.</p>\n  <div class="wall"><button type="button" class="zoom"><img loading="lazy" decoding="async" src="/cashback-sale/img/r46.webp" alt="Отзыв Дарьи: увеличили кэшбэк в 2-3 раза"></button><button type="button" class="zoom"><img loading="lazy" decoding="async" src="/cashback-sale/img/r45.webp" alt="Отзыв Марины: гайд стоящая вещь"></button><button type="button" class="zoom"><img loading="lazy" decoding="async" src="/cashback-sale/img/r40.webp" alt="Отзыв: получил 3500 рублей бонусов по совету из гайда"></button><button type="button" class="zoom"><img loading="lazy" decoding="async" src="/cashback-sale/img/r49.webp" alt="Отзыв: нашёл ещё 3500 рублей кэшбэка в Альфе"></button><button type="button" class="zoom"><img loading="lazy" decoding="async" src="/cashback-sale/img/r47.webp" alt="Отзыв: оплатила ЖКХ и Озон на 15 тысяч, получила 5 тысяч обратно"></button><button type="button" class="zoom"><img loading="lazy" decoding="async" src="/cashback-sale/img/r44.webp" alt="Отзыв: окупил годовую подписку за 1 месяц"></button><button type="button" class="zoom"><img loading="lazy" decoding="async" src="/cashback-sale/img/r36.webp" alt="Отзыв: нашла 5000 рублей кэшбэка на Альфе"></button><button type="button" class="zoom"><img loading="lazy" decoding="async" src="/cashback-sale/img/r50.webp" alt="Отзыв: нашла в гайде новое"></button><button type="button" class="zoom"><img loading="lazy" decoding="async" src="/cashback-sale/img/r38.webp" alt="Отзыв: акция Газпромбанка с кэшбэком 25%, стоимость мануала отбил"></button></div>\n  <a class="btn" href="#pricing">Купить со скидкой 75%</a>\n</div></section>\n\n<section class="sec" id="faq"><div class="wrap">\n  <h2>Вопросы</h2>\n  <div class="faq">\n    <details><summary>Что я получу после оплаты?</summary><p>Текущие выпуски: Основной гайд, Путеводитель для начинающих и Спецвыпуск, плюс все прошлые спецвыпуски. Дальше весь год новые выпуски приходят каждый месяц на почту и в личный кабинет.</p></details>\n    <details><summary>Я уже подписан. Что будет, если купить сейчас?</summary><p>Покупка продлевает подписку на 1 год после окончания вашей текущей подписки. Ничего не сгорает.</p></details>\n    <details><summary>Нужно ли открывать много карт?</summary><p>Нет. Можно начать с одной-двух понятных карт из Путеводителя и постепенно добавлять новые, если захочется забирать больше. Многие просто узнают больше о картах, которые у них уже есть.</p></details>\n    <details><summary>Подойдёт ли новичку?</summary><p>Да. Для старта есть Путеводитель для начинающих: простым текстом, с ответами на частые вопросы.</p></details>\n    <details><summary>Сколько можно вернуть?</summary><p>Зависит от ваших трат и того, сколько карт вы готовы использовать. Авторы гайда получают 10⁠–⁠20 тысяч в месяц при тратах около 120 000 ₽. Даже 5 000 ₽ кэшбэка в месяц – это 60 000 ₽ в год. Примеры подписчиков на странице реальные, но это не гарантия.</p></details>\n    <details><summary>Чем VIP отличается от Стандарта?</summary><p>В VIP есть закрытое Telegram-сообщество «Кэшбэк-консьерж»: админы отвечают на любые вопросы про карты и кэшбэк. Мест в VIP на распродаже ограниченное количество.</p></details>\n    <details><summary>Что если гайд не подойдёт?</summary><p>Напишите нам – вернём 100% денег.</p></details>\n    <details><summary>Это финансовая консультация?</summary><p>Нет. Материалы носят информационный характер. Решение об оформлении карт вы принимаете сами, проверив актуальные условия банка.</p></details>\n  </div>\n</div></section>\n\n<section class="final"><div class="wrap">\n  <h2>Распродажа закончится через <span class="t" data-timer>--:--:--</span></h2>\n  <p>Стандарт 2 490 ₽ вместо 9 900 ₽ · VIP 9 900 ₽ вместо 39 900 ₽</p>\n  <div class="row"><a class="btn" href="#" data-pay="standard">Забрать Стандарт за 2 490 ₽</a><a class="btn ghost" href="#" data-pay="vip">Занять место в VIP</a></div>\n</div></section>\n</main>\n\n\n<dialog class="pay" id="pay"><button type="button" class="pay-x" id="pay-x" aria-label="Закрыть">×</button><p class="pay-t" id="pay-t"></p><iframe id="pay-f" title="Оплата" loading="lazy"></iframe></dialog>\n<dialog class="lb" id="lb"><img id="lb-img" alt=""></dialog>\n\n<dialog class="exit" id="exit">\n  <div class="g">100% гарантия</div>\n  <h2>Не уходите!</h2>\n  <p>Если гайд не понравится, вернём 100% денег. А скидка −75% действует только до 14 ноября.</p>\n  <div class="two"><a class="btn" href="#pricing" data-close>Стандарт за 2 490 ₽</a><a class="btn dark" href="#pricing" data-close>VIP за 9 900 ₽</a></div>\n  <button type="button" class="no" id="exit-no">Нет, спасибо</button>\n</dialog>\n\n<div class="toast" id="toast" role="status" aria-live="polite"><div class="ava" id="toast-ava"></div><div><b id="toast-title"></b><span id="toast-text"></span></div><button type="button" id="toast-x" aria-label="Скрыть">×</button></div>';
 
+function initSale(): () => void {
+  const __ids: number[] = [];
+  const __ivs: number[] = [];
+  const __offs: Array<() => void> = [];
+  const __st = (f: () => void, ms?: number) => {
+    const id = window.setTimeout(f, ms);
+    __ids.push(id);
+    return id;
+  };
+  const __si = (f: () => void, ms?: number) => {
+    const id = window.setInterval(f, ms);
+    __ivs.push(id);
+    return id;
+  };
+  const __on = (t: Document, ev: string, f: (e: any) => void, o?: any) => {
+    t.addEventListener(ev, f, o);
+    __offs.push(() => t.removeEventListener(ev, f, o));
+  };
 
-// ============================================================================
-//  /cashback — основная продуктовая страница «Кэшбэк-гайда»
-// ============================================================================
-
-// ===== atoms (модель Calculator.tsx — единый визуальный язык) =====
-const Eyebrow = ({ children, size = "sm" }: { children: React.ReactNode; size?: "sm" | "lg" }) => (
-  <div
-    className={
-      size === "lg"
-        ? "inline-flex items-center gap-2 font-display font-semibold text-sm md:text-base uppercase tracking-[0.14em] text-foreground border border-foreground/25 rounded-full px-5 py-2"
-        : "inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground border border-foreground/15 rounded-full px-3 py-1"
-    }
-  >
-    {children}
-  </div>
-);
-
-const GoldBtn = ({ href, onClick, children, block }: { href?: string; onClick?: () => void; children: React.ReactNode; block?: boolean }) => (
-  <a
-    href={href}
-    onClick={onClick}
-    className={`inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-accent text-accent-foreground font-display font-semibold text-sm tracking-wide rounded-md hard-shadow ${block ? "w-full" : ""}`}
-  >
-    {children}
-  </a>
-);
-
-const DarkBtn = ({ href, onClick, children, block }: { href?: string; onClick?: () => void; children: React.ReactNode; block?: boolean }) => (
-  <a
-    href={href}
-    onClick={onClick}
-    className={`inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-foreground text-background font-display font-semibold text-sm tracking-wide rounded-md hover:bg-foreground/85 transition-colors ${block ? "w-full" : ""}`}
-  >
-    {children}
-  </a>
-);
-
-const LightBtn = ({ href, onClick, children, block }: { href?: string; onClick?: () => void; children: React.ReactNode; block?: boolean }) => (
-  <a
-    href={href}
-    onClick={onClick}
-    className={`inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-background text-foreground border border-foreground/25 font-display font-semibold text-sm tracking-wide rounded-md hover:border-foreground transition-colors ${block ? "w-full" : ""}`}
-  >
-    {children}
-  </a>
-);
-
-// ===== отзывы (повторяем визуальный язык карточек Calculator) =====
-type Review = { name: string; role: string; quote: string; text: string; noExpand?: boolean };
-
-const reviewsHero: Review[] = [
-  {
-    name: "Андрей",
-    role: "разработчик · Москва",
-    quote: "Из\u00A0воздуха заработал 24\u00A0000\u00A0₽ за\u00A0три месяца",
-    text: "Три месяца назад начал с\u00A0Путеводителя для начинающих. Из\u00A0воздуха заработал 24k\u00A0— 15k в\u00A0ГПБ и\u00A09k в\u00A0ВТБ. Вошёл во\u00A0вкус, собираю веер карточек.",
-  },
-  {
-    name: "Елена",
-    role: "врач · Екатеринбург",
-    quote: "За\u00A0март вернулось около 4\u00A0500\u00A0₽",
-    text: "Кэшбэком пользуюсь давно, миксуя карты разных банков. Но\u00A0акция Газпромбанка с\u00A0кэшбэком 25% была для меня открытием. За\u00A0март вернулось порядка 4,5\u00A0тыс.\u00A0₽\u00A0— примерно на\u00A03\u00A0тыс. больше, чем вышло\u00A0бы по\u00A0старым картам.",
-  },
-];
-
-const reviewsAudience: Review[] = [
-  {
-    name: "Олег",
-    role: "предприниматель · Казань",
-    quote: "Открыл Альфу\u00A0— там ещё 3\u00A0500\u00A0₽ кэшбэка лежит",
-    text: "Купил гайд просто ради интереса, поскольку сам пользуюсь кэшбэками и\u00A0думал, что особо нового для себя не\u00A0подчеркну. Сразу скажу, ошибался. Открыл приложение Альфы, и\u00A0оказалось, что там ещё 3\u00A0500\u00A0₽ кэшбэка хранится.",
-  },
-  {
-    name: "Дмитрий",
-    role: "маркетолог · Москва",
-    quote: "Окупил годовую подписку за\u00A01\u00A0месяц",
-    text: "За\u00A0счёт комбинации сертификаты Ozon и\u00A0Халва окупил годовую подписку на\u00A0гайд за\u00A01\u00A0месяц. Дальше всё, что возвращается\u00A0— уже чистый плюс.",
-  },
-];
-
-const reviewsPricing: Review[] = [
-  {
-    name: "Светлана",
-    role: "бухгалтер · Новосибирск",
-    quote: "За\u00A0полгода вернулось 36\u00A0000\u00A0₽ по\u00A0одной акции",
-    text: "Сегодня получила последний кэшбэк по\u00A0акции Газпромбанка для новеньких. Итого за\u00A0полгода 36\u00A0тысяч. Без гайда я\u00A0бы про эту акцию даже не\u00A0узнала\u00A0— банк её\u00A0особо не\u00A0рекламировал.",
-  },
-  {
-    name: "Марина",
-    role: "маркетолог · СПб",
-    quote: "За\u00A0неделю вернула около 10\u00A0000\u00A0₽ с\u00A0авиабилетов",
-    text: "Подсмотрев в\u00A0гайде акции Альфы, за\u00A0неделю набрала кэшбэками около полутора тысяч обычными покупками. А\u00A0сегодня купила авиабилеты с\u00A030% кэшбэком. Сумма возврата составит более 10\u00A0тысяч.",
-  },
-  {
-    name: "Ирина",
-    role: "подписчица гайда",
-    quote: "Действительно стоящая вещь\u00A0— тщательная аналитика",
-    text: "Действительно стоящая вещь\u00A0— тщательная аналитика. Всё чётко разложено, со\u00A0скринами, как воспользоваться плюшками. Сама регулярно получаю кэшем или баллами 5–20\u00A0т.\u00A0р. в\u00A0месяц, но\u00A0в\u00A0гайде нашла новую инфу.",
-  },
-  {
-    name: "Анна",
-    role: "клиент консультации",
-    quote: "Ожидание недели вылилось в\u00A0новую посудомоечную машину",
-    text: "Василий, добрый день! Так и\u00A0хочется сказать\u00A0— а\u00A0что, так бывает? Ожидание недели по\u00A0оплате кухни вылилось в\u00A0новую посудомоечную машину и\u00A0«бесплатный» монтаж этой кухни. Большое спасибо за\u00A0консультацию.",
-  },
-  {
-    name: "Игорь",
-    role: "клиент консультации",
-    quote: "Консультация увеличила налоговый вычет на\u00A040\u00A0000\u00A0₽",
-    text: "И\u00A0ваша консультация увеличила налоговый вычет на\u00A040\u00A0000. Спасибо.",
-    noExpand: true,
-  },
-];
-
-const ReviewCard = ({ r }: { r: Review }) => {
-  const [open, setOpen] = useState(false);
-  return (
-    <figure className="border border-foreground/15 bg-card hover:border-foreground transition-colors duration-300 p-6 md:p-7 flex flex-col">
-      <header className="flex items-center gap-4">
-        <span
-          aria-hidden
-          className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-muted border border-foreground/15 grid place-items-center font-display text-lg text-foreground/55 shrink-0"
-        >
-          {r.name.charAt(0)}
-        </span>
-        <div className="min-w-0">
-          <div className="font-display font-bold text-xl leading-tight text-foreground">{r.name}</div>
-          <div className="font-mono text-[11px] uppercase tracking-widest mt-1 text-muted-foreground">{r.role}</div>
-        </div>
-      </header>
-      <blockquote className="mt-5 mb-6 font-display text-lg leading-snug pl-4 text-foreground border-l-2 border-accent">
-        {r.quote}
-      </blockquote>
-      {!r.noExpand && (
-        <>
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            className="self-end font-mono text-[11px] uppercase tracking-widest transition-colors inline-flex items-center gap-2 text-foreground hover:text-accent"
-          >
-            {open ? "Свернуть" : "Читать полностью"}
-            <span aria-hidden>{open ? "−" : "→"}</span>
-          </button>
-          {open && (
-            <div className="mt-3 pt-3 border-t border-foreground/10 font-body text-[15px] leading-relaxed text-foreground/85">
-              <p>{r.text}</p>
-            </div>
-          )}
-        </>
-      )}
-    </figure>
-  );
-};
-
-const ReviewGrid = ({ items }: { items: Review[] }) => (
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-    {items.map((r, i) => <ReviewCard key={i} r={r} />)}
-  </div>
-);
-
-// ===== данные секций =====
-const inside = [
-  { n: 1, t: "Разбор карт и категорий месяца", d: "Какими картами платить за\u00A0продукты, ЖКХ, маркетплейсы, такси, кафе, аптеки и\u00A0АЗС." },
-  { n: 2, t: "Обновления по\u00A0банкам", d: "Что изменилось в\u00A0условиях, где упала выгода, какие лимиты и\u00A0исключения появились." },
-  { n: 3, t: "Акции и\u00A0накопительные счета", d: "Промо-ставки и\u00A0сценарии, которые дают дополнительную выгоду к\u00A0обычным расходам." },
-  { n: 4, t: "Спецвыпуск месяца", d: "Отдельная тема с\u00A0условиями, последовательностью действий и\u00A0предупреждениями." },
-  { n: 5, t: "Архив выпусков", d: "При подписке открываются прошлые спецвыпуски и\u00A0материалы на\u00A0весь период доступа." },
-];
-
-const audience = [
-  { icon: "💳", t: "Платите одной картой", d: "И\u00A0не\u00A0уверены, что она действительно выгодна для продуктов, ЖКХ, маркетплейсов и\u00A0такси." },
-  { icon: "🏠", t: "Есть регулярные расходы", d: "Продукты, ЖКХ, аптеки, одежда, доставка и\u00A0крупные покупки дают заметный потенциал возврата." },
-  { icon: "⏱", t: "Нет времени следить за\u00A0банками", d: "Нужна не\u00A0энциклопедия условий, а\u00A0понятная выжимка: что изменилось и\u00A0на\u00A0что обратить внимание." },
-  { icon: "📈", t: "Уже пользуетесь кэшбэком", d: "Гайд помогает замечать акции, категории и\u00A0ограничения, которые легко пропустить." },
-];
-
-const archive = [
-  { date: "Июнь 2026", title: "Основной выпуск", items: ["Карты и\u00A0категории месяца", "Разбор банков и\u00A0ограничений", "Комбо-кэшбэк и\u00A0сервисы"] },
-  { date: "Июнь 2026", title: "Спецвыпуск", items: ["Яндекс\u00A0Банк и\u00A0ежедневный накоп", "Акции за\u00A0перевод пенсии", "ОТП, Ozon и\u00A0накопительные счета"] },
-  { date: "Архив", title: "Прошлые материалы", items: ["Старые спецвыпуски доступны подписчикам", "Темы архива заполняются по\u00A0фактическим выпускам", "Удобно возвращаться к\u00A0рабочим сценариям"] },
-];
-
-const usage = [
-  { n: 1, t: "Быстро", d: "Открыть текущий выпуск и\u00A0посмотреть, какими картами платить в\u00A0основных категориях месяца." },
-  { n: 2, t: "Под задачу", d: "Найти через поиск нужную категорию: продукты, ЖКХ, маркетплейсы, такси, аптеки, АЗС." },
-  { n: 3, t: "Глубже", d: "Изучить разборы банков, спецвыпуски, ограничения, накопительные счета и\u00A0комбо-сценарии." },
-];
-
-const faqItems = [
-  { q: "Что я\u00A0получу после оплаты?", a: "Доступ к\u00A0текущему выпуску Кэшбэк-гайда, спецвыпускам и\u00A0архиву на\u00A0период выбранного тарифа." },
-  { q: "Как часто выходят обновления?", a: "Основной выпуск и\u00A0обновления выходят ежемесячно. Спецвыпуски посвящены отдельным темам и\u00A0доступны подписчикам." },
-  { q: "Подойдёт\u00A0ли новичку?", a: "Да. Для старта внутри есть Путеводитель для начинающих, который помогает разобраться с\u00A0базовой логикой карт, категорий и\u00A0расходов." },
-  { q: "Нужно\u00A0ли открывать много карт?", a: "Нет. Можно начать с\u00A0одной-двух понятных карт и\u00A0постепенно добавлять новые инструменты, если захочется забирать больше выгоды." },
-  { q: "Это финансовая консультация?", a: "Нет. Материалы носят информационный характер. Решение об\u00A0оформлении банковских продуктов и\u00A0карт пользователь принимает самостоятельно после проверки актуальных условий банка." },
-  { q: "Можно\u00A0ли окупить подписку?", a: "Это зависит от\u00A0ваших расходов, банков, региона, доступных карт и\u00A0готовности применять рекомендации. На\u00A0странице приведены реальные примеры результатов подписчиков, но\u00A0они не\u00A0являются гарантией." },
-];
-
-const tariffs = [
-  {
-    name: "Стандарт",
-    old: "19\u00A0900\u00A0₽",
-    price: "9\u00A0900\u00A0₽",
-    note: "Подписка на\u00A01\u00A0год. Все выпуски и\u00A0архив на\u00A0весь период доступа.",
-    items: [
-      "12\u00A0месяцев обновлений",
-      "Ежемесячные спецвыпуски",
-      "Доступ ко\u00A0всем старым выпускам",
-    ],
-    featured: false,
-    widgetId: 1625246,
-    scriptHash: "01668685b511e0ed88100aab07f24bbe50aa6a2e",
-  },
-  {
-    name: "VIP",
-    old: "79\u00A0900\u00A0₽",
-    price: "39\u00A0900\u00A0₽",
-    note: "Всё, что\u00A0в\u00A0тарифе Стандарт, плюс личное сопровождение весь год.",
-    items: [
-      "Всё из\u00A0тарифа Стандарт",
-      "Личный подключённый консультант на\u00A0весь год",
-      "Ответы на\u00A0вопросы",
-      "Разбор крупных покупок",
-      "Индивидуальные рекомендации",
-    ],
-    featured: true,
-    widgetId: 1625247,
-    scriptHash: "8cd06bb161f8a4f0410e6255c41d8b00d9a9d055",
-  },
-];
-
-
-const Cashback = () => {
-  usePageMeta({ title: "Кэшбэк-гайд — ежемесячный разбор банковских выгод", description: "Ежемесячный гайд по кэшбэку: какие категории выбрать в банках, чтобы не терять деньги на обычных покупках." });
-
-  const pageNav = [
-    { href: "#inside", label: "Что внутри", id: "inside" },
-    { href: "#preview", label: "Превью", id: "preview" },
-    { href: "#archive", label: "Архив", id: "archive" },
-    { href: "#pricing", label: "Тарифы", id: "pricing" },
-    { href: "#pricing", label: "Оформить доступ", cta: true },
+  // ===== Настройки распродажи =====
+  // DEMO: таймер идёт до конца текущего дня. На сайте: DEMO = false и реальные даты (время Москвы).
+  var DEMO = false;
+  var SALE_START = new Date(0);
+  var SALE_END = new Date("2026-11-14T23:59:59+03:00"); // заменяется значением saleEnd из config.json
+  // Места в VIP: берутся из файла vip.json рядом со страницей ({"total": 20, "left": 20}).
+  // После каждой покупки VIP уменьшить "left" на 1 - страница сама покажет новое число.
+  var VIP_TOTAL = 20,
+    VIP_LEFT = 20;
+  // Виджет распродажи от Василия 12.11: один на оба тарифа, выбор тарифа внутри формы.
+  var PAY = {
+    standard: { name: "оформление", id: 1682720, hash: "9e8bc9ac328055dac428f107f4a238c74fe2c69e" },
+    vip: { name: "оформление", id: 1682720, hash: "9e8bc9ac328055dac428f107f4a238c74fe2c69e" },
+  };
+  // Уведомления. Сейчас - из отзывов Василию; настоящие покупки (имя и тариф, с согласия) добавлять сюда.
+  var PROOF = [
+    { who: "Подписчик", title: "вернул 25 000 ₽ на покупке тура", text: "Через «Путешествия» в Т-Банке" },
+    { who: "Марина М.", title: "купила кэшбэк-гайд", text: "«Действительно стоящая вещь»" },
+    { who: "VIP", title: "", text: "Закрытое сообщество «Кэшбэк-консьерж»", seats: true },
+    { who: "Подписчик", title: "получит 10 000 ₽ с авиабилетов", text: "Акция Альфы из гайда" },
+    { who: "Дарья С.", title: "увеличила кэшбэк в 2–3 раза", text: "Пересмотрели карты всей семьёй" },
+    { who: "Подписчица", title: "получила 5 000 ₽ обратно", text: "ЖКХ и Озон, пять действий в месяц" },
+    { who: "Подписчик", title: "окупил подписку за 1 месяц", text: "Сертификаты Ozon и Халва" },
+    { who: "Подписчик", title: "нашёл 3 500 ₽ кэшбэка в Альфе", text: "Узнал из гайда про «барабан»" },
   ];
 
+  function pad(n) {
+    return (n < 10 ? "0" : "") + n;
+  }
+  function endTime() {
+    if (DEMO) {
+      var d = new Date();
+      d.setHours(23, 59, 59, 999);
+      return d;
+    }
+    return SALE_END;
+  }
+  var bar = document.querySelectorAll("[data-timer]");
+  var H = document.querySelector("[data-h]"),
+    M = document.querySelector("[data-m]"),
+    S = document.querySelector("[data-s]");
+  function tick() {
+    var now = new Date();
+    if (!DEMO && now < SALE_START) {
+      bar.forEach(function (e) {
+        e.textContent = "скоро";
+      });
+      return;
+    }
+    var left = Math.max(0, Math.floor((endTime() - now) / 1000));
+    var h = pad(Math.floor(left / 3600)),
+      m = pad(Math.floor((left % 3600) / 60)),
+      s = pad(left % 60);
+    H.textContent = h;
+    M.textContent = m;
+    S.textContent = s;
+    bar.forEach(function (e) {
+      e.textContent = left ? h + ":" + m + ":" + s : "завершена";
+    });
+  }
+  tick();
+  __si(tick, 1000);
+
+  function seatsWord(n) {
+    var a = n % 10,
+      b = n % 100;
+    return a === 1 && b !== 11 ? "место" : a >= 2 && a <= 4 && (b < 12 || b > 14) ? "места" : "мест";
+  }
+  function leftWord(n) {
+    return n % 10 === 1 && n % 100 !== 11 ? "осталось" : "осталось";
+  }
+  function seatsText() {
+    return VIP_LEFT > 0
+      ? leftWord(VIP_LEFT) + " " + VIP_LEFT + " " + seatsWord(VIP_LEFT) + " из " + VIP_TOTAL
+      : "мест не осталось";
+  }
+  function renderSeats() {
+    VIP_LEFT = Math.max(0, Math.min(VIP_TOTAL, VIP_LEFT));
+    document.querySelectorAll("[data-seats]").forEach(function (e) {
+      e.textContent = VIP_LEFT > 0 ? "осталось " + VIP_LEFT + " из " + VIP_TOTAL : "мест не осталось";
+    });
+    document.querySelectorAll("[data-seats-short]").forEach(function (e) {
+      e.textContent = VIP_LEFT > 0 ? "· осталось " + VIP_LEFT + " " + seatsWord(VIP_LEFT) : "· мест нет";
+    });
+    document.querySelectorAll("[data-seats-fill]").forEach(function (e) {
+      e.style.width = Math.round((VIP_LEFT / VIP_TOTAL) * 100) + "%";
+    });
+    document.querySelectorAll('[data-pay="vip"]').forEach(function (b) {
+      if (VIP_LEFT > 0) return;
+      b.classList.add("soldout");
+      b.textContent = "Мест в VIP не осталось";
+      b.setAttribute("aria-disabled", "true");
+    });
+  }
+  renderSeats();
+  // актуальное число мест - из vip.json (без кеша, чтобы правка была видна сразу)
+  if (location.protocol !== "file:" && window.fetch) {
+    fetch("/cashback-sale/config.json?t=" + Date.now(), { cache: "no-store" })
+      .then(function (r) {
+        return r.ok ? r.json() : null;
+      })
+      .then(function (d) {
+        if (!d) return;
+        if (+d.vipTotal > 0) VIP_TOTAL = +d.vipTotal;
+        if (d.vipLeft !== undefined && !isNaN(+d.vipLeft)) VIP_LEFT = +d.vipLeft;
+        if (d.saleEnd && !isNaN(Date.parse(d.saleEnd))) {
+          SALE_END = new Date(d.saleEnd);
+          tick();
+        }
+        renderSeats();
+      })
+      .catch(function () {});
+  }
+
+  var lb = document.getElementById("lb"),
+    lbImg = document.getElementById("lb-img");
+  document.querySelectorAll(".shot, .zoom").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var img = b.querySelector("img");
+      lbImg.src = img.src;
+      lbImg.alt = img.alt;
+      if (lb.showModal) lb.showModal();
+    });
+  });
+  lb.addEventListener("click", function () {
+    lb.close();
+  });
+
+  // уведомления: часто, одно за другим
+  var toast = document.getElementById("toast"),
+    i = 0,
+    hidden = false,
+    t;
+  function show() {
+    if (hidden) return;
+    if (lb.open || exitDlg.open) {
+      t = __st(show, 3000);
+      return;
+    }
+    var p = PROOF[i % PROOF.length];
+    i++;
+    document.getElementById("toast-ava").textContent = p.who.charAt(0);
+    document.getElementById("toast-title").textContent = p.seats ? "VIP: " + seatsText() : p.who + " " + p.title;
+    document.getElementById("toast-text").textContent = p.text;
+    toast.classList.add("show");
+    t = __st(function () {
+      toast.classList.remove("show");
+      t = __st(show, 1800);
+    }, 4500);
+  }
+  document.getElementById("toast-x").addEventListener("click", function () {
+    hidden = true;
+    clearTimeout(t);
+    toast.classList.remove("show");
+  });
+
+  // окно с гарантией, когда курсор уходит закрыть страницу (один раз)
+  var exitDlg = document.getElementById("exit"),
+    exitShown = false;
+  try {
+    exitShown = sessionStorage.getItem("exitShown") === "1";
+  } catch (e) {}
+  __on(document, "mouseout", function (e) {
+    if (exitShown || e.relatedTarget || e.clientY > 8 || !exitDlg.showModal) return;
+    exitShown = true;
+    try {
+      sessionStorage.setItem("exitShown", "1");
+    } catch (er) {}
+    exitDlg.showModal();
+  });
+  document.getElementById("exit-no").addEventListener("click", function () {
+    exitDlg.close();
+  });
+  exitDlg.querySelectorAll("[data-close]").forEach(function (a) {
+    a.addEventListener("click", function () {
+      exitDlg.close();
+    });
+  });
+  exitDlg.addEventListener("click", function (e) {
+    if (e.target === exitDlg) exitDlg.close();
+  });
+
+  // ===== чек «казино»: печать, барабан суммы, штамп, монеты =====
+  (function () {
+    var rc = document.querySelector(".rc");
+    if (!rc) return;
+    var reel = rc.querySelector(".reel"),
+      cols = [];
+    var digits = reel.dataset.v.split("");
+    reel.textContent = "";
+    digits.forEach(function (d, i) {
+      if ((digits.length - i) % 3 === 0 && i > 0) {
+        var g = document.createElement("span");
+        g.className = "gap";
+        reel.appendChild(g);
+      }
+      var c = document.createElement("span");
+      c.className = "col";
+      c.dataset.d = d;
+      for (var k = 0; k < 80; k++) {
+        var sp = document.createElement("span");
+        sp.textContent = k % 10;
+        c.appendChild(sp);
+      }
+      c.style.transform = "translateY(-" + d + "em)";
+      reel.appendChild(c);
+      cols.push(c);
+    });
+    if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    function spin() {
+      cols.forEach(function (c, i) {
+        c.style.transition = "none";
+        c.style.transform = "translateY(0)";
+        void c.offsetHeight;
+        var n = (2 + i) * 10 + +c.dataset.d;
+        c.style.transition = "transform " + (1.1 + i * 0.3) + "s cubic-bezier(.12,.72,.2,1)";
+        c.style.transform = "translateY(-" + n + "em)";
+      });
+    }
+    var started = false;
+    function start() {
+      if (started) return;
+      started = true;
+      cols.forEach(function (c) {
+        c.style.transform = "translateY(0)";
+      });
+      rc.classList.add("play");
+      if (rc.classList.contains("calm")) {
+        __st(spin, 300);
+        return;
+      }
+      __st(spin, 1150);
+      __si(spin, 9000);
+    }
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(
+        function (es) {
+          if (es[0].isIntersecting) {
+            start();
+            io.disconnect();
+          }
+        },
+        { threshold: 0.3 },
+      );
+      io.observe(rc);
+    } else start();
+  })();
+
+  __st(show, 2500);
+
+  document.getElementById("pay-x").addEventListener("click", function () {
+    document.getElementById("pay").close();
+  });
+  document.querySelectorAll("[data-pay]").forEach(function (b) {
+    b.addEventListener("click", function (e) {
+      e.preventDefault();
+      var w = PAY[b.dataset.pay];
+      if (!w) return;
+      var pay = document.getElementById("pay");
+      document.getElementById("pay-t").textContent = "Кэшбэк-гайд · " + w.name;
+      document.getElementById("pay-f").src =
+        "/gc-widget.html?id=" + w.id + "&hash=" + w.hash + location.search.replace("?", "&");
+      if (pay.showModal) pay.showModal();
+    });
+  });
+
+  return () => {
+    __ids.forEach((i) => clearTimeout(i));
+    __ivs.forEach((i) => clearInterval(i));
+    __offs.forEach((f) => f());
+  };
+}
+
+const Cashback = () => {
+  usePageMeta({
+    title: "Кэшбэк-гайд: банки вернут вам до 500 000 ₽ в год",
+    description:
+      "Кэшбэк-гайд Василия Мещерякова: каждый месяц подсказываем, какой картой платить, чтобы банки возвращали деньги. Чёрная пятница: −75%.",
+    image: "https://vasyaifin.ru/cashback-sale/og.jpg",
+    imageAlt: "Банки вернут вам до 500 000 ₽ в год – кэшбэк-гайд Василия Мещерякова",
+  });
+  const root = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    el.innerHTML = HTML;
+    const stop = initSale();
+    return () => {
+      stop();
+      el.innerHTML = "";
+    };
+  }, []);
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <SiteHeader pageNav={pageNav} />
-
-      <main className="pt-28">
-        {/* ============ HERO ============ */}
-        <section className="container-px max-w-7xl mx-auto pb-16 md:pb-24 relative">
-          <div className="absolute inset-0 -z-10 bg-grid opacity-40 mask-fade-b" />
-          <div className="grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-16 items-start">
-            <div className="relative">
-              {/* Mobile: иллюстрация в правом верхнем углу, не растягивает блок */}
-              <img
-                src={cashbackHero}
-                alt=""
-                aria-hidden
-                className="lg:hidden pointer-events-none select-none absolute right-0 top-0 w-28 sm:w-40 h-auto"
-                draggable={false}
-              />
-              <div className="lg:pr-0 pr-32 sm:pr-44">
-                <Eyebrow size="lg">Кэшбэк-гайд</Eyebrow>
-                <h1 className="font-serif-display font-medium text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.02] tracking-tight mt-6">
-                  Кэшбэк-гайд: как получать от&nbsp;<span className="italic">10 до&nbsp;50&nbsp;тысяч</span> каждый месяц
-                </h1>
-              </div>
-              <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
-                Карты, категории, акции, накопительные счета, ограничения и&nbsp;рабочие сценарии для обычных расходов&nbsp;— в&nbsp;одном актуальном выпуске.
-              </p>
-
-              <div className="mt-8 flex flex-wrap gap-3">
-                <GoldBtn href="#pricing">Оформить доступ →</GoldBtn>
-              </div>
-            </div>
-
-            {/* Hero illustration — только на десктопе */}
-            <aside className="hidden lg:flex relative justify-end">
-              <img
-                src={cashbackHero}
-                alt="Иллюстрация: карты и возврат кэшбэка"
-                width={1024}
-                height={1280}
-                className="w-full max-w-none h-auto select-none"
-                draggable={false}
-              />
-            </aside>
-
-          </div>
-        </section>
-
-
-        {/* ============ Inside ============ */}
-        <section id="inside" className="container-px max-w-7xl mx-auto py-16 md:py-24 scroll-mt-24">
-          <div className="grid lg:grid-cols-[1fr_1.2fr] gap-10 lg:gap-16 items-start">
-            <div>
-              <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] tracking-tight">
-                Что такое кэшбэк-гайд
-              </h2>
-              <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
-                Гайд собран как рабочий журнал: можно читать целиком, а&nbsp;можно быстро найти нужную категорию или банк через поиск.
-              </p>
-            </div>
-            <ul className="space-y-5">
-              {inside.map((i) => (
-                <li key={i.n} className="flex gap-5 border-t border-foreground/15 pt-5 first:border-t-0 first:pt-0">
-                  <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1 shrink-0 w-8">
-                    №{i.n}
-                  </span>
-                  <div>
-                    <div className="font-display font-bold text-xl text-foreground">{i.t}</div>
-                    <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">{i.d}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        {/* ============ Отзывы (hero) ============ */}
-        <section className="container-px max-w-7xl mx-auto pb-8 md:pb-12">
-          <ReviewGrid items={reviewsHero} />
-        </section>
-
-
-
-        {/* ============ Why monthly (dark research) ============ */}
-        <section className="container-px max-w-7xl mx-auto py-20 md:py-28">
-          <div className="bg-foreground text-background rounded-lg p-8 md:p-12 grid lg:grid-cols-2 gap-10">
-            <div>
-              <div className="inline-flex font-mono text-[11px] uppercase tracking-[0.18em] text-accent border border-accent/40 rounded-full px-3 py-1">
-                Как это работает
-              </div>
-              <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] tracking-tight mt-6">
-                Банковские выгоды быстро устаревают
-              </h2>
-              <p className="mt-5 text-lg text-background/70 leading-relaxed">
-                Банки меняют категории, лимиты, ставки, подписки, правила начисления и&nbsp;исключения. Один и&nbsp;тот&nbsp;же совет может быть полезен в&nbsp;мае и&nbsp;уже не&nbsp;работать в&nbsp;июне.
-              </p>
-            </div>
-            <ul className="space-y-4 self-center">
-              {[
-                "Каждый месяц разбираем, какие условия банков изменились.",
-                "Отбираем сценарии, которые можно применить в обычных расходах.",
-                "Проверяем лимиты, категории, способы оплаты, исключения и подвохи.",
-                "Собираем не общий шум, а практическую выжимку для подписчиков.",
-              ].map((t) => (
-                <li key={t} className="flex gap-4 border-t border-background/20 pt-4 first:border-t-0 first:pt-0 text-background/85">
-                  <span className="text-accent">◆</span>
-                  <span className="leading-relaxed">{t}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-
-        {/* ============ Архив ============ */}
-        <section id="archive" className="container-px max-w-7xl mx-auto py-16 md:py-24 scroll-mt-24">
-          <div className="max-w-2xl">
-            <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] tracking-tight">
-              Архив выпусков и&nbsp;спецвыпусков
-            </h2>
-            <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
-              Подписка ценна не&nbsp;только текущим месяцем. Внутри есть архив прошлых спецвыпусков: можно возвращаться к&nbsp;темам, акциям, банкам и&nbsp;сценариям, которые остаются актуальными.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6 mt-12">
-            {archive.map((a) => (
-              <article key={a.title} className="border border-foreground/15 bg-card p-7 flex flex-col">
-                <div className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">{a.date}</div>
-                <h3 className="font-display font-bold text-2xl mt-3">{a.title}</h3>
-                <ul className="mt-5 space-y-2 text-[15px] text-foreground/85">
-                  {a.items.map((it) => (
-                    <li key={it} className="flex gap-3"><span className="text-accent">·</span><span>{it}</span></li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {/* ============ Preview — листалка ============ */}
-        <CashbackPreviewFlip />
-
-        {/* ============ Как пользоваться ============ */}
-        <section className="container-px max-w-7xl mx-auto py-16 md:py-24">
-          <div className="max-w-2xl">
-            <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] tracking-tight">
-              Как пользоваться гайдом
-            </h2>
-            <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
-              Не&nbsp;обязательно читать всё подряд. Гайд можно использовать как справочник по&nbsp;конкретной категории, банку или задаче.
-            </p>
-          </div>
-          <ol className="mt-10 space-y-4">
-            {usage.map((u) => (
-              <li key={u.n} className="flex items-baseline gap-4 border-t border-foreground/15 pt-4 first:border-t-0 first:pt-0">
-                <span className="font-serif-display text-3xl md:text-4xl leading-none text-accent shrink-0 w-10">
-                  {u.n}.
-                </span>
-                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                  <span className="font-display font-bold text-xl text-foreground">{u.t}</span>
-                  <span className="text-[15px] leading-relaxed text-muted-foreground">— {u.d}</span>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </section>
-
-
-
-        {/* ============ Pricing ============ */}
-        <section id="pricing" className="container-px max-w-7xl mx-auto py-16 md:py-24 scroll-mt-24">
-          <div className="max-w-2xl">
-            <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] tracking-tight">
-              Оформите доступ
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6 lg:gap-8 mt-12 items-stretch max-w-5xl">
-            {tariffs.map((t) => (
-              <article
-                key={t.name}
-                className={`relative border bg-card p-7 md:p-8 flex flex-col ${
-                  t.featured ? "border-accent shadow-paper" : "border-foreground/15"
-                }`}
-
-              >
-
-
-                <h3 className="font-display font-bold text-2xl">{t.name}</h3>
-                <div className="mt-6 font-serif-display text-5xl md:text-6xl leading-none tracking-tight">{t.price}</div>
-                <div className="mt-3 flex items-center gap-3 flex-wrap">
-                  <span className="font-serif-display text-2xl md:text-3xl leading-none text-muted-foreground line-through">{t.old}</span>
-                </div>
-                <p className="mt-5 text-[15px] leading-relaxed text-muted-foreground min-h-[78px]">{t.note}</p>
-                <ul className="mt-5 space-y-2 text-[15px] text-foreground/85 flex-1">
-                  {t.items.map((i) => (
-                    <li key={i} className="flex gap-3"><span className="text-accent">✓</span><span>{i}</span></li>
-                  ))}
-                </ul>
-                <div className="mt-7">
-                  <CalculatorRegisterDialog
-                    widgetId={t.widgetId}
-                    scriptHash={t.scriptHash}
-                    title={`Кэшбэк-гайд · ${t.name}`}
-                    subtitle={`Подписка на\u00A012\u00A0месяцев · ${t.price}`}
-                    trigger={
-                      t.featured
-                        ? <GoldBtn block>Оформить {t.name}</GoldBtn>
-                        : <DarkBtn block>Оформить {t.name}</DarkBtn>
-                    }
-                  />
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {/* ============ Отзывы ============ */}
-        <section id="reviews" className="container-px max-w-7xl mx-auto py-16 md:py-24 scroll-mt-24">
-          <div className="max-w-2xl mb-12">
-            <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] tracking-tight">
-              Что говорят о&nbsp;гайде
-            </h2>
-          </div>
-          <ReviewGrid items={[...reviewsAudience, ...reviewsPricing]} />
-        </section>
-
-        {/* ============ FAQ ============ */}
-        <section id="faq" className="container-px max-w-7xl mx-auto py-16 md:py-24 scroll-mt-24">
-          <div className="max-w-2xl">
-            <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] tracking-tight">
-              Вопросы перед покупкой
-            </h2>
-          </div>
-          <div className="mt-10 max-w-3xl space-y-3">
-            {faqItems.map((f, i) => (
-              <details key={i} className="border border-foreground/15 bg-card p-5 md:p-6 group">
-                <summary className="cursor-pointer font-display font-bold text-lg list-none flex justify-between items-start gap-4">
-                  <span>{f.q}</span>
-                  <span className="text-accent font-mono shrink-0 group-open:rotate-45 transition-transform">+</span>
-                </summary>
-                <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">{f.a}</p>
-              </details>
-            ))}
-          </div>
-        </section>
-
-        {/* ============ Final CTA ============ */}
-        <section className="container-px max-w-7xl mx-auto py-20 md:py-28 text-center">
-          <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] tracking-tight max-w-3xl mx-auto">
-            Оформите доступ к&nbsp;текущему выпуску и&nbsp;архиву
-          </h2>
-          <div className="mt-8 flex justify-center">
-            <GoldBtn href="#pricing">Оформить доступ →</GoldBtn>
-          </div>
-        </section>
-      </main>
-
-      <Footer />
-
-    </div>
+    <>
+      <style dangerouslySetInnerHTML={{ __html: CSS }} />
+      <div ref={root} className="cashback-sale" />
+    </>
   );
 };
 
 export default Cashback;
+// КОНЕЦ ФАЙЛА - страница распродажи /cashback, версия 12.11.2026

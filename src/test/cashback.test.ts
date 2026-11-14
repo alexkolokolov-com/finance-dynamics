@@ -20,9 +20,13 @@ describe("cashback sale deadline", () => {
     );
   });
 
-  it("says the sale is extended by one day because payments failed", () => {
-    expect(page).toContain("Распродажа продлена ещё на сутки");
-    expect(page).toContain("у многих не прошли оплаты");
+  it("explains the extension inside the countdown frame", () => {
+    const start = page.indexOf('<div class="countdown"');
+    const frame = page.slice(start, page.indexOf("</div>", start));
+    expect(frame).toContain(
+      "(продлили ещё на сутки, т.к. у многих из-за сбоя не прошли оплаты)",
+    );
+    expect(page).not.toContain("Распродажа продлена ещё на сутки");
   });
 
   it("no longer points shoppers at 14 November", () => {

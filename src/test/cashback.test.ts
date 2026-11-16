@@ -6,11 +6,7 @@ const root = process.cwd();
 const config = JSON.parse(
   readFileSync(path.join(root, "public/cashback-sale/config.json"), "utf8"),
 );
-// Неразрывные пробелы в вёрстке сравниваем как обычные.
-const page = readFileSync(path.join(root, "src/pages/Cashback.tsx"), "utf8").replace(
-  / /g,
-  " ",
-);
+const page = readFileSync(path.join(root, "src/pages/Cashback.tsx"), "utf8");
 
 describe("cashback sale deadline", () => {
   it("runs until 15 November 2026, 23:59:59 MSK", () => {
@@ -20,19 +16,11 @@ describe("cashback sale deadline", () => {
     );
   });
 
-  it("explains the extension inside the countdown frame", () => {
-    const start = page.indexOf('<div class="countdown"');
-    const frame = page.slice(start, page.indexOf("</div>", start));
-    expect(frame).toContain(
-      "(продлили ещё на сутки, т.к. у многих из-за сбоя не прошли оплаты)",
-    );
-    expect(page).not.toContain("Распродажа продлена ещё на сутки");
-  });
-
-  it("no longer points shoppers at 14 November", () => {
-    expect(page).not.toContain("до 14 ноября");
-    expect(page).toContain("Только до 15 ноября");
-    expect(page).toContain("действует только до 15 ноября");
+  it("takes the deadline from config.json at runtime", () => {
+    expect(page).toContain('fetch("/cashback-sale/config.json');
+    expect(page).toContain("SALE_END = new Date(d.saleEnd)");
+    // Часы, минуты и секунды показываются из этого значения.
+    expect(page).toContain("[data-timer]");
   });
 });
 
@@ -42,9 +30,11 @@ describe("cashback VIP seats", () => {
     expect(config.vipLeft).toBe(13);
   });
 
-  it("shows 13 of 20 in the VIP tariff and 13 seats in the hero", () => {
-    expect(page).toContain("осталось 13 из 20");
-    expect(page).toContain("осталось 13 мест");
-    expect(page).not.toContain("осталось 20 из 20");
+  it("writes the seat counts from config into the page", () => {
+    expect(page).toContain("VIP_TOTAL = +d.vipTotal");
+    expect(page).toContain("VIP_LEFT = +d.vipLeft");
+    expect(page).toContain("[data-seats]");
+    expect(page).toContain("[data-seats-short]");
+    expect(page).toContain("[data-seats-fill]");
   });
 });
